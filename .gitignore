@@ -1,0 +1,10 @@
+# Backups
+Formation_Complete_BACKUP*.html
+
+# Scripts de build (optionnel - décommentez si vous ne voulez pas les versionner)
+# *.py
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini

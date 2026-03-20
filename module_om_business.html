@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange Business — Plateforme Marchande — Formation MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#8D0C23; --blue-light:#B5112C; --blue-pale:#F9E8EC;
+  --orange:#CF9E41; --orange-light:#DDB55A; --orange-pale:#FAF3E0;
+  --teal:#584B26; --teal-pale:#F3EDD8;
+  --red:#6A091A; --red-pale:#F2D6DC;
+  --grey:#455A64; --grey-light:#ECEFF1;
+  --om-brand:#FF6600; --om-pale:#FFF3E0;
+  --bg:#FCFBF8; --sidebar-w:270px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:linear-gradient(135deg,var(--blue),#5A0815); color:white; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 3px 16px rgba(141,12,35,.35); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.back-btn { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:white; padding:7px 14px; border-radius:8px; font-size:.82rem; font-weight:600; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,.22); }
+.module-title-top { font-size:1rem; font-weight:700; }
+.module-subtitle-top { font-size:.75rem; color:rgba(255,255,255,.65); }
+.topbar-badge { background:var(--orange); color:var(--teal); padding:5px 12px; border-radius:20px; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+.layout { display:flex; flex:1; }
+.sidebar { width:var(--sidebar-w); background:white; border-right:1px solid #e8ddd0; padding:24px 0; position:sticky; top:51px; height:calc(100vh - 51px); overflow-y:auto; flex-shrink:0; }
+.sidebar-section { padding:0 18px; margin-bottom:8px; }
+.sidebar-section-title { font-size:.65rem; text-transform:uppercase; letter-spacing:.14em; color:var(--grey); font-weight:700; margin-bottom:8px; padding:0 6px; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:10px; cursor:pointer; font-size:.83rem; font-weight:500; color:var(--grey); transition:all .2s; margin-bottom:2px; border:none; background:none; width:100%; text-align:left; font-family:'Sora',sans-serif; }
+.nav-item:hover { background:var(--blue-pale); color:var(--blue); }
+.nav-item.active { background:var(--blue-pale); color:var(--blue); font-weight:700; }
+.nav-divider { height:1px; background:var(--grey-light); margin:12px 18px; }
+.progress-block { padding:14px 18px; }
+.progress-label { font-size:.72rem; color:var(--grey); margin-bottom:6px; display:flex; justify-content:space-between; }
+.progress-bar { height:6px; background:var(--grey-light); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--orange)); border-radius:3px; transition:width .5s ease; }
+.main-content { flex:1; padding:36px 40px; max-width:900px; }
+.page { display:none; }
+.page.active { display:block; }
+.module-hero { background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:20px; padding:36px; margin-bottom:32px; border:1px solid rgba(207,158,65,.2); }
+.module-hero-icon { font-size:3rem; margin-bottom:12px; }
+.module-hero h1 { font-size:1.85rem; font-weight:800; color:var(--blue); margin-bottom:8px; line-height:1.2; }
+.module-hero-meta { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+.meta-chip { font-size:.78rem; padding:5px 12px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+.chip-red { background:var(--blue-pale); color:var(--blue); }
+.chip-gold { background:var(--orange-pale); color:var(--teal); }
+.chip-grey { background:var(--grey-light); color:var(--grey); }
+.chip-om { background:var(--om-pale); color:var(--om-brand); }
+.objectives-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+.obj-item { display:flex; align-items:flex-start; gap:8px; font-size:.84rem; color:var(--grey); line-height:1.4; }
+.obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; }
+.section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
+.section-heading:first-child { margin-top:0; }
+.section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
+.info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
+.info-card p { font-size:.88rem; color:var(--grey); line-height:1.7; }
+.styled-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); margin:16px 0 24px; font-size:.84rem; }
+.styled-table th { background:var(--blue); color:white; padding:12px 16px; text-align:left; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+.styled-table td { padding:11px 16px; border-bottom:1px solid #f0e8e0; color:var(--grey); line-height:1.5; vertical-align:top; }
+.styled-table tr:nth-child(even) td { background:var(--bg); }
+.styled-table tr:last-child td { border-bottom:none; }
+.alert { border-radius:12px; padding:16px 20px; margin:14px 0; display:flex; gap:12px; font-size:.86rem; line-height:1.6; }
+.alert-icon { font-size:1.2rem; flex-shrink:0; }
+.alert-text { color:var(--grey); }
+.alert-text strong { color:#2C3E50; }
+.alert-info { background:var(--teal-pale); border-left:4px solid var(--teal); }
+.alert-warn { background:var(--orange-pale); border-left:4px solid var(--orange); }
+.alert-success { background:#E8F5E9; border-left:4px solid #2E7D32; }
+.alert-om { background:var(--om-pale); border-left:4px solid var(--om-brand); }
+.styled-list { list-style:none; padding:0; margin:12px 0; }
+.styled-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:.87rem; color:var(--grey); line-height:1.5; border-bottom:1px solid var(--grey-light); }
+.styled-list li:last-child { border-bottom:none; }
+.styled-list li::before { content:'▸'; color:var(--orange); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+
+/* PROFILS CARDS */
+.profils-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:16px 0 24px; }
+.profil-card { border-radius:16px; padding:22px; border:2px solid; }
+.profil-essentiel { background:#F3E5F5; border-color:#7B1FA2; }
+.profil-classique { background:#E3F2FD; border-color:#1565C0; }
+.profil-premium { background:#E8F5E9; border-color:#2E7D32; }
+.profil-badge { font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; padding:4px 10px; border-radius:20px; display:inline-block; margin-bottom:10px; }
+.profil-essentiel .profil-badge { background:#7B1FA2; color:white; }
+.profil-classique .profil-badge { background:#1565C0; color:white; }
+.profil-premium .profil-badge { background:#2E7D32; color:white; }
+.profil-card h4 { font-size:.95rem; font-weight:700; color:#2C3E50; margin-bottom:6px; }
+.profil-card .profil-cible { font-size:.78rem; color:var(--grey); font-style:italic; margin-bottom:10px; line-height:1.4; }
+.profil-card .profil-ca { font-family:'JetBrains Mono',monospace; font-size:.78rem; font-weight:700; margin-bottom:10px; padding:4px 8px; border-radius:6px; display:inline-block; }
+.profil-essentiel .profil-ca { background:rgba(123,31,162,.12); color:#7B1FA2; }
+.profil-classique .profil-ca { background:rgba(21,101,192,.12); color:#1565C0; }
+.profil-premium .profil-ca { background:rgba(46,125,50,.12); color:#2E7D32; }
+.profil-card ul { list-style:none; font-size:.78rem; color:var(--grey); }
+.profil-card ul li { padding:3px 0; display:flex; gap:8px; align-items:flex-start; line-height:1.4; }
+.profil-card ul li::before { content:'•'; font-size:1rem; flex-shrink:0; }
+
+/* FEATURES GRID */
+.features-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:16px 0 24px; }
+.feature-chip { background:white; border-radius:10px; padding:14px; border:1px solid #e8ddd0; text-align:center; }
+.feature-icon { font-size:1.4rem; margin-bottom:6px; }
+.feature-name { font-size:.78rem; font-weight:600; color:#2C3E50; }
+.feature-note { font-size:.7rem; color:var(--grey); margin-top:2px; font-family:'JetBrains Mono',monospace; }
+
+/* PARCOURS */
+.parcours-cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0 24px; }
+.parcours-card { background:white; border-radius:14px; padding:20px; border:2px solid #e8ddd0; }
+.parcours-card h4 { font-size:.9rem; font-weight:700; color:var(--blue); margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--orange-pale); }
+.parcours-step { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--grey-light); align-items:flex-start; font-size:.82rem; color:var(--grey); line-height:1.4; }
+.parcours-step:last-child { border-bottom:none; }
+.p-num { width:22px; height:22px; background:var(--orange); color:white; border-radius:50%; font-size:.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'JetBrains Mono',monospace; }
+
+/* TARIFAIRE */
+.tarif-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0 24px; }
+.tarif-card { background:white; border-radius:12px; padding:18px; border:1px solid #e8ddd0; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.tarif-action { font-size:.82rem; color:var(--grey); margin-bottom:8px; }
+.tarif-val { font-size:1.5rem; font-weight:800; color:var(--blue); }
+.tarif-note { font-size:.72rem; color:var(--grey); margin-top:4px; font-family:'JetBrains Mono',monospace; }
+.tarif-val.gratuit { color:#2E7D32; }
+
+/* Quiz */
+.quiz-container { max-width:720px; }
+.quiz-question-block { background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 14px rgba(0,0,0,.06); border:1px solid #e8ddd0; }
+.quiz-q-num { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--orange); font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.quiz-q-text { font-size:.95rem; font-weight:600; color:#2C3E50; margin-bottom:18px; line-height:1.5; }
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-option { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; border:2px solid #e8ddd0; cursor:pointer; font-size:.87rem; color:var(--grey); transition:all .2s; background:var(--bg); }
+.quiz-option:hover { border-color:var(--blue); background:var(--blue-pale); color:var(--blue); }
+.quiz-option.correct { border-color:#2E7D32; background:#E8F5E9; color:#2E7D32; font-weight:700; }
+.quiz-option.incorrect { border-color:var(--red); background:var(--red-pale); color:var(--red); }
+.quiz-option.disabled { cursor:default; pointer-events:none; }
+.option-letter { width:28px; height:28px; border-radius:50%; background:white; border:2px solid #ccc; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.quiz-option.correct .option-letter { background:#2E7D32; border-color:#2E7D32; color:white; }
+.quiz-option.incorrect .option-letter { background:var(--red); border-color:var(--red); color:white; }
+.quiz-feedback { margin-top:12px; padding:10px 14px; border-radius:8px; font-size:.82rem; display:none; }
+.quiz-feedback.show { display:block; }
+.quiz-feedback.fb-correct { background:#E8F5E9; color:#1B5E20; }
+.quiz-feedback.fb-incorrect { background:var(--red-pale); color:var(--red); }
+.quiz-score-bar { background:white; border-radius:16px; padding:24px; text-align:center; border:2px solid var(--orange); margin-bottom:24px; }
+.quiz-score-bar h3 { font-size:1.1rem; color:var(--blue); margin-bottom:8px; }
+.score-display { font-size:2.5rem; font-weight:800; color:var(--blue); }
+.score-display span { font-size:1.2rem; color:var(--grey); font-weight:400; }
+.exercise-card { background:white; border-radius:16px; padding:28px; margin-bottom:20px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.exercise-header { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.exercise-icon { width:48px; height:48px; background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+.exercise-header h3 { font-size:1.05rem; font-weight:700; color:var(--blue); }
+.exercise-header p { font-size:.78rem; color:var(--grey); margin-top:2px; }
+.exercise-step { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--grey-light); }
+.exercise-step:last-child { border-bottom:none; }
+.step-n { width:26px; height:26px; background:var(--orange); color:white; border-radius:50%; font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-text { font-size:.86rem; color:var(--grey); line-height:1.55; padding-top:2px; }
+
+/* Vision quote */
+.vision-quote { background:linear-gradient(135deg, #1a0a0f, #2d1a08); border-radius:16px; padding:28px; margin:16px 0 24px; position:relative; overflow:hidden; }
+.vision-quote::before { content:'"'; font-size:8rem; color:rgba(207,158,65,.15); position:absolute; top:-20px; left:10px; font-family:Georgia,serif; line-height:1; }
+.vision-quote p { color:#e0e0e0; font-size:1rem; line-height:1.8; font-style:italic; position:relative; z-index:1; }
+.vision-quote .vision-arrow { color:var(--orange); font-size:.9rem; margin-top:14px; font-family:'JetBrains Mono',monospace; position:relative; z-index:1; }
+
+/* Points forts */
+.points-forts { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin:16px 0 24px; }
+.pf-card { background:white; border-radius:12px; padding:18px; text-align:center; border:1px solid #e8ddd0; }
+.pf-icon { font-size:2rem; margin-bottom:10px; }
+.pf-title { font-size:.9rem; font-weight:700; color:var(--blue); margin-bottom:6px; }
+.pf-desc { font-size:.78rem; color:var(--grey); line-height:1.5; }
+
+@media (max-width:768px) {
+  .sidebar { display:none; }
+  .main-content { padding:20px; }
+  .profils-grid { grid-template-columns:1fr; }
+  .features-grid { grid-template-columns:1fr 1fr; }
+  .parcours-cols { grid-template-columns:1fr; }
+  .tarif-grid { grid-template-columns:1fr; }
+  .objectives-grid { grid-template-columns:1fr; }
+  .points-forts { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Retour aux modules</a>
+    <div>
+      <div class="module-title-top">Orange Business — Plateforme Marchande</div>
+      <div class="module-subtitle-top">Module 04 — Formation MAFA Holding</div>
+    </div>
+  </div>
+  <div class="topbar-badge">🏪 OM BUSINESS</div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Navigation</div>
+      <button class="nav-item active" onclick="showTab('cours',this)"><span class="nav-icon">📖</span> Cours</button>
+      <button class="nav-item" onclick="showTab('exercices',this)"><span class="nav-icon">✏️</span> Exercices</button>
+      <button class="nav-item" onclick="showTab('quiz',this)"><span class="nav-icon">🎯</span> Quiz</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Sections du cours</div>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s1')"><span class="nav-icon">1</span> Vision OM Business</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s2')"><span class="nav-icon">2</span> Les 3 profils</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s3')"><span class="nav-icon">3</span> Fonctionnalités</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s4')"><span class="nav-icon">4</span> Création de compte</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s5')"><span class="nav-icon">5</span> Tarification</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="progress-block">
+      <div class="progress-label"><span>Progression quiz</span><span id="prog-label">0 / 5</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- COURS -->
+    <div class="page active" id="page-cours">
+      <div class="module-hero">
+        <div class="module-hero-icon">🏪</div>
+        <h1>Orange Business — Plateforme Marchande</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">👤 Commerciaux OM Business</span>
+          <span class="meta-chip chip-gold">⏱ Durée : 1h30</span>
+          <span class="meta-chip chip-grey">📋 Module 04</span>
+          <span class="meta-chip chip-om">🟠 Orange Money</span>
+        </div>
+        <div class="objectives-grid">
+          <div class="obj-item"><span class="obj-bullet">✦</span> Comprendre l'offre OM Business et ses 3 profils</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Présenter les fonctionnalités de l'application aux marchands</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Maîtriser les parcours de création de compte</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Expliquer la tarification et les avantages concurrentiels</div>
+        </div>
+      </div>
+
+      <!-- S1 -->
+      <div id="s1" class="section-heading">
+        <div class="section-num">1</div>
+        <h2>Vision OM Business</h2>
+      </div>
+      <div class="vision-quote">
+        <p>"Je recherche une solution de paiement offrant toutes les fonctionnalités nécessaires pour soutenir mon activité commerciale — accessible partout, sans SIM obligatoire, sécurisée et traçable."</p>
+        <div class="vision-arrow">→ Voix du marchand — la promesse OM Business</div>
+      </div>
+      <div class="info-card">
+        <h3>🎯 Objectifs d'Orange avec OM Business</h3>
+        <ul class="styled-list">
+          <li><strong>Uniformiser et démocratiser</strong> l'offre business pour tous les types de commerces</li>
+          <li><strong>Accroître la proposition de valeur</strong> au sein des activités marchandes de Côte d'Ivoire</li>
+          <li><strong>Intégrer tous les besoins</strong> marchands sur une plateforme unique et accessible</li>
+          <li><strong>Digitaliser</strong> le commerce informel et formel via des parcours simples et intuitifs</li>
+        </ul>
+      </div>
+      <div class="points-forts">
+        <div class="pf-card">
+          <div class="pf-icon">💻</div>
+          <div class="pf-title">Digitalisation</div>
+          <div class="pf-desc">Onboarding 100% digital — création de compte entièrement via l'application mobile, sans déplacement en agence.</div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-icon">🧭</div>
+          <div class="pf-title">Simplicité</div>
+          <div class="pf-desc">Des parcours intuitifs conçus pour être utilisés facilement par tous les commerçants, même sans formation technique.</div>
+        </div>
+        <div class="pf-card">
+          <div class="pf-icon">🔐</div>
+          <div class="pf-title">Sécurité</div>
+          <div class="pf-desc">Haut niveau de sécurité et de traçabilité sur toutes les transactions — historique complet accessible à tout moment.</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div id="s2" class="section-heading">
+        <div class="section-num">2</div>
+        <h2>Les 3 profils cibles OM Business</h2>
+      </div>
+      <div class="profils-grid">
+        <div class="profil-card profil-essentiel">
+          <div class="profil-badge">Essentiel</div>
+          <h4>OM Business Essentiel</h4>
+          <p class="profil-cible">Épiciers, vendeurs de rue, artisans, VTC, auto-entrepreneurs, commerces informels</p>
+          <div class="profil-ca">CA &lt; 150k XOF/an</div>
+          <ul>
+            <li>1 à 5 employés</li>
+            <li>QR code mobile dynamique</li>
+            <li>Lien de paiement à distance</li>
+            <li>Retrait sans frais</li>
+            <li>Disponible en version Lite ou Full</li>
+          </ul>
+        </div>
+        <div class="profil-card profil-classique">
+          <div class="profil-badge">Classique</div>
+          <h4>OM Business Classique</h4>
+          <p class="profil-cible">Détaillants, supérettes, maquis, bars, boulangeries — petits commerces formels</p>
+          <div class="profil-ca">150k – 400m XOF/an</div>
+          <ul>
+            <li>2 à 10 employés</li>
+            <li>Plusieurs QR codes imprimés</li>
+            <li>Retrait sans frais</li>
+            <li>Traçabilité des transactions</li>
+            <li>Docs : CNI + RC ou carte commerçant</li>
+          </ul>
+        </div>
+        <div class="profil-card profil-premium">
+          <div class="profil-badge">Premium</div>
+          <h4>OM Business Premium</h4>
+          <p class="profil-cible">Stations-services, supermarchés, pharmacies, hôtels, restaurants — grands commerces</p>
+          <div class="profil-ca">CA &gt; 400m XOF/an</div>
+          <ul>
+            <li>+ 10 employés</li>
+            <li>Gestion des rôles du personnel</li>
+            <li>Analyse des performances</li>
+            <li>Facilité de reversement</li>
+            <li>Support dédié</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div class="alert-text"><strong>Conseil de qualification :</strong> Pour identifier le bon profil, posez toujours 3 questions clés au marchand : <strong>Quel est votre CA annuel approximatif ? Combien d'employés avez-vous ? Avez-vous un registre de commerce ?</strong></div>
+      </div>
+
+      <!-- S3 -->
+      <div id="s3" class="section-heading">
+        <div class="section-num">3</div>
+        <h2>Fonctionnalités principales</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-chip"><div class="feature-icon">👤</div><div class="feature-name">Création de compte</div><div class="feature-note">OM & Non-OM</div></div>
+        <div class="feature-chip"><div class="feature-icon">📷</div><div class="feature-name">Encaissement QR</div><div class="feature-note">Paiement sans contact</div></div>
+        <div class="feature-chip"><div class="feature-icon">🔗</div><div class="feature-name">Lien de paiement</div><div class="feature-note">À distance</div></div>
+        <div class="feature-chip"><div class="feature-icon">💸</div><div class="feature-name">Transfert</div><div class="feature-note">Soi-même : gratuit</div></div>
+        <div class="feature-chip"><div class="feature-icon">🏧</div><div class="feature-name">Retrait</div><div class="feature-note">App &amp; USSD</div></div>
+        <div class="feature-chip"><div class="feature-icon">📊</div><div class="feature-name">Historique</div><div class="feature-note">Toutes transactions</div></div>
+        <div class="feature-chip"><div class="feature-icon">↩️</div><div class="feature-name">Remboursement</div><div class="feature-note">Transaction annulée</div></div>
+        <div class="feature-chip"><div class="feature-icon">📈</div><div class="feature-name">Déplafonnement</div><div class="feature-note">Limites étendues</div></div>
+        <div class="feature-chip"><div class="feature-icon">🎧</div><div class="feature-name">Assistance client</div><div class="feature-note">Support dédié</div></div>
+      </div>
+      <div class="alert alert-om">
+        <div class="alert-icon">⭐</div>
+        <div class="alert-text"><strong>Prochainement disponible :</strong> <strong>Tik Tak Pro</strong> — Service de crédit et d'épargne intégré directement dans l'application OM Business. Une nouveauté majeure pour soutenir les besoins de financement des commerçants.</div>
+      </div>
+
+      <!-- S4 -->
+      <div id="s4" class="section-heading">
+        <div class="section-num">4</div>
+        <h2>Parcours de création de compte</h2>
+      </div>
+      <div class="parcours-cols">
+        <div class="parcours-card">
+          <h4>📱 Clients Orange Money (OM)</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Saisir le numéro Orange Money ou accéder à l'application OM Business</div>
+          <div class="parcours-step"><div class="p-num">2</div> Sélectionner "Demande de création de compte marchand"</div>
+          <div class="parcours-step"><div class="p-num">3</div> Compléter les informations : nom, prénom, date de naissance, numéro de pièce d'identité</div>
+          <div class="parcours-step"><div class="p-num">4</div> Prendre en photo la pièce d'identité (recto + verso)</div>
+          <div class="parcours-step"><div class="p-num">5</div> Valider et soumettre la demande</div>
+          <div class="parcours-step"><div class="p-num">6</div> Validation Back Office → Notification "Compte activé" reçue</div>
+        </div>
+        <div class="parcours-card">
+          <h4>🆕 Clients Non-Orange Money (Non-OM)</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Accéder à l'application OM Business sans numéro Orange préexistant</div>
+          <div class="parcours-step"><div class="p-num">2</div> Choisir "Je n'ai pas de compte Orange Money"</div>
+          <div class="parcours-step"><div class="p-num">3</div> Même parcours d'informations que les clients OM (identité + photo CNI)</div>
+          <div class="parcours-step"><div class="p-num">4</div> Enrôlement SIM optionnel — le marchand peut aussi utiliser l'app sans SIM Orange</div>
+          <div class="parcours-step"><div class="p-num">5</div> Validation Back Office → Activation du compte marchand</div>
+          <div class="parcours-step"><div class="p-num">6</div> Tutoriel guidé de prise en main de l'application</div>
+        </div>
+      </div>
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-text"><strong>Avantage clé :</strong> Le parcours Non-OM est une différenciation majeure d'OM Business — un marchand n'a pas besoin d'avoir une SIM Orange pour bénéficier de la plateforme. Cela élargit considérablement la base de clientèle potentielle.</div>
+      </div>
+
+      <!-- S5 -->
+      <div id="s5" class="section-heading">
+        <div class="section-num">5</div>
+        <h2>Tarification OM Business</h2>
+      </div>
+      <div class="info-card">
+        <h3>💰 Une grille tarifaire repensée pour les commerçants</h3>
+        <p>OM Business propose une grille tarifaire avantageuse conçue pour <strong>alléger les charges des commerçants</strong> et <strong>encourager l'usage quotidien</strong> du paiement mobile. L'objectif : rendre OM Business plus compétitif que les solutions concurrentes.</p>
+      </div>
+      <div class="tarif-grid">
+        <div class="tarif-card">
+          <div class="tarif-action">Transfert à soi-même</div>
+          <div class="tarif-val gratuit">GRATUIT</div>
+          <div class="tarif-note">Entre ses propres comptes OM Business</div>
+        </div>
+        <div class="tarif-card">
+          <div class="tarif-action">Transfert à un tiers</div>
+          <div class="tarif-val">Tarif applicable</div>
+          <div class="tarif-note">Selon le barème Orange Money en vigueur</div>
+        </div>
+        <div class="tarif-card">
+          <div class="tarif-action">Encaissement QR Code</div>
+          <div class="tarif-val gratuit">GRATUIT</div>
+          <div class="tarif-note">Réception de paiement sans frais</div>
+        </div>
+        <div class="tarif-card">
+          <div class="tarif-action">Retrait (App &amp; USSD)</div>
+          <div class="tarif-val">Tarif applicable</div>
+          <div class="tarif-note">Selon le montant et le canal de retrait</div>
+        </div>
+      </div>
+      <table class="styled-table">
+        <thead><tr><th>Profil</th><th>Documents requis</th><th>Plafond de transaction</th><th>Avantages spécifiques</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Essentiel</strong></td><td>Pièce d'identité valide</td><td>Standard OM</td><td>QR mobile, lien de paiement</td></tr>
+          <tr><td><strong>Classique</strong></td><td>CNI + Registre de commerce ou Carte commerçant</td><td>Étendu</td><td>Plusieurs QR imprimés, traçabilité</td></tr>
+          <tr><td><strong>Premium</strong></td><td>CNI + RC + Documents financiers</td><td>Déplafonné</td><td>Gestion d'équipe, analyses, support dédié</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- EXERCICES -->
+    <div class="page" id="page-exercices">
+      <div class="module-hero">
+        <div class="module-hero-icon">✏️</div>
+        <h1>Exercices pratiques — OM Business</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">🏪 Orange Business</span>
+          <span class="meta-chip chip-gold">2 exercices</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon">🎯</div>
+          <div>
+            <h3>Exercice 1 — Qualification des profils marchands</h3>
+            <p>Identifier le bon profil OM Business — Durée estimée : 15 minutes</p>
+          </div>
+        </div>
+        <div class="exercise-content">
+          <p style="margin-bottom:14px">Pour chacun des 5 profils marchands ci-dessous, identifiez le profil OM Business correspondant :</p>
+          <table class="styled-table">
+            <thead><tr><th>#</th><th>Description du marchand</th><th>Profil OM Business</th><th>Justification</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mme Adjoua, vendeuse de beignets et d'attiéké, travaille seule, pas de registre de commerce</td>
+                <td><span style="background:#F3E5F5; color:#7B1FA2; padding:3px 8px; border-radius:4px; font-weight:700; font-size:.78rem;">ESSENTIEL</span></td>
+                <td style="font-size:.78rem">CA &lt;150k, 1 employé, commerce informel, pas de RC</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>M. Kouamé, gérant d'une supérette de quartier avec 4 employés, registre de commerce, CA ≈ 50m XOF</td>
+                <td><span style="background:#E3F2FD; color:#1565C0; padding:3px 8px; border-radius:4px; font-weight:700; font-size:.78rem;">CLASSIQUE</span></td>
+                <td style="font-size:.78rem">CA entre 150k et 400m, 4 employés, RC disponible</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Groupe hôtelier avec 3 établissements, +50 employés, CA &gt; 1 milliard XOF</td>
+                <td><span style="background:#E8F5E9; color:#2E7D32; padding:3px 8px; border-radius:4px; font-weight:700; font-size:.78rem;">PREMIUM</span></td>
+                <td style="font-size:.78rem">Grand commerce, CA &gt;400m, nombreux employés, besoin de gestion d'équipe</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Auto-entrepreneur VTC, 1 véhicule, pas de bureau, travaille à son compte</td>
+                <td><span style="background:#F3E5F5; color:#7B1FA2; padding:3px 8px; border-radius:4px; font-weight:700; font-size:.78rem;">ESSENTIEL</span></td>
+                <td style="font-size:.78rem">Micro-entrepreneur, 1 personne, CA réduit — lien de paiement à distance parfait</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Pharmacie avec 8 employés, patente professionnelle, CA ≈ 200m XOF/an</td>
+                <td><span style="background:#E3F2FD; color:#1565C0; padding:3px 8px; border-radius:4px; font-weight:700; font-size:.78rem;">CLASSIQUE</span></td>
+                <td style="font-size:.78rem">CA entre 150k et 400m, 8 employés, commerce formel avec documents</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon">📱</div>
+          <div>
+            <h3>Exercice 2 — Simulation création compte Non-OM</h3>
+            <p>Décrire les étapes de création pour un client sans Orange Money — Durée : 15 min</p>
+          </div>
+        </div>
+        <div class="exercise-content">
+          <div class="alert alert-info" style="margin-bottom:18px">
+            <div class="alert-icon">📋</div>
+            <div class="alert-text"><strong>Scénario :</strong> M. Bamba Seydou, gérant d'un maquis à Treichville, utilise uniquement MTN Money et n'a pas de compte Orange Money. Il veut accepter les paiements Orange Money de ses clients. Décrivez les étapes complètes de création de son compte OM Business.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">1</div>
+            <div class="step-text"><strong>Télécharger l'application :</strong> Guider M. Bamba pour télécharger l'application OM Business sur son smartphone depuis le Play Store ou l'App Store.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">2</div>
+            <div class="step-text"><strong>Lancer l'application :</strong> Ouvrir l'app et choisir "Je n'ai pas de compte Orange Money" — cette option est dédiée aux clients Non-OM.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">3</div>
+            <div class="step-text"><strong>Saisir les informations :</strong> Renseigner nom (Bamba), prénom (Seydou), date de naissance et numéro de sa pièce d'identité nationale.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">4</div>
+            <div class="step-text"><strong>Photographier la CNI :</strong> Prendre en photo le recto et le verso de la carte d'identité de M. Bamba avec l'application.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">5</div>
+            <div class="step-text"><strong>Enrôlement SIM optionnel :</strong> Informer M. Bamba qu'il n'est pas obligatoire d'avoir une SIM Orange — il peut utiliser OM Business sans changer d'opérateur.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">6</div>
+            <div class="step-text"><strong>Soumettre la demande :</strong> Valider et envoyer le dossier. Le Back Office examine la demande dans les 24-48h.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">7</div>
+            <div class="step-text"><strong>Activation :</strong> M. Bamba reçoit une notification de confirmation. Son compte marchand Essentiel est actif — il peut désormais générer son QR Code et accepter les paiements.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="page" id="page-quiz">
+      <div class="module-hero">
+        <div class="module-hero-icon">🎯</div>
+        <h1>Quiz — Orange Business</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">5 questions</span>
+          <span class="meta-chip chip-gold">Feedback immédiat</span>
+        </div>
+      </div>
+      <div class="quiz-score-bar">
+        <h3>Votre score</h3>
+        <div class="score-display" id="score-display">0 <span>/ 5</span></div>
+        <p style="font-size:.82rem; color:var(--grey); margin-top:4px">Répondez à toutes les questions pour valider le module</p>
+      </div>
+      <div class="quiz-container">
+        <div class="quiz-question-block" id="q1">
+          <div class="quiz-q-num">Question 01 / 05</div>
+          <div class="quiz-q-text">Quel profil OM Business convient à un épicier dont le CA annuel est inférieur à 150 000 XOF ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q1',false,'Le profil Premium est pour les grands commerces avec CA >400m XOF/an.')"><span class="option-letter">A</span> OM Business Premium</div>
+            <div class="quiz-option" onclick="answer(this,'q1',false,'Le profil Classique est pour les commerces avec CA entre 150k et 400m XOF.')"><span class="option-letter">B</span> OM Business Classique</div>
+            <div class="quiz-option" onclick="answer(this,'q1',true,'Correct ! OM Business Essentiel cible les micro-commerces et auto-entrepreneurs avec CA &lt;150k XOF/an.')"><span class="option-letter">C</span> OM Business Essentiel</div>
+            <div class="quiz-option" onclick="answer(this,'q1',false,'"Standard" n\'est pas un profil OM Business — les profils sont Essentiel, Classique et Premium.')"><span class="option-letter">D</span> OM Business Standard</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q1"></div>
+        </div>
+        <div class="quiz-question-block" id="q2">
+          <div class="quiz-q-num">Question 02 / 05</div>
+          <div class="quiz-q-text">Dans OM Business, quel est le coût d'un transfert à soi-même (entre ses propres comptes) ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q2',false,'Le transfert à soi-même est entièrement gratuit dans OM Business.')"><span class="option-letter">A</span> Payant selon le montant</div>
+            <div class="quiz-option" onclick="answer(this,'q2',true,'Correct ! Le transfert entre ses propres comptes OM Business est entièrement gratuit — c\'est un avantage clé de la plateforme.')"><span class="option-letter">B</span> Gratuit</div>
+            <div class="quiz-option" onclick="answer(this,'q2',false,'Il n\'y a pas d\'interdiction de transfert à soi-même dans OM Business — au contraire, c\'est gratuit.')"><span class="option-letter">C</span> Interdit</div>
+            <div class="quiz-option" onclick="answer(this,'q2',false,'Le transfert à soi-même n\'est pas limité à 50k XOF — et il est gratuit.')"><span class="option-letter">D</span> Limité à 50 000 XOF</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q2"></div>
+        </div>
+        <div class="quiz-question-block" id="q3">
+          <div class="quiz-q-num">Question 03 / 05</div>
+          <div class="quiz-q-text">Combien de fonctionnalités principales comporte l'application OM Business ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q3',false,'OM Business dispose de plus de 5 fonctionnalités.')"><span class="option-letter">A</span> 5 fonctionnalités</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'7 n\'est pas le bon nombre — comptez les fonctionnalités listées dans le cours.')"><span class="option-letter">B</span> 7 fonctionnalités</div>
+            <div class="quiz-option" onclick="answer(this,'q3',true,'Correct ! OM Business comporte 9 fonctionnalités : Création compte, Encaissement, Lien paiement, Transfert, Retrait, Historique, Remboursement, Déplafonnement, Assistance.')"><span class="option-letter">C</span> 9 fonctionnalités</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'12 est un nombre trop élevé. OM Business dispose de 9 fonctionnalités actuellement.')"><span class="option-letter">D</span> 12 fonctionnalités</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q3"></div>
+        </div>
+        <div class="quiz-question-block" id="q4">
+          <div class="quiz-q-num">Question 04 / 05</div>
+          <div class="quiz-q-text">Que signifie "Onboarding 100% digital" dans le contexte d'OM Business ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q4',false,'L\'onboarding 100% digital ne se fait pas par SMS mais via l\'application mobile.')"><span class="option-letter">A</span> Tout le processus se fait par SMS</div>
+            <div class="quiz-option" onclick="answer(this,'q4',true,'Correct ! "Onboarding 100% digital" signifie que la création de compte se fait entièrement via l\'application mobile, sans aller en agence.')"><span class="option-letter">B</span> La création de compte se fait entièrement via l'application mobile</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'L\'onboarding ne nécessite pas d\'ordinateur — il se fait via smartphone.')"><span class="option-letter">C</span> Il faut obligatoirement un ordinateur</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'"Onboarding 100% digital" désigne la création de compte, pas les formations.')"><span class="option-letter">D</span> La formation est dispensée en ligne uniquement</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q4"></div>
+        </div>
+        <div class="quiz-question-block" id="q5">
+          <div class="quiz-q-num">Question 05 / 05</div>
+          <div class="quiz-q-text">Quelle est la prochaine fonctionnalité annoncée pour OM Business ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q5',false,'L\'assurance mobile n\'est pas la prochaine fonctionnalité annoncée pour OM Business.')"><span class="option-letter">A</span> Un service d'assurance mobile</div>
+            <div class="quiz-option" onclick="answer(this,'q5',true,'Correct ! Tik Tak Pro est le service de crédit et d\'épargne à venir — une évolution majeure pour soutenir le financement des commerçants.')"><span class="option-letter">B</span> Tik Tak Pro — Service de crédit et d'épargne</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'Le paiement international n\'est pas la prochaine fonctionnalité annoncée.')"><span class="option-letter">C</span> Un service de paiement international</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'La carte prépayée physique n\'est pas la fonctionnalité à venir annoncée.')"><span class="option-letter">D</span> Une carte prépayée physique</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q5"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let scores = { q1:null, q2:null, q3:null, q4:null, q5:null };
+function showTab(tab, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+function goTo(id) {
+  setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100);
+}
+function answer(el, qid, correct, feedback) {
+  const block = document.getElementById(qid);
+  if (block.querySelector('.correct') || block.querySelector('.incorrect')) return;
+  block.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+  el.classList.add(correct ? 'correct' : 'incorrect');
+  const fb = document.getElementById('fb-' + qid);
+  fb.textContent = (correct ? '✅ ' : '❌ ') + feedback;
+  fb.className = 'quiz-feedback show ' + (correct ? 'fb-correct' : 'fb-incorrect');
+  scores[qid] = correct;
+  const total = Object.values(scores).filter(v => v === true).length;
+  const answered = Object.values(scores).filter(v => v !== null).length;
+  document.getElementById('score-display').innerHTML = total + ' <span>/ 5</span>';
+  document.getElementById('prog-label').textContent = answered + ' / 5';
+  document.getElementById('prog-fill').style.width = (answered / 5 * 100) + '%';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Agent & Superviseur Orange — Formation MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#8D0C23; --blue-light:#B5112C; --blue-pale:#F9E8EC;
+  --orange:#CF9E41; --orange-light:#DDB55A; --orange-pale:#FAF3E0;
+  --teal:#584B26; --teal-pale:#F3EDD8;
+  --red:#6A091A; --red-pale:#F2D6DC;
+  --grey:#455A64; --grey-light:#ECEFF1;
+  --om-brand:#FF6600; --om-pale:#FFF3E0;
+  --bg:#FCFBF8; --sidebar-w:270px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:linear-gradient(135deg,var(--blue),#5A0815); color:white; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 3px 16px rgba(141,12,35,.35); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.back-btn { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:white; padding:7px 14px; border-radius:8px; font-size:.82rem; font-weight:600; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,.22); }
+.module-title-top { font-size:1rem; font-weight:700; }
+.module-subtitle-top { font-size:.75rem; color:rgba(255,255,255,.65); }
+.topbar-badge { background:var(--orange); color:var(--teal); padding:5px 12px; border-radius:20px; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+.layout { display:flex; flex:1; }
+.sidebar { width:var(--sidebar-w); background:white; border-right:1px solid #e8ddd0; padding:24px 0; position:sticky; top:51px; height:calc(100vh - 51px); overflow-y:auto; flex-shrink:0; }
+.sidebar-section { padding:0 18px; margin-bottom:8px; }
+.sidebar-section-title { font-size:.65rem; text-transform:uppercase; letter-spacing:.14em; color:var(--grey); font-weight:700; margin-bottom:8px; padding:0 6px; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:10px; cursor:pointer; font-size:.83rem; font-weight:500; color:var(--grey); transition:all .2s; margin-bottom:2px; border:none; background:none; width:100%; text-align:left; font-family:'Sora',sans-serif; }
+.nav-item:hover { background:var(--blue-pale); color:var(--blue); }
+.nav-item.active { background:var(--blue-pale); color:var(--blue); font-weight:700; }
+.nav-divider { height:1px; background:var(--grey-light); margin:12px 18px; }
+.progress-block { padding:14px 18px; }
+.progress-label { font-size:.72rem; color:var(--grey); margin-bottom:6px; display:flex; justify-content:space-between; }
+.progress-bar { height:6px; background:var(--grey-light); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--orange)); border-radius:3px; transition:width .5s ease; }
+.main-content { flex:1; padding:36px 40px; max-width:900px; }
+.page { display:none; }
+.page.active { display:block; }
+.module-hero { background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:20px; padding:36px; margin-bottom:32px; border:1px solid rgba(207,158,65,.2); }
+.module-hero-icon { font-size:3rem; margin-bottom:12px; }
+.module-hero h1 { font-size:1.85rem; font-weight:800; color:var(--blue); margin-bottom:8px; line-height:1.2; }
+.module-hero-meta { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+.meta-chip { font-size:.78rem; padding:5px 12px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+.chip-red { background:var(--blue-pale); color:var(--blue); }
+.chip-gold { background:var(--orange-pale); color:var(--teal); }
+.chip-grey { background:var(--grey-light); color:var(--grey); }
+.objectives-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+.obj-item { display:flex; align-items:flex-start; gap:8px; font-size:.84rem; color:var(--grey); line-height:1.4; }
+.obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; }
+.section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
+.section-heading:first-child { margin-top:0; }
+.section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
+.info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
+.info-card p { font-size:.88rem; color:var(--grey); line-height:1.7; }
+.def-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:24px; }
+.def-card { background:white; border-radius:12px; padding:16px 18px; border-left:4px solid var(--orange); box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.def-card .def-term { font-family:'JetBrains Mono',monospace; font-size:.78rem; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+.def-card .def-def { font-size:.82rem; color:var(--grey); line-height:1.55; }
+.styled-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); margin:16px 0 24px; font-size:.84rem; }
+.styled-table th { background:var(--blue); color:white; padding:12px 16px; text-align:left; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+.styled-table td { padding:11px 16px; border-bottom:1px solid #f0e8e0; color:var(--grey); line-height:1.5; vertical-align:top; }
+.styled-table tr:nth-child(even) td { background:var(--bg); }
+.styled-table tr:last-child td { border-bottom:none; }
+.alert { border-radius:12px; padding:16px 20px; margin:14px 0; display:flex; gap:12px; font-size:.86rem; line-height:1.6; }
+.alert-icon { font-size:1.2rem; flex-shrink:0; }
+.alert-text { color:var(--grey); }
+.alert-text strong { color:#2C3E50; }
+.alert-info { background:var(--teal-pale); border-left:4px solid var(--teal); }
+.alert-warn { background:var(--orange-pale); border-left:4px solid var(--orange); }
+.alert-danger { background:var(--red-pale); border-left:4px solid var(--red); }
+.alert-success { background:#E8F5E9; border-left:4px solid #2E7D32; }
+.styled-list { list-style:none; padding:0; margin:12px 0; }
+.styled-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:.87rem; color:var(--grey); line-height:1.5; border-bottom:1px solid var(--grey-light); }
+.styled-list li:last-child { border-bottom:none; }
+.styled-list li::before { content:'▸'; color:var(--orange); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+.steps-list { list-style:none; padding:0; }
+.steps-list li { display:flex; gap:16px; padding:14px 0; border-bottom:1px solid #f0e8e0; align-items:flex-start; }
+.steps-list li:last-child { border-bottom:none; }
+.step-badge { width:34px; height:34px; background:var(--blue); color:white; border-radius:50%; font-size:.8rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'JetBrains Mono',monospace; }
+.step-content h4 { font-size:.9rem; font-weight:700; color:#2C3E50; margin-bottom:4px; }
+.step-content p { font-size:.82rem; color:var(--grey); line-height:1.55; }
+/* Connectivity card */
+.connect-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0 24px; }
+.connect-card { border-radius:14px; padding:20px; border:2px solid; }
+.connect-offline { background:#E8F5E9; border-color:#4CAF50; }
+.connect-online { background:#E3F2FD; border-color:#1976D2; }
+.connect-card h4 { font-size:.9rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.connect-offline h4 { color:#2E7D32; }
+.connect-online h4 { color:#1565C0; }
+.connect-card ul { list-style:none; font-size:.82rem; color:var(--grey); }
+.connect-card ul li { padding:5px 0; display:flex; gap:8px; align-items:flex-start; line-height:1.4; border-bottom:1px solid rgba(0,0,0,.06); }
+.connect-card ul li:last-child { border-bottom:none; }
+.connect-offline ul li::before { content:'✓'; color:#2E7D32; font-weight:700; flex-shrink:0; }
+.connect-online ul li::before { content:'◉'; color:#1976D2; font-weight:700; flex-shrink:0; }
+/* Dashboard grid */
+.dashboard-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:16px 0 24px; }
+.db-card { background:white; border-radius:12px; padding:16px; border:1px solid #e8ddd0; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.db-icon { font-size:1.8rem; margin-bottom:8px; }
+.db-label { font-size:.78rem; font-weight:600; color:#2C3E50; line-height:1.4; }
+.db-note { font-size:.7rem; color:var(--grey); margin-top:4px; font-family:'JetBrains Mono',monospace; }
+/* Superviseur role */
+.superviseur-card { background:linear-gradient(135deg, #1a0a0f, var(--teal)); border-radius:16px; padding:28px; margin:16px 0 24px; color:white; }
+.superviseur-card h3 { font-size:1.1rem; font-weight:700; margin-bottom:16px; color:var(--orange); }
+.superviseur-card ul { list-style:none; }
+.superviseur-card ul li { display:flex; gap:12px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.1); font-size:.86rem; color:rgba(255,255,255,.85); align-items:flex-start; line-height:1.5; }
+.superviseur-card ul li:last-child { border-bottom:none; }
+.superviseur-card ul li::before { content:'◆'; color:var(--orange); font-size:.8rem; flex-shrink:0; margin-top:2px; }
+/* Enrolment flow */
+.enrol-flow { display:flex; gap:0; margin:16px 0 24px; overflow-x:auto; }
+.enrol-step { flex:1; min-width:130px; }
+.enrol-step-inner { background:white; border:2px solid #e8ddd0; border-radius:12px; padding:14px 12px; text-align:center; margin:0 6px; height:100%; }
+.enrol-step:first-child .enrol-step-inner { margin-left:0; }
+.enrol-step:last-child .enrol-step-inner { margin-right:0; }
+.enrol-step-num { width:30px; height:30px; background:var(--blue); color:white; border-radius:50%; font-size:.78rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-family:'JetBrains Mono',monospace; }
+.enrol-step-title { font-size:.78rem; font-weight:700; color:#2C3E50; margin-bottom:4px; line-height:1.3; }
+.enrol-step-desc { font-size:.7rem; color:var(--grey); line-height:1.4; }
+.enrol-arrow { display:flex; align-items:center; color:var(--orange); font-size:1.2rem; padding-top:20px; flex-shrink:0; }
+/* Quiz */
+.quiz-container { max-width:720px; }
+.quiz-question-block { background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 14px rgba(0,0,0,.06); border:1px solid #e8ddd0; }
+.quiz-q-num { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--orange); font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.quiz-q-text { font-size:.95rem; font-weight:600; color:#2C3E50; margin-bottom:18px; line-height:1.5; }
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-option { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; border:2px solid #e8ddd0; cursor:pointer; font-size:.87rem; color:var(--grey); transition:all .2s; background:var(--bg); }
+.quiz-option:hover { border-color:var(--blue); background:var(--blue-pale); color:var(--blue); }
+.quiz-option.correct { border-color:#2E7D32; background:#E8F5E9; color:#2E7D32; font-weight:700; }
+.quiz-option.incorrect { border-color:var(--red); background:var(--red-pale); color:var(--red); }
+.quiz-option.disabled { cursor:default; pointer-events:none; }
+.option-letter { width:28px; height:28px; border-radius:50%; background:white; border:2px solid #ccc; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.quiz-option.correct .option-letter { background:#2E7D32; border-color:#2E7D32; color:white; }
+.quiz-option.incorrect .option-letter { background:var(--red); border-color:var(--red); color:white; }
+.quiz-feedback { margin-top:12px; padding:10px 14px; border-radius:8px; font-size:.82rem; display:none; }
+.quiz-feedback.show { display:block; }
+.quiz-feedback.fb-correct { background:#E8F5E9; color:#1B5E20; }
+.quiz-feedback.fb-incorrect { background:var(--red-pale); color:var(--red); }
+.quiz-score-bar { background:white; border-radius:16px; padding:24px; text-align:center; border:2px solid var(--orange); margin-bottom:24px; }
+.quiz-score-bar h3 { font-size:1.1rem; color:var(--blue); margin-bottom:8px; }
+.score-display { font-size:2.5rem; font-weight:800; color:var(--blue); }
+.score-display span { font-size:1.2rem; color:var(--grey); font-weight:400; }
+.exercise-card { background:white; border-radius:16px; padding:28px; margin-bottom:20px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.exercise-header { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.exercise-icon { width:48px; height:48px; background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+.exercise-header h3 { font-size:1.05rem; font-weight:700; color:var(--blue); }
+.exercise-header p { font-size:.78rem; color:var(--grey); margin-top:2px; }
+.exercise-step { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--grey-light); }
+.exercise-step:last-child { border-bottom:none; }
+.step-n { width:26px; height:26px; background:var(--orange); color:white; border-radius:50%; font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-text { font-size:.86rem; color:var(--grey); line-height:1.55; padding-top:2px; }
+@media (max-width:768px) {
+  .sidebar { display:none; }
+  .main-content { padding:20px; }
+  .def-grid { grid-template-columns:1fr; }
+  .objectives-grid { grid-template-columns:1fr; }
+  .connect-grid { grid-template-columns:1fr; }
+  .dashboard-grid { grid-template-columns:1fr 1fr; }
+  .enrol-flow { flex-direction:column; }
+  .enrol-arrow { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Retour aux modules</a>
+    <div>
+      <div class="module-title-top">Application Agent &amp; Superviseur Orange</div>
+      <div class="module-subtitle-top">Module 05 — Formation MAFA Holding</div>
+    </div>
+  </div>
+  <div class="topbar-badge">📱 AGENT / SUPERVISEUR</div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Navigation</div>
+      <button class="nav-item active" onclick="showTab('cours',this)"><span class="nav-icon">📖</span> Cours</button>
+      <button class="nav-item" onclick="showTab('exercices',this)"><span class="nav-icon">✏️</span> Exercices</button>
+      <button class="nav-item" onclick="showTab('quiz',this)"><span class="nav-icon">🎯</span> Quiz</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Sections du cours</div>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s1')"><span class="nav-icon">1</span> Connexion &amp; interface</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s2')"><span class="nav-icon">2</span> Enregistrer un entrepreneur</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s3')"><span class="nav-icon">3</span> Enrôlement O'calm</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s4')"><span class="nav-icon">4</span> Synchronisation</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s5')"><span class="nav-icon">5</span> Tableau de bord</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s6')"><span class="nav-icon">6</span> Rôle Superviseur</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="progress-block">
+      <div class="progress-label"><span>Progression quiz</span><span id="prog-label">0 / 5</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- COURS -->
+    <div class="page active" id="page-cours">
+      <div class="module-hero">
+        <div class="module-hero-icon">📱</div>
+        <h1>Application Agent &amp; Superviseur Orange</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">👤 Agents &amp; Superviseurs</span>
+          <span class="meta-chip chip-gold">⏱ Durée : 1 heure</span>
+          <span class="meta-chip chip-grey">📋 Module 05</span>
+        </div>
+        <div class="objectives-grid">
+          <div class="obj-item"><span class="obj-bullet">✦</span> Maîtriser l'application Agent pour l'enrôlement des marchands</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Gérer la carte des entreprises et ajouter de nouvelles activités</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Déployer les QR Codes Orange Money (O'calm)</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Utiliser le tableau de bord et les fonctions de synchronisation</div>
+        </div>
+      </div>
+
+      <!-- S1 -->
+      <div id="s1" class="section-heading">
+        <div class="section-num">1</div>
+        <h2>Connexion et interface principale</h2>
+      </div>
+      <div class="info-card">
+        <h3>🔐 Page de connexion</h3>
+        <p>L'application Agent nécessite des <strong>identifiants uniques</strong> attribués par MAFA Holding à chaque agent. Ces identifiants sont personnels et ne doivent jamais être partagés.</p>
+        <ul class="styled-list" style="margin-top:12px">
+          <li>Champ 1 : <strong>Nom d'utilisateur</strong> — attribué par MAFA Holding</li>
+          <li>Champ 2 : <strong>Mot de passe</strong> — à changer dès la première connexion</li>
+          <li>En cas d'oubli : contacter le Responsable Ville ou le superviseur</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🗺️ Carte des entreprises — Vue principale</h3>
+        <p>Une fois connecté, l'agent accède à la <strong>carte interactive</strong> de son secteur. C'est le point de départ de toutes les actions terrain.</p>
+      </div>
+      <div class="def-grid">
+        <div class="def-card">
+          <div class="def-term">Points sur la carte</div>
+          <div class="def-def">Chaque point représente une activité enregistrée. En cliquant dessus : aperçu avec nom, photo, numéro, statut (déjà visité ou non).</div>
+        </div>
+        <div class="def-card">
+          <div class="def-term">Bouton "Ajouter une activité"</div>
+          <div class="def-def">Permet d'enregistrer un nouvel entrepreneur rencontré sur le terrain et non encore dans la base de données.</div>
+        </div>
+        <div class="def-card">
+          <div class="def-term">Fonction "Appeler"</div>
+          <div class="def-def">Depuis l'aperçu d'un point, l'agent peut appeler directement l'entrepreneur pour confirmer sa présence avant une visite.</div>
+        </div>
+        <div class="def-card">
+          <div class="def-term">Fonction "Itinéraire"</div>
+          <div class="def-def">Lance la navigation GPS vers l'emplacement de l'entrepreneur — utile dans les quartiers complexes.</div>
+        </div>
+        <div class="def-card">
+          <div class="def-term">Bouton "Enrôler"</div>
+          <div class="def-def">Accède au formulaire complet de l'entrepreneur — KYC + KYB + Proof of Life + Carte Entreprenant.</div>
+        </div>
+        <div class="def-card">
+          <div class="def-term">Statut "Déjà visité"</div>
+          <div class="def-def">Indique si l'entrepreneur a déjà été vu lors d'une session précédente. Évite les doubles visites.</div>
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div id="s2" class="section-heading">
+        <div class="section-num">2</div>
+        <h2>Enregistrer un nouvel entrepreneur (KYC + KYB)</h2>
+      </div>
+      <div class="info-card">
+        <h3>📝 Formulaire KYC — Informations entrepreneur</h3>
+        <ul class="styled-list">
+          <li><strong>Nom complet</strong> — tel qu'il apparaît sur la CNI</li>
+          <li><strong>Date et lieu de naissance</strong> — obligatoires</li>
+          <li><strong>Numéro CNI</strong> — scanner ou saisir manuellement</li>
+          <li><strong>Photo d'identité</strong> — prise avec l'application, qualité suffisante</li>
+          <li><strong>Numéro de téléphone</strong> — principal et alternatif si disponible</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>🏪 Formulaire KYB — Informations sur l'activité</h3>
+        <ul class="styled-list">
+          <li><strong>Secteur d'activité</strong> — sélectionner dans la liste officielle</li>
+          <li><strong>Photo de l'enseigne</strong> — avec GPS activé (enregistrement automatique des coordonnées)</li>
+          <li><strong>Photo du marchand devant son commerce</strong> — identifie le lieu et la personne</li>
+          <li><strong>Localisation GPS</strong> — captée automatiquement via la photo de l'enseigne</li>
+          <li><strong>Historique d'enrôlement</strong> — premier enrôlement ou mise à jour</li>
+        </ul>
+      </div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text"><strong>Important :</strong> Vérifier que toutes les informations sont correctes avant d'enregistrer. Cliquer <strong>"Enregistrer en local"</strong> d'abord (sauvegarde hors-ligne), puis <strong>"Enregistrer"</strong> pour synchroniser. En cas de perte de connexion, les données locales sont préservées.</div>
+      </div>
+
+      <!-- S3 -->
+      <div id="s3" class="section-heading">
+        <div class="section-num">3</div>
+        <h2>Enrôlement marchand O'calm / Small Business</h2>
+      </div>
+      <div class="info-card">
+        <h3>📲 Les 4 étapes du déploiement QR Code O'calm</h3>
+      </div>
+      <div class="enrol-flow">
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num">0</div>
+            <div class="enrol-step-title">Sélectionner le service</div>
+            <div class="enrol-step-desc">Cliquer "Enrôler des marchands O'calm et Small Business" dans le menu</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num">1</div>
+            <div class="enrol-step-title">Scanner le QR Code</div>
+            <div class="enrol-step-desc">Scanner le QR Code "à blanc" du kit marchand reçu</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num">2</div>
+            <div class="enrol-step-title">Vérification</div>
+            <div class="enrol-step-desc">Formulaire pré-rempli : numéro, désignation, commune → Compléter et valider</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num">3</div>
+            <div class="enrol-step-title">Saisir l'OTP</div>
+            <div class="enrol-step-desc">Le marchand reçoit un code à 4 chiffres — saisir dans l'application</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num">4</div>
+            <div class="enrol-step-title">Résultat &amp; Test</div>
+            <div class="enrol-step-desc">Déploiement réussi → Effectuer un test de transaction</div>
+          </div>
+        </div>
+      </div>
+
+      <table class="styled-table">
+        <thead><tr><th>Étape</th><th>Action de l'agent</th><th>Rôle du marchand</th><th>Résultat attendu</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Étape 0</strong><br><span style="font-size:.72rem; font-family:'JetBrains Mono',monospace; color:var(--orange)">Sélection service</span></td>
+            <td>Cliquer sur "Enrôler des marchands O'calm et Small Business" dans le menu principal</td>
+            <td>—</td>
+            <td>Accès au formulaire d'enrôlement O'calm</td>
+          </tr>
+          <tr>
+            <td><strong>Étape 1</strong><br><span style="font-size:.72rem; font-family:'JetBrains Mono',monospace; color:var(--orange)">Scan QR</span></td>
+            <td>Scanner le QR Code à blanc présent sur le kit marchand avec l'appareil photo de l'application</td>
+            <td>Présenter le QR Code à blanc</td>
+            <td>Formulaire pré-rempli avec les informations du marchand</td>
+          </tr>
+          <tr>
+            <td><strong>Étape 2</strong><br><span style="font-size:.72rem; font-family:'JetBrains Mono',monospace; color:var(--orange)">Vérification</span></td>
+            <td>Vérifier numéro Orange Money, désignation commerciale et commune. Compléter les champs manquants si nécessaire. Cliquer "Suivant".</td>
+            <td>Confirmer ses informations</td>
+            <td>Demande d'envoi d'OTP lancée</td>
+          </tr>
+          <tr>
+            <td><strong>Étape 3</strong><br><span style="font-size:.72rem; font-family:'JetBrains Mono',monospace; color:var(--orange)">OTP</span></td>
+            <td>Saisir le code OTP à 4 chiffres reçu par le marchand dans le formulaire et valider</td>
+            <td>Recevoir le code sur son téléphone et le communiquer</td>
+            <td>Authentification du marchand réussie</td>
+          </tr>
+          <tr>
+            <td><strong>Étape 4</strong><br><span style="font-size:.72rem; font-family:'JetBrains Mono',monospace; color:var(--orange)">Résultat</span></td>
+            <td>Lire le message de résultat et effectuer immédiatement un test de transaction pour valider le déploiement</td>
+            <td>Participer au test de transaction</td>
+            <td>"QR Code déployé avec succès" + transaction test OK</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-text"><strong>Après un déploiement réussi :</strong> Effectuer systématiquement un <strong>test de transaction</strong> avec le marchand. Cela confirme que le QR Code fonctionne correctement et que le marchand peut encaisser. C'est une étape obligatoire avant de quitter le point de vente.</div>
+      </div>
+      <div class="alert alert-danger">
+        <div class="alert-icon">❌</div>
+        <div class="alert-text"><strong>En cas d'échec de déploiement :</strong> Le message "Une erreur est survenue lors du déploiement du QR Code" s'affiche. Vérifier la connexion Internet (obligatoire pour cette étape), le numéro Orange Money du marchand, et l'état du QR Code à blanc. Si le problème persiste, contacter le superviseur.</div>
+      </div>
+
+      <!-- S4 -->
+      <div id="s4" class="section-heading">
+        <div class="section-num">4</div>
+        <h2>Synchronisation &amp; Connectivité</h2>
+      </div>
+      <div class="connect-grid">
+        <div class="connect-card connect-offline">
+          <h4>📴 Sans connexion Internet</h4>
+          <ul>
+            <li>Chargement des données (liste des entrepreneurs)</li>
+            <li>Transfert de données liées aux activités</li>
+            <li>Consultation des dossiers existants</li>
+            <li>Saisie du formulaire KYC + KYB</li>
+            <li>Enregistrement local des dossiers</li>
+            <li>Navigation sur la carte (données en cache)</li>
+          </ul>
+        </div>
+        <div class="connect-card connect-online">
+          <h4>📶 Connexion Internet REQUISE</h4>
+          <ul>
+            <li>Processus de déploiement QR Code O'calm</li>
+            <li>Association QR code / numéro de téléphone</li>
+            <li>Envoi d'OTP au marchand</li>
+            <li>Synchronisation finale des dossiers</li>
+            <li>Mise à jour des données de la carte</li>
+            <li>Accès au tableau de bord en temps réel</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <div class="alert-icon">💡</div>
+        <div class="alert-text"><strong>Conseil terrain :</strong> L'application est conçue pour fonctionner dans des zones à faible couverture réseau. Collectez et saisissez les données en mode hors-ligne, puis synchronisez lorsque vous avez une connexion stable (à la fin de la journée ou dans une zone avec bonne couverture).</div>
+      </div>
+
+      <!-- S5 -->
+      <div id="s5" class="section-heading">
+        <div class="section-num">5</div>
+        <h2>Tableau de bord Agent</h2>
+      </div>
+      <div class="info-card">
+        <h3>📊 Vue d'ensemble du tableau de bord</h3>
+        <p>Le tableau de bord donne une vue synthétique des performances de l'agent et de l'avancement de son secteur. Il se met à jour après chaque synchronisation.</p>
+      </div>
+      <div class="dashboard-grid">
+        <div class="db-card"><div class="db-icon">📈</div><div class="db-label">Performance globale</div><div class="db-note">Tous secteurs confondus</div></div>
+        <div class="db-card"><div class="db-icon">📅</div><div class="db-label">Performance journalière</div><div class="db-note">Fiches validées aujourd'hui</div></div>
+        <div class="db-card"><div class="db-icon">✅</div><div class="db-label">Entrepreneurs visités</div><div class="db-note">Nombre total</div></div>
+        <div class="db-card"><div class="db-icon">⏳</div><div class="db-label">À visiter</div><div class="db-note">Restants dans le secteur</div></div>
+        <div class="db-card"><div class="db-icon">🗺️</div><div class="db-label">Couverture secteur</div><div class="db-note">% de l'îlot couvert</div></div>
+        <div class="db-card"><div class="db-icon">🔄</div><div class="db-label">Dernière synchro</div><div class="db-note">Date et heure</div></div>
+      </div>
+
+      <!-- S6 -->
+      <div id="s6" class="section-heading">
+        <div class="section-num">6</div>
+        <h2>Rôle du Superviseur Orange</h2>
+      </div>
+      <div class="superviseur-card">
+        <h3>👔 Missions du Superviseur Orange</h3>
+        <ul>
+          <li>Superviser les agents de déploiement terrain — s'assurer du respect des procédures et de la qualité des enrôlements</li>
+          <li>Contrôler la qualité des enrôlements — vérification des dossiers soumis par les agents avant validation Back Office</li>
+          <li>Valider les escalades et problèmes P1 — traitement urgent des incidents critiques dans un délai &lt;2 heures</li>
+          <li>Suivre les tableaux de bord — monitoring en temps réel des KPIs de l'équipe terrain</li>
+          <li>Gérer les tickets Orange CI — coordination avec les équipes Orange pour la résolution des incidents marchands</li>
+          <li>Animer les briefings d'équipe — réunion quotidienne de 15 minutes pour aligner les agents sur les objectifs du jour</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>📋 Différences Agent / Superviseur dans l'application</h3>
+        <table class="styled-table" style="margin:12px 0 0">
+          <thead><tr><th>Fonctionnalité</th><th>Agent</th><th>Superviseur</th></tr></thead>
+          <tbody>
+            <tr><td>Enrôlement entrepreneur</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td></tr>
+            <tr><td>Déploiement QR Code O'calm</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td></tr>
+            <tr><td>Tableau de bord équipe</td><td style="color:var(--red); font-weight:700">✗ Non</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td></tr>
+            <tr><td>Validation dossiers agents</td><td style="color:var(--red); font-weight:700">✗ Non</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td></tr>
+            <tr><td>Gestion tickets Orange CI</td><td style="color:var(--red); font-weight:700">✗ Non</td><td style="color:#2E7D32; font-weight:700">✓ Oui</td></tr>
+            <tr><td>Escalade problèmes P1</td><td>Peut signaler</td><td>Traite et résout</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXERCICES -->
+    <div class="page" id="page-exercices">
+      <div class="module-hero">
+        <div class="module-hero-icon">✏️</div>
+        <h1>Exercices pratiques — Agent &amp; Superviseur</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">📱 Application Agent</span>
+          <span class="meta-chip chip-gold">2 exercices</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon">📲</div>
+          <div>
+            <h3>Exercice 1 — Les 4 étapes d'enrôlement O'calm dans l'ordre</h3>
+            <p>Remettre dans l'ordre et décrire chaque étape — Durée estimée : 15 minutes</p>
+          </div>
+        </div>
+        <div class="exercise-content">
+          <div class="alert alert-info" style="margin-bottom:18px">
+            <div class="alert-icon">📋</div>
+            <div class="alert-text"><strong>Scénario :</strong> Vous vous rendez chez Mme Coulibaly, gérante d'une boutique de vêtements à Cocody. Elle possède un kit marchand O'calm avec QR Code à blanc et un compte Orange Money actif. Décrivez les 4 étapes d'enrôlement dans l'ordre.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">0</div>
+            <div class="step-text"><strong>Sélectionner le service :</strong> Ouvrir l'application Agent et sélectionner "Enrôler des marchands O'calm et Small Business" dans le menu principal. Vérifier que la connexion Internet est active.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">1</div>
+            <div class="step-text"><strong>Scanner le QR Code :</strong> Demander à Mme Coulibaly de présenter son QR Code à blanc. Scanner avec l'appareil photo de l'application. Un formulaire pré-rempli s'affiche avec son numéro Orange Money, sa désignation commerciale et sa commune (Cocody).</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">2</div>
+            <div class="step-text"><strong>Vérification et validation :</strong> Vérifier avec Mme Coulibaly que les informations affichées sont correctes (numéro OM, nom du commerce "Boutique Coulibaly", commune). Compléter si nécessaire. Cliquer "Suivant".</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">3</div>
+            <div class="step-text"><strong>Saisir l'OTP :</strong> Mme Coulibaly reçoit un code à 4 chiffres sur son téléphone Orange. Elle vous le communique. Saisir ce code dans le champ OTP de l'application et valider.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-n">4</div>
+            <div class="step-text"><strong>Résultat et test :</strong> L'écran affiche "Le QR Code a été déployé avec succès". Effectuer immédiatement un test de transaction avec Mme Coulibaly pour confirmer que le QR Code fonctionne. Si le test passe → mission accomplie. Informer Mme Coulibaly qu'elle peut désormais encaisser via QR Code.</div>
+          </div>
+          <div class="alert alert-success" style="margin-top:18px">
+            <div class="alert-icon">✅</div>
+            <div class="alert-text"><strong>Résumé :</strong> Étape 0 (Sélection) → Étape 1 (Scan QR) → Étape 2 (Vérification) → Étape 3 (OTP) → Étape 4 (Test). Cette séquence doit être respectée dans cet ordre exact.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon">📶</div>
+          <div>
+            <h3>Exercice 2 — Connexion Internet : quand est-elle obligatoire ?</h3>
+            <p>Identifier les situations nécessitant une connexion — Durée estimée : 10 minutes</p>
+          </div>
+        </div>
+        <div class="exercise-content">
+          <p style="margin-bottom:14px">Pour chacune des situations ci-dessous, indiquez si une connexion Internet est <strong>obligatoire</strong> ou <strong>non requise</strong> :</p>
+          <table class="styled-table">
+            <thead><tr><th>#</th><th>Situation</th><th>Internet ?</th><th>Justification</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>L'agent remplit le formulaire KYC d'un entrepreneur (nom, CNI, activité)</td>
+                <td style="color:#2E7D32; font-weight:700">❌ Non requis</td>
+                <td style="font-size:.78rem">La saisie de formulaire fonctionne hors-ligne. L'agent clique "Enregistrer en local".</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>L'agent déploie un QR Code O'calm et envoie un OTP au marchand</td>
+                <td style="color:var(--red); font-weight:700">✅ Obligatoire</td>
+                <td style="font-size:.78rem">Le déploiement QR et l'envoi d'OTP nécessitent une connexion active avec les serveurs Orange.</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>L'agent consulte la carte pour voir les points de son secteur</td>
+                <td style="color:#2E7D32; font-weight:700">❌ Non requis</td>
+                <td style="font-size:.78rem">Les données de la carte sont chargées en cache lors de la dernière synchronisation.</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>L'agent synchronise ses dossiers enregistrés en local vers le serveur</td>
+                <td style="color:var(--red); font-weight:700">✅ Obligatoire</td>
+                <td style="font-size:.78rem">La synchronisation finale vers le Back Office nécessite une connexion Internet active.</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>L'agent prend en photo l'enseigne d'un entrepreneur pour capturer le GPS</td>
+                <td style="color:#2E7D32; font-weight:700">❌ Non requis</td>
+                <td style="font-size:.78rem">La caméra et le GPS fonctionnent sans Internet. La photo est sauvegardée en local.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="alert alert-info">
+            <div class="alert-icon">💡</div>
+            <div class="alert-text"><strong>Règle mnémotechnique :</strong> Tout ce qui implique une communication avec les serveurs Orange (OTP, synchronisation, déploiement QR) nécessite Internet. Tout ce qui est local (saisie, photo, GPS, carte en cache) fonctionne hors-ligne.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="page" id="page-quiz">
+      <div class="module-hero">
+        <div class="module-hero-icon">🎯</div>
+        <h1>Quiz — Application Agent &amp; Superviseur</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">5 questions</span>
+          <span class="meta-chip chip-gold">Feedback immédiat</span>
+        </div>
+      </div>
+      <div class="quiz-score-bar">
+        <h3>Votre score</h3>
+        <div class="score-display" id="score-display">0 <span>/ 5</span></div>
+        <p style="font-size:.82rem; color:var(--grey); margin-top:4px">Répondez à toutes les questions pour valider le module</p>
+      </div>
+      <div class="quiz-container">
+        <div class="quiz-question-block" id="q1">
+          <div class="quiz-q-num">Question 01 / 05</div>
+          <div class="quiz-q-text">L'application Agent peut-elle fonctionner sans connexion Internet ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q1',false,'L\'application fonctionne partiellement hors-ligne — saisie et consultation sont possibles sans connexion.')"><span class="option-letter">A</span> Non, elle nécessite toujours une connexion active</div>
+            <div class="quiz-option" onclick="answer(this,'q1',true,'Correct ! L\'application fonctionne hors-ligne pour le chargement de données et le transfert des données d\'activités. La connexion n\'est obligatoire que pour le déploiement QR et la synchronisation.')"><span class="option-letter">B</span> Oui, pour le chargement et le transfert de données d'activités</div>
+            <div class="quiz-option" onclick="answer(this,'q1',false,'Toutes les fonctions ne sont pas disponibles hors-ligne — le déploiement QR nécessite Internet.')"><span class="option-letter">C</span> Oui, toutes les fonctions sont disponibles hors-ligne</div>
+            <div class="quiz-option" onclick="answer(this,'q1',false,'L\'application fonctionne partiellement sans connexion.')"><span class="option-letter">D</span> Non, aucune fonction ne marche sans connexion</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q1"></div>
+        </div>
+        <div class="quiz-question-block" id="q2">
+          <div class="quiz-q-num">Question 02 / 05</div>
+          <div class="quiz-q-text">Dans le contexte de l'application Agent, que signifie KYC ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q2',false,'Know Your Company n\'est pas la définition de KYC — KYB est lié à l\'entreprise.')"><span class="option-letter">A</span> Know Your Company</div>
+            <div class="quiz-option" onclick="answer(this,'q2',true,'Correct ! KYC = Know Your Customer — les informations d\'identification personnelle de l\'entrepreneur (nom, CNI, date de naissance, photo).')"><span class="option-letter">B</span> Know Your Customer</div>
+            <div class="quiz-option" onclick="answer(this,'q2',false,'Key Your Contact n\'est pas la définition correcte.')"><span class="option-letter">C</span> Key Your Contact</div>
+            <div class="quiz-option" onclick="answer(this,'q2',false,'Keep Your Customer n\'est pas la définition de KYC dans ce contexte.')"><span class="option-letter">D</span> Keep Your Customer</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q2"></div>
+        </div>
+        <div class="quiz-question-block" id="q3">
+          <div class="quiz-q-num">Question 03 / 05</div>
+          <div class="quiz-q-text">Lors de l'enrôlement O'calm, combien de chiffres comporte le code OTP envoyé au marchand ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q3',false,'Le code OTP O\'calm comporte 4 chiffres, pas 3.')"><span class="option-letter">A</span> 3 chiffres</div>
+            <div class="quiz-option" onclick="answer(this,'q3',true,'Correct ! Le code OTP envoyé au marchand comporte 4 chiffres — il est saisi par l\'agent dans l\'application pour valider l\'enrôlement.')"><span class="option-letter">B</span> 4 chiffres</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'6 chiffres est le format des OTP de connexion, pas de l\'enrôlement O\'calm.')"><span class="option-letter">C</span> 6 chiffres</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'8 chiffres n\'est pas le format de l\'OTP O\'calm.')"><span class="option-letter">D</span> 8 chiffres</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q3"></div>
+        </div>
+        <div class="quiz-question-block" id="q4">
+          <div class="quiz-q-num">Question 04 / 05</div>
+          <div class="quiz-q-text">Que se passe-t-il quand l'agent sélectionne "Enrôler des marchands O'calm" dans l'application ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q4',false,'La caméra ne s\'ouvre pas automatiquement lors de la sélection du menu O\'calm.')"><span class="option-letter">A</span> La caméra s'ouvre immédiatement pour scanner</div>
+            <div class="quiz-option" onclick="answer(this,'q4',true,'Correct ! En sélectionnant "Enrôler des marchands O\'calm", l\'application accède à l\'interface de scan du QR Code à blanc — puis le formulaire se pré-remplit après le scan.')"><span class="option-letter">B</span> L'interface de scan du QR Code à blanc s'affiche</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'L\'OTP n\'est envoyé qu\'après la vérification du formulaire, pas lors de la sélection du menu.')"><span class="option-letter">C</span> L'OTP est immédiatement envoyé au marchand</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'Le QR Code n\'est pas généré lors de la sélection du menu — il est scanné depuis le kit marchand.')"><span class="option-letter">D</span> Le QR Code est généré automatiquement par l'app</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q4"></div>
+        </div>
+        <div class="quiz-question-block" id="q5">
+          <div class="quiz-q-num">Question 05 / 05</div>
+          <div class="quiz-q-text">Après un déploiement QR Code réussi, quelle est l'action obligatoire de l'agent avant de quitter le point de vente ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q5',false,'Se déconnecter n\'est pas l\'action obligatoire après un déploiement réussi.')"><span class="option-letter">A</span> Se déconnecter de l'application</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'Appeler le superviseur n\'est pas requis après un déploiement réussi.')"><span class="option-letter">B</span> Appeler immédiatement le superviseur</div>
+            <div class="quiz-option" onclick="answer(this,'q5',true,'Correct ! Effectuer un test de transaction est obligatoire après chaque déploiement réussi — cela confirme que le QR Code est pleinement fonctionnel.')"><span class="option-letter">C</span> Effectuer un test de transaction avec le marchand</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'La synchronisation n\'est pas l\'action prioritaire immédiate — c\'est le test de transaction.')"><span class="option-letter">D</span> Synchroniser immédiatement les données</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q5"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let scores = { q1:null, q2:null, q3:null, q4:null, q5:null };
+function showTab(tab, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+function goTo(id) {
+  setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100);
+}
+function answer(el, qid, correct, feedback) {
+  const block = document.getElementById(qid);
+  if (block.querySelector('.correct') || block.querySelector('.incorrect')) return;
+  block.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+  el.classList.add(correct ? 'correct' : 'incorrect');
+  const fb = document.getElementById('fb-' + qid);
+  fb.textContent = (correct ? '✅ ' : '❌ ') + feedback;
+  fb.className = 'quiz-feedback show ' + (correct ? 'fb-correct' : 'fb-incorrect');
+  scores[qid] = correct;
+  const total = Object.values(scores).filter(v => v === true).length;
+  const answered = Object.values(scores).filter(v => v !== null).length;
+  document.getElementById('score-display').innerHTML = total + ' <span>/ 5</span>';
+  document.getElementById('prog-label').textContent = answered + ' / 5';
+  document.getElementById('prog-fill').style.width = (answered / 5 * 100) + '%';
+}
+</script>
+</body>
+</html>
