@@ -3615,6 +3615,115 @@ body   { overflow: hidden; height: 100vh; }
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════
+     PAGE D'ACCUEIL — s'affiche avant tout contenu
+══════════════════════════════════════════════════ -->
+<div id="welcome-screen" style="
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(135deg,#0a0a0a 0%,#1a0508 40%,#2c0d14 70%,#0a0a0a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;
+  overflow:hidden;
+">
+  <!-- Fond décoratif -->
+  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden">
+    <div style="position:absolute;top:-120px;left:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(141,12,35,0.18) 0%,transparent 70%)"></div>
+    <div style="position:absolute;bottom:-80px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(207,158,65,0.12) 0%,transparent 70%)"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;border-radius:50%;border:1px solid rgba(255,255,255,0.04)"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,0.03)"></div>
+  </div>
+
+  <!-- Logo / Entête -->
+  <div style="text-align:center;margin-bottom:48px;position:relative">
+    <div style="display:inline-flex;align-items:center;gap:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:50px;padding:10px 22px;margin-bottom:32px">
+      <span style="font-size:1.1rem">🏢</span>
+      <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.08em;text-transform:uppercase">MAFA Holding</span>
+      <span style="width:1px;height:14px;background:rgba(255,255,255,0.2)"></span>
+      <span style="font-size:13px;font-weight:600;color:rgba(207,158,65,0.85);letter-spacing:0.06em">Projet ID30</span>
+    </div>
+    <h1 style="font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:white;line-height:1.15;margin:0 0 14px">
+      Plateforme de<br>
+      <span style="background:linear-gradient(90deg,#CF9E41,#DDB55A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Formation MAFA</span>
+    </h1>
+    <p style="font-size:15px;color:rgba(255,255,255,0.5);max-width:400px;margin:0 auto;line-height:1.7">
+      Partenaire Orange Money · Côte d'Ivoire<br>
+      30 Grandes Villes · Programme ID30
+    </p>
+  </div>
+
+  <!-- Séparateur -->
+  <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:28px">
+    Que souhaitez-vous faire ?
+  </div>
+
+  <!-- Deux choix -->
+  <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;padding:0 20px">
+
+    <!-- Bouton Formation -->
+    <button onclick="enterFormation()" style="
+      cursor:pointer;border:none;
+      background:linear-gradient(135deg,#8D0C23,#B5112C);
+      border-radius:20px;padding:32px 36px;
+      width:260px;text-align:left;
+      box-shadow:0 8px 40px rgba(141,12,35,0.45);
+      transition:transform .2s,box-shadow .2s;
+      position:relative;overflow:hidden;
+    "
+    onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 56px rgba(141,12,35,0.6)'"
+    onmouseleave="this.style.transform='';this.style.boxShadow='0 8px 40px rgba(141,12,35,0.45)'">
+      <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.05)"></div>
+      <div style="font-size:2.4rem;margin-bottom:14px">🎓</div>
+      <div style="font-size:1.15rem;font-weight:800;color:white;margin-bottom:8px">Formation</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:18px">Accédez aux modules de formation — cours, exercices et quiz interactifs</div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em">6 modules disponibles</span>
+      </div>
+      <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border-radius:50px;padding:8px 16px">
+        <span style="font-size:13px;font-weight:700;color:white">Commencer →</span>
+      </div>
+    </button>
+
+    <!-- Bouton Évaluation -->
+    <button onclick="window.location.href='evaluation.html'" style="
+      cursor:pointer;border:none;
+      background:linear-gradient(135deg,#1565C0,#1976D2);
+      border-radius:20px;padding:32px 36px;
+      width:260px;text-align:left;
+      box-shadow:0 8px 40px rgba(21,101,192,0.45);
+      transition:transform .2s,box-shadow .2s;
+      position:relative;overflow:hidden;
+    "
+    onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 56px rgba(21,101,192,0.6)'"
+    onmouseleave="this.style.transform='';this.style.boxShadow='0 8px 40px rgba(21,101,192,0.45)'">
+      <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.05)"></div>
+      <div style="font-size:2.4rem;margin-bottom:14px">📋</div>
+      <div style="font-size:1.15rem;font-weight:800;color:white;margin-bottom:8px">Évaluation</div>
+      <div style="font-size:12.5px;color:rgba(255,255,255,0.65);line-height:1.6;margin-bottom:18px">Passez l'évaluation officielle MAFA — QCM par rôle avec correction automatique</div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em">30 questions · 4 rôles</span>
+      </div>
+      <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border-radius:50px;padding:8px 16px">
+        <span style="font-size:13px;font-weight:700;color:white">Commencer →</span>
+      </div>
+    </button>
+
+  </div>
+
+  <!-- Pied de page discret -->
+  <div style="position:absolute;bottom:24px;font-size:11px;color:rgba(255,255,255,0.2);text-align:center">
+    © 2026 MAFA Holding — Mandatée par le Ministère du Commerce et de l'Industrie de Côte d'Ivoire
+  </div>
+</div>
+
+<script>
+function enterFormation() {
+  var ws = document.getElementById('welcome-screen');
+  ws.style.transition = 'opacity 0.4s ease';
+  ws.style.opacity = '0';
+  setTimeout(function() { ws.style.display = 'none'; }, 420);
+}
+</script>
+
 <div class="announce-bar">
   ⚡ Plateforme de Formation MAFA Holding — Projet ID30 &amp; Orange Money — Côte d'Ivoire &nbsp;|&nbsp; 🎓 5 modules disponibles &nbsp;|&nbsp; 📍 30 Grandes Villes
 </div>
