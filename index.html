@@ -3766,6 +3766,49 @@ body   { overflow: hidden; height: 100vh; }
       </div>
     </button>
 
+    <button class="module-card" onclick="openModule('m6')" style="border:none;cursor:pointer;text-align:left;background:white;">
+      <div class="card-header">
+        <div class="card-icon">🔍</div>
+        <div class="card-meta">
+          <div class="card-num">Module 06</div>
+          <h3>Inspecteur Orange — Fiche de Visite</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Maîtrisez la Fiche de Visite MAFA : les 8 étapes de documentation terrain, diagnostic des problèmes, niveaux d'urgence P1/P2/P3, checklist de soumission et cas pratiques fréquents.</p>
+        <div class="card-tags">
+          <span class="tag tag-public">🔍 Inspecteurs Orange</span>
+          <span class="tag tag-duration">⏱ 1h30</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-link-btn">Accéder au module</span>
+        <span class="progress-mini">20 quiz · 2 exercices</span>
+      </div>
+    </button>
+
+    <!-- Carte Évaluation Finale -->
+    <a href="evaluation.html" style="text-decoration:none;display:block;" class="module-card">
+      <div class="card-header" style="background:linear-gradient(135deg,#1565C0,#0D47A1);">
+        <div class="card-icon" style="background:rgba(255,255,255,0.15);color:white;">📋</div>
+        <div class="card-meta">
+          <div class="card-num" style="color:rgba(255,255,255,0.75);">Évaluation</div>
+          <h3 style="color:white;">Évaluation Finale MAFA</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">QCM officiel de certification — 30 questions par rôle (Call Center, Back Office, Inspecteur, Superviseur). Correction automatique et résultats personnalisés.</p>
+        <div class="card-tags">
+          <span class="tag" style="background:#E3F2FD;color:#1565C0;">📝 Tous les rôles</span>
+          <span class="tag tag-duration">⏱ 20 min</span>
+        </div>
+      </div>
+      <div class="card-footer" style="background:linear-gradient(135deg,#1565C0,#0D47A1);">
+        <span class="card-link-btn" style="color:white;border-color:rgba(255,255,255,0.4);">▶ Commencer l'évaluation</span>
+        <span class="progress-mini" style="color:rgba(255,255,255,0.7);">30 questions · 4 rôles</span>
+      </div>
+    </a>
+
   </div>
 </div>
 
@@ -7841,6 +7884,859 @@ body   { overflow: hidden; height: 100vh; }
   </div>
 </div>
 
+<div class="module-overlay" id="overlay-m6">
+  <div class="overlay-topbar">
+    <button class="overlay-back" onclick="closeModule()">← Retour au portail</button>
+    <span class="overlay-topbar-title">🔍 Inspecteur Orange — Fiche de Visite MAFA</span>
+  </div>
+  <div class="overlay-content">
+<div class="module-page" id="module-m6">
+    <div class="module-header-wrap">
+      <div class="module-breadcrumb">
+        <span>Formation</span>
+        <span class="crumb-sep">›</span>
+        <span class="crumb-mod">Module 06 — Inspecteur Orange — Fiche de Visite MAFA</span>
+        <span class="crumb-sep">·</span>
+        <span>8 Étapes · Diagnostic · Cas Pratiques</span>
+      </div>
+      <div class="module-title-block">
+        <div class="module-title-icon" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB)">🔍</div>
+        <div class="module-title-text">
+          <h2>Inspecteur Orange — Fiche de Visite MAFA</h2>
+          <div class="module-chips"><span class="module-chip chip-audience">🔍 Inspecteurs Orange</span><span class="module-chip chip-duration">⏱ 1h30</span></div>
+        </div>
+      </div>
+      <div class="module-objectives">
+        <div class="module-objectives-title">🎯 Objectifs pédagogiques</div>
+        <ul>
+          <li>Maîtriser les 8 étapes de la Fiche de Visite MAFA</li>
+          <li>Appliquer les niveaux d'urgence P1/P2/P3 correctement</li>
+          <li>Réaliser un GPS précis (≤ 15m) et documenter par photo</li>
+          <li>Gérer les cas pratiques : injoignable, escalade, concurrent</li>
+          <li>Compléter la checklist des 16 points avant soumission</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="module-tabs-clean" style="flex-shrink:0">
+      <button class="tab-btn-clean active" data-tab="cours" onclick="showModuleTab('m6','cours')">📚 Cours</button>
+      <button class="tab-btn-clean" data-tab="exo" onclick="showModuleTab('m6','exo')">✏️ Exercices</button>
+      <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m6','quiz')">✅ Quiz</button>
+      <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m6','resultats')">📊 Résultats</button>
+    </div>
+
+    <div class="module-content-scroll">
+
+      <!-- ══ COURS ══ -->
+      <div class="tab-section" id="tab-m6-cours" style="display:block">
+<div class="module-hero">
+        <div class="module-hero-icon">🔍</div>
+        <h1>Fiche de Visite MAFA — Inspector Orange</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">🔍 Inspecteurs Orange</span>
+          <span class="meta-chip chip-gold">⏱ Durée : 1h30</span>
+          <span class="meta-chip chip-grey">📋 Module 06</span>
+        </div>
+        <div class="objectives-grid">
+          <div class="obj-item"><span class="obj-bullet">✦</span> Compléter les 8 étapes dans l'ordre</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> GPS capturé sur place avec précision ≤ 15m</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Diagnostiquer et documenter tous les problèmes</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Au moins 1 photo de la devanture obligatoire</div>
+          <div class="obj-item"><span class="obj-bullet">✦</span> Signer et vérifier le résumé avant envoi définitif</div>
+        </div>
+      </div>
+
+      <!-- S1 — INTRODUCTION -->
+      <div class="section-heading">
+        <div class="section-num">1</div>
+        <h2>Introduction — Rôle &amp; Prérequis</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>🎯 Objectif de la Fiche de Visite</h3>
+        <p>La <strong>Fiche de Visite MAFA</strong> est l'outil numérique officiel pour documenter les visites terrain auprès des marchands Orange Money. Elle remplace les fiches papier et garantit une collecte <strong>structurée, géolocalisée et transmise en temps réel</strong> au superviseur.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>👮 Rôle de l'Inspecteur</h3>
+        <ul class="styled-list">
+          <li>Vérifier le travail des agents terrain</li>
+          <li>Contrôler la conformité des marchands</li>
+          <li>Diagnostiquer les problèmes terrain</li>
+          <li>Documenter les actions correctives</li>
+          <li>Soumettre des rapports au superviseur</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 Prérequis Techniques</div>
+        <div class="def-grid">
+          <div class="def-card">
+            <div class="def-term">📶 Connexion</div>
+            <div class="def-def">Internet 4G ou WiFi obligatoire pour la soumission</div>
+          </div>
+          <div class="def-card">
+            <div class="def-term">📍 GPS</div>
+            <div class="def-def">Permissions accordées — activé avant d'arriver sur place</div>
+          </div>
+          <div class="def-card">
+            <div class="def-term">📷 Caméra</div>
+            <div class="def-def">Pour les photos de devanture et le scan QR Code</div>
+          </div>
+          <div class="def-card">
+            <div class="def-term">🔋 Batterie</div>
+            <div class="def-def">Minimum 30% recommandé avant chaque visite</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2 — STRUCTURE -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">2</div>
+        <h2>Structure du Formulaire — 8 Étapes</h2>
+      </div>
+
+      <div class="enrol-flow" style="flex-wrap:wrap;gap:8px">
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">1</div><div class="enrol-step-title">🗂️ Identification</div><div class="enrol-step-desc">Marchand &amp; Inspecteur</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">2</div><div class="enrol-step-title">📱 QR Code</div><div class="enrol-step-desc">Scan ou saisie manuelle</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">3</div><div class="enrol-step-title">📍 GPS</div><div class="enrol-step-desc">Géolocalisation ≤ 15m</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">4</div><div class="enrol-step-title">🔍 Diagnostic</div><div class="enrol-step-desc">Problèmes identifiés</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">5</div><div class="enrol-step-title">⚡ Actions</div><div class="enrol-step-desc">Ce qui a été fait</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">6</div><div class="enrol-step-title">📸 Photos</div><div class="enrol-step-desc">Documentation visuelle</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">7</div><div class="enrol-step-title">✍️ Signature</div><div class="enrol-step-desc">Validation &amp; certification</div></div></div>
+        <div class="enrol-arrow">→</div>
+        <div class="enrol-step"><div class="enrol-step-inner"><div class="enrol-step-num">8</div><div class="enrol-step-title">📋 Résumé</div><div class="enrol-step-desc">Vérification &amp; soumission</div></div></div>
+      </div>
+
+      <!-- S3 — ÉTAPES 1 À 3 -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">3</div>
+        <h2>Étapes 1 à 3 — Identification, QR Code &amp; GPS</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🗂️ Étape 1 — Identification du Marchand</div>
+        <table class="styled-table">
+          <thead><tr><th>Champ</th><th>Description</th><th>Obligatoire</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Date &amp; heure</strong></td><td>Date et heure d'arrivée sur place</td><td>✅ Oui</td></tr>
+            <tr><td><strong>Nom du marchand</strong></td><td>Prénom et nom complet — vérifier conformité avec dossier</td><td>✅ Oui</td></tr>
+            <tr><td><strong>Code marchand</strong></td><td>Format <code>OM-CI-XXXXX</code></td><td>✅ Oui</td></tr>
+            <tr><td><strong>Commune / Quartier</strong></td><td>Sélectionner le bloc géographique</td><td>✅ Oui</td></tr>
+            <tr><td><strong>Activité principale</strong></td><td>Vérifier si conforme au dossier enregistré</td><td>✅ Oui</td></tr>
+            <tr><td><strong>Raison de la visite</strong></td><td>Injoignable / Suivi / Formation / Escalade...</td><td>✅ Oui</td></tr>
+            <tr><td><strong>Nom de l'inspecteur</strong></td><td>Votre identité complète</td><td>✅ Oui</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:16px">
+          <div style="font-size:13px;font-weight:700;color:#455A64;margin-bottom:10px">Statuts du Marchand</div>
+          <div class="def-grid">
+            <div class="def-card" style="border-left:4px solid #4CAF50">
+              <div class="def-term" style="color:#2E7D32">🟢 Actif</div>
+              <div class="def-def">Utilise Orange Money activement — transactions régulières</div>
+            </div>
+            <div class="def-card" style="border-left:4px solid #e53935">
+              <div class="def-term" style="color:#B71C1C">🔴 Inactif</div>
+              <div class="def-def">Aucune transaction récente — nécessite diagnostic et réactivation</div>
+            </div>
+            <div class="def-card" style="border-left:4px solid #6A1B9A">
+              <div class="def-term" style="color:#4A148C">🔒 Compte bloqué</div>
+              <div class="def-def">Escalade technique requise immédiatement — P1 Urgent</div>
+            </div>
+            <div class="def-card" style="border-left:4px solid #F57C00">
+              <div class="def-term" style="color:#E65100">🆕 Nouveau (J+2)</div>
+              <div class="def-def">Enrôlement récent — priorité de visite et vérification</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 Étape 2 — QR Code Marchand</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">1</span>
+            <p style="font-size:13px;color:#2d3748">Appuyer sur <strong>« Scanner le QR Code »</strong></p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">2</span>
+            <p style="font-size:13px;color:#2d3748">Pointer la caméra vers le <strong>sticker du terminal</strong></p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">3</span>
+            <p style="font-size:13px;color:#2d3748">Le code est <strong>reconnu et affiché en vert</strong> → pré-rempli automatiquement</p>
+          </div>
+        </div>
+        <div class="alert alert-warn">
+          <div class="alert-icon">📌</div>
+          <div class="alert-text"><strong>QR illisible ?</strong> Saisir le code manuellement au format <code>OM-CI-XXXXX</code>. Un QR de confirmation est généré automatiquement.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📍 Étape 3 — Position GPS</div>
+        <div class="kpi-grid">
+          <div class="kpi-card" style="border:2px solid #4CAF50">
+            <div class="kpi-val" style="color:#2E7D32">≤ 5m</div>
+            <div class="kpi-unit">Excellent</div>
+            <div class="kpi-label">✅ Idéal</div>
+          </div>
+          <div class="kpi-card" style="border:2px solid #FF9800">
+            <div class="kpi-val" style="color:#E65100">6–15m</div>
+            <div class="kpi-unit">Acceptable</div>
+            <div class="kpi-label">⚠️ Toléré</div>
+          </div>
+          <div class="kpi-card" style="border:2px solid #e53935">
+            <div class="kpi-val" style="color:#B71C1C">&gt; 15m</div>
+            <div class="kpi-unit">Insuffisant</div>
+            <div class="kpi-label">❌ Refaire</div>
+          </div>
+        </div>
+        <div class="alert alert-info" style="margin-top:12px">
+          <div class="alert-icon">💡</div>
+          <div class="alert-text"><strong>Conseils GPS :</strong> Rester immobile jusqu'à la capture · Préférer l'extérieur du bâtiment · Si incorrect : photographier l'emplacement réel pour documenter.</div>
+        </div>
+      </div>
+
+      <!-- S4 — ÉTAPES 4 & 5 -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">4</div>
+        <h2>Étapes 4 &amp; 5 — Diagnostic &amp; Actions</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔍 Étape 4 — Diagnostic Terrain</div>
+        <p style="font-size:13px;color:#455A64;margin-bottom:16px">Cocher <strong>tous les problèmes qui s'appliquent</strong>. Si aucun problème : cocher « Aucun problème ».</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+          <div style="background:#FFEBEE;border-radius:10px;padding:12px;border-left:4px solid #e53935">
+            <div style="font-size:11px;font-weight:700;color:#B71C1C;margin-bottom:6px">🚨 P1 — URGENT (&lt; 2h)</div>
+            <div style="font-size:13px;color:#2d3748">🔒 Compte bloqué</div>
+            <div style="font-size:13px;color:#2d3748">❌ Transaction échouée — argent disparu</div>
+          </div>
+          <div style="background:#FFF3E0;border-radius:10px;padding:12px;border-left:4px solid #FF9800">
+            <div style="font-size:11px;font-weight:700;color:#E65100;margin-bottom:6px">⚠️ P2 — HAUTE (&lt; 24h)</div>
+            <div style="font-size:13px;color:#2d3748">🔑 Code PIN bloqué — Reset requis</div>
+            <div style="font-size:13px;color:#2d3748">📶 Problème réseau — tester la connexion</div>
+          </div>
+          <div style="background:#E8F5E9;border-radius:10px;padding:12px;border-left:4px solid #4CAF50">
+            <div style="font-size:11px;font-weight:700;color:#2E7D32;margin-bottom:6px">📋 P3 — STANDARD (&lt; 5 jours)</div>
+            <div style="font-size:13px;color:#2d3748">📚 Besoin de formation</div>
+            <div style="font-size:13px;color:#2d3748">💵 Manque de float — rechargement requis</div>
+            <div style="font-size:13px;color:#2d3748">⚔️ Utilise un concurrent (Wave/MTN/Moov)</div>
+          </div>
+          <div style="background:#F3E5F5;border-radius:10px;padding:12px;border-left:4px solid #9C27B0">
+            <div style="font-size:11px;font-weight:700;color:#6A1B9A;margin-bottom:6px">📱 MATÉRIEL</div>
+            <div style="font-size:13px;color:#2d3748">📱 Feature phone incompatible</div>
+            <div style="font-size:13px;color:#2d3748">✅ Aucun problème — marchand satisfait</div>
+          </div>
+        </div>
+
+        <table class="styled-table">
+          <thead><tr><th>Niveau</th><th>Délai de traitement</th><th>Exemples</th></tr></thead>
+          <tbody>
+            <tr><td><span style="background:#FFEBEE;color:#B71C1C;padding:3px 8px;border-radius:6px;font-weight:700">🚨 P1 URGENT</span></td><td><strong>&lt; 2 heures</strong></td><td>Compte bloqué, Transaction échouée</td></tr>
+            <tr><td><span style="background:#FFF3E0;color:#E65100;padding:3px 8px;border-radius:6px;font-weight:700">⚠️ P2 HAUTE</span></td><td><strong>&lt; 24 heures</strong></td><td>PIN bloqué, Problème réseau</td></tr>
+            <tr><td><span style="background:#E8F5E9;color:#2E7D32;padding:3px 8px;border-radius:6px;font-weight:700">📋 P3 STANDARD</span></td><td><strong>&lt; 5 jours</strong></td><td>Formation, Commissions, Float</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚡ Étape 5 — Actions Effectuées</div>
+        <p style="font-size:13px;color:#455A64;margin-bottom:14px">Cocher toutes les actions réalisées pendant la visite :</p>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>📚</span><span style="font-size:13px;color:#2d3748">Formation complète (30 min+)</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>⚡</span><span style="font-size:13px;color:#2d3748">Rappel rapide des fonctionnalités (15 min)</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>🔑</span><span style="font-size:13px;color:#2d3748">Reset du code PIN initié</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>💳</span><span style="font-size:13px;color:#2d3748">Transaction test effectuée avec succès</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#FFEBEE;border-radius:8px;padding:10px 14px"><span>🎫</span><span style="font-size:13px;color:#B71C1C"><strong>Ticket escalade Orange CI créé</strong> — noter la référence du ticket</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>💰</span><span style="font-size:13px;color:#2d3748">Grille des commissions expliquée</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>🖨️</span><span style="font-size:13px;color:#2d3748">Sticker / matériel remis au marchand</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>📞</span><span style="font-size:13px;color:#2d3748">Contact mis à jour dans le système</span></div>
+          <div style="display:flex;gap:10px;align-items:center;background:#E8F5E9;border-radius:8px;padding:10px 14px"><span>✅</span><span style="font-size:13px;color:#2E7D32">Aucune action requise — marchand OK</span></div>
+        </div>
+      </div>
+
+      <!-- S5 — ÉTAPES 6, 7 & 8 -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">5</div>
+        <h2>Étapes 6, 7 &amp; 8 — Photos, Signature &amp; Soumission</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📸 Étape 6 — Photos</div>
+        <div class="alert alert-warn" style="margin-bottom:14px">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-text"><strong>Minimum 1 photo obligatoire</strong> pour pouvoir valider la soumission.</div>
+        </div>
+        <div class="def-grid">
+          <div class="def-card" style="border-left:4px solid #1565C0">
+            <div class="def-term">📷 Devanture *</div>
+            <div class="def-def">Vue générale du commerce — <strong>obligatoire</strong>. Bonne luminosité, nom du commerce et affichage OM visibles.</div>
+          </div>
+          <div class="def-card">
+            <div class="def-term">📱 Terminal</div>
+            <div class="def-def">Équipement du marchand — vérifier l'état du matériel et la visibilité du QR Code.</div>
+          </div>
+          <div class="def-card" style="border-left:4px solid #e53935">
+            <div class="def-term">⚠️ Problème constaté</div>
+            <div class="def-def">Documenter tout dysfonctionnement visible — indispensable pour les escalades P1/P2.</div>
+          </div>
+        </div>
+        <div class="alert alert-info" style="margin-top:12px">
+          <div class="alert-icon">💡</div>
+          <div class="alert-text"><strong>Procédure :</strong> Appuyer sur la zone → caméra s'ouvre → prendre la photo → confirmer. Ne jamais photographier sans consentement du marchand.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">✍️ Étape 7 — Signature &amp; Validation</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:#FFEBEE;border-radius:10px;padding:14px;border-left:4px solid #e53935">
+            <div style="font-size:13px;font-weight:700;color:#B71C1C;margin-bottom:4px">⚠️ Signature Inspecteur — OBLIGATOIRE</div>
+            <div style="font-size:13px;color:#2d3748">Certifie la réalité de la visite. Sans signature, la soumission est impossible.</div>
+          </div>
+          <div style="background:#E8F5E9;border-radius:10px;padding:14px;border-left:4px solid #4CAF50">
+            <div style="font-size:13px;font-weight:700;color:#2E7D32;margin-bottom:4px">✅ Signature Marchand — Optionnelle</div>
+            <div style="font-size:13px;color:#2d3748">Si le marchand est présent, sa signature renforce la validité du rapport.</div>
+          </div>
+          <div style="background:#FFF3E0;border-radius:10px;padding:14px;border-left:4px solid #FF9800">
+            <div style="font-size:13px;font-weight:700;color:#E65100;margin-bottom:4px">☑️ Case de certification — OBLIGATOIRE</div>
+            <div style="font-size:13px;color:#2d3748">« Je certifie que les informations sont exactes » — à cocher impérativement.</div>
+          </div>
+        </div>
+        <div class="alert alert-danger" style="margin-top:12px">
+          <div class="alert-icon">🚨</div>
+          <div class="alert-text"><strong>ATTENTION :</strong> Une fois soumise, la fiche <strong>ne peut plus être modifiée</strong>. Vérifiez minutieusement avant d'envoyer.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 Étape 8 — Résumé &amp; Soumission</div>
+        <p style="font-size:13px;color:#455A64;margin-bottom:14px">Vérifier ligne par ligne avant d'appuyer sur <strong>« 📤 Soumettre la fiche »</strong> :</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Référence unique de visite</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Date, heure, inspecteur, marchand, code</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Commune, statut, niveau d'urgence</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Coordonnées GPS + précision</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Problèmes identifiés &amp; actions effectuées</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Résultat de visite + numéro ticket</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Nombre de photos ajoutées</div>
+          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ État des signatures</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">1</span>
+            <p style="font-size:13px;color:#2d3748">Vérifier toutes les lignes du résumé</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">2</span>
+            <p style="font-size:13px;color:#2d3748">Appuyer sur <strong>« 📤 Soumettre la fiche »</strong></p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">3</span>
+            <p style="font-size:13px;color:#2d3748">Attendre la confirmation (~2 secondes)</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;background:#E8F5E9;border-radius:10px;padding:12px 16px">
+            <span style="background:#2E7D32;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">4</span>
+            <p style="font-size:13px;color:#2d3748"><strong>Écran de succès</strong> = transmission confirmée ✅</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- S6 — CHECKLIST -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">6</div>
+        <h2>Checklist Avant Soumission — 16 Points</h2>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text">Vérifier <strong>chacun des 16 points</strong> avant d'appuyer sur Soumettre. Une case manquante = soumission bloquée ou donnée incomplète.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">☑️ Les 16 Points de Contrôle</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;gap:10px;background:#E3F2FD;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#1565C0;font-weight:700;flex-shrink:0">Étape 1</span><span style="font-size:13px;color:#2d3748">Date, heure, nom marchand, code et commune renseignés</span></div>
+          <div style="display:flex;gap:10px;background:#E3F2FD;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#1565C0;font-weight:700;flex-shrink:0">Étape 1</span><span style="font-size:13px;color:#2d3748">Statut du marchand sélectionné</span></div>
+          <div style="display:flex;gap:10px;background:#E3F2FD;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#1565C0;font-weight:700;flex-shrink:0">Étape 1</span><span style="font-size:13px;color:#2d3748">Conformité du nom et de l'activité vérifiée</span></div>
+          <div style="display:flex;gap:10px;background:#F3E5F5;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#6A1B9A;font-weight:700;flex-shrink:0">Étape 2</span><span style="font-size:13px;color:#2d3748">QR Code scanné ou code saisi manuellement (OM-CI-XXXXX)</span></div>
+          <div style="display:flex;gap:10px;background:#E8F5E9;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">Étape 3</span><span style="font-size:13px;color:#2d3748">GPS capturé avec précision ≤ 15m</span></div>
+          <div style="display:flex;gap:10px;background:#E8F5E9;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">Étape 3</span><span style="font-size:13px;color:#2d3748">Position correcte ou incorrecte — champ renseigné</span></div>
+          <div style="display:flex;gap:10px;background:#FFEBEE;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#B71C1C;font-weight:700;flex-shrink:0">Étape 4</span><span style="font-size:13px;color:#2d3748">Au moins un problème (ou « Aucun ») coché</span></div>
+          <div style="display:flex;gap:10px;background:#FFEBEE;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#B71C1C;font-weight:700;flex-shrink:0">Étape 4</span><span style="font-size:13px;color:#2d3748">Niveau d'urgence sélectionné si P1 ou P2</span></div>
+          <div style="display:flex;gap:10px;background:#FFEBEE;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#B71C1C;font-weight:700;flex-shrink:0">Étape 4</span><span style="font-size:13px;color:#2d3748">Observations libres remplies</span></div>
+          <div style="display:flex;gap:10px;background:#FFF3E0;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#E65100;font-weight:700;flex-shrink:0">Étape 5</span><span style="font-size:13px;color:#2d3748">Au moins une action cochée</span></div>
+          <div style="display:flex;gap:10px;background:#FFF3E0;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#E65100;font-weight:700;flex-shrink:0">Étape 5</span><span style="font-size:13px;color:#2d3748">Résultat de visite sélectionné</span></div>
+          <div style="display:flex;gap:10px;background:#FFF3E0;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#E65100;font-weight:700;flex-shrink:0">Étape 5</span><span style="font-size:13px;color:#2d3748">Ticket Orange CI saisi si escalade</span></div>
+          <div style="display:flex;gap:10px;background:#F3EDD8;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#584B26;font-weight:700;flex-shrink:0">Étape 6</span><span style="font-size:13px;color:#2d3748">Au minimum 1 photo (devanture) ajoutée</span></div>
+          <div style="display:flex;gap:10px;background:#F3EDD8;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#584B26;font-weight:700;flex-shrink:0">Étape 7</span><span style="font-size:13px;color:#2d3748">Signature inspecteur apposée</span></div>
+          <div style="display:flex;gap:10px;background:#F3EDD8;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#584B26;font-weight:700;flex-shrink:0">Étape 7</span><span style="font-size:13px;color:#2d3748">Case de certification cochée</span></div>
+          <div style="display:flex;gap:10px;background:#f8fafc;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#455A64;font-weight:700;flex-shrink:0">Étape 8</span><span style="font-size:13px;color:#2d3748">Résumé vérifié ligne par ligne avant soumission</span></div>
+        </div>
+      </div>
+
+      <!-- S7 — CAS PRATIQUES -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">7</div>
+        <h2>Cas Pratiques Fréquents</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🚶 Cas 1 — Marchand Injoignable</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#f8fafc;border-radius:8px;padding:10px 14px"><span style="background:#455A64;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</span><p style="font-size:13px;color:#2d3748">Renseigner nom et code depuis le système</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#f8fafc;border-radius:8px;padding:10px 14px"><span style="background:#455A64;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</span><p style="font-size:13px;color:#2d3748">Raison de visite : <strong>« Injoignable (50% inactifs) »</strong></p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#f8fafc;border-radius:8px;padding:10px 14px"><span style="background:#455A64;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</span><p style="font-size:13px;color:#2d3748">Capturer le GPS à l'emplacement présumé</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#f8fafc;border-radius:8px;padding:10px 14px"><span style="background:#455A64;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">4</span><p style="font-size:13px;color:#2d3748">Cocher <strong>« Marchand injoignable »</strong> dans Diagnostic</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#E3F2FD;border-radius:8px;padding:10px 14px"><span style="background:#1565C0;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">R</span><p style="font-size:13px;color:#1565C0"><strong>Résultat :</strong> Non résolu — introuvable</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="color:#B71C1C">🚨 Cas 2 — Escalade Urgente P1</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#FFEBEE;border-radius:8px;padding:10px 14px"><span style="background:#B71C1C;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</span><p style="font-size:13px;color:#2d3748">Cocher le problème P1 correspondant</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#FFEBEE;border-radius:8px;padding:10px 14px"><span style="background:#B71C1C;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</span><p style="font-size:13px;color:#2d3748">Sélectionner urgence <strong>« P1 — Urgent (&lt;2h) »</strong></p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#FFEBEE;border-radius:8px;padding:10px 14px"><span style="background:#B71C1C;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</span><p style="font-size:13px;color:#2d3748"><strong>Contacter le superviseur immédiatement</strong></p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#FFEBEE;border-radius:8px;padding:10px 14px"><span style="background:#B71C1C;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">4</span><p style="font-size:13px;color:#2d3748">Créer ticket Orange CI — <strong>noter la référence</strong></p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#FFEBEE;border-radius:8px;padding:10px 14px"><span style="background:#B71C1C;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">R</span><p style="font-size:13px;color:#B71C1C"><strong>Résultat :</strong> Compte bloqué — escalade urgente</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚔️ Cas 3 — Marchand Utilise un Concurrent</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#F3EDD8;border-radius:8px;padding:10px 14px"><span style="background:#584B26;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</span><p style="font-size:13px;color:#2d3748">Cocher <strong>« Utilise un concurrent »</strong> dans Diagnostic</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#F3EDD8;border-radius:8px;padding:10px 14px"><span style="background:#584B26;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</span><p style="font-size:13px;color:#2d3748">Identifier le concurrent dans les observations (Wave / MTN / Moov)</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#F3EDD8;border-radius:8px;padding:10px 14px"><span style="background:#584B26;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</span><p style="font-size:13px;color:#2d3748">Présenter les avantages Orange Money vs concurrent</p></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;background:#F3EDD8;border-radius:8px;padding:10px 14px"><span style="background:#584B26;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">4</span><p style="font-size:13px;color:#2d3748">Remonter l'info dans les notes superviseur</p></div>
+        </div>
+      </div>
+
+      <!-- S8 — BONNES PRATIQUES -->
+      <div class="section-heading" style="margin-top:32px">
+        <div class="section-num">8</div>
+        <h2>Bonnes Pratiques &amp; Règles</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card" style="margin:0">
+          <div class="card-title">📋 Règles Fondamentales</div>
+          <ul class="styled-list">
+            <li>Ne jamais soumettre sans visite physique réelle</li>
+            <li>Capturer le GPS sur place uniquement</li>
+            <li>Tous les champs * sont obligatoires</li>
+            <li>Contacter le superviseur en cas de doute</li>
+          </ul>
+        </div>
+        <div class="card" style="margin:0">
+          <div class="card-title">📸 Qualité des Photos</div>
+          <ul class="styled-list">
+            <li>Bonne luminosité indispensable</li>
+            <li>Nom du commerce et affichage OM visibles</li>
+            <li>Documenter tout problème constaté</li>
+            <li>Ne pas photographier sans consentement</li>
+          </ul>
+        </div>
+        <div class="card" style="margin:0">
+          <div class="card-title">🔒 Confidentialité</div>
+          <ul class="styled-list">
+            <li>Données marchands strictement confidentielles</li>
+            <li>Ne pas partager hors du système MAFA</li>
+            <li>Signaler tout accès non autorisé au superviseur</li>
+            <li>Respecter la politique de données Orange CI</li>
+          </ul>
+        </div>
+        <div class="card" style="margin:0">
+          <div class="card-title">🛠️ Problèmes Techniques</div>
+          <ul class="styled-list">
+            <li>L'app fonctionne hors connexion pour la saisie</li>
+            <li>Données sauvegardées localement en cas de bug</li>
+            <li>En cas de bug : noter sur papier</li>
+            <li>Signaler au superviseur avec screenshot</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-success" style="margin-top:20px">
+        <div class="alert-icon">✅</div>
+        <div class="alert-text"><strong>Pour réussir chaque visite :</strong> Compléter les 8 étapes dans l'ordre · GPS capturé sur place ≤ 15m · Diagnostiquer et documenter tous les problèmes · Au moins 1 photo obligatoire · Signer avant de soumettre · Vérifier le résumé avant envoi définitif.</div>
+      </div>
+
+      </div><!-- fin tab-m6-cours -->
+
+      <!-- ══ EXERCICES ══ -->
+      <div class="tab-section" id="tab-m6-exo" style="display:none">
+<div class="module-hero">
+        <div class="module-hero-icon">✏️</div>
+        <h1>Exercices pratiques — Inspecteur Orange</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">🔍 Inspecteurs</span>
+          <span class="meta-chip chip-gold">2 exercices</span>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon">🎭</div>
+          <div>
+            <h3>Exercice 1 — Identifier le bon niveau d'urgence</h3>
+            <p>Pour chaque situation, déterminez le niveau d'urgence (P1/P2/P3) — Durée : 10 min</p>
+          </div>
+        </div>
+        <div class="exercise-content">
+          <table class="styled-table">
+            <thead><tr><th>#</th><th>Situation terrain</th><th>Niveau</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Le marchand ne peut pas accéder à son compte — compte bloqué depuis hier</td><td style="color:#B71C1C;font-weight:700">🚨 P1 — &lt; 2h</td></tr>
+              <tr><td>2</td><td>Le marchand a oublié son code PIN — 3 tentatives échouées</td><td style="color:#E65100;font-weight:700">⚠️ P2 — &lt; 24h</td></tr>
+              <tr><td>3</td><td>Le marchand demande à comprendre comment consulter son historique</td><td style="color:#2E7D32;font-weight:700">📋 P3 — &lt; 5j</td></tr>
+              <tr><td>4</td><td>Un client a payé 10 000 FCFA mais le marchand dit ne pas avoir reçu l'argent</td><td style="color:#B71C1C;font-weight:700">🚨 P1 — &lt; 2h</td></tr>
+              <tr><td>5</td><td>Le marchand utilise Wave pour encaisser — n'a pas utilisé OM depuis 2 semaines</td><td style="color:#2E7D32;font-weight:700">📋 P3 — &lt; 5j</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon">📋</div>
+          <div>
+            <h3>Exercice 2 — Checklist de soumission</h3>
+            <p>Identifier les points manquants dans cette fiche — Durée : 15 min</p>
+          </div>
+        </div>
+        <div class="exercise-content">
+          <div class="alert alert-info" style="margin-bottom:16px">
+            <div class="alert-icon">📋</div>
+            <div class="alert-text"><strong>Mise en situation :</strong> Un inspecteur soumet sa fiche. Voici ce qu'il a renseigné : Nom marchand ✅ · Code OM-CI-12345 ✅ · GPS 8m ✅ · Problème : PIN bloqué ✅ · Action : Reset PIN ✅ · Photos : 0 ❌ · Signature inspecteur ✅ · Case certification ✅</div>
+          </div>
+          <div class="alert alert-danger" style="margin-bottom:16px">
+            <div class="alert-icon">❌</div>
+            <div class="alert-text"><strong>Ce qui manque :</strong> Aucune photo ajoutée — la soumission sera bloquée. Minimum 1 photo de la devanture est obligatoire. L'inspecteur doit retourner au commerce ou utiliser une photo existante.</div>
+          </div>
+          <div class="alert alert-warn">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-text"><strong>Autre point :</strong> Le niveau d'urgence (P2) doit être sélectionné puisqu'il y a un PIN bloqué. Vérifier que ce champ est bien renseigné dans le Diagnostic.</div>
+          </div>
+        </div>
+      </div>
+      </div><!-- fin tab-m6-exo -->
+
+      <!-- ══ QUIZ ══ -->
+      <div class="tab-section" id="tab-m6-quiz" style="display:none">
+<div class="module-hero">
+        <div class="module-hero-icon">🎯</div>
+        <h1>Quiz — Inspecteur Orange Fiche de Visite</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">20 questions</span>
+          <span class="meta-chip chip-gold">Feedback immédiat</span>
+        </div>
+      </div>
+
+      <div class="quiz-score-bar">
+        <h3>Votre score</h3>
+        <div id="m6-score-display" style="font-size:1.4rem;font-weight:800;color:var(--teal)">0 / 20</div>
+        <div style="font-size:12px;color:var(--grey);margin-top:4px">Répondez à toutes les questions pour valider le module</div>
+      </div>
+
+      <div class="quiz-body">
+
+        <div class="quiz-question-block" id="m6-q1">
+          <div class="quiz-q-num">Question 01 / 20</div>
+          <div class="quiz-q-text">Quel est le délai de traitement pour un problème P1 (Compte bloqué) ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q1',false,'P1 = urgent, délai &lt; 2 heures, pas 24h.')">Moins de 24 heures</div>
+            <div class="quiz-option" onclick="answerM6(this,'q1',true,'Correct ! P1 = URGENT, traitement obligatoire en moins de 2 heures.')">Moins de 2 heures</div>
+            <div class="quiz-option" onclick="answerM6(this,'q1',false,'P3 = standard, délai &lt; 5 jours. P1 est bien plus urgent.')">Moins de 5 jours</div>
+            <div class="quiz-option" onclick="answerM6(this,'q1',false,'Il n\'y a pas de délai de 48h dans la classification MAFA.')">Moins de 48 heures</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q1"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q2">
+          <div class="quiz-q-num">Question 02 / 20</div>
+          <div class="quiz-q-text">Quelle est la précision GPS minimale acceptable pour une fiche de visite ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q2',false,'5m est excellent mais pas le seuil minimum. La tolérance va jusqu\'à 15m.')">≤ 5 mètres</div>
+            <div class="quiz-option" onclick="answerM6(this,'q2',false,'10m est acceptable mais ce n\'est pas le seuil défini dans le guide.')">≤ 10 mètres</div>
+            <div class="quiz-option" onclick="answerM6(this,'q2',true,'Correct ! Au-delà de 15m, la précision est insuffisante et doit être refaite.')">≤ 15 mètres</div>
+            <div class="quiz-option" onclick="answerM6(this,'q2',false,'20m est insuffisant selon le guide. Le seuil maximal est 15m.')">≤ 20 mètres</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q2"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q3">
+          <div class="quiz-q-num">Question 03 / 20</div>
+          <div class="quiz-q-text">Combien de photos minimum sont obligatoires pour soumettre une fiche de visite ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q3',false,'Zéro photo n\'est pas acceptable — la soumission serait bloquée.')">0 — les photos sont optionnelles</div>
+            <div class="quiz-option" onclick="answerM6(this,'q3',true,'Correct ! Minimum 1 photo (devanture) est obligatoire pour valider la soumission.')">1 photo minimum (devanture)</div>
+            <div class="quiz-option" onclick="answerM6(this,'q3',false,'2 photos ne sont pas exigées — 1 suffit (devanture).')">2 photos minimum</div>
+            <div class="quiz-option" onclick="answerM6(this,'q3',false,'3 photos ne sont pas le minimum requis selon la procédure.')">3 photos minimum</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q3"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q4">
+          <div class="quiz-q-num">Question 04 / 20</div>
+          <div class="quiz-q-text">Un marchand signale qu'un client a payé 15 000 FCFA mais l'argent n'est pas arrivé. Quel niveau d'urgence appliquer ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q4',true,'Correct ! Transaction échouée (argent disparu) = P1 URGENT, traitement &lt; 2 heures.')">P1 — Urgent (&lt; 2 heures)</div>
+            <div class="quiz-option" onclick="answerM6(this,'q4',false,'P2 est pour PIN bloqué ou problème réseau. Transaction échouée = P1.')">P2 — Haute (&lt; 24 heures)</div>
+            <div class="quiz-option" onclick="answerM6(this,'q4',false,'P3 est pour des problèmes non urgents (formation, float). Argent disparu = P1.')">P3 — Standard (&lt; 5 jours)</div>
+            <div class="quiz-option" onclick="answerM6(this,'q4',false,'Il n\'existe pas de niveau P4 dans la classification MAFA.')">P4 — Informatif</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q4"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q5">
+          <div class="quiz-q-num">Question 05 / 20</div>
+          <div class="quiz-q-text">Le QR Code du marchand est illisible. Que fait l'inspecteur ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q5',false,'Abandonner la visite n\'est pas la procédure. Il faut saisir manuellement.')">Abandonner la visite et revenir un autre jour</div>
+            <div class="quiz-option" onclick="answerM6(this,'q5',false,'Contacter Orange ne suffit pas — la procédure prévoit une saisie manuelle immédiate.')">Contacter Orange Money pour un nouveau QR</div>
+            <div class="quiz-option" onclick="answerM6(this,'q5',true,'Correct ! En cas de QR illisible : saisir manuellement au format OM-CI-XXXXX.')">Saisir le code manuellement au format OM-CI-XXXXX</div>
+            <div class="quiz-option" onclick="answerM6(this,'q5',false,'Passer au marchand suivant n\'est pas acceptable — la visite doit être documentée.')">Passer au marchand suivant sans documenter</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q5"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q6">
+          <div class="quiz-q-num">Question 06 / 20</div>
+          <div class="quiz-q-text">Quelle est la signature OBLIGATOIRE pour soumettre une fiche de visite ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q6',false,'La signature du marchand est optionnelle, pas obligatoire.')">La signature du marchand uniquement</div>
+            <div class="quiz-option" onclick="answerM6(this,'q6',true,'Correct ! La signature de l\'inspecteur est obligatoire. Celle du marchand est optionnelle.')">La signature de l'inspecteur — celle du marchand est optionnelle</div>
+            <div class="quiz-option" onclick="answerM6(this,'q6',false,'Les deux signatures ne sont pas toutes obligatoires — seule celle de l\'inspecteur l\'est.')">Les deux signatures sont obligatoires</div>
+            <div class="quiz-option" onclick="answerM6(this,'q6',false,'Une fiche sans signature ne peut pas être soumise.')">Aucune signature n'est requise</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q6"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q7">
+          <div class="quiz-q-num">Question 07 / 20</div>
+          <div class="quiz-q-text">Combien d'étapes comporte la Fiche de Visite MAFA ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q7',false,'5 étapes est insuffisant — la fiche en comporte 8.')">5 étapes</div>
+            <div class="quiz-option" onclick="answerM6(this,'q7',false,'6 étapes est incorrect — la fiche en comporte 8.')">6 étapes</div>
+            <div class="quiz-option" onclick="answerM6(this,'q7',false,'7 étapes est incorrect — la fiche en comporte 8.')">7 étapes</div>
+            <div class="quiz-option" onclick="answerM6(this,'q7',true,'Correct ! La fiche comporte 8 étapes : Identification, QR, GPS, Diagnostic, Actions, Photos, Signature, Résumé.')">8 étapes</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q7"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q8">
+          <div class="quiz-q-num">Question 08 / 20</div>
+          <div class="quiz-q-text">Un inspecteur soumet une fiche depuis son bureau sans avoir fait de visite. C'est :</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q8',false,'Ce n\'est pas toléré en cas d\'urgence — la règle est absolue.')">Toléré en cas d'urgence</div>
+            <div class="quiz-option" onclick="answerM6(this,'q8',false,'Ce n\'est pas autorisé si le superviseur est informé — la règle s\'applique toujours.')">Autorisé si le superviseur est informé</div>
+            <div class="quiz-option" onclick="answerM6(this,'q8',true,'Correct ! Ne jamais soumettre sans visite physique réelle — c\'est une règle absolue.')">Strictement interdit — règle fondamentale</div>
+            <div class="quiz-option" onclick="answerM6(this,'q8',false,'Ce n\'est pas autorisé le week-end non plus.')">Autorisé uniquement le week-end</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q8"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q9">
+          <div class="quiz-q-num">Question 09 / 20</div>
+          <div class="quiz-q-text">Quel est le format correct d'un code marchand Orange Money ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q9',false,'Ce format n\'existe pas dans le système MAFA.')">MAFA-12345</div>
+            <div class="quiz-option" onclick="answerM6(this,'q9',true,'Correct ! Le format officiel est OM-CI-XXXXX (Orange Money - Côte d\'Ivoire).')">OM-CI-XXXXX</div>
+            <div class="quiz-option" onclick="answerM6(this,'q9',false,'Ce format n\'est pas le format officiel du code marchand.')">CI-OM-12345</div>
+            <div class="quiz-option" onclick="answerM6(this,'q9',false,'Un simple numéro à 6 chiffres n\'est pas le format officiel.')">Un numéro à 6 chiffres</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q9"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q10">
+          <div class="quiz-q-num">Question 10 / 20</div>
+          <div class="quiz-q-text">Un marchand utilise Wave pour encaisser et refuse de parler. Quel problème cocher dans le Diagnostic ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q10',false,'Compte bloqué = problème technique, pas un cas de concurrent.')">Compte bloqué</div>
+            <div class="quiz-option" onclick="answerM6(this,'q10',false,'Besoin de formation est insuffisant ici — le problème principal est la concurrence.')">Besoin de formation</div>
+            <div class="quiz-option" onclick="answerM6(this,'q10',true,'Correct ! Cocher « Utilise un concurrent » puis identifier Wave/MTN/Moov dans les observations.')">Utilise un concurrent + identifier dans les observations</div>
+            <div class="quiz-option" onclick="answerM6(this,'q10',false,'Problème réseau n\'a rien à voir avec l\'utilisation d\'un concurrent.')">Problème réseau</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q10"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q11">
+          <div class="quiz-q-num">Question 11 / 20</div>
+          <div class="quiz-q-text">Quelle est la première action lors d'une escalade P1 ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q11',false,'Créer le ticket vient après avoir contacté le superviseur.')">Créer immédiatement le ticket Orange CI</div>
+            <div class="quiz-option" onclick="answerM6(this,'q11',false,'Soumettre la fiche vient après les actions de contact et ticket.')">Soumettre la fiche sans attendre</div>
+            <div class="quiz-option" onclick="answerM6(this,'q11',true,'Correct ! En P1 : cocher le problème → sélectionner P1 → contacter le superviseur immédiatement → créer ticket.')">Cocher le problème P1 et contacter le superviseur immédiatement</div>
+            <div class="quiz-option" onclick="answerM6(this,'q11',false,'Attendre n\'est pas acceptable en P1 — délai &lt; 2 heures.')">Attendre le lendemain pour avoir plus d'informations</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q11"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q12">
+          <div class="quiz-q-num">Question 12 / 20</div>
+          <div class="quiz-q-text">Peut-on modifier une fiche de visite après soumission ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q12',false,'Aucune modification n\'est possible après soumission — c\'est pour garantir l\'intégrité des données.')">Oui, dans les 2 heures suivant la soumission</div>
+            <div class="quiz-option" onclick="answerM6(this,'q12',false,'Le superviseur ne peut pas non plus modifier — la fiche est verrouillée.')">Oui, si le superviseur autorise</div>
+            <div class="quiz-option" onclick="answerM6(this,'q12',true,'Correct ! Une fois soumise, la fiche ne peut PLUS être modifiée. D\'où l\'importance de vérifier avant d\'envoyer.')">Non — une fiche soumise ne peut plus être modifiée</div>
+            <div class="quiz-option" onclick="answerM6(this,'q12',false,'Ce n\'est pas possible non plus le même jour.')">Oui, uniquement le même jour</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q12"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q13">
+          <div class="quiz-q-num">Question 13 / 20</div>
+          <div class="quiz-q-text">Quel statut attribuer à un marchand enrôlé il y a 2 jours qui n'a pas encore effectué de transaction ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q13',false,'Inactif implique une ancienneté — un marchand J+2 est nouveau, pas encore inactif.')">Inactif</div>
+            <div class="quiz-option" onclick="answerM6(this,'q13',false,'Actif signifie des transactions régulières — ce marchand n\'en a pas encore fait.')">Actif</div>
+            <div class="quiz-option" onclick="answerM6(this,'q13',false,'Compte bloqué implique un problème technique — ce n\'est pas le cas ici.')">Compte bloqué</div>
+            <div class="quiz-option" onclick="answerM6(this,'q13',true,'Correct ! J+2 = Nouveau, enrôlement récent, priorité de visite pour l\'accompagner dans sa première utilisation.')">Nouveau (J+2) — enrôlement récent, priorité</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q13"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q14">
+          <div class="quiz-q-num">Question 14 / 20</div>
+          <div class="quiz-q-text">Combien de points de contrôle comporte la checklist avant soumission ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q14',false,'8 points est insuffisant — la checklist en comporte 16.')">8 points</div>
+            <div class="quiz-option" onclick="answerM6(this,'q14',false,'12 points est insuffisant — la checklist officielle en comporte 16.')">12 points</div>
+            <div class="quiz-option" onclick="answerM6(this,'q14',true,'Correct ! La checklist comporte exactement 16 points de contrôle répartis sur les 8 étapes.')">16 points</div>
+            <div class="quiz-option" onclick="answerM6(this,'q14',false,'20 points est trop — la checklist officielle en comporte 16.')">20 points</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q14"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q15">
+          <div class="quiz-q-num">Question 15 / 20</div>
+          <div class="quiz-q-text">Quelle est la batterie minimale recommandée avant de commencer une visite ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q15',false,'10% est insuffisant — risque de panne pendant la visite.')">10%</div>
+            <div class="quiz-option" onclick="answerM6(this,'q15',false,'20% est insuffisant — le guide recommande au minimum 30%.')">20%</div>
+            <div class="quiz-option" onclick="answerM6(this,'q15',true,'Correct ! Le guide recommande un minimum de 30% de batterie avant chaque visite.')">30%</div>
+            <div class="quiz-option" onclick="answerM6(this,'q15',false,'50% n\'est pas le seuil minimum — 30% est recommandé.')">50%</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q15"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q16">
+          <div class="quiz-q-num">Question 16 / 20</div>
+          <div class="quiz-q-text">Un inspecteur constate un problème de PIN bloqué. Quel niveau et quel délai ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q16',false,'P1 est réservé aux problèmes critiques (compte bloqué, argent disparu). PIN bloqué = P2.')">P1 — moins de 2 heures</div>
+            <div class="quiz-option" onclick="answerM6(this,'q16',true,'Correct ! PIN bloqué = P2 HAUTE, traitement en moins de 24 heures.')">P2 — moins de 24 heures</div>
+            <div class="quiz-option" onclick="answerM6(this,'q16',false,'P3 est pour les problèmes non urgents. PIN bloqué empêche le marchand d\'encaisser = P2.')">P3 — moins de 5 jours</div>
+            <div class="quiz-option" onclick="answerM6(this,'q16',false,'Il n\'y a pas de classification « aucune urgence » pour un PIN bloqué.')">Aucune urgence</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q16"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q17">
+          <div class="quiz-q-num">Question 17 / 20</div>
+          <div class="quiz-q-text">Où capturer le GPS pour avoir la meilleure précision ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q17',false,'Les murs d\'un bâtiment bloquent le signal GPS — l\'extérieur est recommandé.')">À l'intérieur du bâtiment du marchand</div>
+            <div class="quiz-option" onclick="answerM6(this,'q17',true,'Correct ! Rester immobile à l\'extérieur du bâtiment donne la meilleure précision GPS.')">À l'extérieur du bâtiment, en restant immobile</div>
+            <div class="quiz-option" onclick="answerM6(this,'q17',false,'Dans son véhicule peut donner un emplacement imprécis ou éloigné du commerce.')">Dans son véhicule devant le commerce</div>
+            <div class="quiz-option" onclick="answerM6(this,'q17',false,'Au bureau est interdit — le GPS doit être capturé sur place.')">Au bureau, après la visite</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q17"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q18">
+          <div class="quiz-q-num">Question 18 / 20</div>
+          <div class="quiz-q-text">Que faire si l'application plante pendant une visite ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q18',false,'Abandonner sans documenter n\'est pas la procédure.')">Abandonner la visite immédiatement</div>
+            <div class="quiz-option" onclick="answerM6(this,'q18',false,'L\'application sauvegarde localement — les données ne sont pas perdues.')">Recommencer depuis le début</div>
+            <div class="quiz-option" onclick="answerM6(this,'q18',true,'Correct ! En cas de bug : noter sur papier, signaler au superviseur avec screenshot. L\'app sauvegarde localement.')">Noter sur papier et signaler au superviseur avec screenshot</div>
+            <div class="quiz-option" onclick="answerM6(this,'q18',false,'Appeler le marchand ne résout pas le bug de l\'application.')">Appeler le marchand pour qu'il attende</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q18"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q19">
+          <div class="quiz-q-num">Question 19 / 20</div>
+          <div class="quiz-q-text">Un inspecteur arrive et le marchand est absent. Quelle raison de visite sélectionner à l'étape 1 ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q19',false,'Suivi régulier est pour les marchands présents — pas pour un marchand absent.')">Suivi régulier</div>
+            <div class="quiz-option" onclick="answerM6(this,'q19',false,'Formation est pour un marchand présent qui demande à être formé.')">Formation</div>
+            <div class="quiz-option" onclick="answerM6(this,'q19',true,'Correct ! « Injoignable (50% inactifs) » est la raison à sélectionner quand le marchand est absent.')">Injoignable (50% inactifs)</div>
+            <div class="quiz-option" onclick="answerM6(this,'q19',false,'Escalade est pour les problèmes techniques critiques, pas pour un marchand absent.')">Escalade technique</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q19"></div>
+        </div>
+
+        <div class="quiz-question-block" id="m6-q20">
+          <div class="quiz-q-num">Question 20 / 20</div>
+          <div class="quiz-q-text">Après avoir appuyé sur « Soumettre la fiche », comment savoir que la transmission a réussi ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerM6(this,'q20',false,'Un email de confirmation n\'est pas mentionné dans la procédure.')">Un email de confirmation est envoyé</div>
+            <div class="quiz-option" onclick="answerM6(this,'q20',false,'L\'application ne se ferme pas automatiquement après soumission.')">L'application se ferme automatiquement</div>
+            <div class="quiz-option" onclick="answerM6(this,'q20',true,'Correct ! Un écran de succès apparaît (~2 secondes) pour confirmer la transmission.')">Un écran de succès s'affiche (~2 secondes)</div>
+            <div class="quiz-option" onclick="answerM6(this,'q20',false,'Le superviseur ne confirme pas par téléphone — la confirmation est automatique dans l\'app.')">Le superviseur confirme par téléphone</div>
+          </div>
+          <div class="quiz-feedback" id="m6-fb-q20"></div>
+        </div>
+
+      </div><!-- fin quiz-body -->
+
+      <div class="card" style="margin-top:24px">
+        <div class="card-title">🔄 Actions</div>
+        <button onclick="resetM6()" class="btn btn-secondary btn-sm">🔄 Recommencer le quiz</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎯 Score du quiz</div>
+        <div id="m6-score-detail" style="font-size:1.2rem;font-weight:700;color:var(--teal);margin-bottom:8px">0 / 20</div>
+        <div style="font-size:13px;color:var(--grey)">Répondez à toutes les questions pour voir votre score final.</div>
+      </div>
+
+      </div><!-- fin tab-m6-quiz -->
+
+      <!-- ══ RÉSULTATS ══ -->
+      <div class="tab-section" id="tab-m6-resultats" style="display:none">
+<div class="module-hero">
+        <div class="module-hero-icon">📊</div>
+        <h1>Résultats — Inspecteur Orange</h1>
+      </div>
+      <div class="card">
+        <div class="card-title">🏅 Grille d'évaluation</div>
+        <table class="styled-table">
+          <thead><tr><th>Score</th><th>Niveau</th><th>Statut</th></tr></thead>
+          <tbody>
+            <tr><td>18–20 / 20</td><td>Expert Inspecteur</td><td style="color:#2E7D32;font-weight:700">✅ Certifié</td></tr>
+            <tr><td>15–17 / 20</td><td>Confirmé</td><td style="color:#F57C00;font-weight:700">⚡ Validé</td></tr>
+            <tr><td>12–14 / 20</td><td>En progression</td><td style="color:#1565C0;font-weight:700">📚 À revoir</td></tr>
+            <tr><td>&lt; 12 / 20</td><td>À renforcer</td><td style="color:#e53935;font-weight:700">❌ Formation requise</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">🔄 Actions</div>
+        <button onclick="showModuleTab('m6','quiz')" class="btn btn-primary btn-sm">📝 Refaire le quiz</button>
+        <button onclick="showModuleTab('m6','cours')" class="btn btn-secondary btn-sm" style="margin-left:8px">📚 Revoir le cours</button>
+      </div>
+      </div><!-- fin tab-m6-resultats -->
+
+    </div><!-- fin module-content-scroll -->
+  </div><!-- fin module-page -->
+  </div><!-- fin overlay-content -->
+</div><!-- fin overlay-m6 -->
+
 <script>
 // ── Navigation Overlay ──────────────────────────────────
 var _currentModule = null;
@@ -7940,6 +8836,34 @@ function answerM5(el, qid, correct, feedback) {
   document.getElementById('m5-score-display').innerHTML = total + ' <span>/ 20</span>';
   document.getElementById('m5-prog-label').textContent = answered + ' / 20';
   document.getElementById('m5-prog-fill').style.width = (answered / 20 * 100) + '%';
+}
+
+// ── MODULE 6 ──
+let scoresM6 = { q1:null,q2:null,q3:null,q4:null,q5:null,q6:null,q7:null,q8:null,q9:null,q10:null,q11:null,q12:null,q13:null,q14:null,q15:null,q16:null,q17:null,q18:null,q19:null,q20:null };
+function answerM6(el, qid, correct, feedback) {
+  var block = document.getElementById('m6-' + qid);
+  if (!block || block.querySelector('.correct') || block.querySelector('.incorrect')) return;
+  block.querySelectorAll('.quiz-option').forEach(function(o) { o.classList.add('disabled'); });
+  el.classList.add(correct ? 'correct' : 'incorrect');
+  var fb = document.getElementById('m6-fb-' + qid);
+  if (fb) { fb.textContent = (correct ? '✅ ' : '❌ ') + feedback; fb.className = 'quiz-feedback show ' + (correct ? 'fb-correct' : 'fb-incorrect'); }
+  scoresM6[qid] = correct;
+  updateScoreM6();
+}
+function updateScoreM6() {
+  var vals = Object.values(scoresM6), answered = vals.filter(function(v){return v!==null;}).length, correct = vals.filter(Boolean).length;
+  var el1 = document.getElementById('m6-score-display'), el2 = document.getElementById('m6-score-detail');
+  if (el1) el1.textContent = correct + ' / 20';
+  if (el2) el2.textContent = correct + ' / 20 (' + answered + ' répondue' + (answered>1?'s':'') + ')';
+}
+function resetM6() {
+  Object.keys(scoresM6).forEach(function(k){ scoresM6[k]=null; });
+  document.querySelectorAll('#tab-m6-quiz .quiz-question-block').forEach(function(block) {
+    block.querySelectorAll('.quiz-option').forEach(function(o){ o.className='quiz-option'; });
+    var fb = block.querySelector('.quiz-feedback');
+    if (fb) { fb.className='quiz-feedback'; fb.textContent=''; }
+  });
+  updateScoreM6();
 }
 
 /* ── Quiz M1 — Call Center ── */
