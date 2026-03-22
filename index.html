@@ -3523,13 +3523,10 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
   border: 2.5px solid #333;
   overflow: hidden;
   box-shadow: 0 6px 24px rgba(0,0,0,0.22);
-  background: #111;
+  background: #1a1a1a;
   cursor: zoom-in;
   transition: transform .2s, box-shadow .2s;
-  aspect-ratio: 9/16;
   min-width: 140px;
-  display: flex;
-  align-items: stretch;
 }
 .phone-frame:hover {
   transform: translateY(-4px) scale(1.03);
@@ -3537,11 +3534,10 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 }
 .phone-frame img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 15px;
-  flex: 1;
 }
 
 /* Grille universelle pour les series de captures */
