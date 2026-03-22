@@ -2170,6 +2170,37 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 .quiz-option  { font-size: 0.9rem; line-height: 1.5; padding: 11px 15px; }
 .quiz-feedback { font-size: 0.875rem; line-height: 1.7; padding: 11px 15px; }
 
+/* Numérotation sections — globale (couvre m0, m6 et tout module sans CSS spécifique) */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 36px 0 20px;
+}
+.section-heading:first-of-type { margin-top: 0; }
+.section-num {
+  background: var(--blue);
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: 'Sora', sans-serif;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+.section-heading h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--blue);
+  line-height: 1.3;
+  font-family: 'Sora', sans-serif;
+}
+
 /* Hero résultats */
 .res-val { font-size:28px;font-weight:800; }
 .res-lbl { font-size:11px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.08em;margin-top:2px; }
@@ -2627,7 +2658,7 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 #module-m4 .obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; }
 #module-m4 .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
 #module-m4 .section-heading:first-child { margin-top:0; }
-#module-m4 .section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+#module-m4 .section-num { background:var(--blue); color:white; width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; font-family:'Sora',sans-serif; flex-shrink:0; letter-spacing:-0.01em; }
 #module-m4 .section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
 #module-m4 .info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
 #module-m4 .info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
@@ -2777,7 +2808,7 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 #module-m5 .obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; }
 #module-m5 .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
 #module-m5 .section-heading:first-child { margin-top:0; }
-#module-m5 .section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+#module-m5 .section-num { background:var(--blue); color:white; width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; font-family:'Sora',sans-serif; flex-shrink:0; letter-spacing:-0.01em; }
 #module-m5 .section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
 #module-m5 .info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
 #module-m5 .info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
@@ -2950,15 +2981,16 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 #module-m1 .section-heading:first-child { margin-top: 0; }
 #module-m1 .section-num { background: var(--blue);
   color: white;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: 'Sora', sans-serif;
+  letter-spacing: -0.01em;
   flex-shrink: 0; }
 #module-m1 .section-heading h2 { font-size: 1.25rem; font-weight: 700; color: var(--blue); }
 /* CARDS */
@@ -3226,7 +3258,7 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 #module-m2 .obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; margin-top:1px; }
 #module-m2 .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
 #module-m2 .section-heading:first-child { margin-top:0; }
-#module-m2 .section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+#module-m2 .section-num { background:var(--blue); color:white; width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; font-family:'Sora',sans-serif; flex-shrink:0; letter-spacing:-0.01em; }
 #module-m2 .section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
 #module-m2 .info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
 #module-m2 .info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
@@ -3346,7 +3378,7 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 #module-m3 .obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; }
 #module-m3 .section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
 #module-m3 .section-heading:first-child { margin-top:0; }
-#module-m3 .section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+#module-m3 .section-num { background:var(--blue); color:white; width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; font-family:'Sora',sans-serif; flex-shrink:0; letter-spacing:-0.01em; }
 #module-m3 .section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
 #module-m3 .info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
 #module-m3 .info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
