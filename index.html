@@ -2058,6 +2058,18 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 
 /* ══ TYPOGRAPHIE GLOBALE — contenu des modules ══ */
 
+/* Paragraphes directs (hors conteneur) — encadrement subtil */
+.tab-section > p {
+  background: #f8fafc;
+  border-left: 4px solid #c7d2fe;
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin-bottom: 14px;
+  color: #1a2332;
+  font-size: 0.93rem;
+  line-height: 1.85;
+}
+
 /* Paragraphes */
 .tab-section p {
   font-size: 0.93rem;
@@ -4176,7 +4188,7 @@ function enterFormation() {
       <h2>Qui sommes-nous ? — Contexte MAFA &amp; ID30</h2>
     </div>
 
-    <p style="font-size:14px;color:#374151;line-height:1.8">MAFA Holding est une entreprise mandatée par le <strong>Ministère du Commerce et de l'Industrie</strong> pour procéder à l'identification et l'enrôlement de tous les entreprenants de Côte d'Ivoire dans <strong>30 grandes villes</strong> du territoire national. Le projet s'appelle <strong>ID30</strong>.</p>
+    <div class="info-card" style="border-left:4px solid #1a237e;background:#f0f4ff"><p style="margin:0">MAFA Holding est une entreprise mandatée par le <strong>Ministère du Commerce et de l'Industrie</strong> pour procéder à l'identification et l'enrôlement de tous les entreprenants de Côte d'Ivoire dans <strong>30 grandes villes</strong> du territoire national. Le projet s'appelle <strong>ID30</strong>.</p></div>
 
     <div style="text-align:center;margin:16px 0">
       <img src="img_m0/fondamentaux_image1.png" alt="MAFA — Rendre l'informel visible" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.12)">
@@ -4262,7 +4274,7 @@ function enterFormation() {
       <h2>Le métier d'agent</h2>
     </div>
 
-    <p style="font-size:14px;color:#374151;line-height:1.8">Notre équipe opère sur deux types de postes complémentaires : le <strong>Call Center</strong> (contact direct client par téléphone) et le <strong>Back Office</strong> (traitement administratif des dossiers).</p>
+    <div class="info-card" style="border-left:4px solid #1a237e;background:#f0f4ff"><p style="margin:0">Notre équipe opère sur deux types de postes complémentaires : le <strong>Call Center</strong> (contact direct client par téléphone) et le <strong>Back Office</strong> (traitement administratif des dossiers).</p></div>
 
     <div style="text-align:center;margin:16px 0">
       <img src="img_m0/fondamentaux_image2.png" alt="Matériels terrain — FAMOCO et smartphone" style="max-width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.12)">
@@ -4356,8 +4368,9 @@ function enterFormation() {
       </div>
     </div>
 
-    <h3 style="margin:20px 0 10px;color:#1a237e">📞 Les 6 étapes d'un appel réussi</h3>
-    <table class="styled-table">
+    <div class="info-card" style="padding:0;overflow:hidden;border:none;box-shadow:none">
+    <div style="background:#1a237e;color:white;padding:10px 16px;font-weight:700;font-size:0.95rem;border-radius:10px 10px 0 0">📞 Les 6 étapes d'un appel réussi</div>
+    <table class="styled-table" style="margin:0;border-radius:0 0 10px 10px;box-shadow:none">
       <thead>
         <tr><th>Étape</th><th>Ce que l'agent fait</th></tr>
       </thead>
@@ -4371,8 +4384,11 @@ function enterFormation() {
       </tbody>
     </table>
 
-    <h3 style="margin:20px 0 10px;color:#1a237e">🗣️ Formulations à retenir</h3>
-    <table class="styled-table">
+    </div>
+
+    <div class="info-card" style="padding:0;overflow:hidden;border:none;box-shadow:none">
+    <div style="background:#1a237e;color:white;padding:10px 16px;font-weight:700;font-size:0.95rem;border-radius:10px 10px 0 0">🗣️ Formulations à retenir</div>
+    <table class="styled-table" style="margin:0;border-radius:0 0 10px 10px;box-shadow:none">
       <thead>
         <tr><th>❌ À éviter</th><th>✅ Dire à la place</th></tr>
       </thead>
@@ -4384,6 +4400,7 @@ function enterFormation() {
         <tr><td>« C'est impossible »</td><td>« Voici ce que je peux faire pour vous »</td></tr>
       </tbody>
     </table>
+    </div>
 
     <!-- S6 -->
     <div class="section-heading">
@@ -4446,7 +4463,7 @@ function enterFormation() {
       <h2>Attitude commerciale — Les 7 piliers</h2>
     </div>
 
-    <p style="font-size:14px;color:#374151;line-height:1.8">L'attitude commerciale est la manière dont un professionnel aborde ses relations avec ses clients, prospects et partenaires. Elle englobe les comportements, stratégies et valeurs qui guident les interactions pour atteindre des objectifs.</p>
+    <div class="info-card" style="border-left:4px solid #1a237e;background:#f0f4ff"><p style="margin:0">L'attitude commerciale est la manière dont un professionnel aborde ses relations avec ses clients, prospects et partenaires. Elle englobe les comportements, stratégies et valeurs qui guident les interactions pour atteindre des objectifs.</p></div>
 
     <table class="styled-table">
       <thead>
