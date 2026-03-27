@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation Connectel ID30 — MAFA HOLDING</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #2563eb;
+    --accent: #2563eb;
+    --accent2: #f97316;
+    --gold: #eab308;
+    --surface: #ffffff;
+    --surface2: #f8fafc;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --radius: 10px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-blue: 0 4px 14px rgba(37,99,235,0.22);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f1f5fb;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    display: none;
+  }
+  body::after {
+    display: none;
+  }
+
+  /* TOP ACCENT BAR */
+  body::before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #60a5fa, var(--accent2));
+    z-index: 9999;
+    pointer-events: none;
+  }
+  body::after {
+    display: none;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    flex-shrink: 0;
+    display: block;
+  }
+  .logo-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .logo-main {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text);
+    letter-spacing: 0.03em;
+  }
+  .logo-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .logo-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+    margin: 0 0.25rem;
+  }
+  .header-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  /* SCREENS */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ADMIN PANEL */
+  .panel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+  .panel-title span { color: var(--accent); }
+  .panel-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 0;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 12px 10px;
+    background: none;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn:hover:not(.active) { background: var(--surface2); color: var(--text); }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    border-right-color: var(--accent);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  /* FORM ELEMENTS */
+  .form-group { margin-bottom: 1.2rem; }
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  input, textarea, select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 11px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    background: var(--surface);
+  }
+  input::placeholder, textarea::placeholder { color: #94a3b8; }
+  select option { background: var(--surface); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow-blue);
+  }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,99,235,0.3); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: #eff6ff; }
+  .btn-danger { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
+  .btn-danger:hover { background: #fee2e2; }
+  .btn-success { background: var(--success); color: #fff; box-shadow: 0 4px 12px rgba(16,185,129,0.25); }
+  .btn-success:hover { background: #059669; transform: translateY(-1px); }
+  .btn-success:active { transform: translateY(0); }
+  .btn-orange { background: var(--accent2); color: white; box-shadow: 0 4px 12px rgba(249,115,22,0.25); }
+  .btn-orange:hover { background: #ea6f0c; transform: translateY(-1px); }
+  .btn-sm { padding: 7px 14px; font-size: 0.82rem; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .question-card .q-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  .q-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: rgba(0,194,255,0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .q-type-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .badge-qcm { background: rgba(245,200,66,0.15); color: var(--gold); }
+  .badge-vf { background: rgba(0,224,150,0.12); color: var(--success); }
+  .badge-open { background: rgba(255,107,53,0.12); color: var(--accent2); }
+
+  .options-grid { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .option-row { display: flex; align-items: center; gap: 8px; }
+  .option-row input[type="text"] { padding: 8px 12px; font-size: 0.88rem; }
+  .option-row input[type="radio"] { width: auto; accent-color: var(--accent); cursor: pointer; }
+  .option-label { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+
+  .correct-hint { font-size: 0.75rem; color: var(--success); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+
+  /* CONFIG CARD */
+  .config-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .config-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  /* EXAM SCREEN */
+  .exam-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .exam-info h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .exam-info p { font-size: 0.82rem; color: var(--text-muted); }
+
+  .timer-block {
+    text-align: center;
+  }
+  .timer-display {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .timer-display.warning { color: var(--gold); }
+  .timer-display.danger { color: var(--danger); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .timer-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-radius: 20px;
+    height: 6px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #0099cc);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+  }
+
+  .exam-question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .exam-q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .exam-q-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .exam-options { display: flex; flex-direction: column; gap: 10px; }
+  .exam-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .exam-option:hover { border-color: #93c5fd; background: #f0f7ff; }
+  .exam-option.selected { border-color: var(--accent); background: #eff6ff; box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
+  .exam-option input[type="radio"] { width: auto; accent-color: var(--accent); }
+  .exam-option-letter {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    min-width: 20px;
+  }
+
+  .nav-buttons { display: flex; gap: 1rem; justify-content: space-between; align-items: center; margin-top: 2rem; }
+
+  /* RESULTS */
+  .result-hero {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+  }
+  .result-score-ring {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .result-score-ring svg {
+    position: absolute;
+    top: 0; left: 0;
+    transform: rotate(-90deg);
+  }
+  .score-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    position: relative;
+    z-index: 1;
+  }
+  .score-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+  .result-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .result-mention {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+  .mention-excellent { background: rgba(0,224,150,0.15); color: var(--success); border: 1px solid rgba(0,224,150,0.3); }
+  .mention-bien { background: rgba(0,194,255,0.12); color: var(--accent); border: 1px solid var(--border); }
+  .mention-moyen { background: rgba(245,200,66,0.12); color: var(--gold); border: 1px solid rgba(245,200,66,0.3); }
+  .mention-insuffisant { background: rgba(255,71,87,0.12); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
+
+  .result-details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .result-details-header {
+    padding: 1rem 1.5rem;
+    background: var(--surface2);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .result-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .result-item:last-child { border-bottom: none; }
+  .result-item-icon { font-size: 1.1rem; margin-top: 2px; }
+  .result-item-text { flex: 1; font-size: 0.9rem; }
+  .result-item-text .q-text { font-weight: 500; margin-bottom: 4px; }
+  .result-item-text .q-answer { font-size: 0.82rem; color: var(--text-muted); }
+  .result-item-text .q-correct { font-size: 0.82rem; color: var(--success); }
+
+  /* ADMIN RESULTS */
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .results-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .results-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table tr:hover td { background: rgba(0,194,255,0.03); }
+  .rank-badge {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rank-1 { background: var(--gold); color: #1e293b; }
+  .rank-2 { background: #C0C0C0; color: #1e293b; }
+  .rank-3 { background: #CD7F32; color: white; }
+  .rank-other { background: var(--surface2); color: var(--text-muted); }
+
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* IDENTITY SCREEN */
+  .identity-hero {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  .identity-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .identity-hero h1 span { color: var(--accent); }
+  .identity-hero p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+  }
+
+  .identity-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* CODE SCREEN */
+  .code-screen {
+    max-width: 420px;
+    margin: 4rem auto;
+    text-align: center;
+  }
+  .code-screen h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .code-screen p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+  .code-input-wrap { display: flex; gap: 8px; }
+  .code-input-wrap input { text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Syne', sans-serif; font-weight: 700; text-align: center; }
+
+  /* OPERATION CHOICE */
+  .op-choice-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem 2rem;
+    gap: 1.5rem;
+  }
+  .op-choice-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.2rem;
+  }
+  .op-choice-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+  .op-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+  }
+  .op-card {
+    border-radius: 16px;
+    padding: 2rem 1.5rem 2rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    text-align: center;
+    transition: all 0.22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .op-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+  .op-card-orange {
+    background: linear-gradient(135deg, #fff7f0, #fff0e0);
+    border-color: #f97316;
+    box-shadow: 0 4px 20px rgba(249,115,22,0.15);
+  }
+  .op-card-orange:hover { border-color: #ea580c; box-shadow: 0 12px 32px rgba(249,115,22,0.3); }
+  .op-card-id30 {
+    background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+    border-color: #2563eb;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.15);
+  }
+  .op-card-id30:hover { border-color: #1d4ed8; box-shadow: 0 12px 32px rgba(37,99,235,0.3); }
+  .op-card-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+  .op-card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+  .op-card-orange .op-card-name { color: #c2410c; }
+  .op-card-id30 .op-card-name { color: #1e40af; }
+  .op-card-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+  .op-card-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 1.4rem;
+  }
+  .op-role-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .op-card-orange .op-role-pill { background: rgba(249,115,22,0.15); color: #c2410c; }
+  .op-card-id30 .op-role-pill { background: rgba(37,99,235,0.12); color: #1e40af; }
+  .op-card-btn {
+    display: block;
+    width: 100%;
+    padding: 11px 0;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .op-card-orange .op-card-btn { background: #f97316; color: white; }
+  .op-card-orange .op-card-btn:hover { background: #ea580c; }
+  .op-card-id30 .op-card-btn { background: #2563eb; color: white; }
+  .op-card-id30 .op-card-btn:hover { background: #1d4ed8; }
+  .op-status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .badge-active { background: rgba(16,185,129,0.15); color: #059669; }
+  .badge-available { background: rgba(100,116,139,0.12); color: var(--text-muted); }
+  @media (max-width: 600px) {
+    .op-cards { grid-template-columns: 1fr; }
+  }
+
+  /* LANDING */
+  .landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 72vh;
+    text-align: center;
+    gap: 1.2rem;
+    padding: 3rem 1rem;
+  }
+  .landing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .landing-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .landing-logo .accent { color: var(--accent); }
+  .landing-logo .accent2 { color: var(--accent2); }
+  .landing-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+  .landing-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+  .landing-features {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .landing-feature {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .landing-feature span { color: var(--success); font-size: 0.9rem; }
+
+  .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .empty-state p { font-size: 0.9rem; }
+
+  .alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .alert-success { background: rgba(0,224,150,0.1); border: 1px solid rgba(0,224,150,0.3); color: var(--success); }
+  .alert-error { background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); color: var(--danger); }
+  .alert-info { background: rgba(0,194,255,0.1); border: 1px solid var(--border); color: var(--accent); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* IMPORT SECTION */
+  .import-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--surface);
+    position: relative;
+  }
+  .import-zone:hover, .import-zone.dragover {
+    border-color: var(--accent);
+    background: rgba(0,194,255,0.05);
+  }
+  .import-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  .import-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .import-zone h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .import-zone p { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  .import-formats { display: flex; gap: 8px; justify-content: center; margin-top: 1rem; }
+  .format-badge {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .badge-xlsx { background: rgba(0,194,150,0.15); color: #00c296; border: 1px solid rgba(0,194,150,0.3); }
+  .badge-docx { background: rgba(0,100,220,0.15); color: #4499ff; border: 1px solid rgba(0,100,220,0.3); }
+
+  .import-preview {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-top: 1rem;
+    overflow: hidden;
+    display: none;
+  }
+  .import-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+    background: var(--surface2);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .import-preview-list { max-height: 240px; overflow-y: auto; }
+  .import-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 1.2rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .import-preview-item:last-child { border-bottom: none; }
+  .import-q-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 0.78rem; min-width: 30px; }
+
+  /* REVIEW SCREEN */
+  .review-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .review-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .review-header h2 span { color: var(--accent); }
+  .review-header p { font-size: 0.82rem; color: var(--text-muted); }
+
+  .review-summary-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .review-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+  .review-stat .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-answered { background: var(--accent); }
+  .dot-unanswered { background: var(--danger); }
+  .dot-open { background: var(--accent2); }
+
+  .review-question-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .review-question-block.unanswered { border-color: rgba(255,71,87,0.4); }
+  .review-question-block.answered { border-color: rgba(0,194,255,0.3); }
+  .review-question-block.open-type { border-color: rgba(255,107,53,0.3); }
+
+  .review-q-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .review-q-header:hover { background: rgba(0,194,255,0.03); }
+  .review-status-icon { font-size: 1.1rem; min-width: 24px; }
+  .review-q-text-preview {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .review-answer-preview {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .review-edit-btn {
+    background: rgba(0,194,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .review-edit-btn:hover { background: rgba(0,194,255,0.2); }
+
+  .review-q-body {
+    display: none;
+    padding: 0 1.2rem 1.2rem;
+    border-top: 1px solid var(--border);
+    animation: fadeIn 0.2s ease;
+  }
+  .review-q-body.open { display: block; }
+  .review-q-full-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.6;
+    padding: 1rem 0 1rem;
+  }
+  .review-options { display: flex; flex-direction: column; gap: 8px; }
+  .review-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+  }
+  .review-option:hover { border-color: var(--accent); background: rgba(0,194,255,0.05); }
+  .review-option.selected { border-color: var(--accent); background: rgba(0,194,255,0.12); }
+  .review-option input[type="radio"] { width: auto; accent-color: var(--accent); }
+  .review-option-letter { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); min-width: 18px; font-size: 0.85rem; }
+
+  .review-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .warning-unanswered {
+    background: rgba(255,71,87,0.08);
+    border: 1px solid rgba(255,71,87,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: var(--danger);
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .row, .row3 { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .landing-logo { font-size: 1.8rem; }
+    .exam-header { flex-direction: column; gap: 1rem; text-align: center; }
+    .review-header { flex-direction: column; align-items: flex-start; }
+    .review-actions { flex-direction: column; }
+  }
+
+/* ── BOUTON RETOUR FORMATION ── */
+.back-to-formation {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #eff6ff; border: 1px solid #bfdbfe;
+  color: #2563eb; border-radius: 8px;
+  padding: 5px 12px; font-size: 11px; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: background .18s;
+  letter-spacing: .03em;
+}
+.back-to-formation:hover { background: #dbeafe; }
+.landing-formation-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.85); border-radius: 10px;
+  padding: 8px 16px; font-size: 12px; font-weight: 600;
+  text-decoration: none; margin-top: 12px;
+  transition: background .18s;
+}
+.landing-formation-link:hover { background: rgba(255,255,255,.2); color: white; }
+
+</style>
+</head>
+<body>
+<!-- ══ SUPABASE SDK ══ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<div class="wrapper">
+  <!-- HEADER -->
+  <div class="header">
+    <img src="img_m4/s01_logo_mafa.jpg" alt="MAFA" class="logo-icon" style="object-fit:contain;background:none;box-shadow:none;">
+    <div class="logo-block">
+      <div class="logo-main">MAFA HOLDING</div>
+      <div class="logo-sub">Colibri Technologies</div>
+    </div>
+    <div class="logo-divider"></div>
+    <div class="header-title">Système d'Évaluation</div>
+    <div class="header-badge" id="currentMode">Accueil</div>
+    <a href="index.html" class="back-to-formation" title="Retourner au portail de formation">
+      ← Formation
+    </a>
+  </div>
+
+  <!-- SCREEN: LANDING -->
+  <div class="screen active" id="screen-landing">
+    <div class="landing">
+      <div class="landing-badge">✦ Plateforme officielle</div>
+      <div class="landing-logo">
+        <div>Évaluation</div>
+        <div><span class="accent">Connectel</span></div>
+        <div><span class="accent2">ID30</span></div>
+      </div>
+      <p class="landing-subtitle">Plateforme d'évaluation des candidats — QCM, Vrai/Faux et questions ouvertes avec correction automatique et classement en temps réel.</p>
+      <div class="landing-buttons">
+        <button class="btn btn-primary" onclick="goToEvaluation()" style="padding:13px 28px;font-size:0.95rem">
+          🔵&nbsp; Commencer — Connectel ID30
+        </button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-check-result')">
+          🔑&nbsp; Consulter mes résultats
+        </button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-admin-login')">
+          ⚙&nbsp; Administration
+        </button>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <a href="index.html" class="landing-formation-link">
+          📚 Retourner aux modules de formation MAFA
+        </a>
+      </div>
+      <div class="landing-features">
+        <div class="landing-feature"><span>✓</span> Correction automatique</div>
+        <div class="landing-feature"><span>✓</span> Classement en temps réel</div>
+        <div class="landing-feature"><span>✓</span> Code résultat personnel</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: ADMIN LOGIN -->
+  <div class="screen" id="screen-admin-login">
+    <div class="code-screen">
+      <h2>Espace Administrateur</h2>
+      <p>Saisissez le code administrateur pour accéder au panneau de gestion.</p>
+      <div class="form-group">
+        <div class="code-input-wrap">
+          <input type="password" id="admin-code-input" placeholder="Code admin" onkeydown="if(event.key==='Enter') checkAdminCode()">
+          <button class="btn btn-primary" onclick="checkAdminCode()">OK</button>
+        </div>
+      </div>
+      <div id="admin-login-error" class="alert alert-error" style="display:none">❌ Code incorrect</div>
+      <div class="divider"></div>
+      <button class="btn btn-secondary btn-sm" onclick="showScreen('screen-landing')">← Retour</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: ADMIN PANEL -->
+  <div class="screen" id="screen-admin">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
+      <div class="panel-title" style="margin-bottom:0">Panneau <span>Administrateur</span></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="try{const s=localStorage.getItem('mafa_all_results');if(s)state.results=JSON.parse(s);}catch(e){}renderResults();showAlert('exam-status','✅ Résultats actualisés !','alert-info');" title="Actualiser les résultats">
+          🔄 Actualiser
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="adminLogout()" style="border-color:rgba(255,71,87,0.4);color:var(--danger)">
+          🔒 Déconnexion
+        </button>
+      </div>
+    </div>
+    <div class="panel-subtitle">Configurez les évaluations et consultez les résultats</div>
+    <!-- FILTRE OPÉRATION ADMIN -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding:12px 16px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+      <span style="font-size:0.82rem;font-weight:600;color:var(--text-muted);white-space:nowrap">Filtrer résultats :</span>
+      <button id="admin-filter-all" class="btn btn-primary btn-sm" onclick="setAdminFilter('all')">Tout</button>
+      <span style="font-size:0.85rem;color:var(--text-muted);padding:6px 0">🔵 Évaluation Connectel ID30</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-config')">⚙ Configuration</button>
+      <button class="tab-btn" onclick="switchTab('tab-questions')">📝 Questions</button>
+      <button class="tab-btn" onclick="switchTab('tab-results')">📊 Résultats</button>
+    </div>
+
+    <!-- TAB: CONFIG -->
+    <div class="tab-content active" id="tab-config">
+      <div class="config-card">
+        <h3>📋 Paramètres de l'évaluation</h3>
+        <div class="form-group">
+          <label>Titre de l'évaluation</label>
+          <input type="text" id="exam-title" placeholder="ex : Test de recrutement — Agent Call Center" value="Test de Recrutement — Connectel ID30">
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>Durée (minutes)</label>
+            <input type="number" id="exam-duration" placeholder="ex: 30" value="30" min="1" max="180">
+          </div>
+          <div class="form-group">
+            <label>Code d'accès candidats (optionnel)</label>
+            <input type="text" id="exam-access-code" placeholder="Laisser vide = pas de code" value="">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>Barème : Points par bonne réponse</label>
+            <input type="number" id="points-correct" value="1" min="1">
+          </div>
+          <div class="form-group">
+            <label>Points retirés par mauvaise réponse</label>
+            <input type="number" id="points-wrong" value="0" min="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Instructions pour les candidats</label>
+          <textarea id="exam-instructions" placeholder="Instructions affichées au début de l'évaluation...">Lisez attentivement chaque question. Pour les QCM, une seule réponse est correcte. Vous disposez du temps indiqué. Bonne chance !</textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveConfig()">💾 Enregistrer la configuration</button>
+      </div>
+
+      <div class="config-card">
+        <h3>🔐 Sécurité</h3>
+        <div class="form-group">
+          <label>Changer le code administrateur</label>
+          <div class="row">
+            <input type="password" id="new-admin-code" placeholder="Nouveau code admin">
+            <button class="btn btn-secondary" onclick="changeAdminCode()">Changer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <h3>📤 Actions</h3>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <button class="btn btn-success" onclick="activateExam()">✅ Activer l'évaluation</button>
+          <button class="btn btn-danger" onclick="resetExam()">🗑 Réinitialiser tout</button>
+          <button class="btn btn-orange" onclick="exportResults()">📥 Exporter CSV</button>
+        </div>
+        <div id="exam-status" class="alert alert-info" style="margin-top:1rem;display:none"></div>
+      </div>
+    </div>
+
+    <!-- TAB: QUESTIONS -->
+    <div class="tab-content" id="tab-questions">
+
+      <!-- IMPORT ZONE -->
+      <div class="config-card">
+        <h3>📥 Importer depuis un fichier</h3>
+        <div class="import-zone" id="import-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+          <input type="file" id="import-file-input" accept=".xlsx,.docx" onchange="handleFileImport(this.files[0])">
+          <div class="import-icon">📂</div>
+          <h3>Glissez-déposez votre fichier ici</h3>
+          <p>ou cliquez pour sélectionner un fichier</p>
+          <div class="import-formats">
+            <span class="format-badge badge-xlsx">Excel .xlsx</span>
+            <span class="format-badge badge-docx">Word .docx</span>
+          </div>
+        </div>
+
+        <div class="import-preview" id="import-preview">
+          <div class="import-preview-header">
+            <span id="import-preview-title">Questions détectées</span>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-danger btn-sm" onclick="cancelImport()">✕ Annuler</button>
+              <button class="btn btn-success btn-sm" onclick="confirmImport()">✅ Importer</button>
+            </div>
+          </div>
+          <div class="import-preview-list" id="import-preview-list"></div>
+        </div>
+
+        <div style="margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="downloadExcelTemplate()">⬇ Modèle Excel</button>
+          <button class="btn btn-secondary btn-sm" onclick="downloadWordTemplate()">⬇ Modèle Word</button>
+        </div>
+        <div id="import-alert" style="display:none;margin-top:0.8rem"></div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <div style="font-family:'Syne',sans-serif;font-weight:700">Questions de l'évaluation</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="addQuestion('qcm')">+ QCM</button>
+          <button class="btn btn-secondary btn-sm" onclick="addQuestion('vf')">+ Vrai/Faux</button>
+          <button class="btn btn-secondary btn-sm" onclick="addQuestion('open')">+ Ouverte</button>
+        </div>
+      </div>
+      <div id="questions-list">
+        <div class="empty-state">
+          <div class="icon">📝</div>
+          <p>Aucune question. Ajoutez des QCM, Vrai/Faux ou questions ouvertes ci-dessus.</p>
+        </div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:1rem">
+        <button class="btn btn-primary" onclick="saveQuestions()">💾 Enregistrer les questions</button>
+        <button class="btn btn-secondary btn-sm" onclick="loadSampleQuestions()">📋 Charger exemple</button>
+      </div>
+    </div>
+
+    <!-- TAB: RESULTS -->
+    <div class="tab-content" id="tab-results">
+      <div id="results-content">
+        <div class="empty-state">
+          <div class="icon">📊</div>
+          <p>Aucun résultat pour le moment. Les résultats s'afficheront ici après les évaluations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: CANDIDATE ENTRY -->
+  <div class="screen" id="screen-candidate-entry">
+    <div class="identity-hero">
+      <h1>Bienvenue sur <span>l'évaluation</span></h1>
+      <p>Renseignez vos informations pour commencer le test</p>
+    </div>
+
+    <div class="identity-card">
+      <div id="access-code-section" style="display:none">
+        <div class="form-group">
+          <label>Code d'accès</label>
+          <input type="text" id="candidate-access-code" placeholder="Saisissez le code fourni" style="text-transform:uppercase;letter-spacing:0.15em">
+        </div>
+        <div class="divider"></div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Nom *</label>
+          <input type="text" id="candidate-lastname" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label>Prénom *</label>
+          <input type="text" id="candidate-firstname" placeholder="Votre prénom">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Numéro de téléphone * <span style="font-weight:400;color:var(--text-muted);font-size:0.8rem">(identifiant de votre compte)</span></label>
+        <input type="tel" id="candidate-phone" placeholder="0XXXXXXXXX">
+      </div>
+      <div class="form-group">
+        <label>Votre poste *</label>
+        <select id="candidate-poste" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:0.95rem;font-family:inherit;background:var(--surface);color:var(--text);cursor:pointer">
+          <option value="">-- Sélectionnez votre poste --</option>
+          <option value="call-center">Agent Call Center (ID30)</option>
+          <option value="back-office">Agent Back Office (ID30)</option>
+          <option value="inspecteur">Inspecteur (ID30 &amp; Orange QR)</option>
+          <option value="superviseur">Superviseur (Agent &amp; Orange Money)</option>
+        </select>
+      </div>
+      <div id="eval-already-done" class="alert alert-error" style="display:none">
+        Vous avez déjà passé l'évaluation pour ce poste. Une seule tentative est autorisée.
+      </div>
+
+      <div id="candidate-entry-error" class="alert alert-error" style="display:none"></div>
+      <div id="instructions-block" class="alert alert-info" style="display:none"></div>
+
+      <button class="btn btn-primary btn-full" onclick="startExam()" style="margin-top:1rem">
+        Commencer le test ▶
+      </button>
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn btn-secondary btn-sm" onclick="showScreen('screen-landing')">← Retour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: EXAM -->
+  <div class="screen" id="screen-exam">
+    <div class="exam-header">
+      <div class="exam-info">
+        <h2 id="exam-title-display">Évaluation</h2>
+        <p id="exam-candidate-name">Candidat</p>
+      </div>
+      <div class="timer-block">
+        <div class="timer-display" id="timer-display">00:00</div>
+        <div class="timer-label">Temps restant</div>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="exam-progress" style="width:0%"></div>
+    </div>
+
+    <div id="exam-questions-container"></div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" id="btn-prev" onclick="navigate(-1)" style="display:none">← Précédent</button>
+      <div style="font-size:0.85rem;color:var(--text-muted)" id="question-counter">Question 1 / 1</div>
+      <button class="btn btn-primary" id="btn-next" onclick="navigate(1)">Suivant →</button>
+      <button class="btn btn-success" id="btn-submit" onclick="submitExam()" style="display:none">✅ Terminer</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: REVIEW -->
+  <div class="screen" id="screen-review">
+    <div class="review-header">
+      <div>
+        <h2>🔍 Vérification de vos <span>réponses</span></h2>
+        <p id="review-candidate-name-display">Candidat</p>
+      </div>
+      <div class="timer-block">
+        <div class="timer-display" id="timer-display-review">00:00</div>
+        <div class="timer-label">Temps restant</div>
+      </div>
+    </div>
+
+    <div class="alert alert-info" style="margin-bottom:1.5rem">
+      ✏️ Vous pouvez <strong>modifier vos réponses</strong> en cliquant sur une question. Quand vous êtes prêt, validez définitivement en bas de page.
+    </div>
+
+    <div class="warning-unanswered" id="warning-unanswered">
+      ⚠️ Attention : <span id="unanswered-count">0</span> question(s) sans réponse. Vous pouvez quand même soumettre.
+    </div>
+
+    <div class="review-summary-bar" id="review-summary-bar"></div>
+    <div id="review-questions-list"></div>
+
+    <div class="review-actions">
+      <button class="btn btn-secondary" onclick="backToExam()">← Retour au test</button>
+      <button class="btn btn-success" onclick="confirmSubmit()" style="padding:14px 32px;font-size:1rem">
+        ✅ Valider définitivement
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: CANDIDATE RESULTS -->
+  <div class="screen" id="screen-results">
+    <div class="result-hero">
+      <div class="result-score-ring" id="score-ring">
+        <svg width="160" height="160" viewBox="0 0 160 160" id="score-svg">
+          <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(0,194,255,0.1)" stroke-width="10"/>
+          <circle cx="80" cy="80" r="70" fill="none" stroke="var(--accent)" stroke-width="10"
+            stroke-dasharray="439.8" stroke-dashoffset="439.8" id="score-circle" stroke-linecap="round"/>
+        </svg>
+        <div class="score-value" id="result-score-value">0%</div>
+        <div class="score-label">Score</div>
+      </div>
+      <div class="result-name" id="result-candidate-name"></div>
+      <div id="result-stats" style="color:var(--text-muted);font-size:0.9rem;margin-top:0.3rem"></div>
+      <div id="result-mention" class="result-mention mention-moyen"></div>
+    </div>
+
+    <div class="result-details" id="result-details-block">
+      <div class="result-details-header">Détail des réponses (QCM & Vrai/Faux)</div>
+      <div id="result-answers-list"></div>
+    </div>
+
+    <div class="alert alert-info" style="margin-top:1.5rem">
+      📋 La partie <strong>mise en situation</strong> sera évaluée séparément par l'administrateur.
+    </div>
+
+    <div style="text-align:center;margin-top:2rem;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="showScreen('screen-landing')">← Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: CONSULTER MES RESULTATS -->
+  <div class="screen" id="screen-check-result">
+    <div class="code-screen">
+      <h2>🔑 Consulter mes résultats</h2>
+      <p>Saisissez votre code personnel reçu à la fin de l'évaluation pour accéder uniquement à vos résultats.</p>
+      <div class="form-group">
+        <label>Votre code personnel</label>
+        <div class="code-input-wrap">
+          <input type="text" id="lookup-code-input" placeholder="ex: A3B7K2" maxlength="6" style="text-transform:uppercase;letter-spacing:0.2em;font-family:'Syne',sans-serif;font-weight:700;text-align:center;font-size:1.1rem" oninput="this.value=this.value.toUpperCase()">
+          <button class="btn btn-primary" onclick="lookupResultByCode()">Voir</button>
+        </div>
+      </div>
+      <div id="lookup-error" class="alert alert-error" style="display:none"></div>
+      <div id="lookup-result-block" style="display:none;margin-top:1.5rem"></div>
+      <div class="divider"></div>
+      <button class="btn btn-secondary btn-sm" onclick="showScreen('screen-landing')">← Retour</button>
+    </div>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;font-size:0.75rem;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:2rem;background:#fff">
+  © 2025 MAFA HOLDING — Colibri Technologies &nbsp;·&nbsp; Tous droits réservés
+</footer>
+
+<script>
+// ===================== STATE =====================
+let state = {
+  adminCode: 'MAFA2024',
+  examActive: false,
+  currentOperation: 'id30',
+  config: {
+    title: 'Évaluation MAFA',
+    duration: 30,
+    accessCode: '',
+    pointsCorrect: 1,
+    pointsWrong: 0,
+    instructions: 'Lisez attentivement chaque question. Pour les QCM, une seule réponse est correcte. Vous disposez du temps indiqué. Bonne chance !'
+  },
+  questions: [],
+  results: [],
+  currentCandidate: null,
+  currentAnswers: {},
+  currentQuestion: 0,
+  timerInterval: null,
+  timeRemaining: 0
+};
+
+// ===================== OPERATION SELECTION =====================
+function selectOperation(op) {
+  state.currentOperation = op;
+  setupCandidateEntry();
+  showScreen('screen-candidate-entry');
+}
+function goToEvaluation() {
+  state.currentOperation = 'id30';
+  setupCandidateEntry();
+  showScreen('screen-candidate-entry');
+}
+
+// ===================== NAVIGATION =====================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const modes = {
+    'screen-landing': 'Accueil',
+    'screen-admin-login': 'Admin',
+    'screen-admin': 'Administration',
+    'screen-candidate-entry': 'Candidat',
+    'screen-exam': 'Évaluation en cours',
+    'screen-results': 'Résultats',
+    'screen-check-result': 'Mes Résultats',
+    'screen-review': 'Révision'
+  };
+  if(id !== 'screen-candidate-entry') {
+    document.getElementById('currentMode').textContent = modes[id] || '';
+  }
+  if(id === 'screen-admin') renderResults();
+  window.scrollTo(0,0);
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id === 'tab-results') renderResults();
+  if(id === 'tab-questions') renderQuestions();
+}
+
+// ===================== IMPORT =====================
+let pendingImport = [];
+
+function handleDragOver(e) { e.preventDefault(); document.getElementById('import-zone').classList.add('dragover'); }
+function handleDragLeave(e) { document.getElementById('import-zone').classList.remove('dragover'); }
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('import-zone').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if(file) handleFileImport(file);
+}
+
+async function handleFileImport(file) {
+  if(!file) return;
+  const name = file.name.toLowerCase();
+  showImportAlert('⏳ Lecture du fichier...', 'alert-info');
+  try {
+    if(name.endsWith('.xlsx')) {
+      await importExcel(file);
+    } else if(name.endsWith('.docx')) {
+      await importWord(file);
+    } else {
+      showImportAlert('❌ Format non supporté. Utilisez .xlsx ou .docx', 'alert-error');
+    }
+  } catch(err) {
+    showImportAlert('❌ Erreur de lecture : ' + err.message, 'alert-error');
+  }
+}
+
+async function importExcel(file) {
+  // Load SheetJS from CDN
+  if(!window.XLSX) {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+  }
+  const buffer = await file.arrayBuffer();
+  const wb = XLSX.read(buffer, { type: 'array' });
+  // Chercher l'onglet QUESTIONS
+  const sheetName = wb.SheetNames.find(n => n.toUpperCase() === 'QUESTIONS') || wb.SheetNames[0];
+  const ws = wb.Sheets[sheetName];
+  const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+
+  const questions = [];
+  for(const row of rows) {
+    const type = (row['TYPE'] || '').toString().trim().toUpperCase();
+    const enonce = (row['ENONCE'] || '').toString().trim();
+    if(!type || !enonce) continue;
+
+    const optA = (row['OPTION_A'] || '').toString().trim();
+    const optB = (row['OPTION_B'] || '').toString().trim();
+    const optC = (row['OPTION_C'] || '').toString().trim();
+    const optD = (row['OPTION_D'] || '').toString().trim();
+    const rep = (row['BONNE_REPONSE'] || '').toString().trim().toUpperCase();
+    const pts = parseFloat(row['POINTS']) || 1;
+
+    if(type === 'QCM') {
+      const options = [optA, optB, optC, optD].filter(o => o);
+      const correctMap = { A:0, B:1, C:2, D:3 };
+      const correct = correctMap[rep] !== undefined ? correctMap[rep] : 0;
+      questions.push({ id: Date.now() + Math.random(), type: 'qcm', text: enonce, options, correct, points: pts });
+    } else if(type === 'VF') {
+      const options = ['Vrai', 'Faux'];
+      const correct = rep === 'A' ? 0 : 1;
+      questions.push({ id: Date.now() + Math.random(), type: 'vf', text: enonce, options, correct, points: pts });
+    } else if(type === 'OPEN') {
+      questions.push({ id: Date.now() + Math.random(), type: 'open', text: enonce, options: [], correct: 0, points: pts });
+    }
+  }
+  if(questions.length === 0) { showImportAlert('❌ Aucune question valide trouvée dans le fichier.', 'alert-error'); return; }
+  showImportPreview(questions, file.name);
+}
+
+async function importWord(file) {
+  if(!window.mammoth) {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
+  }
+  const buffer = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer: buffer });
+  const text = result.value;
+  const questions = parseWordText(text);
+  if(questions.length === 0) { showImportAlert('❌ Aucune question valide trouvée. Vérifiez le format du fichier.', 'alert-error'); return; }
+  showImportPreview(questions, file.name);
+}
+
+function parseWordText(text) {
+  const questions = [];
+  // Séparer par blocs (lignes vides)
+  const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(b => b);
+
+  for(const block of blocks) {
+    const lines = block.split('\n').map(l => l.trim()).filter(l => l);
+    const data = {};
+    for(const line of lines) {
+      const match = line.match(/^([A-Z_]+):\s*(.*)$/);
+      if(match) data[match[1]] = match[2].trim();
+    }
+    const type = (data['TYPE'] || '').toUpperCase();
+    const enonce = data['ENONCE'] || '';
+    const pts = parseFloat(data['POINTS']) || 1;
+    if(!type || !enonce) continue;
+
+    if(type === 'QCM') {
+      const options = ['A','B','C','D'].map(l => data[l] || '').filter(o => o);
+      const correctMap = { A:0, B:1, C:2, D:3 };
+      const correct = correctMap[(data['REPONSE']||'').toUpperCase()] !== undefined ? correctMap[(data['REPONSE']).toUpperCase()] : 0;
+      questions.push({ id: Date.now() + Math.random(), type: 'qcm', text: enonce, options, correct, points: pts });
+    } else if(type === 'VF') {
+      questions.push({ id: Date.now() + Math.random(), type: 'vf', text: enonce, options: ['Vrai','Faux'], correct: (data['REPONSE']||'').toUpperCase() === 'A' ? 0 : 1, points: pts });
+    } else if(type === 'OPEN') {
+      questions.push({ id: Date.now() + Math.random(), type: 'open', text: enonce, options: [], correct: 0, points: pts });
+    }
+  }
+  return questions;
+}
+
+function showImportPreview(questions, filename) {
+  pendingImport = questions;
+  const letters = ['A','B','C','D','E','F'];
+  const typeColors = { qcm: 'badge-qcm', vf: 'badge-vf', open: 'badge-open' };
+  const typeTxt = { qcm: 'QCM', vf: 'V/F', open: 'Ouv.' };
+
+  document.getElementById('import-preview-title').textContent = `${questions.length} question(s) détectée(s) dans "${filename}"`;
+  document.getElementById('import-preview-list').innerHTML = questions.map((q, i) => `
+    <div class="import-preview-item">
+      <span class="import-q-num">Q${i+1}</span>
+      <span class="q-type-badge ${typeColors[q.type]}">${typeTxt[q.type]}</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${q.text}</span>
+      <span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap">${q.points} pt${q.points > 1 ? 's' : ''}</span>
+    </div>`).join('');
+  document.getElementById('import-preview').style.display = 'block';
+  showImportAlert(`✅ ${questions.length} question(s) prête(s) à importer. Vérifiez et confirmez.`, 'alert-success');
+}
+
+function confirmImport() {
+  if(pendingImport.length === 0) return;
+  const replace = state.questions.length > 0
+    ? confirm(`Vous avez déjà ${state.questions.length} question(s).\n\nAppuyez OK pour REMPLACER, ou Annuler pour AJOUTER à la suite.`)
+    : true;
+  if(replace) {
+    state.questions = pendingImport;
+  } else {
+    state.questions = [...state.questions, ...pendingImport];
+  }
+  pendingImport = [];
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('import-file-input').value = '';
+  renderQuestions();
+  showImportAlert(`✅ ${state.questions.length} question(s) chargée(s) avec succès !`, 'alert-success');
+}
+
+function cancelImport() {
+  pendingImport = [];
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('import-file-input').value = '';
+  document.getElementById('import-alert').style.display = 'none';
+}
+
+function showImportAlert(msg, cls) {
+  const el = document.getElementById('import-alert');
+  el.className = 'alert ' + cls;
+  el.textContent = msg;
+  el.style.display = 'flex';
+  if(cls === 'alert-success') setTimeout(() => el.style.display = 'none', 5000);
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+// ===================== TÉLÉCHARGEMENT MODÈLES =====================
+function downloadExcelTemplate() {
+  // Générer un Excel minimal en base64 via SheetJS
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js').then(() => {
+    const wb = XLSX.utils.book_new();
+
+    // Feuille QUESTIONS
+    const data = [
+      ['TYPE','ENONCE','OPTION_A','OPTION_B','OPTION_C','OPTION_D','BONNE_REPONSE','POINTS'],
+      ['QCM',"Qu'est-ce que la satisfaction client dans un call center ?","Le nombre d'appels traités","Le niveau de contentement du client","Le temps de pause des agents","La vitesse de connexion internet",'B',2],
+      ['VF',"Un agent doit toujours identifier le client avant de traiter sa demande.","Vrai","Faux","","","A",1],
+      ['QCM',"Quelle est la bonne attitude face à un client mécontent ?","Raccrocher poliment","Écouter et proposer une solution","Transférer l'appel","Ignorer le client",'B',2],
+      ['OPEN',"Décrivez votre méthode pour gérer un appel difficile.","","","","","",5],
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    ws['!cols'] = [{wch:8},{wch:55},{wch:30},{wch:30},{wch:25},{wch:25},{wch:14},{wch:8}];
+    XLSX.utils.book_append_sheet(wb, ws, 'QUESTIONS');
+
+    // Feuille INSTRUCTIONS
+    const info = [
+      ['MAFA HOLDING / COLIBRI TECHNOLOGIES — Modèle de questions'],
+      [''],
+      ['COLONNES :'],
+      ['TYPE','QCM, VF ou OPEN (obligatoire)'],
+      ['ENONCE','Texte de la question (obligatoire)'],
+      ['OPTION_A à D','Options de réponse (pour QCM/VF)'],
+      ['BONNE_REPONSE','Lettre de la bonne réponse : A, B, C ou D'],
+      ['POINTS','Points attribués (défaut: 1)'],
+      [''],
+      ['RÈGLES :'],
+      ['','• TYPE doit être exactement QCM, VF ou OPEN (majuscules)'],
+      ['','• Pour VF : OPTION_A=Vrai, OPTION_B=Faux'],
+      ['','• Pour OPEN : laisser options et BONNE_REPONSE vides'],
+    ];
+    const ws2 = XLSX.utils.aoa_to_sheet(info);
+    ws2['!cols'] = [{wch:18},{wch:55}];
+    XLSX.utils.book_append_sheet(wb, ws2, 'INSTRUCTIONS');
+
+    XLSX.writeFile(wb, 'modele_questions_MAFA.xlsx');
+  });
+}
+
+function downloadWordTemplate() {
+  const content = `MAFA HOLDING / COLIBRI TECHNOLOGIES
+Modèle Word — Import de Questions d'Évaluation
+===============================================
+
+FORMAT DES QUESTIONS :
+Chaque question doit suivre exactement ce format.
+Séparez les questions par une ligne vide.
+
+--- FORMAT QCM ---
+TYPE: QCM
+ENONCE: Votre question ici ?
+A: Première option
+B: Deuxième option
+C: Troisième option (optionnel)
+D: Quatrième option (optionnel)
+REPONSE: B
+POINTS: 2
+
+--- FORMAT VF ---
+TYPE: VF
+ENONCE: Affirmation vraie ou fausse ?
+A: Vrai
+B: Faux
+REPONSE: A
+POINTS: 1
+
+--- FORMAT OPEN ---
+TYPE: OPEN
+ENONCE: Votre question ouverte ici ?
+POINTS: 5
+
+===============================================
+▼ VOS QUESTIONS COMMENCENT ICI ▼
+===============================================
+
+TYPE: QCM
+ENONCE: Qu'est-ce que la satisfaction client dans un call center ?
+A: Le nombre d'appels traités
+B: Le niveau de contentement du client après interaction
+C: Le temps de pause des agents
+D: La vitesse de connexion internet
+REPONSE: B
+POINTS: 2
+
+TYPE: VF
+ENONCE: Un agent doit toujours identifier le client avant de traiter sa demande.
+A: Vrai
+B: Faux
+REPONSE: A
+POINTS: 1
+
+TYPE: QCM
+ENONCE: Quelle est la bonne attitude face à un client mécontent ?
+A: Raccrocher poliment
+B: Écouter, comprendre et proposer une solution
+C: Transférer immédiatement l'appel
+D: Ignorer et continuer le script
+REPONSE: B
+POINTS: 2
+
+TYPE: OPEN
+ENONCE: Décrivez votre méthode pour gérer un appel difficile avec un client en colère.
+POINTS: 5
+`;
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'modele_questions_MAFA.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+  showImportAlert('⚠️ Modèle téléchargé en .txt. Renommez-le en .docx ou copiez le contenu dans Word en respectant le format.', 'alert-info');
+}
+
+// ===================== ADMIN =====================
+function adminLogout() {
+  if(confirm('Se déconnecter de l\'espace administrateur ?')) {
+    document.getElementById('admin-code-input').value = '';
+    showScreen('screen-landing');
+  }
+}
+
+function checkAdminCode() {
+  const input = document.getElementById('admin-code-input').value;
+  if(input === state.adminCode) {
+    document.getElementById('admin-login-error').style.display = 'none';
+    document.getElementById('admin-code-input').value = '';
+    renderQuestions();
+    showScreen('screen-admin');
+  } else {
+    document.getElementById('admin-login-error').style.display = 'flex';
+  }
+}
+
+function changeAdminCode() {
+  const newCode = document.getElementById('new-admin-code').value.trim();
+  if(newCode.length >= 4) {
+    state.adminCode = newCode;
+    document.getElementById('new-admin-code').value = '';
+    alert('Code admin mis à jour !');
+  } else {
+    alert('Le code doit contenir au moins 4 caractères.');
+  }
+}
+
+function saveConfig() {
+  state.config.title = document.getElementById('exam-title').value;
+  state.config.duration = parseInt(document.getElementById('exam-duration').value) || 30;
+  state.config.accessCode = document.getElementById('exam-access-code').value.trim();
+  state.config.pointsCorrect = parseFloat(document.getElementById('points-correct').value) || 1;
+  state.config.pointsWrong = parseFloat(document.getElementById('points-wrong').value) || 0;
+  state.config.instructions = document.getElementById('exam-instructions').value;
+  showAlert('exam-status', '✅ Configuration enregistrée !', 'alert-info');
+}
+
+function activateExam() {
+  saveConfig();
+  saveQuestions();
+  state.examActive = true;
+  showAlert('exam-status', '✅ Évaluation activée ! Les candidats peuvent maintenant composer.', 'alert-success');
+}
+
+function showAlert(id, msg, cls) {
+  const el = document.getElementById(id);
+  el.className = 'alert ' + cls;
+  el.textContent = msg;
+  el.style.display = 'flex';
+  setTimeout(() => el.style.display = 'none', 4000);
+}
+
+function resetExam() {
+  if(confirm('⚠️ Réinitialiser TOUS les résultats ? Cette action est irréversible.')) {
+    state.results = [];
+    try { localStorage.removeItem('mafa_all_results'); } catch(e) {}
+    state.examActive = false;
+    renderResults();
+    showAlert('exam-status', '🗑 Données réinitialisées.', 'alert-error');
+  }
+}
+
+function exportResults() {
+  let toExport = state.results;
+  if(adminResultsFilter === 'orange') toExport = state.results.filter(r => r.operation === 'orange');
+  else if(adminResultsFilter === 'id30') toExport = state.results.filter(r => !r.operation || r.operation === 'id30');
+  if(toExport.length === 0) { alert('Aucun résultat à exporter.'); return; }
+  const sorted = [...toExport].sort((a,b) => b.percentage - a.percentage);
+  const opSuffix = adminResultsFilter !== 'all' ? '_' + adminResultsFilter.toUpperCase() : '';
+  let csv = 'Rang,Opération,Prénom,Nom,Email,Téléphone,Rôle/Poste,Score,Pourcentage,Correctes,Incorrectes,Durée,Date\n';
+  sorted.forEach((r, i) => {
+    const op = r.operation === 'orange' ? 'ORANGE' : 'ID30';
+    csv += `${i+1},"${op}","${r.firstname}","${r.lastname}","${r.email}","${r.phone}","${r.posteLabel||''}",${r.score}/${r.maxScore},${r.percentage}%,${r.correct},${r.wrong},"${r.duration}","${r.date}"\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `resultats${opSuffix}_${Date.now()}.csv`;
+  a.click();
+}
+
+// ===================== QUESTIONS BUILDER =====================
+function addQuestion(type) {
+  state.questions.push({
+    id: Date.now(),
+    type,
+    text: '',
+    options: type === 'qcm' ? ['', '', '', ''] : (type === 'vf' ? ['Vrai', 'Faux'] : []),
+    correct: 0,
+    points: 1
+  });
+  renderQuestions();
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-list');
+  if(state.questions.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">📝</div><p>Aucune question. Ajoutez des QCM, Vrai/Faux ou questions ouvertes ci-dessus.</p></div>`;
+    return;
+  }
+  container.innerHTML = state.questions.map((q, idx) => {
+    const typeBadge = q.type === 'qcm' ? '<span class="q-type-badge badge-qcm">QCM</span>' :
+                      q.type === 'vf' ? '<span class="q-type-badge badge-vf">Vrai/Faux</span>' :
+                      '<span class="q-type-badge badge-open">Ouverte</span>';
+    let optionsHTML = '';
+    if(q.type === 'qcm' || q.type === 'vf') {
+      const letters = ['A','B','C','D','E'];
+      optionsHTML = `<div class="options-grid">` +
+        q.options.map((opt, oi) => `
+          <div class="option-row">
+            <span class="option-label">${letters[oi]}</span>
+            <input type="radio" name="correct_${idx}" value="${oi}" ${q.correct === oi ? 'checked' : ''} onchange="setCorrect(${idx}, ${oi})" title="Correcte">
+            ${q.type === 'qcm' ? `<input type="text" placeholder="Option ${letters[oi]}" value="${opt}" oninput="updateOption(${idx}, ${oi}, this.value)">` :
+              `<span style="flex:1;padding:8px 12px;background:var(--surface2);border-radius:8px;font-size:0.9rem">${opt}</span>`}
+          </div>`).join('') +
+        `</div>
+        <div class="correct-hint">✓ Cochez le bouton radio à gauche de la bonne réponse</div>`;
+      if(q.type === 'qcm') {
+        optionsHTML += `<div style="margin-top:8px"><button class="btn btn-secondary btn-sm" onclick="addOption(${idx})">+ Option</button></div>`;
+      }
+    } else {
+      optionsHTML = `<div class="alert alert-info" style="font-size:0.82rem">💡 Question ouverte — Notée manuellement via Google Forms</div>`;
+    }
+    return `
+      <div class="question-card">
+        <div class="q-header">
+          <span class="q-number">Q${idx + 1}</span>
+          ${typeBadge}
+          <input type="number" value="${q.points}" min="0.5" step="0.5" style="width:80px;text-align:center" title="Points" oninput="updatePoints(${idx}, this.value)">
+          <span style="font-size:0.75rem;color:var(--text-muted)">pts</span>
+          <div style="margin-left:auto;display:flex;gap:6px">
+            ${idx > 0 ? `<button class="btn btn-secondary btn-sm" onclick="moveQuestion(${idx}, -1)">↑</button>` : ''}
+            ${idx < state.questions.length-1 ? `<button class="btn btn-secondary btn-sm" onclick="moveQuestion(${idx}, 1)">↓</button>` : ''}
+            <button class="btn btn-danger btn-sm" onclick="removeQuestion(${idx})">✕</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Énoncé de la question</label>
+          <textarea placeholder="Tapez votre question ici..." oninput="updateQuestionText(${idx}, this.value)">${q.text}</textarea>
+        </div>
+        ${optionsHTML}
+      </div>`;
+  }).join('');
+}
+
+function updateQuestionText(idx, val) { state.questions[idx].text = val; }
+function updateOption(idx, oi, val) { state.questions[idx].options[oi] = val; }
+function setCorrect(idx, oi) { state.questions[idx].correct = oi; }
+function updatePoints(idx, val) { state.questions[idx].points = parseFloat(val) || 1; }
+function removeQuestion(idx) { state.questions.splice(idx, 1); renderQuestions(); }
+function addOption(idx) { if(state.questions[idx].options.length < 6) { state.questions[idx].options.push(''); renderQuestions(); } }
+function moveQuestion(idx, dir) {
+  const arr = state.questions;
+  [arr[idx], arr[idx+dir]] = [arr[idx+dir], arr[idx]];
+  renderQuestions();
+}
+
+function saveQuestions() {
+  // Collect current values from DOM
+  document.querySelectorAll('.question-card textarea').forEach((ta, i) => {
+    if(state.questions[i]) state.questions[i].text = ta.value;
+  });
+  alert('✅ Questions enregistrées ! (' + state.questions.length + ' questions)');
+}
+
+
+// ============================================================
+// BANQUE DE QUESTIONS ORANGE — OM Business (Niveau Intermédiaire)
+// ============================================================
+// QUESTIONS ORANGE retirées (fichier ID30 uniquement)
+
+// ============================================================
+// BANQUE DE QUESTIONS PAR POSTE — 30 questions chacun
+// ============================================================
+const QUESTIONS_BY_POSTE = {
+'call-center': [
+  { type:'qcm', text:"Un agent Call Center ouvre un dossier dans Connectel. L'entrepreneur répond mais dit ne pas être disponible cette semaine. Quelle est la procédure correcte ?", options:["Classer le dossier comme 'Refus ferme'","Planifier un rappel dans 7 jours et noter la disponibilité","Proposer immédiatement 3 créneaux alternatifs et noter le plus proche","Transmettre au superviseur pour décision"], correct:2, points:1 },
+  { type:'qcm', text:"Parmi les profils d'entrepreneurs suivants, lesquels sont éligibles à la Carte Entreprenant ID30 ? (Sélectionnez 2 réponses)", options:["Vendeur ambulant de rue sans local fixe","Fonctionnaire de l'État salarié","Chauffeur VTC indépendant","Actionnaire majoritaire d'une multinationale"], correct:[0,2], multi:2, points:1 },
+  { type:'qcm', text:"Un vendeur en ligne qui commercialise ses produits via Instagram peut-il bénéficier de la Carte Entreprenant ID30 ?", options:["Non — le commerce en ligne n'est pas reconnu","Oui — toute activité génératrice de revenus est éligible, y compris le commerce en ligne","Uniquement s'il a un compte bancaire professionnel","Non — il doit d'abord ouvrir une boutique physique"], correct:1, points:1 },
+  { type:'qcm', text:"Un prospect dit être 'ambulant' et ne pas avoir d'adresse fixe. L'agent doit-il traiter son dossier ?", options:["Non — une adresse fixe est obligatoire pour la Carte Entreprenant","Oui — l'activité ambulante est éligible ; l'adresse de résidence suffit pour le dossier","Non — les ambulants doivent d'abord s'enregistrer à la mairie","Suspendre le dossier en attente de régularisation"], correct:1, points:1 },
+  { type:'qcm', text:"Quels types d'entrepreneurs sans local commercial sont éligibles à la Carte Entreprenant ? (Sélectionnez 2 réponses)", options:["Prestataire de services à domicile (coiffeur, plombier)","Retraité sans activité","Chauffeur indépendant (taxi, VTC)","Fonctionnaire en activité"], correct:[0,2], multi:2, points:1 },
+  { type:'qcm', text:"Connectel affiche pour un dossier le statut 'Doublon détecté'. Que fait l'agent ?", options:["Supprimer le dossier le plus ancien","Valider les deux et laisser le Back Office décider","Ne traiter qu'un seul des deux dossiers et signaler l'autre au superviseur","Ignorer et continuer le traitement normalement"], correct:2, points:1 },
+  { type:'qcm', text:"L'entrepreneur dit avoir reçu sa Carte Entreprenant il y a 6 mois mais n'a jamais eu de rendez-vous de mise à jour. Comment l'agent traite-t-il ce cas ?", options:["Clôturer le dossier comme 'Déjà traité'","Vérifier dans Connectel si la mise à jour est bien enregistrée, sinon planifier un nouveau RDV","Ignorer car la carte a déjà été émise","Transférer au Back Office sans note"], correct:1, points:1 },
+  { type:'qcm', text:"Lors d'un appel, l'entrepreneur fournit une adresse différente de celle enregistrée dans Connectel. Quelle action s'impose ?", options:["Mettre à jour l'adresse directement dans Connectel","Ignorer car l'adresse est secondaire","Noter la nouvelle adresse dans le commentaire du dossier et signaler pour mise à jour Back Office","Annuler le RDV et clôturer le dossier"], correct:2, points:1 },
+  { type:'qcm', text:"Après 3 tentatives infructueuses sur un dossier (numéro valide mais pas de réponse), quel statut l'agent doit-il appliquer dans Connectel ?", options:["Refus ferme","Injoignable — à relancer selon planning","Dossier clôturé définitivement","Numéro invalide"], correct:1, points:1 },
+  { type:'qcm', text:"Un entrepreneur accepte un RDV mais précise qu'il ne sera disponible que le dimanche. L'équipe terrain ne travaille pas le dimanche. Que fait l'agent ?", options:["Confirmer le RDV au dimanche quand même","Proposer le lundi matin comme alternative la plus proche et noter la contrainte","Classer comme 'Refus ferme' car dimanche impossible","Transférer au superviseur sans proposer d'alternative"], correct:1, points:1 },
+  { type:'qcm', text:"L'agent Call Center constate dans Connectel qu'un dossier a été marqué 'Validé' par le Back Office mais que l'entrepreneur appelle pour signaler qu'il n'a jamais reçu sa carte. Que fait l'agent ?", options:["Dire à l'entrepreneur qu'il a tort et clôturer l'appel","Ouvrir un ticket d'anomalie et escalader au superviseur","Renvoyer l'entrepreneur directement au Back Office","Créer un nouveau dossier de zéro"], correct:1, points:1 },
+  { type:'qcm', text:"Pendant un appel, l'entrepreneur demande à l'agent de lui préciser le contenu exact de sa Carte Entreprenant (données imprimées). Quelle réponse est correcte ?", options:["L'agent lit toutes les données personnelles du dossier","L'agent explique les informations générales imprimées sur la carte sans lire les données sensibles","L'agent refuse toute information et raccroche","L'agent donne uniquement le numéro de dossier"], correct:1, points:1 },
+  { type:'qcm', text:"Quel est l'impact d'un taux d'appels 'Refus ferme' élevé dans une équipe Call Center ?", options:["Aucun impact, c'est inévitable","Signal d'alerte sur la qualité du discours ou le ciblage des dossiers","Cela améliore la productivité car les dossiers sont clôturés plus vite","Preuve que le projet ID30 n'intéresse pas les entrepreneurs"], correct:1, points:1 },
+  { type:'qcm', text:"Lors d'un appel, le correspondant qui répond n'est pas l'entrepreneur inscrit mais son épouse. L'épouse accepte le RDV. L'agent doit :", options:["Confirmer le RDV avec l'épouse et noter que le RDV doit être confirmé avec l'entrepreneur directement","Refuser et raccrocher car l'entrepreneur n'est pas disponible","Valider le RDV sans mention particulière","Classer comme 'Refus ferme' car l'entrepreneur n'a pas répondu"], correct:0, points:1 },
+  { type:'qcm', text:"La DMT (Durée Moyenne de Traitement) d'un agent est de 18 minutes par appel, alors que la norme est 10 minutes. Quelle est la cause la plus probable ?", options:["L'agent travaille trop lentement, il faut le sanctionner","L'agent ne maîtrise pas les raccourcis Connectel ou le script d'appel","Les entrepreneurs du secteur sont naturellement plus bavards","Le réseau téléphonique est mauvais dans la zone"], correct:1, points:1 },
+  { type:'qcm', text:"Un entrepreneur en état d'énervement accuse MAFA Holding d'être une arnaque. Comment l'agent réagit-il ?", options:["Raccrocher poliment pour éviter l'escalade","Rester calme, présenter les références officielles (Ministère du Commerce), proposer un rappel ultérieur","Mettre l'entrepreneur en attente indéfiniment","Contester les accusations et défendre MAFA Holding fermement"], correct:1, points:1 },
+  { type:'qcm', text:"Quel est le KPI principal utilisé pour évaluer la performance individuelle d'un agent Call Center ID30 ?", options:["Le nombre total d'appels passés","Le nombre de fiches validées par jour (cible : 15 minimum)","Le temps moyen passé en pause","Le nombre d'entrepreneurs ayant raccroché"], correct:1, points:1 },
+  { type:'qcm', text:"L'agent remarque que 5 dossiers consécutifs dans sa file ont le même numéro de téléphone. Que doit-il faire ?", options:["Appeler le numéro 5 fois","Appeler une seule fois, noter l'anomalie et la signaler au superviseur","Supprimer les 4 doublons","Valider les 5 dossiers avec le même RDV"], correct:1, points:1 },
+  { type:'qcm', text:"Dans le protocole Call Center ID30, que se passe-t-il après la confirmation d'un RDV par l'entrepreneur ?", options:["L'agent clôture immédiatement le dossier","L'agent envoie les informations au Back Office pour préparation de l'équipe terrain","L'agent attend que le terrain valide avant toute action","L'agent rappelle le lendemain pour reconfirmer"], correct:1, points:1 },
+  { type:'vf', text:"Un agent Call Center peut modifier directement le numéro de téléphone d'un entrepreneur dans Connectel sans validation Back Office.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Si l'entrepreneur n'a pas répondu après 3 tentatives réparties sur 3 jours différents, le dossier peut être classé 'Injoignable définitif'.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Le Call Center peut confirmer un RDV terrain même si l'équipe terrain n'a pas encore confirmé la disponibilité de l'agent pour ce créneau.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Un agent Call Center qui dépasse systématiquement 15 fiches par jour peut réduire la qualité de sa vérification des informations.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Lors d'un appel de relance, l'entrepreneur dit : 'J'ai déjà un RDV prévu pour dans 3 jours'. Comment l'agent vérifie-t-il cette information ?", options:["Il croit l'entrepreneur sur parole","Il vérifie dans Connectel si un RDV est bien enregistré avec cette date","Il annule l'ancien RDV et en crée un nouveau","Il transfère au superviseur"], correct:1, points:1 },
+  { type:'qcm', text:"Un agent Call Center reçoit un message de son superviseur lui demandant de valider 30 fiches ce jour au lieu de 15 pour rattraper un retard. Que doit faire l'agent ?", options:["Accepter et valider 30 fiches sans se soucier de la qualité","Accepter mais maintenir le protocole qualité, quitte à ne pas atteindre 30","Refuser catégoriquement de travailler plus","Valider des dossiers sans appeler pour gagner du temps"], correct:1, points:1 },
+  { type:'qcm', text:"Quelle information l'agent doit-il impérativement noter dans Connectel à la fin de chaque appel, qu'il soit fructueux ou non ?", options:["Uniquement si l'appel a abouti à un RDV","Le résumé de l'appel, le statut appliqué et l'heure du prochain contact","Le nom de l'opérateur téléphonique de l'entrepreneur","La météo du jour pour contexte"], correct:1, points:1 },
+  { type:'qcm', text:"L'entrepreneur accepte le RDV mais demande que l'agent terrain arrive avant 7h du matin. L'heure standard de démarrage terrain est 8h. Que fait l'agent ?", options:["Confirmer le RDV à 7h pour satisfaire l'entrepreneur","Expliquer les horaires standards et proposer le créneau le plus tôt possible (8h-9h)","Classer comme refus car horaire impossible","Ignorer la demande et confirmer à l'heure standard sans le mentionner"], correct:1, points:1 },
+  { type:'qcm', text:"Pourquoi est-il interdit à un agent Call Center de promettre des avantages financiers à l'entrepreneur pour accepter le RDV ?", options:["Car cela crée de fausses attentes et nuit à la crédibilité du projet ID30","Car l'agent n'a pas de budget pour cela","Car les avantages sont réservés aux superviseurs","Ce n'est pas interdit, c'est une technique de persuasion valable"], correct:0, points:1 },
+  { type:'qcm', text:"Un entrepreneur enregistré à Abidjan Cocody appelle pour signaler qu'il a déménagé à Bouaké. Quelle est la procédure correcte ?", options:["Mettre à jour l'adresse dans Connectel et transférer le dossier à l'équipe Bouaké","Clôturer le dossier car hors zone","Ignorer le déménagement et maintenir le RDV à Abidjan","Créer un nouveau dossier à Bouaké en gardant l'ancien ouvert"], correct:0, points:1 },
+  { type:'qcm', text:"Combien de jours maximum une fiche peut-elle rester au statut 'En attente de reconfirmation' avant d'être relancée ?", options:["1 jour","3 jours","7 jours","14 jours"], correct:1, points:1 },
+  { type:'qcm', text:"L'agent constate que son taux de conversion RDV est de 30% alors que la moyenne équipe est 65%. Quelle est la première action à mener ?", options:["Accuser la qualité des dossiers fournis","Analyser les enregistrements d'appels avec le superviseur pour identifier les points d'amélioration","Augmenter la vitesse des appels","Passer à un autre projet"], correct:1, points:1 },
+  { type:'vf', text:"Un agent Call Center peut décider seul de clôturer définitivement un dossier sans validation de son superviseur.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Le script d'appel est un guide — l'agent peut l'adapter selon le profil de l'entrepreneur, tout en respectant les informations obligatoires.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'open', text:"Un entrepreneur accepte le RDV mais après la conversation, vous réalisez que l'adresse qu'il a donnée est différente de celle dans Connectel, et le numéro alternatif qu'il a mentionné n'est pas enregistré. Décrivez précisément toutes les actions que vous effectuez dans Connectel et vis-à-vis de votre superviseur.", options:[], correct:0, points:3 }
+],
+
+'back-office': [
+  { type:'qcm', text:"Le Back Office reçoit un dossier où le score Proof of Life est de 63 et les photos sont nettes. La CNI est valide. Quelle décision est correcte ?", options:["Rejeter car le score recommandé est 70","Valider car le score dépasse le minimum de 60 et les autres éléments sont conformes","Mettre en attente en demandant une nouvelle capture biométrique","Transférer au superviseur pour décision"], correct:1, points:1 },
+  { type:'qcm', text:"Un dossier présente une CNI avec une date d'expiration dépassée de 2 mois mais le préfet de l'époque a signé une attestation de renouvellement. Le Back Office doit :", options:["Valider avec l'attestation comme pièce complémentaire","Rejeter car la CNI est expirée","Valider sans condition car l'attestation suffit","Ignorer l'expiration si la photo correspond"], correct:0, points:1 },
+  { type:'qcm', text:"Le Back Office constate que les coordonnées GPS d'un dossier pointent vers la mer (erreur évidente). Quelle est la bonne procédure ?", options:["Corriger manuellement les coordonnées en estimant l'emplacement probable","Valider en notant l'erreur GPS dans les commentaires","Rejeter le dossier — retour terrain obligatoire pour recapturer le GPS","Supprimer les coordonnées et valider sans GPS"], correct:2, points:1 },
+  { type:'qcm', text:"Deux photos de portrait d'un même dossier montrent deux personnes différentes. Le Back Office doit :", options:["Conserver la meilleure photo et valider","Contacter le Call Center pour clarification","Rejeter immédiatement — incohérence d'identité grave nécessitant une nouvelle visite","Demander à l'agent terrain de choisir laquelle est correcte"], correct:2, points:1 },
+  { type:'qcm', text:"Le Back Office reçoit 40 dossiers le lundi matin. Le délai maximum de traitement est 48h. Il est 9h lundi. À quelle heure au plus tard tous les dossiers doivent-ils être traités ?", options:["Lundi 17h","Mardi 9h","Mercredi 9h","Mardi 23h59"], correct:2, points:1 },
+  { type:'qcm', text:"Un dossier arrive avec les 3 photos requises mais l'une d'elles montre le marchand portant des lunettes de soleil. Le Proof of Life est à 72. Que fait le Back Office ?", options:["Valider car le Proof of Life dépasse 70","Rejeter — la photo avec lunettes de soleil ne permet pas la vérification biométrique correcte","Valider en notant la réserve dans les commentaires","Demander uniquement une nouvelle photo sans retour terrain"], correct:1, points:1 },
+  { type:'qcm', text:"Le Back Office identifie que le même entrepreneur est enregistré dans deux communes différentes avec deux agents différents. Les données KYC sont identiques. Quelle procédure s'applique ?", options:["Valider les deux dossiers pour ne pas perdre de données","Conserver le dossier le plus complet, rejeter l'autre et signaler les deux agents concernés","Supprimer les deux et demander un nouvel enrôlement","Laisser le système gérer automatiquement"], correct:1, points:1 },
+  { type:'qcm', text:"Un dossier présente un secteur d'activité KYB = 'Commerce général' mais les photos montrent clairement un salon de coiffure. Le Back Office :", options:["Valide car 'Commerce général' englobe tout","Corrige lui-même le secteur d'activité","Rejette pour incohérence KYB et demande une correction terrain","Ignore l'incohérence si les autres données sont correctes"], correct:2, points:1 },
+  { type:'qcm', text:"Quelle est la conséquence directe d'un taux de rejet Back Office supérieur à 25% sur une période donnée ?", options:["Aucune, c'est normal pour un projet de formalisation","Coût supplémentaire terrain, retards et nécessité d'analyser les causes racines avec les équipes","Cela prouve que les agents terrain sont incompétents","Le projet ID30 doit être arrêté"], correct:1, points:1 },
+  { type:'qcm', text:"La photo de la CNI d'un dossier est lisible mais présente un reflet lumineux qui cache partiellement le numéro de CNI. Le Back Office :", options:["Valide car la majorité des informations sont lisibles","Rejette — le numéro de CNI doit être entièrement lisible pour la vérification légale","Essaie de deviner les chiffres manquants","Contacte le Ministère pour vérification"], correct:1, points:1 },
+  { type:'qcm', text:"Un agent terrain a oublié de capturer la photo du lieu d'activité mais toutes les autres données sont parfaites. Le Back Office :", options:["Valide par exception car les autres données sont excellentes","Rejette — la photo du lieu d'activité est une pièce obligatoire irremplaçable","Demande uniquement la photo manquante par email à l'agent","Note la manque et valide quand même en attente"], correct:1, points:1 },
+  { type:'qcm', text:"Le KYB d'un dossier indique 5 employés mais l'entrepreneur a déclaré au Call Center n'avoir aucun employé. Cette contradiction :", options:["Est ignorée car KYC prime sur les déclarations téléphoniques","Doit entraîner un rejet pour vérification et clarification terrain","Est normale car les déclarations téléphoniques et terrain peuvent différer","Ne concerne pas le Back Office"], correct:1, points:1 },
+  { type:'qcm', text:"Un dossier est envoyé en Back Office avec un score Proof of Life de 58. L'agent terrain a noté : 'lumière faible, meilleure condition impossible sur le terrain'. Le Back Office :", options:["Valide par compréhension des conditions difficiles","Rejette systématiquement car 58 est sous le seuil minimum de 60","Valide uniquement si le superviseur terrain confirme les conditions","Demande une deuxième tentative dans de meilleures conditions (retour terrain)"], correct:3, points:1 },
+  { type:'qcm', text:"La date de naissance sur la CNI indique 1985 mais le formulaire KYC indique 1958. Même prénom et nom. Le Back Office :", options:["Valide en prenant la date de la CNI comme référence","Rejette pour incohérence — l'écart de 27 ans sur l'âge est une erreur critique","Valide en notant les deux dates","Corrige manuellement en alignant sur la CNI"], correct:1, points:1 },
+  { type:'qcm', text:"Quel document permet au Back Office de contester une validation déjà faite par un superviseur terrain ?", options:["Une demande verbale","Un rapport d'anomalie documenté avec preuves (photos, données) soumis à la hiérarchie","Aucun, la décision du superviseur terrain est définitive","Un email informel"], correct:1, points:1 },
+  { type:'vf', text:"Un score Proof of Life de 60 est suffisant pour valider un dossier si toutes les autres pièces sont conformes.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Le Back Office peut valider un dossier dont la CNI expire dans 30 jours sans mention particulière.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Si l'adresse GPS est incorrecte mais l'adresse déclarée est cohérente, le Back Office peut valider en conservant l'adresse déclarée uniquement.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Le Back Office peut décider de valider un dossier en attente depuis plus de 72h sans retour terrain, pour éviter le blocage.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Un dossier rejeté revient avec corrections après 8 jours ouvrés (au lieu de 5). Le Back Office :", options:["Refuse de le traiter car hors délai","Traite le dossier normalement et note le retard dans le rapport de suivi","Demande une pénalité à l'agent terrain","Archive le dossier sans traitement"], correct:1, points:1 },
+  { type:'qcm', text:"Un dossier arrive complet et conforme. Mais le Back Office reconnaît la photo de l'entrepreneur comme étant un de ses proches. Que doit faire l'agent Back Office ?", options:["Valider car les données sont conformes","Signaler le conflit d'intérêt à son superviseur et demander qu'un autre agent traite ce dossier","Rejeter le dossier","Valider rapidement avant que quelqu'un ne remarque"], correct:1, points:1 },
+  { type:'qcm', text:"Le Back Office traite en moyenne 25 dossiers par jour. Un lot urgent de 60 dossiers arrive avec délai de 24h. La priorité correcte est :", options:["Traiter les 60 en urgence en sautant certaines vérifications","Traiter les 25 normaux d'abord, puis les 60","Alerter le superviseur, définir des priorités et traiter méthodiquement en respectant les standards","Refuser les 60 car c'est au-delà de la capacité"], correct:2, points:1 },
+  { type:'qcm', text:"Quel est l'indicateur clé qui différencie un Back Office performant d'un Back Office rapide mais peu fiable ?", options:["Le nombre de dossiers traités par heure","Le taux de validation croisé avec le taux d'anomalies détectées après validation","Le nombre d'heures supplémentaires effectuées","La taille des fichiers traités"], correct:1, points:1 },
+  { type:'qcm', text:"Un agent Back Office découvre qu'un lot de 15 dossiers envoyés par le même agent terrain contient des photos identiques copiées-collées sur des formulaires différents. Il doit :", options:["Valider car les formulaires ont des noms différents","Rejeter tous les 15 dossiers et signaler immédiatement comme fraude potentielle au superviseur et à la direction","Rejeter uniquement les dossiers avec doublons évidents","Appeler l'agent terrain pour clarification avant toute action"], correct:1, points:1 },
+  { type:'qcm', text:"La différence entre KYC et KYB dans le dossier ID30 est :", options:["KYC = données financières, KYB = données personnelles","KYC = identité personnelle de l'entrepreneur, KYB = données sur l'activité commerciale","KYC et KYB désignent la même chose dans ce contexte","KYC = données Back Office, KYB = données terrain"], correct:1, points:1 },
+  { type:'qcm', text:"Le Back Office reçoit un dossier avec une note de l'agent terrain : 'Entrepreneur nerveux, a refusé de sourire pour la photo'. Le Proof of Life est à 64. Le Back Office :", options:["Rejette car le score est trop bas","Valide car 64 dépasse le minimum de 60 et le contexte explique le score bas","Demande une nouvelle visite pour avoir un score de 70","Ignore la note de l'agent"], correct:1, points:1 },
+  { type:'vf', text:"Un dossier pour lequel le Back Office ne peut pas vérifier les coordonnées GPS (zone hors couverture cartographique) doit systématiquement être rejeté.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Le Back Office est autorisé à valider provisoirement un dossier incomplet pour ne pas bloquer l'émission de la Carte Entreprenant.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Un entrepreneur ayant deux activités commerciales différentes peut légalement avoir deux dossiers ID30 distincts.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Lors du contrôle d'un dossier, le Back Office constate que le FAMOCO utilisé avait une version firmware obsolète lors de la capture. Cela impacte :", options:["Uniquement la qualité des photos","La fiabilité du Proof of Life et potentiellement la précision GPS — le dossier doit être signalé","Rien, le firmware n'affecte pas les données","Uniquement la date de capture"], correct:1, points:1 },
+  { type:'open', text:"Vous recevez un dossier avec ces caractéristiques : Proof of Life = 61, CNI expirée depuis 3 semaines, coordonnées GPS à 800m de l'adresse déclarée, photos nettes mais secteur d'activité KYB vide. Détaillez votre décision pour chaque point et justifiez votre décision finale : validation, mise en attente ou rejet.", options:[], correct:0, points:3 }
+],
+
+'inspecteur': [
+  { type:'qcm', text:"Lors d'une visite, l'inspecteur scanne le QR Code mais l'application indique 'Enregistrement non trouvé'. L'entrepreneur présente sa Carte Entreprenant physique. L'inspecteur doit :", options:["Valider visuellement sur la base de la carte physique","Signaler l'anomalie dans l'application, photographier la carte et escalader au superviseur","Demander à l'entrepreneur de contacter le Back Office lui-même","Ignorer et passer au point de vente suivant"], correct:1, points:1 },
+  { type:'qcm', text:"L'inspecteur arrive chez un entrepreneur. Le lieu d'activité déclaré est un kiosque de 2m² mais la carte indique une superficie de 25m². Que fait l'inspecteur ?", options:["Valider car les superficies sont approximatives","Signaler l'écart comme non-conformité KYB et documenter avec photos","Corriger lui-même la superficie dans l'application","Ignorer car la superficie n'est pas un critère de conformité"], correct:1, points:1 },
+  { type:'qcm', text:"L'inspecteur découvre qu'un entrepreneur utilise sa Carte Entreprenant pour une activité totalement différente de celle déclarée (ex : déclaré coiffeur, exerce comme mécanicien). Quelle est la gravité de cette situation ?", options:["Mineure — l'activité importe peu tant que la carte est valide","Majeure — fraude sur l'identité commerciale, escalader immédiatement au superviseur et documentation complète","Normale — les activités peuvent évoluer","Mineure — noter dans le rapport sans signalement urgent"], correct:1, points:1 },
+  { type:'qcm', text:"La précision GPS lors d'une visite d'inspection affiche 12 mètres. L'inspecteur :", options:["Continue normalement, 12 mètres est excellent","Attend que la précision atteigne 5 mètres ou moins avant de capturer","Note la précision 'Acceptable' (≤15m), documente et continue","Reporte la visite car la précision est insuffisante"], correct:2, points:1 },
+  { type:'qcm', text:"L'entrepreneur refuse catégoriquement de laisser l'inspecteur prendre des photos de son commerce, invoquant des raisons de sécurité. L'inspecteur :", options:["Prend quand même les photos discrètement","Abandonne la visite sans rapport","Documente le refus dans l'application avec date/heure, note les observations visuelles et signale au superviseur","Accepte et valide quand même sans photos"], correct:2, points:1 },
+  { type:'qcm', text:"Lors d'une visite, l'inspecteur constate que la Carte Entreprenant présentée est une photocopie et non l'original. L'entrepreneur dit avoir perdu l'original. L'inspecteur :", options:["Accepte la photocopie et valide","Demande à l'entrepreneur de se rendre au bureau MAFA pour duplicata, documente et marque 'Carte manquante'","Valide provisoirement en attendant le duplicata","Confisque la photocopie"], correct:1, points:1 },
+  { type:'qcm', text:"L'inspecteur visite un point de vente. L'entrepreneur est présent mais refuse de montrer sa Carte Entreprenant en disant qu'elle est 'à la maison'. L'inspecteur :", options:["Valide quand même sur la base de l'identité verbale","Programme une re-visite dans 48h et documente le motif","Clôture définitivement le dossier comme non-conforme","Appelle le Call Center pour signalement"], correct:1, points:1 },
+  { type:'qcm', text:"Sur la carte de l'application Inspector, un point ROUGE signifie :", options:["Un entrepreneur enrôlé récemment en attente de visite","Un entrepreneur déjà visité et marqué non-conforme nécessitant suivi urgent","Un inspecteur en déplacement dans ce secteur","Une zone sans couverture réseau"], correct:1, points:1 },
+  { type:'qcm', text:"L'inspecteur réalise sa 11ème visite de la journée mais il est 17h30 et le dernier entrepreneur sur sa liste ferme à 18h. La distance est de 35 minutes. Que fait l'inspecteur ?", options:["Abandonne la visite et la reporte au lendemain","Tente de se dépêcher quitte à bâcler la documentation","Appelle le superviseur pour décider : effectuer la visite ou la reprogrammer intelligemment","Marque la visite comme 'Effectuée' sans y aller pour atteindre son quota"], correct:2, points:1 },
+  { type:'qcm', text:"L'inspecteur constate que 3 entrepreneurs voisins (marché adjacent) ont exactement les mêmes coordonnées GPS dans leurs dossiers. Cela indique :", options:["Une erreur systématique de capture GPS lors de l'enrôlement — à signaler comme anomalie groupe","Que les 3 entrepreneurs partagent le même emplacement légalement","Une coïncidence normale dans les marchés denses","Que l'application GPS est défectueuse"], correct:0, points:1 },
+  { type:'qcm', text:"Lors d'une visite, l'entrepreneur montre une Carte Entreprenant au nom de sa femme mais c'est l'homme qui gère l'activité au quotidien. L'inspecteur :", options:["Valide car l'activité est bien présente","Documente la situation : titulaire absent, activité gérée par tiers — signaler pour vérification de conformité légale","Invalide immédiatement","Ignore et passe à la prochaine visite"], correct:1, points:1 },
+  { type:'qcm', text:"Qu'est-ce qu'une visite 'fantôme' dans le contexte de l'inspection ID30 ?", options:["Une visite effectuée la nuit","Une visite enregistrée dans l'application sans avoir été réellement effectuée sur le terrain — fraude grave","Une visite sans GPS activé","Une visite d'un entrepreneur difficile à trouver"], correct:1, points:1 },
+  { type:'qcm', text:"L'inspecteur remarque que son application affiche 'Synchronisation en échec depuis 6h'. Il a 4 rapports de visite non synchronisés. Il doit :", options:["Recommencer les 4 visites une fois le réseau rétabli","Sauvegarder les données localement et synchroniser dès que le réseau est disponible — ne pas effacer les données","Contacter le superviseur pour saisir manuellement les données","Abandonner les rapports et refaire les visites"], correct:1, points:1 },
+  { type:'qcm', text:"La Fiche de Visite Inspector comporte 8 étapes. L'étape 5 (Actions) permet de :", options:["Photographier le lieu d'activité","Saisir le statut de conformité et les actions correctives recommandées","Enregistrer la signature de l'entrepreneur","Soumettre le rapport final"], correct:1, points:1 },
+  { type:'qcm', text:"Un entrepreneur conforme il y a 3 mois est re-visité et son activité a complètement cessé (local vide). L'inspecteur :", options:["Valide car le dossier était conforme précédemment","Marque 'Non-conforme — Activité cessée' avec photos du local vide et remonte au superviseur","Supprime la Carte Entreprenant de la base de données","Ignore et maintient le statut conforme"], correct:1, points:1 },
+  { type:'vf', text:"Un inspecteur peut fermer une visite comme 'Conforme' si le QR Code est valide même sans avoir vérifié la concordance activité/réalité terrain.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"L'application Inspector permet à l'inspecteur de contester une validation Back Office directement depuis son interface.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Un inspecteur peut effectuer une visite de contrôle sans que l'entrepreneur soit présent, si le lieu d'activité est accessible et l'activité observable.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Le rapport d'inspection doit contenir au minimum 2 photos géolocalisées pour être accepté par le système.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"L'inspecteur constate une erreur dans son propre rapport après soumission. Quelle est la procédure ?", options:["Supprimer le rapport et en créer un nouveau","Contacter le superviseur pour demander une correction officielle du rapport soumis","Soumettre un second rapport en contradiction avec le premier","Ignorer l'erreur si elle est mineure"], correct:1, points:1 },
+  { type:'qcm', text:"Un inspecteur est sollicité par un entrepreneur pour 'accélérer' la conformité de son dossier en échange d'un service. L'inspecteur doit :", options:["Accepter si le dossier mérite vraiment d'être validé","Refuser fermement, documenter la tentative de corruption et la signaler immédiatement à son superviseur","Accepter mais noter la conformité objective","Ignorer et traiter le dossier normalement"], correct:1, points:1 },
+  { type:'qcm', text:"Lors d'une visite groupée dans un marché, l'inspecteur peut-il utiliser une seule photo de la devanture du marché pour plusieurs dossiers d'entrepreneurs différents ?", options:["Oui, si les entrepreneurs sont dans le même marché","Non — chaque dossier exige des photos individuelles spécifiques à l'emplacement et l'activité de l'entrepreneur","Oui, si les entrepreneurs sont côte à côte","Non, sauf autorisation superviseur"], correct:1, points:1 },
+  { type:'qcm', text:"La Fiche de Visite étape 2 correspond à :", options:["GPS","QR Code","Photos","Signature"], correct:1, points:1 },
+  { type:'qcm', text:"Comment l'inspecteur distingue un point ORANGE d'un point JAUNE sur la carte Inspector ?", options:["Orange = attente validation, Jaune = problème GPS détecté","Orange = enrôlé par agent en attente de première inspection, Jaune = re-visite programmée","Orange = conforme, Jaune = non-conforme","Il n'y a pas de points jaunes dans Inspector"], correct:1, points:1 },
+  { type:'qcm', text:"L'inspecteur a effectué 12 visites aujourd'hui dont 4 marquées 'Non-conformes'. Son superviseur lui demande de 'réajuster' ces 4 dossiers en conformes pour améliorer les statistiques. L'inspecteur :", options:["Obéit au superviseur car c'est sa hiérarchie","Refuse et signale la pression hiérarchique inappropriée à l'échelon supérieur","Modifie 2 sur 4 comme compromis","Obéit mais garde une copie de ses rapports originaux"], correct:1, points:1 },
+  { type:'vf', text:"L'inspecteur peut décider de ne pas visiter un entrepreneur déjà conforme lors de la dernière inspection si aucun signalement n'a été fait sur ce dossier.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Un inspecteur dont le taux de conformité dépasse 95% sur un mois peut être suspecté de ne pas effectuer des contrôles rigoureux.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'open', text:"Lors d'une visite d'inspection, vous découvrez : (1) QR Code valide et correspondent au dossier, (2) l'activité est présente mais différente de celle déclarée, (3) l'entrepreneur dit avoir changé d'activité il y a 2 mois sans en informer MAFA. Détaillez chaque étape de votre rapport et vos recommandations.", options:[], correct:0, points:3 }
+],
+
+'superviseur': [
+  { type:'qcm', text:"Un agent de votre équipe a un taux de déploiement de 35% (objectif : 85%) depuis 2 semaines. Les autres agents sont à 80%+. Quelle est votre première action ?", options:["Le sanctionner immédiatement","Organiser un accompagnement terrain d'une journée pour identifier les blocages opérationnels","Lui attribuer une zone plus facile sans discussion","Ignorer en espérant que ça s'améliore"], correct:1, points:1 },
+  { type:'qcm', text:"L'application Superviseur affiche 3 déploiements 'En attente de validation' depuis plus de 2 heures. Vous êtes en réunion. Que faites-vous ?", options:["Attendre la fin de la réunion","Valider rapidement sur mobile entre deux points de la réunion ou déléguer à un superviseur adjoint si disponible","Demander aux agents d'annuler et de recommencer demain","Ignorer — les agents peuvent attendre"], correct:1, points:1 },
+  { type:'qcm', text:"Un marchand contacte directement le superviseur (numéro transmis par erreur par un agent) pour se plaindre que son QR Code ne fonctionne pas. Le superviseur :", options:["Donne le numéro du 0808 uniquement","Vérifie dans l'application Superviseur le statut du déploiement, identifie l'agent concerné et coordonne la solution","Demande au marchand de rappeler l'agent directement","Dit au marchand que ce n'est pas son rôle"], correct:1, points:1 },
+  { type:'qcm', text:"Votre équipe de 6 agents doit déployer 300 QR Codes en 5 jours. Comment répartissez-vous les objectifs ?", options:["60 par agent sur 5 jours sans distinction","Analyser les performances passées de chaque agent et attribuer des objectifs différenciés selon les capacités","Donner 300 à l'agent le plus performant","Demander à chaque agent de s'auto-attribuer son objectif"], correct:1, points:1 },
+  { type:'qcm', text:"L'application Superviseur indique qu'un agent a synchronisé 15 déploiements en 2 heures (hors du commun). Vous devez :", options:["Féliciter l'agent publiquement sans vérification","Vérifier la géolocalisation et les détails de chaque déploiement pour confirmer leur authenticité","Ignorer car c'est une bonne performance","Demander à l'agent une explication écrite"], correct:1, points:1 },
+  { type:'qcm', text:"Un agent signale que lors de 3 enrôlements consécutifs dans un même marché, les QR Codes à blanc ont été refusés par le système (déjà utilisés). Que fait le superviseur ?", options:["Demander à l'agent de continuer avec d'autres kits","Investiguer si les kits ont été compromis, bloquer les QR Codes suspects et signaler à la direction technique","Fournir de nouveaux kits sans investigation","Suspendre l'agent jusqu'à clarification"], correct:1, points:1 },
+  { type:'qcm', text:"Le taux de déploiement de votre équipe est 75% (objectif 85%). Il reste 5 jours. Quelle stratégie adoptez-vous ?", options:["Accepter 75% car c'est proche de l'objectif","Analyser les zones non couvertes, réaffecter les agents vers les marchés à forte densité et intensifier le suivi quotidien","Demander une extension de délai","Travailler uniquement les marchés faciles pour gonfler les chiffres"], correct:1, points:1 },
+  { type:'qcm', text:"Lors d'un test de transaction post-déploiement, le QR Code affiche 'Marchand non trouvé'. L'agent a déjà quitté le point de vente. Le superviseur :", options:["Demande à l'agent de revenir immédiatement chez le marchand pour réenrôler","Appelle le 0808 pour signalement technique pendant que l'agent retourne chez le marchand","Invalide le déploiement et demande à l'agent de le refaire le lendemain","Marque le déploiement comme réussi malgré l'erreur"], correct:1, points:1 },
+  { type:'qcm', text:"Votre équipe utilise l'application Agent version 2.1 mais une mise à jour vers 2.3 est disponible. La 2.3 corrige des bugs GPS. Que faites-vous ?", options:["Laisser chaque agent décider de mettre à jour","Planifier une mise à jour coordonnée de toute l'équipe lors d'une pause pour éviter les incohérences de version","Mettre à jour uniquement votre propre application en premier","Attendre que la direction impose la mise à jour"], correct:1, points:1 },
+  { type:'qcm', text:"Un marchand Premium refuse de montrer ses documents financiers à l'agent lors du déplafonnement. L'agent vous appelle. Que conseillez-vous ?", options:["Forcer le marchand à montrer les documents","Expliquer que les documents sont obligatoires pour le déplafonnement Premium — sans eux, seul le profil Classique est possible","Valider le déplafonnement Premium sans les documents pour ne pas perdre le marchand","Demander au marchand d'envoyer les documents par WhatsApp"], correct:1, points:1 },
+  { type:'qcm', text:"Le tableau de bord Superviseur indique que votre zone a un taux de 'Doublons détectés' de 12% (moyenne nationale : 3%). Que faire en priorité ?", options:["Ignorer car votre taux de déploiement est bon","Analyser les dossiers doublons pour identifier si c'est une erreur de kits, de procédure ou de fraude potentielle","Accuser les agents de fraude sans investigation","Signaler à la direction et attendre leurs instructions"], correct:1, points:1 },
+  { type:'qcm', text:"Un agent vous demande comment gérer un marchand OM Essentiel qui veut encaisser 120 000 FCFA en une seule transaction. Que répondez-vous ?", options:["La transaction sera refusée","La transaction est acceptée avec des frais sur les 70 000 FCFA au-delà du plafond gratuit de 50 000 FCFA/jour","La transaction nécessite une validation superviseur","Le marchand doit passer au profil Classique avant d'encaisser"], correct:1, points:1 },
+  { type:'qcm', text:"Quelle est la différence opérationnelle entre un déploiement 'QR Code à blanc' et un 'QR Code actif' dans l'application Agent ?", options:["Le QR Code à blanc est en noir et blanc, l'actif est en couleur","Le QR Code à blanc est scanné lors de l'enrôlement O'calm pour initialiser le compte, le QR Code actif est le code final fonctionnel après validation","Le QR Code à blanc est temporaire, valable 24h seulement","Il n'y a aucune différence fonctionnelle"], correct:1, points:1 },
+  { type:'qcm', text:"Vous constatez qu'un agent enregistre systématiquement des tests de transaction réussis mais les marchands signalent que leurs QR Codes ne fonctionnent pas. Que soupçonnez-vous ?", options:["Un problème réseau localisé dans la zone de l'agent","L'agent falsifie les tests de transaction dans l'application sans les effectuer réellement","Un bug de l'application que vous devez signaler","Une formation insuffisante des marchands"], correct:1, points:1 },
+  { type:'qcm', text:"Le superviseur reçoit une demande d'un agent pour changer de zone de déploiement car 'les marchands dans sa zone sont hostiles'. Que fait le superviseur ?", options:["Refuse catégoriquement, la zone est fixe","Accompagne l'agent dans la zone pour observer les interactions, propose des techniques de persuasion et réévalue si nécessaire","Accepte immédiatement le changement de zone","Signale l'agent à la direction pour manque de professionnalisme"], correct:1, points:1 },
+  { type:'vf', text:"Le superviseur peut valider un déploiement QR Code sans avoir vérifié si le test de transaction a été effectué.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Si un agent O'calm enregistre plus de 8 déploiements par jour pendant 3 jours consécutifs, le superviseur doit le signaler à la direction comme performance exceptionnelle à analyser.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Un superviseur peut accéder aux données de performance de toutes les équipes du projet, pas seulement la sienne.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"L'application Superviseur permet de bloquer temporairement un agent soupçonné de fraude en attendant l'investigation.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Lors d'une réunion d'équipe hebdomadaire, un agent partage publiquement les difficultés d'un collègue. Vous en tant que superviseur :", options:["Laissez le débat s'installer, c'est constructif","Recadrez immédiatement : les performances individuelles se traitent en entretien privé, pas en réunion collective","Encouragez la comparaison entre agents pour stimuler la compétition","Ignorez l'incident"], correct:1, points:1 },
+  { type:'qcm', text:"Le RCCM d'un marchand demandant le profil Premium indique une date de création d'entreprise postérieure à la date d'inscription ID30. Cela signifie :", options:["Le marchand est éligible au Premium car il a maintenant un RCCM","Anomalie chronologique — l'entreprise légale n'existait pas au moment de l'enrôlement ID30, à signaler et analyser","Aucun problème — les dates peuvent différer légalement","Le dossier ID30 doit être mis à jour avec la nouvelle date"], correct:1, points:1 },
+  { type:'qcm', text:"L'application Superviseur indique que 4 agents ont synchronisé leurs données dans la même plage horaire (8h01 à 8h04) avec des localisations différentes de plus de 15 km chacune. Que peut cela indiquer ?", options:["Un réseau très rapide ce matin-là","Une synchronisation différée de données collectées la veille, ou une anomalie de données à vérifier","Une performance exceptionnelle de l'équipe","Une mise à jour automatique de l'application"], correct:1, points:1 },
+  { type:'qcm', text:"Un marchand Essentiel demande à un agent comment passer au profil Classique. L'agent ne sait pas répondre et appelle le superviseur. La réponse correcte est :", options:["Appeler le 0808","Menu options de l'application OM Business → Demander déplafonnement → Profil Classique → Fournir les pièces requises — réponse sous 24h","Se rendre en agence Orange","Attendre 6 mois d'utilisation active avant de pouvoir déplafonner"], correct:1, points:1 },
+  { type:'qcm', text:"Quel critère différencie le profil OM Business Classique du profil Essentiel en termes de plafond mensuel d'encaissement ?", options:["Classique : 500 000 FCFA, Essentiel : 250 000 FCFA","Classique : plafond supérieur négocié avec Orange CI (plusieurs millions FCFA), Essentiel : 500 000 FCFA/mois gratuit","Classique : illimité, Essentiel : 100 000 FCFA","Classique : 1 000 000 FCFA, Essentiel : 500 000 FCFA"], correct:1, points:1 },
+  { type:'qcm', text:"Un superviseur constate que son équipe atteint l'objectif en quantité mais que le taux d'anomalies signalées post-déploiement est de 18% (tolérance : 5%). Quelle est la cause la plus probable ?", options:["L'objectif quantitatif est trop élevé","Les agents privilégient la vitesse de déploiement au détriment de la qualité de vérification","Les marchands sont mal formés","Le réseau est instable dans la zone"], correct:1, points:1 },
+  { type:'vf', text:"Le superviseur est co-responsable de la qualité des déploiements de ses agents, pas seulement de leur volume.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Un superviseur peut approuver un déploiement pour un marchand dont le QR Code à blanc a déjà été utilisé par un autre agent.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'open', text:"Vous supervisez une équipe de 5 agents sur une zone de 3 marchés. Après 2 semaines, vous constatez : agent A = 90% d'objectif, B = 85%, C = 45%, D = 78%, E = 30%. Le délai de fin de mission est dans 8 jours. Décrivez votre plan d'action complet pour les 8 jours restants, agent par agent.", options:[], correct:0, points:3 }
+]
+}; // fin QUESTIONS_BY_POSTE
+
+function loadSampleQuestions() {
+  state.questions = [
+    { id: 1, type: 'qcm', text: 'Qu\'est-ce que la satisfaction client dans un call center ?', options: ['Le nombre d\'appels traités', 'Le niveau de contentement du client après interaction', 'Le temps de pause des agents', 'La vitesse de connexion internet'], correct: 1, points: 2 },
+    { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
+    { id: 3, type: 'qcm', text: 'Que signifie le sigle DMT (Durée Moyenne de Traitement) ?', options: ['Durée totale des appels dans une journée', 'Temps moyen passé par un agent sur chaque appel', 'Nombre de tickets résolus par heure', 'Délai de réponse au premier appel'], correct: 1, points: 2 },
+    { id: 4, type: 'vf', text: 'L\'écoute active consiste à interrompre le client pour lui proposer des solutions rapidement.', options: ['Vrai', 'Faux'], correct: 1, points: 1 },
+    { id: 5, type: 'qcm', text: 'Quelle est la bonne attitude face à un client mécontent ?', options: ['Raccrocher poliment', 'Écouter, comprendre, s\'excuser si nécessaire et proposer une solution', 'Transférer immédiatement l\'appel', 'Ignorer les plaintes et continuer le script'], correct: 1, points: 2 },
+    { id: 6, type: 'open', text: 'Décrivez en quelques lignes votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
+  ];
+  renderQuestions();
+  alert('✅ Questions exemples chargées !');
+}
+
+// ===================== CANDIDATE ENTRY =====================
+function setupCandidateEntry() {
+  const section = document.getElementById('access-code-section');
+  section.style.display = state.config.accessCode ? 'block' : 'none';
+  const instrBlock = document.getElementById('instructions-block');
+  if(state.config.instructions) {
+    instrBlock.style.display = 'flex';
+    instrBlock.innerHTML = '📋 ' + state.config.instructions;
+  }
+
+  // Adapter le titre et les rôles selon l'opération choisie
+  const hero = document.querySelector('#screen-candidate-entry .identity-hero h1');
+  const heroSub = document.querySelector('#screen-candidate-entry .identity-hero p');
+  const posteSelect = document.getElementById('candidate-poste');
+
+  if(state.currentOperation === 'orange') {
+    if(hero) hero.innerHTML = 'Évaluation <span>Orange Money Business</span>';
+    if(heroSub) heroSub.textContent = 'Opération ORANGE — Renseignez vos informations pour commencer';
+    posteSelect.innerHTML = `
+      <option value="">-- Sélectionnez votre rôle --</option>
+      <option value="agent-orange">Agent OM Business</option>
+      <option value="superviseur-orange">Superviseur OM Business</option>
+      <option value="inspecteur-orange">Inspecteur OM Business</option>
+      <option value="rv-orange">Responsable Ville (OM Business)</option>
+    `;
+  } else if(state.currentOperation === 'id30') {
+    if(hero) hero.innerHTML = 'Bienvenue sur <span>l\'évaluation</span>';
+    if(heroSub) heroSub.textContent = 'Opération ID30 — Renseignez vos informations pour commencer le test';
+    posteSelect.innerHTML = `
+      <option value="">-- Sélectionnez votre poste --</option>
+      <option value="call-center">Agent Call Center (ID30)</option>
+      <option value="back-office">Agent Back Office (ID30)</option>
+      <option value="inspecteur">Inspecteur (ID30 &amp; Orange QR)</option>
+      <option value="superviseur">Superviseur (Agent &amp; Orange Money)</option>
+    `;
+  }
+}
+
+async function startExam() {
+  const firstname = document.getElementById('candidate-firstname').value.trim();
+  const lastname = document.getElementById('candidate-lastname').value.trim();
+  const phone = document.getElementById('candidate-phone').value.trim().replace(/\s+/g, '');
+  const poste = document.getElementById('candidate-poste').value;
+  const errorEl = document.getElementById('candidate-entry-error');
+  const alreadyDoneEl = document.getElementById('eval-already-done');
+
+  alreadyDoneEl.style.display = 'none';
+
+  if(!firstname || !lastname || !phone) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Veuillez remplir tous les champs obligatoires (*).';
+    return;
+  }
+  if(phone.length < 8) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Numéro de téléphone invalide (minimum 8 chiffres).';
+    return;
+  }
+  if(!poste) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Veuillez sélectionner votre poste.';
+    return;
+  }
+  if(state.config.accessCode) {
+    const code = document.getElementById('candidate-access-code').value.trim().toUpperCase();
+    if(code !== state.config.accessCode.toUpperCase()) {
+      errorEl.style.display = 'flex';
+      errorEl.textContent = '❌ Code d\'accès incorrect.';
+      return;
+    }
+  }
+
+  // Connexion / création du candidat via téléphone
+  errorEl.style.display = 'none';
+  const posteMap = {
+    'call-center': 'Call Center', 'back-office': 'Back Office',
+    'inspecteur': 'Inspecteur', 'superviseur': 'Superviseur',
+    'agent-orange': 'Call Center', 'rv-orange': 'Superviseur',
+    'inspecteur-orange': 'Inspecteur', 'superviseur-orange': 'Superviseur'
+  };
+
+  try {
+    var loginResult = await loginOrCreateCandidat({
+      nom: lastname, prenom: firstname, telephone: phone,
+      poste: posteMap[poste] || 'Call Center'
+    });
+
+    if (loginResult.candidat) {
+      state._supabaseCandidatId = loginResult.candidat.id;
+
+      // Vérifier si une évaluation a déjà été passée pour ce poste
+      var sb = getSupabase();
+      var { data: existingEvals } = await sb
+        .from('evaluations')
+        .select('id, poste, score_final, created_at')
+        .eq('candidat_id', loginResult.candidat.id);
+
+      if (existingEvals && existingEvals.length > 0) {
+        // Le candidat a déjà passé une évaluation
+        alreadyDoneEl.style.display = 'flex';
+        alreadyDoneEl.innerHTML = '⚠️ Vous avez déjà passé une évaluation (<strong>' + existingEvals[0].poste + '</strong> — Score : ' + existingEvals[0].score_final + ' pts, le ' + new Date(existingEvals[0].created_at).toLocaleDateString('fr-FR') + '). <br>Une seule tentative est autorisée par poste.';
+        return;
+      }
+    }
+  } catch(e) {
+    console.error('[Supabase] Erreur connexion candidat:', e);
+    // Continuer quand même en mode dégradé
+  }
+
+  // Charger les questions adaptées au poste et à l'opération
+  const posteLabels = {
+    'call-center': 'Agent Call Center — ID30',
+    'back-office': 'Agent Back Office — ID30',
+    'inspecteur': 'Inspecteur — ID30',
+    'superviseur': 'Superviseur — ID30',
+    'agent-orange': 'Agent OM Business — Orange',
+    'rv-orange': 'Responsable Ville — Orange',
+    'inspecteur-orange': 'Inspecteur OM Business — Orange',
+    'superviseur-orange': 'Superviseur — Orange'
+  };
+  const bank = QUESTIONS_BY_POSTE;
+  let rawQuestions = bank[poste] || [];
+  state.questions = rawQuestions.map((q, i) => ({...q, id: i + 1}));
+  if(state.questions.length === 0) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Aucune question disponible pour ce rôle.';
+    return;
+  }
+  state.config.title = 'Évaluation — ' + posteLabels[poste];
+
+  errorEl.style.display = 'none';
+  state.currentCandidate = { firstname, lastname, email: '', phone, poste, posteLabel: posteLabels[poste], operation: state.currentOperation || 'id30' };
+  state.currentAnswers = {};
+  state.currentQuestion = 0;
+  state.startTime = Date.now();
+
+  document.getElementById('exam-title-display').textContent = state.config.title;
+  document.getElementById('exam-candidate-name').textContent = `${firstname} ${lastname}`;
+
+  renderExam();
+  startTimer(state.config.duration * 60);
+  showScreen('screen-exam');
+}
+
+// ===================== EXAM =====================
+function renderExam() {
+  const q = state.questions[state.currentQuestion];
+  const total = state.questions.length;
+  const current = state.currentQuestion;
+
+  document.getElementById('exam-progress').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('question-counter').textContent = `Question ${current + 1} / ${total}`;
+
+  const btn_prev = document.getElementById('btn-prev');
+  const btn_next = document.getElementById('btn-next');
+  const btn_submit = document.getElementById('btn-submit');
+
+  btn_prev.style.display = current > 0 ? 'inline-flex' : 'none';
+  btn_next.style.display = current < total - 1 ? 'inline-flex' : 'none';
+  btn_submit.style.display = current === total - 1 ? 'inline-flex' : 'none';
+  btn_submit.textContent = '🔍 Vérifier & Terminer';
+
+  const letters = ['A','B','C','D','E','F'];
+  const typeBadge = q.type === 'qcm' ? '<span class="q-type-badge badge-qcm">QCM</span>' :
+                    q.type === 'vf' ? '<span class="q-type-badge badge-vf">Vrai/Faux</span>' :
+                    '<span class="q-type-badge badge-open">Question Ouverte</span>';
+  let optionsHTML = '';
+  if(q.multi) {
+    const curSel = Array.isArray(state.currentAnswers[q.id]) ? state.currentAnswers[q.id] : [];
+    optionsHTML = `<div class="alert alert-info" style="margin-bottom:0.8rem;font-size:0.85rem;padding:10px 14px">☑️ Sélectionnez <strong>${q.multi} réponses</strong> pour cette question.</div>
+    <div class="exam-options">` + q.options.map((opt, oi) => `
+      <label class="exam-option ${curSel.includes(oi) ? 'selected' : ''}" onclick="selectMultiAnswer(${q.id}, ${oi}, ${q.multi})">
+        <input type="checkbox" value="${oi}" ${curSel.includes(oi) ? 'checked' : ''} style="pointer-events:none;width:16px;height:16px;accent-color:var(--accent)">
+        <span class="exam-option-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </label>`).join('') + `</div>`;
+  } else if(q.type === 'qcm' || q.type === 'vf') {
+    optionsHTML = `<div class="exam-options">` + q.options.map((opt, oi) => `
+      <label class="exam-option ${state.currentAnswers[q.id] === oi ? 'selected' : ''}" onclick="selectAnswer(${q.id}, ${oi})">
+        <input type="radio" name="exam_q" value="${oi}" ${state.currentAnswers[q.id] === oi ? 'checked' : ''} style="pointer-events:none">
+        <span class="exam-option-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </label>`).join('') + `</div>`;
+  } else {
+    optionsHTML = `
+      <div class="alert alert-info" style="margin-bottom:1rem">📝 Cette question sera évaluée séparément. Répondez sur Google Forms.</div>
+      <textarea placeholder="Votre réponse (optionnel pour référence)..." style="min-height:120px" oninput="state.currentAnswers['open_${q.id}'] = this.value">${state.currentAnswers['open_'+q.id] || ''}</textarea>`;
+  }
+
+  document.getElementById('exam-questions-container').innerHTML = `
+    <div class="exam-question-card">
+      <div class="exam-q-meta">
+        ${typeBadge}
+        <span style="font-size:0.78rem;color:var(--text-muted)">${q.points} point${q.points > 1 ? 's' : ''}</span>
+      </div>
+      <div class="exam-q-text">${q.text || '<em style="color:var(--text-muted)">Question sans texte</em>'}</div>
+      ${optionsHTML}
+    </div>`;
+}
+
+function selectAnswer(qId, optionIdx) {
+  state.currentAnswers[qId] = optionIdx;
+  renderExam();
+}
+
+
+function selectMultiAnswer(qId, optionIdx, maxSelect) {
+  let current = Array.isArray(state.currentAnswers[qId]) ? [...state.currentAnswers[qId]] : [];
+  if(current.includes(optionIdx)) {
+    current = current.filter(i => i !== optionIdx);
+  } else {
+    if(current.length >= maxSelect) current = current.slice(1);
+    current.push(optionIdx);
+  }
+  state.currentAnswers[qId] = current;
+  renderExam();
+}
+
+function navigate(dir) {
+  state.currentQuestion += dir;
+  renderExam();
+}
+
+function startTimer(seconds) {
+  state.timeRemaining = seconds;
+  clearInterval(state.timerInterval);
+  updateTimerDisplay();
+  state.timerInterval = setInterval(() => {
+    state.timeRemaining--;
+    updateTimerDisplay();
+    if(state.timeRemaining <= 0) {
+      clearInterval(state.timerInterval);
+      submitExam(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+  const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+  const el = document.getElementById('timer-display');
+  el.textContent = `${m}:${s}`;
+  el.className = 'timer-display';
+  if(state.timeRemaining < 60) el.classList.add('danger');
+  else if(state.timeRemaining < 300) el.classList.add('warning');
+}
+
+function submitExam(auto = false) {
+  if(auto) {
+    // Temps écoulé : soumettre directement
+    finalizeExam();
+    return;
+  }
+  // Afficher l'écran de révision
+  showReview();
+}
+
+// ===================== REVIEW =====================
+function showReview() {
+  const candidate = state.currentCandidate;
+  document.getElementById('review-candidate-name-display').textContent = `${candidate.firstname} ${candidate.lastname}`;
+
+  // Sync timer display
+  syncReviewTimer();
+
+  const letters = ['A','B','C','D','E','F'];
+  const total = state.questions.length;
+  const autoQ = state.questions.filter(q => q.type !== 'open');
+  const answered = autoQ.filter(q => state.currentAnswers[q.id] !== undefined).length;
+  const unanswered = autoQ.filter(q => state.currentAnswers[q.id] === undefined).length;
+  const openQ = state.questions.filter(q => q.type === 'open').length;
+
+  // Summary bar
+  document.getElementById('review-summary-bar').innerHTML = `
+    <div class="review-stat"><div class="dot dot-answered"></div>${answered} répondu(s)</div>
+    ${unanswered > 0 ? `<div class="review-stat"><div class="dot dot-unanswered"></div>${unanswered} sans réponse</div>` : ''}
+    ${openQ > 0 ? `<div class="review-stat"><div class="dot dot-open"></div>${openQ} question(s) ouverte(s)</div>` : ''}
+    <div class="review-stat" style="margin-left:auto;color:var(--text-muted)">${total} question(s) au total</div>`;
+
+  // Warning
+  const warnEl = document.getElementById('warning-unanswered');
+  if(unanswered > 0) {
+    warnEl.style.display = 'block';
+    document.getElementById('unanswered-count').textContent = unanswered;
+  } else {
+    warnEl.style.display = 'none';
+  }
+
+  // Questions list
+  document.getElementById('review-questions-list').innerHTML = state.questions.map((q, idx) => {
+    const ans = state.currentAnswers[q.id];
+    const isOpen = q.type === 'open';
+    let statusIcon, statusClass, answerPreview;
+
+    if(isOpen) {
+      statusIcon = '📝';
+      statusClass = 'open-type';
+      answerPreview = 'Question ouverte';
+    } else if(ans !== undefined) {
+      statusIcon = '✅';
+      statusClass = 'answered';
+      answerPreview = letters[ans] + '. ' + (q.options[ans] || '');
+    } else {
+      statusIcon = '❌';
+      statusClass = 'unanswered';
+      answerPreview = 'Sans réponse';
+    }
+
+    let bodyHTML = '';
+    if(!isOpen) {
+      bodyHTML = `
+        <div class="review-q-full-text">${q.text}</div>
+        <div class="review-options">
+          ${q.options.map((opt, oi) => `
+            <label class="review-option ${ans === oi ? 'selected' : ''}" onclick="reviewSelectAnswer(${q.id}, ${oi}, this)">
+              <input type="radio" name="review_q_${q.id}" value="${oi}" ${ans === oi ? 'checked' : ''} style="pointer-events:none">
+              <span class="review-option-letter">${letters[oi]}</span>
+              <span>${opt}</span>
+            </label>`).join('')}
+        </div>`;
+    } else {
+      bodyHTML = `
+        <div class="review-q-full-text">${q.text}</div>
+        <div class="alert alert-info" style="font-size:0.82rem">📝 Cette question ouverte sera évaluée séparément via Google Forms.</div>
+        <textarea placeholder="Notes personnelles (optionnel)..." style="min-height:80px;margin-top:8px" oninput="state.currentAnswers['open_${q.id}']=this.value">${state.currentAnswers['open_'+q.id]||''}</textarea>`;
+    }
+
+    return `
+      <div class="review-question-block ${statusClass}" id="review-block-${q.id}">
+        <div class="review-q-header" onclick="toggleReviewBlock(${q.id})">
+          <span class="review-status-icon">${statusIcon}</span>
+          <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--accent);font-size:0.8rem;min-width:30px">Q${idx+1}</span>
+          <span class="review-q-text-preview">${q.text || 'Question sans texte'}</span>
+          <span class="review-answer-preview">${answerPreview}</span>
+          <button class="review-edit-btn">${isOpen ? 'Voir' : 'Modifier'}</button>
+        </div>
+        <div class="review-q-body" id="review-body-${q.id}">
+          ${bodyHTML}
+        </div>
+      </div>`;
+  }).join('');
+
+  showScreen('screen-review');
+  document.getElementById('currentMode').textContent = 'Révision';
+}
+
+function toggleReviewBlock(qId) {
+  const body = document.getElementById(`review-body-${qId}`);
+  body.classList.toggle('open');
+}
+
+function reviewSelectAnswer(qId, optionIdx, labelEl) {
+  state.currentAnswers[qId] = optionIdx;
+  // Update UI in review block
+  const block = document.getElementById(`review-block-${qId}`);
+  block.querySelectorAll('.review-option').forEach(opt => opt.classList.remove('selected'));
+  labelEl.classList.add('selected');
+  block.querySelector('input[value="'+optionIdx+'"]').checked = true;
+  // Update header preview
+  const q = state.questions.find(q => q.id === qId);
+  const letters = ['A','B','C','D','E','F'];
+  block.querySelector('.review-answer-preview').textContent = letters[optionIdx] + '. ' + q.options[optionIdx];
+  block.classList.remove('unanswered');
+  block.classList.add('answered');
+  block.querySelector('.review-status-icon').textContent = '✅';
+  // Recount unanswered
+  const autoQ = state.questions.filter(q => q.type !== 'open');
+  const unanswered = autoQ.filter(q => state.currentAnswers[q.id] === undefined).length;
+  const warnEl = document.getElementById('warning-unanswered');
+  if(unanswered > 0) {
+    warnEl.style.display = 'block';
+    document.getElementById('unanswered-count').textContent = unanswered;
+    const bar = document.getElementById('review-summary-bar');
+    const answered = autoQ.length - unanswered;
+    bar.querySelector('.dot-answered').parentElement.innerHTML = `<div class="dot dot-answered"></div>${answered} répondu(s)`;
+  } else {
+    warnEl.style.display = 'none';
+  }
+}
+
+function syncReviewTimer() {
+  // Mirror timer to review screen
+  clearInterval(state.reviewTimerSync);
+  state.reviewTimerSync = setInterval(() => {
+    const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+    const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+    const el = document.getElementById('timer-display-review');
+    if(el) {
+      el.textContent = `${m}:${s}`;
+      el.className = 'timer-display';
+      if(state.timeRemaining < 60) el.classList.add('danger');
+      else if(state.timeRemaining < 300) el.classList.add('warning');
+    }
+  }, 500);
+}
+
+function backToExam() {
+  clearInterval(state.reviewTimerSync);
+  showScreen('screen-exam');
+  document.getElementById('currentMode').textContent = 'Évaluation en cours';
+}
+
+function confirmSubmit() {
+  if(!confirm('✅ Confirmer la soumission définitive ?\n\nVos réponses seront enregistrées et vous ne pourrez plus les modifier.')) return;
+  clearInterval(state.reviewTimerSync);
+  finalizeExam();
+}
+
+function finalizeExam() {
+  clearInterval(state.timerInterval);
+  clearInterval(state.reviewTimerSync);
+  // Calculate score
+  let score = 0, maxScore = 0, correct = 0, wrong = 0;
+  const autoQuestions = state.questions.filter(q => q.type !== 'open');
+  autoQuestions.forEach(q => {
+    maxScore += q.points;
+    const ans = state.currentAnswers[q.id];
+    const isCorrect = q.multi
+      ? (Array.isArray(ans) && JSON.stringify([...ans].sort((a,b)=>a-b)) === JSON.stringify([...q.correct].sort((a,b)=>a-b)))
+      : ans === q.correct;
+    if(ans === undefined || (q.multi && (!Array.isArray(ans) || ans.length === 0))) { wrong++; score -= state.config.pointsWrong; }
+    else if(isCorrect) { correct++; score += q.points; }
+    else { wrong++; score -= state.config.pointsWrong; }
+  });
+  score = Math.max(0, score);
+  const percentage = maxScore > 0 ? Math.round(score / maxScore * 100) : 0;
+  const duration = Math.round((Date.now() - state.startTime) / 1000);
+  const durationStr = `${Math.floor(duration/60)}min ${duration%60}s`;
+
+  // Générer un code personnel unique pour ce candidat
+  const resultCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  const result = {
+    ...state.currentCandidate,
+    score, maxScore, percentage, correct, wrong,
+    duration: durationStr,
+    date: new Date().toLocaleString('fr-FR'),
+    answers: {...state.currentAnswers},
+    resultCode,
+    examTitle: state.config.title
+  };
+  state.results.push(result);
+
+  // Sauvegarder dans localStorage sous le code personnel
+  try {
+    localStorage.setItem('mafa_result_' + resultCode, JSON.stringify(result));
+  } catch(e) {}
+  // Sauvegarder liste complete dans localStorage
+  try { localStorage.setItem('mafa_all_results', JSON.stringify(state.results)); } catch(e) {}
+
+  // ══ SAUVEGARDER DANS SUPABASE ══
+  (async function() {
+    try {
+      var candidatId = state._supabaseCandidatId;
+      if (candidatId) {
+        await saveEvaluation({
+          candidat_id: candidatId,
+          poste: result.posteLabel || state.currentCandidate.poste,
+          score_final: result.score,
+          total_questions: autoQuestions.length,
+          reponses: Object.keys(state.currentAnswers).map(function(k) {
+            return { question_id: k, answer: state.currentAnswers[k] };
+          }),
+          duree_secondes: duration
+        });
+        console.log('[Supabase] Évaluation sauvegardée avec succès');
+      }
+    } catch(e) {
+      console.error('[Supabase] Erreur sauvegarde évaluation:', e);
+    }
+  })();
+
+  // Show results
+  showCandidateResults(result);
+}
+
+function showCandidateResults(result) {
+  document.getElementById('result-candidate-name').textContent = `${result.firstname} ${result.lastname}${result.posteLabel ? ' — ' + result.posteLabel : ''}`;
+  document.getElementById('result-score-value').textContent = result.percentage + '%';
+  document.getElementById('result-stats').textContent = `${result.correct} correcte(s) · ${result.wrong} incorrecte(s) · ${result.duration}`;
+
+  // Score circle
+  const circumference = 439.8;
+  const offset = circumference - (result.percentage / 100 * circumference);
+  const circle = document.getElementById('score-circle');
+  circle.style.strokeDashoffset = offset;
+  const colors = result.percentage >= 80 ? 'var(--success)' : result.percentage >= 60 ? 'var(--accent)' : result.percentage >= 40 ? 'var(--gold)' : 'var(--danger)';
+  circle.style.stroke = colors;
+  document.getElementById('result-score-value').style.color = colors;
+
+  // Mention
+  const mentionEl = document.getElementById('result-mention');
+  if(result.percentage >= 80) { mentionEl.textContent = '🏆 Excellent'; mentionEl.className = 'result-mention mention-excellent'; }
+  else if(result.percentage >= 60) { mentionEl.textContent = '👍 Bien'; mentionEl.className = 'result-mention mention-bien'; }
+  else if(result.percentage >= 40) { mentionEl.textContent = '⚠️ Moyen'; mentionEl.className = 'result-mention mention-moyen'; }
+  else { mentionEl.textContent = '❌ Insuffisant'; mentionEl.className = 'result-mention mention-insuffisant'; }
+
+  // Detail
+  const autoQ = state.questions.filter(q => q.type !== 'open');
+  const letters = ['A','B','C','D','E','F'];
+  document.getElementById('result-answers-list').innerHTML = autoQ.map((q, idx) => {
+    const ans = result.answers[q.id];
+    const isCorrect = q.multi
+      ? (Array.isArray(ans) && JSON.stringify([...ans].sort((a,b)=>a-b)) === JSON.stringify([...q.correct].sort((a,b)=>a-b)))
+      : ans === q.correct;
+    const icon = (ans === undefined || ans === null) ? '⬜' : isCorrect ? '✅' : '❌';
+    const ansDisplay = q.multi
+      ? (Array.isArray(ans) && ans.length > 0 ? ans.map(i => letters[i] + '. ' + q.options[i]).join(' + ') : 'Sans réponse')
+      : (ans !== undefined ? (letters[ans] + '. ' + q.options[ans]) : 'Sans réponse');
+    const correctDisplay = q.multi
+      ? q.correct.map(i => letters[i] + '. ' + q.options[i]).join(' + ')
+      : (letters[q.correct] + '. ' + q.options[q.correct]);
+    return `
+      <div class="result-item">
+        <div class="result-item-icon">${icon}</div>
+        <div class="result-item-text">
+          <div class="q-text">Q${idx+1}. ${q.text || 'Question'}${q.multi ? ' <em style="font-size:0.75rem;color:var(--text-muted)">(2 réponses)</em>' : ''}</div>
+          <div class="q-answer">Votre réponse : ${ansDisplay}</div>
+          ${!isCorrect ? `<div class="q-correct">✓ Bonne réponse : ${correctDisplay}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+
+  // Afficher le code personnel du candidat sur l'écran de résultats
+  const existingCodeBlock = document.getElementById('result-code-block');
+  if(existingCodeBlock) existingCodeBlock.remove();
+  if(result.resultCode) {
+    const codeBlock = document.createElement('div');
+    codeBlock.id = 'result-code-block';
+    codeBlock.style.cssText = 'background:linear-gradient(135deg,#1e3a8a,#1565C0);color:white;border-radius:14px;padding:20px 24px;margin:1.5rem 0;text-align:center';
+    codeBlock.innerHTML = `
+      <div style="font-size:0.75rem;opacity:.8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Votre code personnel</div>
+      <div style="font-size:2.2rem;font-weight:800;letter-spacing:0.25em;font-family:'Syne',sans-serif;margin-bottom:8px">${result.resultCode}</div>
+      <div style="font-size:0.82rem;opacity:.85;line-height:1.6">Notez ce code pour consulter vos résultats ultérieurement.<br>Depuis l'accueil → <strong>Consulter mes résultats</strong></div>`;
+    const heroSection = document.querySelector('.result-hero');
+    if(heroSection) heroSection.insertAdjacentElement('afterend', codeBlock);
+  }
+
+  showScreen('screen-results');
+}
+
+// ===================== LOOKUP PAR CODE =====================
+function lookupResultByCode() {
+  const code = (document.getElementById('lookup-code-input').value || '').trim().toUpperCase();
+  const errorEl = document.getElementById('lookup-error');
+  const resultBlock = document.getElementById('lookup-result-block');
+
+  errorEl.style.display = 'none';
+  resultBlock.style.display = 'none';
+
+  if(!code || code.length < 4) {
+    errorEl.textContent = '❌ Veuillez saisir votre code personnel (6 caractères).';
+    errorEl.style.display = 'flex';
+    return;
+  }
+
+  // Chercher dans localStorage
+  let result = null;
+  try {
+    const stored = localStorage.getItem('mafa_result_' + code);
+    if(stored) result = JSON.parse(stored);
+  } catch(e) {}
+
+  // Chercher aussi dans la session courante
+  if(!result) {
+    result = state.results.find(r => r.resultCode === code) || null;
+  }
+
+  if(!result) {
+    errorEl.textContent = '❌ Aucun résultat trouvé pour ce code. Vérifiez le code ou contactez l\'administrateur.';
+    errorEl.style.display = 'flex';
+    return;
+  }
+
+  const colors = result.percentage >= 80 ? '#10b981' : result.percentage >= 60 ? '#2563eb' : result.percentage >= 40 ? '#eab308' : '#ef4444';
+  const mention = result.percentage >= 80 ? '🏆 Excellent' : result.percentage >= 60 ? '👍 Bien' : result.percentage >= 40 ? '⚠️ Moyen' : '❌ Insuffisant';
+
+  resultBlock.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <div style="background:var(--surface2);padding:1rem 1.5rem;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:10px">
+        <span>📊 Résultats de</span>
+        <span style="color:var(--accent)">${result.firstname} ${result.lastname}</span>
+      </div>
+      <div style="padding:1.5rem;text-align:center">
+        <div style="font-size:3rem;font-weight:800;color:${colors};font-family:'Syne',sans-serif">${result.percentage}%</div>
+        <div style="font-size:0.9rem;color:var(--text-muted);margin:6px 0">${result.score}/${result.maxScore} pts &nbsp;·&nbsp; ${result.correct} correcte(s) &nbsp;·&nbsp; ${result.wrong} incorrecte(s)</div>
+        <div style="display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-top:8px;background:rgba(0,0,0,0.06)">${mention}</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:10px">Durée : ${result.duration} &nbsp;·&nbsp; ${result.date}</div>
+      </div>
+    </div>`;
+  resultBlock.style.display = 'block';
+}
+
+// ===================== ADMIN RESULTS =====================
+let adminResultsFilter = 'all';
+function setAdminFilter(filter) {
+  adminResultsFilter = filter;
+  // filtres non utilisés en mode ID30
+  renderResults();
+}
+
+function renderResults() {
+  const container = document.getElementById('results-content');
+  let filtered = state.results;
+  if(adminResultsFilter === 'orange') filtered = state.results.filter(r => r.operation === 'orange');
+  else if(adminResultsFilter === 'id30') filtered = state.results.filter(r => !r.operation || r.operation === 'id30');
+
+  if(filtered.length === 0) {
+    const msg = adminResultsFilter === 'all' ? 'Aucun résultat pour le moment.' :
+                adminResultsFilter === 'orange' ? 'Aucun résultat ORANGE pour le moment.' :
+                'Aucun résultat ID30 pour le moment.';
+    container.innerHTML = `<div class="empty-state"><div class="icon">📊</div><p>${msg}</p></div>`;
+    return;
+  }
+  const sorted = [...filtered].sort((a,b) => b.percentage - a.percentage);
+  const avg = Math.round(sorted.reduce((s,r) => s+r.percentage, 0) / sorted.length);
+  const top = sorted[0].percentage;
+  const opLabelMap = { orange: '🟠', id30: '🔵', undefined: '🔵' };
+
+  container.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-value">${sorted.length}</div><div class="stat-label">Candidats</div></div>
+      <div class="stat-card"><div class="stat-value">${avg}%</div><div class="stat-label">Moyenne</div></div>
+      <div class="stat-card"><div class="stat-value">${top}%</div><div class="stat-label">Meilleur score</div></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Rang</th>
+            <th>Opération</th>
+            <th>Candidat</th>
+            <th>Rôle / Poste</th>
+            <th>Contact</th>
+            <th>Score</th>
+            <th>Durée</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${sorted.map((r, i) => {
+            const rankCls = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-other';
+            const barColor = r.percentage >= 80 ? 'var(--success)' : r.percentage >= 60 ? 'var(--accent)' : r.percentage >= 40 ? 'var(--gold)' : 'var(--danger)';
+            const opEmoji = r.operation === 'orange' ? '🟠' : '🔵';
+            const opLabel = r.operation === 'orange' ? 'ORANGE' : 'ID30';
+            const opStyle = r.operation === 'orange' ? 'color:#c2410c;background:rgba(249,115,22,0.1)' : 'color:#1e40af;background:rgba(37,99,235,0.1)';
+            return `
+            <tr>
+              <td><span class="rank-badge ${rankCls}">${i+1}</span></td>
+              <td><span style="padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;${opStyle}">${opEmoji} ${opLabel}</span></td>
+              <td><strong>${r.firstname} ${r.lastname}</strong></td>
+              <td style="font-size:0.78rem;color:var(--accent);font-weight:600">${r.posteLabel||'—'}</td>
+              <td style="font-size:0.8rem;color:var(--text-muted)">${r.email}<br>${r.phone||''}</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:${r.percentage}%;background:${barColor}"></div></div>
+                  <strong style="min-width:40px;text-align:right">${r.percentage}%</strong>
+                </div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">${r.score}/${r.maxScore} pts · ${r.correct}✓ ${r.wrong}✗</div>
+              </td>
+              <td style="font-size:0.82rem">${r.duration}</td>
+              <td style="font-size:0.78rem;color:var(--text-muted)">${r.date}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:1rem">
+      <button class="btn btn-orange btn-sm" onclick="exportResults()">📥 Exporter CSV</button>
+      <button class="btn btn-secondary btn-sm" onclick="if(confirm('Effacer tous les résultats ?')){state.results=[];try{localStorage.removeItem('mafa_all_results');}catch(e){}renderResults();}" style="border-color:var(--danger);color:var(--danger)">🗑 Effacer tout</button>
+    </div>`;
+}
+
+// ══ Charger résultats Supabase au démarrage ══
+async function loadResultsFromSupabase() {
+  try {
+    var evals = await getAllResults();
+    if (evals && evals.length > 0) {
+      var supaResults = evals.map(function(ev) {
+        var c = ev.candidats || {};
+        var nameParts = (c.nom || '').split(' ');
+        var totalQ = ev.total_questions || 30;
+        var scoreFinal = ev.score_final || 0;
+        var pct = totalQ > 0 ? Math.round(scoreFinal / totalQ * 100) : 0;
+        return {
+          firstname: nameParts[0] || '',
+          lastname: nameParts.slice(1).join(' ') || '',
+          email: c.email || '',
+          phone: c.telephone || '',
+          posteLabel: ev.poste || c.poste || '',
+          operation: (ev.poste || '').toLowerCase().includes('orange') ? 'orange' : 'id30',
+          score: scoreFinal,
+          maxScore: totalQ,
+          percentage: pct,
+          correct: scoreFinal,
+          wrong: totalQ - scoreFinal,
+          duration: ev.duree_secondes ? Math.floor(ev.duree_secondes/60) + 'min ' + (ev.duree_secondes%60) + 's' : '—',
+          date: new Date(ev.created_at).toLocaleString('fr-FR'),
+          resultCode: ev.id,
+          _fromSupabase: true
+        };
+      });
+      // Fusionner sans doublons (éviter dupliquer le localStorage)
+      var localEmails = state.results.map(function(r) { return r.email + r.date; });
+      supaResults.forEach(function(sr) {
+        if (localEmails.indexOf(sr.email + sr.date) === -1) {
+          state.results.push(sr);
+        }
+      });
+      renderResults();
+    }
+  } catch(e) {
+    console.error('[Supabase] Erreur chargement résultats:', e);
+  }
+}
+
+// ===================== INIT =====================
+// Load sample questions by default for demo
+state.questions = [
+  { id: 1, type: 'qcm', text: 'Qu\'est-ce que la satisfaction client dans un call center ?', options: ['Le nombre d\'appels traités', 'Le niveau de contentement du client après interaction', 'Le temps de pause des agents', 'La vitesse de connexion internet'], correct: 1, points: 2 },
+  { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
+  { id: 3, type: 'open', text: 'Décrivez votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
+];
+state.examActive = true;
+// Restaurer les resultats depuis localStorage
+try {
+  const stored = localStorage.getItem('mafa_all_results');
+  if(stored) state.results = JSON.parse(stored);
+} catch(e) {}
+// Charger aussi depuis Supabase
+loadResultsFromSupabase();
+</script>
+</body>
+</html>

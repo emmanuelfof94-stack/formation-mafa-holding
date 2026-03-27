@@ -1,0 +1,2880 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation Orange Money Business — MAFA HOLDING</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #f97316;
+    --accent: #f97316;
+    --accent2: #ea580c;
+    --gold: #eab308;
+    --surface: #ffffff;
+    --surface2: #f8fafc;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --radius: 10px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-blue: 0 4px 14px rgba(249,115,22,0.22);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f1f5fb;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    display: none;
+  }
+  body::after {
+    display: none;
+  }
+
+  /* TOP ACCENT BAR */
+  body::before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #f97316, #fb923c, #ea580c);
+    z-index: 9999;
+    pointer-events: none;
+  }
+  body::after {
+    display: none;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    flex-shrink: 0;
+    display: block;
+  }
+  .logo-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .logo-main {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text);
+    letter-spacing: 0.03em;
+  }
+  .logo-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .logo-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+    margin: 0 0.25rem;
+  }
+  .header-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .header-badge {
+    margin-left: auto;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #c2410c;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  /* SCREENS */
+  .screen { display: none; animation: fadeIn 0.4s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ADMIN PANEL */
+  .panel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+  .panel-title span { color: var(--accent); }
+  .panel-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 0;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 12px 10px;
+    background: none;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn:hover:not(.active) { background: var(--surface2); color: var(--text); }
+  .tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    border-right-color: var(--accent);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  /* FORM ELEMENTS */
+  .form-group { margin-bottom: 1.2rem; }
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  input, textarea, select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 11px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    background: var(--surface);
+  }
+  input::placeholder, textarea::placeholder { color: #94a3b8; }
+  select option { background: var(--surface); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow-blue);
+  }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(37,99,235,0.3); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: #eff6ff; }
+  .btn-danger { background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; }
+  .btn-danger:hover { background: #fee2e2; }
+  .btn-success { background: var(--success); color: #fff; box-shadow: 0 4px 12px rgba(16,185,129,0.25); }
+  .btn-success:hover { background: #059669; transform: translateY(-1px); }
+  .btn-success:active { transform: translateY(0); }
+  .btn-orange { background: var(--accent2); color: white; box-shadow: 0 4px 12px rgba(249,115,22,0.25); }
+  .btn-orange:hover { background: #ea6f0c; transform: translateY(-1px); }
+  .btn-sm { padding: 7px 14px; font-size: 0.82rem; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .question-card .q-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  .q-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: rgba(0,194,255,0.1);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .q-type-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .badge-qcm { background: rgba(245,200,66,0.15); color: var(--gold); }
+  .badge-vf { background: rgba(0,224,150,0.12); color: var(--success); }
+  .badge-open { background: rgba(255,107,53,0.12); color: var(--accent2); }
+
+  .options-grid { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .option-row { display: flex; align-items: center; gap: 8px; }
+  .option-row input[type="text"] { padding: 8px 12px; font-size: 0.88rem; }
+  .option-row input[type="radio"] { width: auto; accent-color: var(--accent); cursor: pointer; }
+  .option-label { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+
+  .correct-hint { font-size: 0.75rem; color: var(--success); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+
+  /* CONFIG CARD */
+  .config-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .config-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  /* EXAM SCREEN */
+  .exam-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .exam-info h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .exam-info p { font-size: 0.82rem; color: var(--text-muted); }
+
+  .timer-block {
+    text-align: center;
+  }
+  .timer-display {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .timer-display.warning { color: var(--gold); }
+  .timer-display.danger { color: var(--danger); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .timer-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-radius: 20px;
+    height: 6px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #0099cc);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+  }
+
+  .exam-question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .exam-q-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .exam-q-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+  .exam-options { display: flex; flex-direction: column; gap: 10px; }
+  .exam-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .exam-option:hover { border-color: #93c5fd; background: #f0f7ff; }
+  .exam-option.selected { border-color: var(--accent); background: #eff6ff; box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
+  .exam-option input[type="radio"] { width: auto; accent-color: var(--accent); }
+  .exam-option-letter {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    min-width: 20px;
+  }
+
+  .nav-buttons { display: flex; gap: 1rem; justify-content: space-between; align-items: center; margin-top: 2rem; }
+
+  /* RESULTS */
+  .result-hero {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+  }
+  .result-score-ring {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .result-score-ring svg {
+    position: absolute;
+    top: 0; left: 0;
+    transform: rotate(-90deg);
+  }
+  .score-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    position: relative;
+    z-index: 1;
+  }
+  .score-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+  .result-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .result-mention {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+  .mention-excellent { background: rgba(0,224,150,0.15); color: var(--success); border: 1px solid rgba(0,224,150,0.3); }
+  .mention-bien { background: rgba(0,194,255,0.12); color: var(--accent); border: 1px solid var(--border); }
+  .mention-moyen { background: rgba(245,200,66,0.12); color: var(--gold); border: 1px solid rgba(245,200,66,0.3); }
+  .mention-insuffisant { background: rgba(255,71,87,0.12); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
+
+  .result-details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .result-details-header {
+    padding: 1rem 1.5rem;
+    background: var(--surface2);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .result-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .result-item:last-child { border-bottom: none; }
+  .result-item-icon { font-size: 1.1rem; margin-top: 2px; }
+  .result-item-text { flex: 1; font-size: 0.9rem; }
+  .result-item-text .q-text { font-weight: 500; margin-bottom: 4px; }
+  .result-item-text .q-answer { font-size: 0.82rem; color: var(--text-muted); }
+  .result-item-text .q-correct { font-size: 0.82rem; color: var(--success); }
+
+  /* ADMIN RESULTS */
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .results-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .results-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table tr:hover td { background: rgba(0,194,255,0.03); }
+  .rank-badge {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rank-1 { background: var(--gold); color: #1e293b; }
+  .rank-2 { background: #C0C0C0; color: #1e293b; }
+  .rank-3 { background: #CD7F32; color: white; }
+  .rank-other { background: var(--surface2); color: var(--text-muted); }
+
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* IDENTITY SCREEN */
+  .identity-hero {
+    text-align: center;
+    padding: 2rem 0 1rem;
+  }
+  .identity-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .identity-hero h1 span { color: var(--accent); }
+  .identity-hero p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+  }
+
+  .identity-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* CODE SCREEN */
+  .code-screen {
+    max-width: 420px;
+    margin: 4rem auto;
+    text-align: center;
+  }
+  .code-screen h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .code-screen p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+  .code-input-wrap { display: flex; gap: 8px; }
+  .code-input-wrap input { text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Syne', sans-serif; font-weight: 700; text-align: center; }
+
+  /* OPERATION CHOICE */
+  .op-choice-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem 2rem;
+    gap: 1.5rem;
+  }
+  .op-choice-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.2rem;
+  }
+  .op-choice-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+  .op-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+  }
+  .op-card {
+    border-radius: 16px;
+    padding: 2rem 1.5rem 2rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    text-align: center;
+    transition: all 0.22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .op-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+  .op-card-orange {
+    background: linear-gradient(135deg, #fff7f0, #fff0e0);
+    border-color: #f97316;
+    box-shadow: 0 4px 20px rgba(249,115,22,0.15);
+  }
+  .op-card-orange:hover { border-color: #ea580c; box-shadow: 0 12px 32px rgba(249,115,22,0.3); }
+  .op-card-id30 {
+    background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+    border-color: #2563eb;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.15);
+  }
+  .op-card-id30:hover { border-color: #1d4ed8; box-shadow: 0 12px 32px rgba(37,99,235,0.3); }
+  .op-card-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+  .op-card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+  .op-card-orange .op-card-name { color: #c2410c; }
+  .op-card-id30 .op-card-name { color: #1e40af; }
+  .op-card-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+  .op-card-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 1.4rem;
+  }
+  .op-role-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .op-card-orange .op-role-pill { background: rgba(249,115,22,0.15); color: #c2410c; }
+  .op-card-id30 .op-role-pill { background: rgba(37,99,235,0.12); color: #1e40af; }
+  .op-card-btn {
+    display: block;
+    width: 100%;
+    padding: 11px 0;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .op-card-orange .op-card-btn { background: #f97316; color: white; }
+  .op-card-orange .op-card-btn:hover { background: #ea580c; }
+  .op-card-id30 .op-card-btn { background: #2563eb; color: white; }
+  .op-card-id30 .op-card-btn:hover { background: #1d4ed8; }
+  .op-status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .badge-active { background: rgba(16,185,129,0.15); color: #059669; }
+  .badge-available { background: rgba(100,116,139,0.12); color: var(--text-muted); }
+  @media (max-width: 600px) {
+    .op-cards { grid-template-columns: 1fr; }
+  }
+
+  /* LANDING */
+  .landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 72vh;
+    text-align: center;
+    gap: 1.2rem;
+    padding: 3rem 1rem;
+  }
+  .landing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #c2410c;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .landing-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .landing-logo .accent { color: var(--accent); }
+  .landing-logo .accent2 { color: var(--accent2); }
+  .landing-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+  .landing-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+  .landing-features {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .landing-feature {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .landing-feature span { color: var(--success); font-size: 0.9rem; }
+
+  .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+  }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .empty-state p { font-size: 0.9rem; }
+
+  .alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .alert-success { background: rgba(0,224,150,0.1); border: 1px solid rgba(0,224,150,0.3); color: var(--success); }
+  .alert-error { background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); color: var(--danger); }
+  .alert-info { background: rgba(0,194,255,0.1); border: 1px solid var(--border); color: var(--accent); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* IMPORT SECTION */
+  .import-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--surface);
+    position: relative;
+  }
+  .import-zone:hover, .import-zone.dragover {
+    border-color: var(--accent);
+    background: rgba(0,194,255,0.05);
+  }
+  .import-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  .import-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .import-zone h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .import-zone p { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+  .import-formats { display: flex; gap: 8px; justify-content: center; margin-top: 1rem; }
+  .format-badge {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .badge-xlsx { background: rgba(0,194,150,0.15); color: #00c296; border: 1px solid rgba(0,194,150,0.3); }
+  .badge-docx { background: rgba(0,100,220,0.15); color: #4499ff; border: 1px solid rgba(0,100,220,0.3); }
+
+  .import-preview {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-top: 1rem;
+    overflow: hidden;
+    display: none;
+  }
+  .import-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+    background: var(--surface2);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .import-preview-list { max-height: 240px; overflow-y: auto; }
+  .import-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 1.2rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .import-preview-item:last-child { border-bottom: none; }
+  .import-q-num { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); font-size: 0.78rem; min-width: 30px; }
+
+  /* REVIEW SCREEN */
+  .review-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .review-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .review-header h2 span { color: var(--accent); }
+  .review-header p { font-size: 0.82rem; color: var(--text-muted); }
+
+  .review-summary-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .review-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+  .review-stat .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-answered { background: var(--accent); }
+  .dot-unanswered { background: var(--danger); }
+  .dot-open { background: var(--accent2); }
+
+  .review-question-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .review-question-block.unanswered { border-color: rgba(255,71,87,0.4); }
+  .review-question-block.answered { border-color: rgba(0,194,255,0.3); }
+  .review-question-block.open-type { border-color: rgba(255,107,53,0.3); }
+
+  .review-q-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .review-q-header:hover { background: rgba(0,194,255,0.03); }
+  .review-status-icon { font-size: 1.1rem; min-width: 24px; }
+  .review-q-text-preview {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .review-answer-preview {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .review-edit-btn {
+    background: rgba(0,194,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .review-edit-btn:hover { background: rgba(0,194,255,0.2); }
+
+  .review-q-body {
+    display: none;
+    padding: 0 1.2rem 1.2rem;
+    border-top: 1px solid var(--border);
+    animation: fadeIn 0.2s ease;
+  }
+  .review-q-body.open { display: block; }
+  .review-q-full-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.6;
+    padding: 1rem 0 1rem;
+  }
+  .review-options { display: flex; flex-direction: column; gap: 8px; }
+  .review-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+  }
+  .review-option:hover { border-color: var(--accent); background: rgba(0,194,255,0.05); }
+  .review-option.selected { border-color: var(--accent); background: rgba(0,194,255,0.12); }
+  .review-option input[type="radio"] { width: auto; accent-color: var(--accent); }
+  .review-option-letter { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); min-width: 18px; font-size: 0.85rem; }
+
+  .review-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .warning-unanswered {
+    background: rgba(255,71,87,0.08);
+    border: 1px solid rgba(255,71,87,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    color: var(--danger);
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .row, .row3 { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .landing-logo { font-size: 1.8rem; }
+    .exam-header { flex-direction: column; gap: 1rem; text-align: center; }
+    .review-header { flex-direction: column; align-items: flex-start; }
+    .review-actions { flex-direction: column; }
+  }
+
+/* ── BOUTON RETOUR FORMATION ── */
+.back-to-formation {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #eff6ff; border: 1px solid #bfdbfe;
+  color: #2563eb; border-radius: 8px;
+  padding: 5px 12px; font-size: 11px; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: background .18s;
+  letter-spacing: .03em;
+}
+.back-to-formation:hover { background: #dbeafe; }
+.landing-formation-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.85); border-radius: 10px;
+  padding: 8px 16px; font-size: 12px; font-weight: 600;
+  text-decoration: none; margin-top: 12px;
+  transition: background .18s;
+}
+.landing-formation-link:hover { background: rgba(255,255,255,.2); color: white; }
+
+</style>
+</head>
+<body>
+<!-- ══ SUPABASE SDK ══ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<div class="wrapper">
+  <!-- HEADER -->
+  <div class="header">
+    <img src="img_m4/s01_logo_mafa.jpg" alt="MAFA" class="logo-icon" style="object-fit:contain;background:none;box-shadow:none;">
+    <div class="logo-block">
+      <div class="logo-main">MAFA HOLDING</div>
+      <div class="logo-sub">Colibri Technologies</div>
+    </div>
+    <div class="logo-divider"></div>
+    <div class="header-title">Système d'Évaluation</div>
+    <div class="header-badge" id="currentMode">Accueil</div>
+    <a href="index.html" class="back-to-formation" title="Retourner au portail de formation">
+      ← Formation
+    </a>
+  </div>
+
+  <!-- SCREEN: LANDING -->
+  <div class="screen active" id="screen-landing">
+    <div class="landing">
+      <div class="landing-badge">✦ Plateforme officielle</div>
+      <div class="landing-logo">
+        <div>Évaluation</div>
+        <div><span class="accent">Orange Money</span></div>
+        <div><span class="accent2">Business</span></div>
+      </div>
+      <p class="landing-subtitle">Plateforme d'évaluation des candidats — QCM, Vrai/Faux et questions ouvertes avec correction automatique et classement en temps réel.</p>
+      <div class="landing-buttons">
+        <button class="btn btn-primary" onclick="goToEvaluation()" style="padding:13px 28px;font-size:0.95rem">
+          🟠&nbsp; Commencer — Orange Money Business
+        </button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-check-result')">
+          🔑&nbsp; Consulter mes résultats
+        </button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-admin-login')">
+          ⚙&nbsp; Administration
+        </button>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <a href="index.html" class="landing-formation-link">
+          📚 Retourner aux modules de formation MAFA
+        </a>
+      </div>
+      <div class="landing-features">
+        <div class="landing-feature"><span>✓</span> Correction automatique</div>
+        <div class="landing-feature"><span>✓</span> Classement en temps réel</div>
+        <div class="landing-feature"><span>✓</span> Code résultat personnel</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: ADMIN LOGIN -->
+  <div class="screen" id="screen-admin-login">
+    <div class="code-screen">
+      <h2>Espace Administrateur</h2>
+      <p>Saisissez le code administrateur pour accéder au panneau de gestion.</p>
+      <div class="form-group">
+        <div class="code-input-wrap">
+          <input type="password" id="admin-code-input" placeholder="Code admin" onkeydown="if(event.key==='Enter') checkAdminCode()">
+          <button class="btn btn-primary" onclick="checkAdminCode()">OK</button>
+        </div>
+      </div>
+      <div id="admin-login-error" class="alert alert-error" style="display:none">❌ Code incorrect</div>
+      <div class="divider"></div>
+      <button class="btn btn-secondary btn-sm" onclick="showScreen('screen-landing')">← Retour</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: ADMIN PANEL -->
+  <div class="screen" id="screen-admin">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
+      <div class="panel-title" style="margin-bottom:0">Panneau <span>Administrateur</span></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="try{const s=localStorage.getItem('mafa_all_results');if(s)state.results=JSON.parse(s);}catch(e){}renderResults();showAlert('exam-status','✅ Résultats actualisés !','alert-info');" title="Actualiser les résultats">
+          🔄 Actualiser
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="adminLogout()" style="border-color:rgba(255,71,87,0.4);color:var(--danger)">
+          🔒 Déconnexion
+        </button>
+      </div>
+    </div>
+    <div class="panel-subtitle">Configurez les évaluations et consultez les résultats</div>
+    <!-- FILTRE OPÉRATION ADMIN -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding:12px 16px;background:var(--surface2);border-radius:10px;border:1px solid var(--border)">
+      <span style="font-size:0.82rem;font-weight:600;color:var(--text-muted);white-space:nowrap">Filtrer résultats :</span>
+      <button id="admin-filter-all" class="btn btn-primary btn-sm" onclick="setAdminFilter('all')">Tout</button>
+      <span style="font-size:0.85rem;color:var(--text-muted);padding:6px 0">🟠 Évaluation Orange Money Business</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-config')">⚙ Configuration</button>
+      <button class="tab-btn" onclick="switchTab('tab-questions')">📝 Questions</button>
+      <button class="tab-btn" onclick="switchTab('tab-results')">📊 Résultats</button>
+    </div>
+
+    <!-- TAB: CONFIG -->
+    <div class="tab-content active" id="tab-config">
+      <div class="config-card">
+        <h3>📋 Paramètres de l'évaluation</h3>
+        <div class="form-group">
+          <label>Titre de l'évaluation</label>
+          <input type="text" id="exam-title" placeholder="ex : Test de recrutement — Agent Call Center" value="Test de Recrutement — Connectel ID30">
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>Durée (minutes)</label>
+            <input type="number" id="exam-duration" placeholder="ex: 30" value="30" min="1" max="180">
+          </div>
+          <div class="form-group">
+            <label>Code d'accès candidats (optionnel)</label>
+            <input type="text" id="exam-access-code" placeholder="Laisser vide = pas de code" value="">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>Barème : Points par bonne réponse</label>
+            <input type="number" id="points-correct" value="1" min="1">
+          </div>
+          <div class="form-group">
+            <label>Points retirés par mauvaise réponse</label>
+            <input type="number" id="points-wrong" value="0" min="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Instructions pour les candidats</label>
+          <textarea id="exam-instructions" placeholder="Instructions affichées au début de l'évaluation...">Lisez attentivement chaque question. Pour les QCM, une seule réponse est correcte. Vous disposez du temps indiqué. Bonne chance !</textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveConfig()">💾 Enregistrer la configuration</button>
+      </div>
+
+      <div class="config-card">
+        <h3>🔐 Sécurité</h3>
+        <div class="form-group">
+          <label>Changer le code administrateur</label>
+          <div class="row">
+            <input type="password" id="new-admin-code" placeholder="Nouveau code admin">
+            <button class="btn btn-secondary" onclick="changeAdminCode()">Changer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <h3>📤 Actions</h3>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <button class="btn btn-success" onclick="activateExam()">✅ Activer l'évaluation</button>
+          <button class="btn btn-danger" onclick="resetExam()">🗑 Réinitialiser tout</button>
+          <button class="btn btn-orange" onclick="exportResults()">📥 Exporter CSV</button>
+        </div>
+        <div id="exam-status" class="alert alert-info" style="margin-top:1rem;display:none"></div>
+      </div>
+    </div>
+
+    <!-- TAB: QUESTIONS -->
+    <div class="tab-content" id="tab-questions">
+
+      <!-- IMPORT ZONE -->
+      <div class="config-card">
+        <h3>📥 Importer depuis un fichier</h3>
+        <div class="import-zone" id="import-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+          <input type="file" id="import-file-input" accept=".xlsx,.docx" onchange="handleFileImport(this.files[0])">
+          <div class="import-icon">📂</div>
+          <h3>Glissez-déposez votre fichier ici</h3>
+          <p>ou cliquez pour sélectionner un fichier</p>
+          <div class="import-formats">
+            <span class="format-badge badge-xlsx">Excel .xlsx</span>
+            <span class="format-badge badge-docx">Word .docx</span>
+          </div>
+        </div>
+
+        <div class="import-preview" id="import-preview">
+          <div class="import-preview-header">
+            <span id="import-preview-title">Questions détectées</span>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-danger btn-sm" onclick="cancelImport()">✕ Annuler</button>
+              <button class="btn btn-success btn-sm" onclick="confirmImport()">✅ Importer</button>
+            </div>
+          </div>
+          <div class="import-preview-list" id="import-preview-list"></div>
+        </div>
+
+        <div style="margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-secondary btn-sm" onclick="downloadExcelTemplate()">⬇ Modèle Excel</button>
+          <button class="btn btn-secondary btn-sm" onclick="downloadWordTemplate()">⬇ Modèle Word</button>
+        </div>
+        <div id="import-alert" style="display:none;margin-top:0.8rem"></div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <div style="font-family:'Syne',sans-serif;font-weight:700">Questions de l'évaluation</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="addQuestion('qcm')">+ QCM</button>
+          <button class="btn btn-secondary btn-sm" onclick="addQuestion('vf')">+ Vrai/Faux</button>
+          <button class="btn btn-secondary btn-sm" onclick="addQuestion('open')">+ Ouverte</button>
+        </div>
+      </div>
+      <div id="questions-list">
+        <div class="empty-state">
+          <div class="icon">📝</div>
+          <p>Aucune question. Ajoutez des QCM, Vrai/Faux ou questions ouvertes ci-dessus.</p>
+        </div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:1rem">
+        <button class="btn btn-primary" onclick="saveQuestions()">💾 Enregistrer les questions</button>
+        <button class="btn btn-secondary btn-sm" onclick="loadSampleQuestions()">📋 Charger exemple</button>
+      </div>
+    </div>
+
+    <!-- TAB: RESULTS -->
+    <div class="tab-content" id="tab-results">
+      <div id="results-content">
+        <div class="empty-state">
+          <div class="icon">📊</div>
+          <p>Aucun résultat pour le moment. Les résultats s'afficheront ici après les évaluations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: CANDIDATE ENTRY -->
+  <div class="screen" id="screen-candidate-entry">
+    <div class="identity-hero">
+      <h1>Bienvenue sur <span>l'évaluation</span></h1>
+      <p>Renseignez vos informations pour commencer le test</p>
+    </div>
+
+    <div class="identity-card">
+      <div id="access-code-section" style="display:none">
+        <div class="form-group">
+          <label>Code d'accès</label>
+          <input type="text" id="candidate-access-code" placeholder="Saisissez le code fourni" style="text-transform:uppercase;letter-spacing:0.15em">
+        </div>
+        <div class="divider"></div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Nom *</label>
+          <input type="text" id="candidate-lastname" placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label>Prénom *</label>
+          <input type="text" id="candidate-firstname" placeholder="Votre prénom">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Numéro de téléphone * <span style="font-weight:400;color:var(--text-muted);font-size:0.8rem">(identifiant de votre compte)</span></label>
+        <input type="tel" id="candidate-phone" placeholder="0XXXXXXXXX">
+      </div>
+      <div class="form-group">
+        <label>Votre poste *</label>
+        <select id="candidate-poste" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:0.95rem;font-family:inherit;background:var(--surface);color:var(--text);cursor:pointer">
+          <option value="">-- Sélectionnez votre poste --</option>
+          <option value="call-center">Agent Call Center (ID30)</option>
+          <option value="back-office">Agent Back Office (ID30)</option>
+          <option value="inspecteur">Inspecteur (ID30 &amp; Orange QR)</option>
+          <option value="superviseur">Superviseur (Agent &amp; Orange Money)</option>
+        </select>
+      </div>
+      <div id="eval-already-done" class="alert alert-error" style="display:none">
+        Vous avez déjà passé l'évaluation pour ce poste. Une seule tentative est autorisée.
+      </div>
+
+      <div id="candidate-entry-error" class="alert alert-error" style="display:none"></div>
+      <div id="instructions-block" class="alert alert-info" style="display:none"></div>
+
+      <button class="btn btn-primary btn-full" onclick="startExam()" style="margin-top:1rem">
+        Commencer le test ▶
+      </button>
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn btn-secondary btn-sm" onclick="showScreen('screen-landing')">← Retour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: EXAM -->
+  <div class="screen" id="screen-exam">
+    <div class="exam-header">
+      <div class="exam-info">
+        <h2 id="exam-title-display">Évaluation</h2>
+        <p id="exam-candidate-name">Candidat</p>
+      </div>
+      <div class="timer-block">
+        <div class="timer-display" id="timer-display">00:00</div>
+        <div class="timer-label">Temps restant</div>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="exam-progress" style="width:0%"></div>
+    </div>
+
+    <div id="exam-questions-container"></div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" id="btn-prev" onclick="navigate(-1)" style="display:none">← Précédent</button>
+      <div style="font-size:0.85rem;color:var(--text-muted)" id="question-counter">Question 1 / 1</div>
+      <button class="btn btn-primary" id="btn-next" onclick="navigate(1)">Suivant →</button>
+      <button class="btn btn-success" id="btn-submit" onclick="submitExam()" style="display:none">✅ Terminer</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: REVIEW -->
+  <div class="screen" id="screen-review">
+    <div class="review-header">
+      <div>
+        <h2>🔍 Vérification de vos <span>réponses</span></h2>
+        <p id="review-candidate-name-display">Candidat</p>
+      </div>
+      <div class="timer-block">
+        <div class="timer-display" id="timer-display-review">00:00</div>
+        <div class="timer-label">Temps restant</div>
+      </div>
+    </div>
+
+    <div class="alert alert-info" style="margin-bottom:1.5rem">
+      ✏️ Vous pouvez <strong>modifier vos réponses</strong> en cliquant sur une question. Quand vous êtes prêt, validez définitivement en bas de page.
+    </div>
+
+    <div class="warning-unanswered" id="warning-unanswered">
+      ⚠️ Attention : <span id="unanswered-count">0</span> question(s) sans réponse. Vous pouvez quand même soumettre.
+    </div>
+
+    <div class="review-summary-bar" id="review-summary-bar"></div>
+    <div id="review-questions-list"></div>
+
+    <div class="review-actions">
+      <button class="btn btn-secondary" onclick="backToExam()">← Retour au test</button>
+      <button class="btn btn-success" onclick="confirmSubmit()" style="padding:14px 32px;font-size:1rem">
+        ✅ Valider définitivement
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN: CANDIDATE RESULTS -->
+  <div class="screen" id="screen-results">
+    <div class="result-hero">
+      <div class="result-score-ring" id="score-ring">
+        <svg width="160" height="160" viewBox="0 0 160 160" id="score-svg">
+          <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(0,194,255,0.1)" stroke-width="10"/>
+          <circle cx="80" cy="80" r="70" fill="none" stroke="var(--accent)" stroke-width="10"
+            stroke-dasharray="439.8" stroke-dashoffset="439.8" id="score-circle" stroke-linecap="round"/>
+        </svg>
+        <div class="score-value" id="result-score-value">0%</div>
+        <div class="score-label">Score</div>
+      </div>
+      <div class="result-name" id="result-candidate-name"></div>
+      <div id="result-stats" style="color:var(--text-muted);font-size:0.9rem;margin-top:0.3rem"></div>
+      <div id="result-mention" class="result-mention mention-moyen"></div>
+    </div>
+
+    <div class="result-details" id="result-details-block">
+      <div class="result-details-header">Détail des réponses (QCM & Vrai/Faux)</div>
+      <div id="result-answers-list"></div>
+    </div>
+
+    <div class="alert alert-info" style="margin-top:1.5rem">
+      📋 La partie <strong>mise en situation</strong> sera évaluée séparément par l'administrateur.
+    </div>
+
+    <div style="text-align:center;margin-top:2rem;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="showScreen('screen-landing')">← Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: CONSULTER MES RESULTATS -->
+  <div class="screen" id="screen-check-result">
+    <div class="code-screen">
+      <h2>🔑 Consulter mes résultats</h2>
+      <p>Saisissez votre code personnel reçu à la fin de l'évaluation pour accéder uniquement à vos résultats.</p>
+      <div class="form-group">
+        <label>Votre code personnel</label>
+        <div class="code-input-wrap">
+          <input type="text" id="lookup-code-input" placeholder="ex: A3B7K2" maxlength="6" style="text-transform:uppercase;letter-spacing:0.2em;font-family:'Syne',sans-serif;font-weight:700;text-align:center;font-size:1.1rem" oninput="this.value=this.value.toUpperCase()">
+          <button class="btn btn-primary" onclick="lookupResultByCode()">Voir</button>
+        </div>
+      </div>
+      <div id="lookup-error" class="alert alert-error" style="display:none"></div>
+      <div id="lookup-result-block" style="display:none;margin-top:1.5rem"></div>
+      <div class="divider"></div>
+      <button class="btn btn-secondary btn-sm" onclick="showScreen('screen-landing')">← Retour</button>
+    </div>
+  </div>
+
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;font-size:0.75rem;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:2rem;background:#fff">
+  © 2025 MAFA HOLDING — Colibri Technologies &nbsp;·&nbsp; Tous droits réservés
+</footer>
+
+<script>
+// ===================== STATE =====================
+let state = {
+  adminCode: 'MAFA2024',
+  examActive: false,
+  currentOperation: 'orange',
+  config: {
+    title: 'Évaluation MAFA',
+    duration: 30,
+    accessCode: '',
+    pointsCorrect: 1,
+    pointsWrong: 0,
+    instructions: 'Lisez attentivement chaque question. Pour les QCM, une seule réponse est correcte. Vous disposez du temps indiqué. Bonne chance !'
+  },
+  questions: [],
+  results: [],
+  currentCandidate: null,
+  currentAnswers: {},
+  currentQuestion: 0,
+  timerInterval: null,
+  timeRemaining: 0
+};
+
+// ===================== OPERATION SELECTION =====================
+function selectOperation(op) {
+  state.currentOperation = op;
+  setupCandidateEntry();
+  showScreen('screen-candidate-entry');
+}
+function goToEvaluation() {
+  state.currentOperation = 'orange';
+  setupCandidateEntry();
+  showScreen('screen-candidate-entry');
+}
+
+// ===================== NAVIGATION =====================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const modes = {
+    'screen-landing': 'Accueil',
+    'screen-admin-login': 'Admin',
+    'screen-admin': 'Administration',
+    'screen-candidate-entry': 'Candidat',
+    'screen-exam': 'Évaluation en cours',
+    'screen-results': 'Résultats',
+    'screen-check-result': 'Mes Résultats',
+    'screen-review': 'Révision'
+  };
+  if(id !== 'screen-candidate-entry') {
+    document.getElementById('currentMode').textContent = modes[id] || '';
+  }
+  if(id === 'screen-admin') renderResults();
+  window.scrollTo(0,0);
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id === 'tab-results') renderResults();
+  if(id === 'tab-questions') renderQuestions();
+}
+
+// ===================== IMPORT =====================
+let pendingImport = [];
+
+function handleDragOver(e) { e.preventDefault(); document.getElementById('import-zone').classList.add('dragover'); }
+function handleDragLeave(e) { document.getElementById('import-zone').classList.remove('dragover'); }
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('import-zone').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if(file) handleFileImport(file);
+}
+
+async function handleFileImport(file) {
+  if(!file) return;
+  const name = file.name.toLowerCase();
+  showImportAlert('⏳ Lecture du fichier...', 'alert-info');
+  try {
+    if(name.endsWith('.xlsx')) {
+      await importExcel(file);
+    } else if(name.endsWith('.docx')) {
+      await importWord(file);
+    } else {
+      showImportAlert('❌ Format non supporté. Utilisez .xlsx ou .docx', 'alert-error');
+    }
+  } catch(err) {
+    showImportAlert('❌ Erreur de lecture : ' + err.message, 'alert-error');
+  }
+}
+
+async function importExcel(file) {
+  // Load SheetJS from CDN
+  if(!window.XLSX) {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+  }
+  const buffer = await file.arrayBuffer();
+  const wb = XLSX.read(buffer, { type: 'array' });
+  // Chercher l'onglet QUESTIONS
+  const sheetName = wb.SheetNames.find(n => n.toUpperCase() === 'QUESTIONS') || wb.SheetNames[0];
+  const ws = wb.Sheets[sheetName];
+  const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+
+  const questions = [];
+  for(const row of rows) {
+    const type = (row['TYPE'] || '').toString().trim().toUpperCase();
+    const enonce = (row['ENONCE'] || '').toString().trim();
+    if(!type || !enonce) continue;
+
+    const optA = (row['OPTION_A'] || '').toString().trim();
+    const optB = (row['OPTION_B'] || '').toString().trim();
+    const optC = (row['OPTION_C'] || '').toString().trim();
+    const optD = (row['OPTION_D'] || '').toString().trim();
+    const rep = (row['BONNE_REPONSE'] || '').toString().trim().toUpperCase();
+    const pts = parseFloat(row['POINTS']) || 1;
+
+    if(type === 'QCM') {
+      const options = [optA, optB, optC, optD].filter(o => o);
+      const correctMap = { A:0, B:1, C:2, D:3 };
+      const correct = correctMap[rep] !== undefined ? correctMap[rep] : 0;
+      questions.push({ id: Date.now() + Math.random(), type: 'qcm', text: enonce, options, correct, points: pts });
+    } else if(type === 'VF') {
+      const options = ['Vrai', 'Faux'];
+      const correct = rep === 'A' ? 0 : 1;
+      questions.push({ id: Date.now() + Math.random(), type: 'vf', text: enonce, options, correct, points: pts });
+    } else if(type === 'OPEN') {
+      questions.push({ id: Date.now() + Math.random(), type: 'open', text: enonce, options: [], correct: 0, points: pts });
+    }
+  }
+  if(questions.length === 0) { showImportAlert('❌ Aucune question valide trouvée dans le fichier.', 'alert-error'); return; }
+  showImportPreview(questions, file.name);
+}
+
+async function importWord(file) {
+  if(!window.mammoth) {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
+  }
+  const buffer = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer: buffer });
+  const text = result.value;
+  const questions = parseWordText(text);
+  if(questions.length === 0) { showImportAlert('❌ Aucune question valide trouvée. Vérifiez le format du fichier.', 'alert-error'); return; }
+  showImportPreview(questions, file.name);
+}
+
+function parseWordText(text) {
+  const questions = [];
+  // Séparer par blocs (lignes vides)
+  const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(b => b);
+
+  for(const block of blocks) {
+    const lines = block.split('\n').map(l => l.trim()).filter(l => l);
+    const data = {};
+    for(const line of lines) {
+      const match = line.match(/^([A-Z_]+):\s*(.*)$/);
+      if(match) data[match[1]] = match[2].trim();
+    }
+    const type = (data['TYPE'] || '').toUpperCase();
+    const enonce = data['ENONCE'] || '';
+    const pts = parseFloat(data['POINTS']) || 1;
+    if(!type || !enonce) continue;
+
+    if(type === 'QCM') {
+      const options = ['A','B','C','D'].map(l => data[l] || '').filter(o => o);
+      const correctMap = { A:0, B:1, C:2, D:3 };
+      const correct = correctMap[(data['REPONSE']||'').toUpperCase()] !== undefined ? correctMap[(data['REPONSE']).toUpperCase()] : 0;
+      questions.push({ id: Date.now() + Math.random(), type: 'qcm', text: enonce, options, correct, points: pts });
+    } else if(type === 'VF') {
+      questions.push({ id: Date.now() + Math.random(), type: 'vf', text: enonce, options: ['Vrai','Faux'], correct: (data['REPONSE']||'').toUpperCase() === 'A' ? 0 : 1, points: pts });
+    } else if(type === 'OPEN') {
+      questions.push({ id: Date.now() + Math.random(), type: 'open', text: enonce, options: [], correct: 0, points: pts });
+    }
+  }
+  return questions;
+}
+
+function showImportPreview(questions, filename) {
+  pendingImport = questions;
+  const letters = ['A','B','C','D','E','F'];
+  const typeColors = { qcm: 'badge-qcm', vf: 'badge-vf', open: 'badge-open' };
+  const typeTxt = { qcm: 'QCM', vf: 'V/F', open: 'Ouv.' };
+
+  document.getElementById('import-preview-title').textContent = `${questions.length} question(s) détectée(s) dans "${filename}"`;
+  document.getElementById('import-preview-list').innerHTML = questions.map((q, i) => `
+    <div class="import-preview-item">
+      <span class="import-q-num">Q${i+1}</span>
+      <span class="q-type-badge ${typeColors[q.type]}">${typeTxt[q.type]}</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${q.text}</span>
+      <span style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap">${q.points} pt${q.points > 1 ? 's' : ''}</span>
+    </div>`).join('');
+  document.getElementById('import-preview').style.display = 'block';
+  showImportAlert(`✅ ${questions.length} question(s) prête(s) à importer. Vérifiez et confirmez.`, 'alert-success');
+}
+
+function confirmImport() {
+  if(pendingImport.length === 0) return;
+  const replace = state.questions.length > 0
+    ? confirm(`Vous avez déjà ${state.questions.length} question(s).\n\nAppuyez OK pour REMPLACER, ou Annuler pour AJOUTER à la suite.`)
+    : true;
+  if(replace) {
+    state.questions = pendingImport;
+  } else {
+    state.questions = [...state.questions, ...pendingImport];
+  }
+  pendingImport = [];
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('import-file-input').value = '';
+  renderQuestions();
+  showImportAlert(`✅ ${state.questions.length} question(s) chargée(s) avec succès !`, 'alert-success');
+}
+
+function cancelImport() {
+  pendingImport = [];
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('import-file-input').value = '';
+  document.getElementById('import-alert').style.display = 'none';
+}
+
+function showImportAlert(msg, cls) {
+  const el = document.getElementById('import-alert');
+  el.className = 'alert ' + cls;
+  el.textContent = msg;
+  el.style.display = 'flex';
+  if(cls === 'alert-success') setTimeout(() => el.style.display = 'none', 5000);
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+// ===================== TÉLÉCHARGEMENT MODÈLES =====================
+function downloadExcelTemplate() {
+  // Générer un Excel minimal en base64 via SheetJS
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js').then(() => {
+    const wb = XLSX.utils.book_new();
+
+    // Feuille QUESTIONS
+    const data = [
+      ['TYPE','ENONCE','OPTION_A','OPTION_B','OPTION_C','OPTION_D','BONNE_REPONSE','POINTS'],
+      ['QCM',"Qu'est-ce que la satisfaction client dans un call center ?","Le nombre d'appels traités","Le niveau de contentement du client","Le temps de pause des agents","La vitesse de connexion internet",'B',2],
+      ['VF',"Un agent doit toujours identifier le client avant de traiter sa demande.","Vrai","Faux","","","A",1],
+      ['QCM',"Quelle est la bonne attitude face à un client mécontent ?","Raccrocher poliment","Écouter et proposer une solution","Transférer l'appel","Ignorer le client",'B',2],
+      ['OPEN',"Décrivez votre méthode pour gérer un appel difficile.","","","","","",5],
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    ws['!cols'] = [{wch:8},{wch:55},{wch:30},{wch:30},{wch:25},{wch:25},{wch:14},{wch:8}];
+    XLSX.utils.book_append_sheet(wb, ws, 'QUESTIONS');
+
+    // Feuille INSTRUCTIONS
+    const info = [
+      ['MAFA HOLDING / COLIBRI TECHNOLOGIES — Modèle de questions'],
+      [''],
+      ['COLONNES :'],
+      ['TYPE','QCM, VF ou OPEN (obligatoire)'],
+      ['ENONCE','Texte de la question (obligatoire)'],
+      ['OPTION_A à D','Options de réponse (pour QCM/VF)'],
+      ['BONNE_REPONSE','Lettre de la bonne réponse : A, B, C ou D'],
+      ['POINTS','Points attribués (défaut: 1)'],
+      [''],
+      ['RÈGLES :'],
+      ['','• TYPE doit être exactement QCM, VF ou OPEN (majuscules)'],
+      ['','• Pour VF : OPTION_A=Vrai, OPTION_B=Faux'],
+      ['','• Pour OPEN : laisser options et BONNE_REPONSE vides'],
+    ];
+    const ws2 = XLSX.utils.aoa_to_sheet(info);
+    ws2['!cols'] = [{wch:18},{wch:55}];
+    XLSX.utils.book_append_sheet(wb, ws2, 'INSTRUCTIONS');
+
+    XLSX.writeFile(wb, 'modele_questions_MAFA.xlsx');
+  });
+}
+
+function downloadWordTemplate() {
+  const content = `MAFA HOLDING / COLIBRI TECHNOLOGIES
+Modèle Word — Import de Questions d'Évaluation
+===============================================
+
+FORMAT DES QUESTIONS :
+Chaque question doit suivre exactement ce format.
+Séparez les questions par une ligne vide.
+
+--- FORMAT QCM ---
+TYPE: QCM
+ENONCE: Votre question ici ?
+A: Première option
+B: Deuxième option
+C: Troisième option (optionnel)
+D: Quatrième option (optionnel)
+REPONSE: B
+POINTS: 2
+
+--- FORMAT VF ---
+TYPE: VF
+ENONCE: Affirmation vraie ou fausse ?
+A: Vrai
+B: Faux
+REPONSE: A
+POINTS: 1
+
+--- FORMAT OPEN ---
+TYPE: OPEN
+ENONCE: Votre question ouverte ici ?
+POINTS: 5
+
+===============================================
+▼ VOS QUESTIONS COMMENCENT ICI ▼
+===============================================
+
+TYPE: QCM
+ENONCE: Qu'est-ce que la satisfaction client dans un call center ?
+A: Le nombre d'appels traités
+B: Le niveau de contentement du client après interaction
+C: Le temps de pause des agents
+D: La vitesse de connexion internet
+REPONSE: B
+POINTS: 2
+
+TYPE: VF
+ENONCE: Un agent doit toujours identifier le client avant de traiter sa demande.
+A: Vrai
+B: Faux
+REPONSE: A
+POINTS: 1
+
+TYPE: QCM
+ENONCE: Quelle est la bonne attitude face à un client mécontent ?
+A: Raccrocher poliment
+B: Écouter, comprendre et proposer une solution
+C: Transférer immédiatement l'appel
+D: Ignorer et continuer le script
+REPONSE: B
+POINTS: 2
+
+TYPE: OPEN
+ENONCE: Décrivez votre méthode pour gérer un appel difficile avec un client en colère.
+POINTS: 5
+`;
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'modele_questions_MAFA.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+  showImportAlert('⚠️ Modèle téléchargé en .txt. Renommez-le en .docx ou copiez le contenu dans Word en respectant le format.', 'alert-info');
+}
+
+// ===================== ADMIN =====================
+function adminLogout() {
+  if(confirm('Se déconnecter de l\'espace administrateur ?')) {
+    document.getElementById('admin-code-input').value = '';
+    showScreen('screen-landing');
+  }
+}
+
+function checkAdminCode() {
+  const input = document.getElementById('admin-code-input').value;
+  if(input === state.adminCode) {
+    document.getElementById('admin-login-error').style.display = 'none';
+    document.getElementById('admin-code-input').value = '';
+    renderQuestions();
+    showScreen('screen-admin');
+  } else {
+    document.getElementById('admin-login-error').style.display = 'flex';
+  }
+}
+
+function changeAdminCode() {
+  const newCode = document.getElementById('new-admin-code').value.trim();
+  if(newCode.length >= 4) {
+    state.adminCode = newCode;
+    document.getElementById('new-admin-code').value = '';
+    alert('Code admin mis à jour !');
+  } else {
+    alert('Le code doit contenir au moins 4 caractères.');
+  }
+}
+
+function saveConfig() {
+  state.config.title = document.getElementById('exam-title').value;
+  state.config.duration = parseInt(document.getElementById('exam-duration').value) || 30;
+  state.config.accessCode = document.getElementById('exam-access-code').value.trim();
+  state.config.pointsCorrect = parseFloat(document.getElementById('points-correct').value) || 1;
+  state.config.pointsWrong = parseFloat(document.getElementById('points-wrong').value) || 0;
+  state.config.instructions = document.getElementById('exam-instructions').value;
+  showAlert('exam-status', '✅ Configuration enregistrée !', 'alert-info');
+}
+
+function activateExam() {
+  saveConfig();
+  saveQuestions();
+  state.examActive = true;
+  showAlert('exam-status', '✅ Évaluation activée ! Les candidats peuvent maintenant composer.', 'alert-success');
+}
+
+function showAlert(id, msg, cls) {
+  const el = document.getElementById(id);
+  el.className = 'alert ' + cls;
+  el.textContent = msg;
+  el.style.display = 'flex';
+  setTimeout(() => el.style.display = 'none', 4000);
+}
+
+function resetExam() {
+  if(confirm('⚠️ Réinitialiser TOUS les résultats ? Cette action est irréversible.')) {
+    state.results = [];
+    try { localStorage.removeItem('mafa_all_results'); } catch(e) {}
+    state.examActive = false;
+    renderResults();
+    showAlert('exam-status', '🗑 Données réinitialisées.', 'alert-error');
+  }
+}
+
+function exportResults() {
+  let toExport = state.results;
+  if(adminResultsFilter === 'orange') toExport = state.results.filter(r => r.operation === 'orange');
+  else if(adminResultsFilter === 'id30') toExport = state.results.filter(r => !r.operation || r.operation === 'id30');
+  if(toExport.length === 0) { alert('Aucun résultat à exporter.'); return; }
+  const sorted = [...toExport].sort((a,b) => b.percentage - a.percentage);
+  const opSuffix = adminResultsFilter !== 'all' ? '_' + adminResultsFilter.toUpperCase() : '';
+  let csv = 'Rang,Opération,Prénom,Nom,Email,Téléphone,Rôle/Poste,Score,Pourcentage,Correctes,Incorrectes,Durée,Date\n';
+  sorted.forEach((r, i) => {
+    const op = r.operation === 'orange' ? 'ORANGE' : 'ID30';
+    csv += `${i+1},"${op}","${r.firstname}","${r.lastname}","${r.email}","${r.phone}","${r.posteLabel||''}",${r.score}/${r.maxScore},${r.percentage}%,${r.correct},${r.wrong},"${r.duration}","${r.date}"\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `resultats${opSuffix}_${Date.now()}.csv`;
+  a.click();
+}
+
+// ===================== QUESTIONS BUILDER =====================
+function addQuestion(type) {
+  state.questions.push({
+    id: Date.now(),
+    type,
+    text: '',
+    options: type === 'qcm' ? ['', '', '', ''] : (type === 'vf' ? ['Vrai', 'Faux'] : []),
+    correct: 0,
+    points: 1
+  });
+  renderQuestions();
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-list');
+  if(state.questions.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">📝</div><p>Aucune question. Ajoutez des QCM, Vrai/Faux ou questions ouvertes ci-dessus.</p></div>`;
+    return;
+  }
+  container.innerHTML = state.questions.map((q, idx) => {
+    const typeBadge = q.type === 'qcm' ? '<span class="q-type-badge badge-qcm">QCM</span>' :
+                      q.type === 'vf' ? '<span class="q-type-badge badge-vf">Vrai/Faux</span>' :
+                      '<span class="q-type-badge badge-open">Ouverte</span>';
+    let optionsHTML = '';
+    if(q.type === 'qcm' || q.type === 'vf') {
+      const letters = ['A','B','C','D','E'];
+      optionsHTML = `<div class="options-grid">` +
+        q.options.map((opt, oi) => `
+          <div class="option-row">
+            <span class="option-label">${letters[oi]}</span>
+            <input type="radio" name="correct_${idx}" value="${oi}" ${q.correct === oi ? 'checked' : ''} onchange="setCorrect(${idx}, ${oi})" title="Correcte">
+            ${q.type === 'qcm' ? `<input type="text" placeholder="Option ${letters[oi]}" value="${opt}" oninput="updateOption(${idx}, ${oi}, this.value)">` :
+              `<span style="flex:1;padding:8px 12px;background:var(--surface2);border-radius:8px;font-size:0.9rem">${opt}</span>`}
+          </div>`).join('') +
+        `</div>
+        <div class="correct-hint">✓ Cochez le bouton radio à gauche de la bonne réponse</div>`;
+      if(q.type === 'qcm') {
+        optionsHTML += `<div style="margin-top:8px"><button class="btn btn-secondary btn-sm" onclick="addOption(${idx})">+ Option</button></div>`;
+      }
+    } else {
+      optionsHTML = `<div class="alert alert-info" style="font-size:0.82rem">💡 Question ouverte — Notée manuellement via Google Forms</div>`;
+    }
+    return `
+      <div class="question-card">
+        <div class="q-header">
+          <span class="q-number">Q${idx + 1}</span>
+          ${typeBadge}
+          <input type="number" value="${q.points}" min="0.5" step="0.5" style="width:80px;text-align:center" title="Points" oninput="updatePoints(${idx}, this.value)">
+          <span style="font-size:0.75rem;color:var(--text-muted)">pts</span>
+          <div style="margin-left:auto;display:flex;gap:6px">
+            ${idx > 0 ? `<button class="btn btn-secondary btn-sm" onclick="moveQuestion(${idx}, -1)">↑</button>` : ''}
+            ${idx < state.questions.length-1 ? `<button class="btn btn-secondary btn-sm" onclick="moveQuestion(${idx}, 1)">↓</button>` : ''}
+            <button class="btn btn-danger btn-sm" onclick="removeQuestion(${idx})">✕</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Énoncé de la question</label>
+          <textarea placeholder="Tapez votre question ici..." oninput="updateQuestionText(${idx}, this.value)">${q.text}</textarea>
+        </div>
+        ${optionsHTML}
+      </div>`;
+  }).join('');
+}
+
+function updateQuestionText(idx, val) { state.questions[idx].text = val; }
+function updateOption(idx, oi, val) { state.questions[idx].options[oi] = val; }
+function setCorrect(idx, oi) { state.questions[idx].correct = oi; }
+function updatePoints(idx, val) { state.questions[idx].points = parseFloat(val) || 1; }
+function removeQuestion(idx) { state.questions.splice(idx, 1); renderQuestions(); }
+function addOption(idx) { if(state.questions[idx].options.length < 6) { state.questions[idx].options.push(''); renderQuestions(); } }
+function moveQuestion(idx, dir) {
+  const arr = state.questions;
+  [arr[idx], arr[idx+dir]] = [arr[idx+dir], arr[idx]];
+  renderQuestions();
+}
+
+function saveQuestions() {
+  // Collect current values from DOM
+  document.querySelectorAll('.question-card textarea').forEach((ta, i) => {
+    if(state.questions[i]) state.questions[i].text = ta.value;
+  });
+  alert('✅ Questions enregistrées ! (' + state.questions.length + ' questions)');
+}
+
+
+// ============================================================
+// BANQUE DE QUESTIONS ORANGE — OM Business (Niveau Intermédiaire)
+// ============================================================
+const QUESTIONS_BY_POSTE_ORANGE = {
+
+'agent-orange': [
+  // --- OM BUSINESS : Profils marchands ---
+  { type:'qcm', text:"Un commerçant ambulant vend de la nourriture dans la rue, sans local fixe, sans employé. Quel profil OM Business lui proposez-vous ?", options:["OM Business Premium","OM Business Classique","OM Business Essentiel","Il n'est pas éligible à OM Business"], correct:2, points:1 },
+  { type:'qcm', text:"Quel est le seuil de chiffre d'affaires annuel pour distinguer le profil Essentiel du profil Classique ?", options:["Moins de 500 000 XOF pour l'Essentiel","Moins de 150 000 XOF pour l'Essentiel","Moins de 400 millions XOF pour l'Essentiel","Moins de 1 million XOF pour l'Essentiel"], correct:1, points:1 },
+  { type:'qcm', text:"Un épicier déclare un CA de 80 000 XOF/an, 2 employés, sans registre de commerce. Quel profil OM Business est correct ?", options:["Classique — 2 employés suffisent","Premium — secteur alimentaire","Essentiel — CA inférieur à 150 000 XOF/an, sans RC","Non éligible — le CA est trop faible"], correct:2, points:1 },
+  { type:'qcm', text:"Un restaurant avec 8 employés, CA de 320 millions XOF/an et un registre de commerce disponible. Quel profil lui attribuez-vous ?", options:["Essentiel — restaurant informel","Classique — CA entre 150k et 400M XOF avec RC","Premium — plus de 5 employés obligatoirement","Non éligible — les restaurants sont exclus de OM Business"], correct:1, points:1 },
+  { type:'vf', text:"Un marchand peut créer un compte OM Business Essentiel même s'il n'a pas de SIM Orange.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Pour créer un compte OM Business Essentiel, aucun document n'est requis — le processus est 100% digital.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Quelle est la différence entre le profil Classique et le profil Premium en termes de gestion des employés ?", options:["Le profil Classique permet la gestion des rôles du personnel, pas le Premium","Le profil Premium permet la gestion des rôles du personnel — une fonctionnalité absente sur le Classique","Les deux profils ont exactement les mêmes fonctionnalités de gestion","Seul le profil Essentiel gère les rôles du personnel"], correct:1, points:1 },
+  { type:'vf', text:"Les marchands O'CALM 50 existants sont intégrés au profil OM Business Essentiel dans la nouvelle nomenclature.", options:["Vrai","Faux"], correct:0, points:1 },
+  // --- OM BUSINESS : Fonctionnalités ---
+  { type:'vf', text:"Le lien de paiement OM Business permet à un marchand d'encaisser des paiements à distance, sans QR Code physique.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Un marchand vous demande comment recevoir des paiements de clients qui sont loin de son commerce. Que lui proposez-vous ?", options:["Le QR Code imprimé","Le lien de paiement OM Business","Le retrait USSD","Le transfert à soi-même"], correct:1, points:1 },
+  { type:'vf', text:"Le transfert d'argent OM Business (vers soi-même ou vers un tiers) est gratuit.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Un marchand Classique souhaite afficher plusieurs QR Codes dans ses différentes caisses. Cette fonctionnalité est-elle disponible ?", options:["Non — un seul QR Code par compte OM Business","Oui — le profil Classique prévoit plusieurs QR imprimés","Oui, mais uniquement pour le profil Premium","Non — les QR Codes multiples nécessitent un abonnement spécial"], correct:1, points:1 },
+  { type:'qcm', text:"Un prospect vous dit : 'Mes clients n'ont pas tous une SIM Orange, OM Business ne leur sera pas utile.' Comment répondez-vous ?", options:["'Effectivement, vos clients doivent avoir une SIM Orange pour payer'","'C'est le CLIENT qui paye avec son Orange Money — le marchand reçoit les paiements quel que soit son opérateur'","'Vous avez raison, mais la majorité des clients ont probablement une SIM Orange'","'Je vais vérifier cette information avec mon superviseur'"], correct:1, points:1 },
+  { type:'qcm', text:"Qu'est-ce que le service Tik Tak Pro mentionné dans OM Business V9 ?", options:["Un service de localisation GPS des marchands","Un service de crédit et d'épargne intégré à OM Business, en cours de déploiement","Un tableau de bord de suivi des transactions en temps réel","Un outil de formation en ligne pour les agents"], correct:1, points:1 },
+  { type:'qcm', text:"Pour un marchand Non-OM (sans SIM Orange), quelle étape spécifique existe lors de la création de compte OM Business ?", options:["La création est impossible pour les clients Non-OM","Le dossier passe par la corbeille de validation Back Office avant activation","Le compte est activé instantanément sans vérification","Le marchand doit d'abord acheter une SIM Orange"], correct:1, points:1 },
+  // --- APPLICATION AGENT ---
+  { type:'qcm', text:"Parmi les profils suivants, lesquels sont des cibles prioritaires pour OM Business Essentiel ? (Sélectionnez 2 réponses)", options:["Chauffeur VTC / Uber sans local fixe","Entreprise cotée en bourse","Vendeur ambulant de fruits et légumes","Grande surface internationale"], correct:[0,2], multi:2, points:1 },
+  { type:'qcm', text:"Un vendeur en ligne qui vend via WhatsApp et réseaux sociaux souhaite encaisser ses clients à distance. Quel profil OM Business lui proposez-vous ?", options:["OM Business Premium — ventes en ligne uniquement","OM Business Essentiel — pas de local requis, lien de paiement adapté","Non éligible — les vendeurs en ligne ne sont pas une cible OM Business","OM Business Classique — le e-commerce est réservé au Classique"], correct:1, points:1 },
+  { type:'qcm', text:"Quels types de marchands sans local fixe peuvent bénéficier du profil OM Business Essentiel ?", options:["Uniquement les épiciers avec boutique","Les vendeurs ambulants, chauffeurs VTC, vendeurs en ligne et prestataires de service mobile","Uniquement les marchands enregistrés à la mairie","Les chauffeurs de taxi uniquement"], correct:1, points:1 },
+  { type:'qcm', text:"Un chauffeur VTC vous dit : 'Je ne suis pas un commerçant, OM Business ne me concerne pas.' Comment répondez-vous ?", options:["Il a raison — les VTC sont hors cible","OM Business Essentiel est fait pour lui : encaissement à distance via lien de paiement, dossier CNI seule, pas de local requis","Il faut d'abord qu'il ouvre une boutique pour être éligible","Lui proposer d'abord un compte Orange Money standard"], correct:1, points:1 },
+  { type:'qcm', text:"Parmi ces activités, lesquelles sont éligibles à OM Business Essentiel sans registre de commerce ? (Sélectionnez 2 réponses)", options:["Vendeur ambulant de rue","Directeur général de SA","Couturière à domicile","PDG d'une multinationale"], correct:[0,2], multi:2, points:1 },
+  { type:'qcm', text:"Un agent hésite à prospecter les vendeurs ambulants car 'ils bougent tout le temps'. Quelle est la bonne approche ?", options:["L'agent a raison — les ambulants sont difficiles à fidéliser","Les ambulants sont une cible idéale : profil Essentiel sans local, CNI seule, lien de paiement pour encaisser à distance","Attendre que l'ambulant se sédentarise avant de le prospecter","Les orienter vers un compte Orange Money standard"], correct:1, points:1 },
+  { type:'qcm', text:"Sur la carte de l'Application Agent, que représente un point VERT ?", options:["Une activité déjà visitée ce mois","Une activité à visiter (non encore traitée)","Un marchand actif avec au moins une transaction","Une zone interdite à la prospection"], correct:1, points:1 },
+  { type:'qcm', text:"Sur la carte de l'Application Agent, que représente un point JAUNE ?", options:["Une activité à visiter en priorité","Une activité déjà visitée","Un marchand en attente de validation","Une zone à forte densité commerciale"], correct:1, points:1 },
+  { type:'vf', text:"L'Application Agent peut charger la carte des activités et fonctionner sans connexion Internet.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Lors de l'enrôlement d'un marchand via l'Application Agent, quelle est la première action à effectuer (Étape 1) ?", options:["Saisir le numéro de téléphone du marchand","Scanner le QR Code à blanc","Demander l'OTP au marchand","Vérifier les infos pré-remplies"], correct:1, points:1 },
+  { type:'qcm', text:"L'OTP reçu par le marchand lors de l'enrôlement via l'Application Agent est composé de combien de chiffres ?", options:["6 chiffres","8 chiffres","4 chiffres","3 chiffres"], correct:2, points:1 },
+  { type:'qcm', text:"Après avoir obtenu un résultat 'Succès' lors de l'enrôlement via l'Application Agent, quelle action finale est recommandée ?", options:["Passer immédiatement au prochain marchand","Effectuer un test de paiement et communiquer le numéro de hotline au marchand","Remettre le rapport à son superviseur dans la journée","Désinstaller l'application pour libérer de l'espace"], correct:1, points:1 },
+  { type:'qcm', text:"Quelle connexion est OBLIGATOIRE lors du déploiement du QR Code via l'Application Agent ?", options:["La connexion n'est jamais requise","La connexion Internet est requise uniquement pour le déploiement du QR Code","La connexion Bluetooth avec le téléphone du marchand","La connexion WiFi du réseau Orange uniquement"], correct:1, points:1 },
+  { type:'qcm', text:"Après une période de travail hors connexion, quelle action effectuez-vous dans l'Application Agent pour mettre à jour les données ?", options:["Redémarrer le téléphone","Utiliser la fonction de synchronisation des données","Désinstaller et réinstaller l'application","Contacter le Back Office pour une mise à jour manuelle"], correct:1, points:1 },
+  { type:'qcm', text:"Le tableau de bord de l'Application Agent vous permet de consulter :", options:["Uniquement les marchands en cours d'enrôlement","Les indicateurs de performance : activités visitées, enrôlements effectués, objectifs","Uniquement les problèmes techniques signalés","Les coordonnées de tous les agents de la zone"], correct:1, points:1 },
+],
+
+'rv-orange': [
+  { type:'qcm', text:"Fin de mois, vos données terrain : 58 comptes créés, 21 marchands avec au moins une transaction, taux de conversion prospect→création de 38%. Quel est le diagnostic prioritaire ?", options:["Le taux de conversion (38%) est trop faible — former les agents à mieux convaincre lors du 1er contact","Le taux d'activation (36%) révèle un défaut d'accompagnement post-création — priorité sur le suivi, pas sur le volume","Le volume de créations (58) est insuffisant — recruter des agents supplémentaires ce mois","Le territoire est saturé — redistribuer les agents vers de nouvelles zones de prospection"], correct:1, points:2 },
+  { type:'qcm', text:"Vous avez 2 agents pour 3 semaines dans un marché de 350 commerçants. Objectif : maximiser les marchands réellement actifs (pas juste les créations). Quelle stratégie adoptez-vous ?", options:["Commencer par les 40 commerces Premium (CA >400m XOF) pour maximiser la valeur des transactions générées","Diviser le marché en 2 zones géographiques et affecter un agent par zone sans priorisation qualitative","Concentrer les agents sur les profils Essentiel/Classique à forte densité (maquis, épiceries) avec suivi J+3 systématique pour chaque compte créé","Prioriser les commerçants déjà titulaires d'une SIM Orange pour minimiser les objections et accélérer la création"], correct:2, points:2 },
+  { type:'qcm', text:"Un gérant de supérette (7 employés, CA ≈280m XOF) vous dit : 'J'ai déjà MTN Money depuis 3 ans, mes clients sont habitués à ça, et mon comptable m'a dit que ces apps créent des problèmes de comptabilité.' Quelle séquence de réponse est la plus efficace ?", options:["Répondre d'abord sur la complémentarité MTN/OM, puis lever l'objection comptabilité si le prospect y revient","Adresser d'abord l'objection comptabilité (relevés OM Business exportables), puis différencier MTN/OM comme complémentaires, puis présenter la valeur Classique","Proposer immédiatement une démonstration live de l'application pour court-circuiter les objections théoriques","Laisser le gérant réfléchir et revenir dans 3 jours avec une documentation écrite sur la sécurité"], correct:1, points:2 },
+  { type:'qcm', text:"Analyse mensuelle de 2 de vos 4 superviseurs : Superviseur A (équipe de 20 agents, objectif 200 enrôlements/jour) = 172 créations, 50 marchands actifs (29%). Superviseur B (équipe de 15 agents, objectif 150 enrôlements/jour) = 98 créations, 79 marchands actifs (81%). Sur lequel concentrez-vous votre coaching prioritaire, et sur quoi ?", options:["Coacher Superviseur B pour augmenter le volume de son équipe — ses agents n'atteignent pas les 10 enrôlements/jour","Coacher les deux superviseurs avec le même plan de formation pour harmoniser les méthodes","Coacher Superviseur A sur l'accompagnement post-création et organiser un partage de méthode : Superviseur B présente son approche suivi à l'équipe élargie","Sanctionner Superviseur A pour son faible taux d'activation (29%) avec un ultimatum de 2 semaines"], correct:2, points:2 },
+  { type:'qcm', text:"À J-3 de la clôture mensuelle, votre équipe manque 18 comptes à l'objectif. Option A : créer rapidement sans sélection qualitative. Option B : ne créer que des comptes qualifiés et manquer l'objectif de 18. Votre décision ?", options:["Option A — l'objectif mensuel est contractuel, il faut l'atteindre coûte que coûte","Option A mais en ciblant uniquement les profils Essentiel (dossier CNI seule) pour aller plus vite","Option B — ne créer que des comptes qualifiés, documenter l'écart et remonter à la direction un plan de rattrapage structuré","Suspendre toute prospection et consacrer les 3 jours à activer les marchands déjà créés ce mois"], correct:2, points:2 },
+  { type:'qcm', text:"Un marchand Essentiel que vous suivez réalise une croissance rapide : il a ouvert 3 nouveaux points de vente et a maintenant 8 employés. Que faites-vous en priorité ?", options:["Ne rien changer — le profil Essentiel initial suffit tant que le marchand est actif","Lui proposer une montée en profil Classique en collectant les documents requis (RC ou patente)","Transférer le dossier directement en Premium sans vérification documentaire","Attendre la visite de l'Inspecteur pour qu'il déclenche la reclassification"], correct:1, points:2 },
+  { type:'qcm', text:"Votre directeur régional veut doubler l'objectif de créations ce mois (de 70 à 140). Votre équipe : 4 superviseurs, 2 équipes de 15 agents et 2 équipes de 20 agents (70 agents total), objectif standard 10 enrôlements/agent/jour. Le taux d'activation actuel est de 68%. Quelle est votre recommandation ?", options:["Accepter sans condition et demander aux 4 superviseurs d'exiger 20 enrôlements/agent/jour","Refuser catégoriquement — doubler le volume nuira à la qualité du portefeuille","Accepter l'objectif en négociant un indicateur composite (créations × taux d'activation), en renforçant le suivi post-création et en présentant un plan structuré par superviseur","Déléguer l'objectif volume uniquement aux 2 équipes de 20 agents et garder les 2 équipes de 15 sur la qualité"], correct:2, points:2 },
+  { type:'qcm', text:"Quel est l'indicateur le plus pertinent pour mesurer la valeur réelle de votre déploiement OM Business sur un territoire ?", options:["Le nombre total de comptes créés dans la ville ce mois","Le nombre de téléchargements de l'application OM Business","Le taux de marchands générant au moins une transaction par semaine, croisé avec le volume de transactions","Le nombre de QR Codes imprimés et distribués sur le territoire"], correct:2, points:1 },
+  { type:'vf', text:"Un marchand qui a une SIM MTN peut créer un compte OM Business et accepter des paiements Orange Money sans changer d'opérateur.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Tik Tak Pro est un service de crédit et d'épargne intégré à OM Business, destiné prioritairement aux marchands Premium.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Les 3 critères de qualification essentiels pour déterminer le bon profil OM Business d'un prospect marchand sont :", options:["Réseau mobile utilisé, ancienneté du commerce, nombre de clients par jour","CA annuel approximatif, nombre d'employés, possession d'un registre de commerce ou patente","Localisation GPS du commerce, type de marchandise, horaires d'ouverture","Type de smartphone, opérateur actuel, équipement informatique"], correct:1, points:1 },
+  { type:'qcm', text:"Un prospect Classique potentiel (CA ≈200m XOF, 6 employés, RC disponible) hésite car il pense que 'OM Business nécessite que tous ses clients aient une SIM Orange'. Quel est l'argument clé à apporter ?", options:["Lui expliquer que la majorité de ses clients ont probablement une SIM Orange","Lui rappeler que l'application OM Business est gratuite au téléchargement","Clarifier que c'est le CLIENT qui paye avec son Orange Money — le marchand reçoit les paiements peu importe son opérateur","Proposer d'acheter une SIM Orange comme geste commercial pour débloquer la situation"], correct:2, points:1 },
+  { type:'qcm', text:"Lors d'une formation de vos agents, vous évaluez leurs pitchs. L'un d'eux commence systématiquement par les frais de retrait. Quelle correction apportez-vous ?", options:["Lui interdire de mentionner les frais pour éviter les objections","Lui coacher une structure : valeur et avantages concurrentiels d'abord, tarification ensuite","Le remplacer sur ce secteur car il crée de la résistance","Lui demander de lire la fiche produit avant chaque visite terrain"], correct:1, points:1 },
+  { type:'vf', text:"Un compte Essentiel OM Business peut être créé avec uniquement une CNI sans registre de commerce.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'vf', text:"Le profil Essentiel OM Business est destiné aux commerces dont le chiffre d'affaires annuel est inférieur à 150 millions XOF.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Un commerçant déclare un CA de 120 millions XOF, 2 employés, sans registre de commerce ni patente. Dans quel profil doit-il être classé ?", options:["Premium — CA proche de la limite Classique","Classique — 2 employés suffisent pour ce profil","Essentiel — CA <150m XOF, 2 employés, pas de document professionnel","Non éligible — absence de registre de commerce rédhibitoire"], correct:2, points:1 },
+  { type:'qcm', text:"Un agent refuse de prospecter des chauffeurs VTC/Uber car 'ils ne sont pas des commerçants'. Votre réponse en tant que RV ?", options:["Accepter — les VTC ne sont effectivement pas une cible OM Business prioritaire","Corriger l'agent : les VTC/chauffeurs sont une cible Essentiel idéale (paiements à distance, dossier CNI seule)","Les exclure cette semaine et réévaluer en fin de mois","Transférer la prospection VTC à un autre agent plus motivé"], correct:1, points:1 },
+  { type:'qcm', text:"Votre zone compte 3 marchés hebdomadaires qui se tiennent le vendredi. Comment optimisez-vous la planification de vos agents ?", options:["Les envoyer le mercredi pour former les commerçants avant le marché","Concentrer la prospection les vendredis — jour de forte disponibilité et d'affluence des marchands","Éviter les marchés hebdomadaires : trop de monde, pas adapté à la prospection terrain","Envoyer un seul agent pour couvrir les 3 marchés simultanément"], correct:1, points:1 },
+  { type:'vf', text:"Le lien de paiement OM Business permet à un marchand d'encaisser des paiements à distance, sans QR Code physique.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Un marchand Premium demande la différence entre 'transfert à soi-même' et 'retrait'. Quelle explication transmettez-vous à vos agents ?", options:["Ce sont deux termes différents pour la même opération","Le transfert vers son propre compte bancaire est gratuit ; le retrait espèces est soumis à des frais selon le montant","Le retrait est gratuit, le transfert à soi-même est payant","Les deux opérations sont soumises aux mêmes frais"], correct:1, points:1 },
+  { type:'qcm', text:"Pourquoi le 'volume de transactions générées' est-il plus pertinent que le 'nombre de créations' pour mesurer l'impact commercial de votre déploiement ?", options:["Ce n'est pas plus pertinent — les créations restent l'indicateur contractuel principal","Car les transactions représentent la valeur économique réelle générée pour Orange et les marchands","Car le volume de transactions est plus facile à mesurer que le taux d'activation","Car le directeur régional demande uniquement ce chiffre"], correct:1, points:1 },
+  { type:'qcm', text:"Un distributeur alimentaire (grossiste), 15 employés, CA déclaré 800m XOF, RC + documents financiers disponibles. Quel profil lui attribuez-vous ?", options:["Classique — CA entre 150m et 400m XOF","Essentiel — commerce de gros sans besoin de fonctionnalités avancées","Premium — CA >400m XOF, +10 employés, documents financiers disponibles","Non éligible — les grossistes distributeurs ne sont pas la cible OM Business"], correct:2, points:1 },
+  { type:'vf', text:"Le suivi J+3 (contact 3 jours après la création d'un compte) est une pratique recommandée pour améliorer significativement le taux d'activation.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Deux commerces identiques en zone, même activité, même CA estimé à 130m XOF : l'un a un RC, l'autre non. L'agent classe le premier en Classique, le second en Essentiel. Cette décision est :", options:["Incorrecte — les deux doivent être Essentiel si le CA est <150m XOF","Correcte — le RC est un critère différenciateur entre Essentiel et Classique pour des CA proches du seuil","À compléter par vérification du nombre d'employés avant de confirmer","Incorrecte — deux commerces similaires doivent avoir le même profil"], correct:1, points:2 },
+  { type:'qcm', text:"Un agent génère beaucoup de prospects mais peine à finaliser les créations sur place (connexion lente). Quelle solution proposez-vous ?", options:["Réduire ses objectifs car la zone a une mauvaise couverture réseau","Équiper l'agent d'une connexion data de secours et l'entraîner à optimiser la création (wifi marchand, heure creuse)","Lui demander de noter les données manuellement et de les saisir le soir au bureau","Changer l'agent de zone pour une zone mieux couverte"], correct:1, points:1 },
+  { type:'qcm', text:"Un marchand Classique vous signale que son agent n'est plus joignable depuis 2 semaines et qu'il a un problème de compte non résolu. Comment intervenez-vous ?", options:["Lui dire de contacter le service client Orange directement","Prendre en charge la demande : identifier le problème, contacter le superviseur de l'agent et assurer le suivi jusqu'à résolution","Créer un nouveau compte pour éviter le blocage","Lui indiquer d'attendre que l'agent revienne"], correct:1, points:2 },
+  { type:'vf', text:"Un marchand qui utilise le parcours Non-OM peut recevoir des paiements Orange Money de clients, sans jamais posséder de SIM Orange.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Votre zone affiche 60% de profils Essentiel, 30% Classique, 10% Premium. La zone voisine a 40% Essentiel, 45% Classique, 15% Premium. Quelle conclusion en tirez-vous ?", options:["Votre zone est moins performante — il faut cibler plus de Premium","La répartition reflète la structure économique de chaque zone — résultat cohérent si les classifications sont correctes","Vos agents classifient mal — trop d'Essentiel signifie des erreurs systématiques","Le directeur régional vous demandera d'aligner sur la zone voisine"], correct:1, points:2 },
+  { type:'qcm', text:"En fin de trimestre, vous présentez un bilan à la direction. Quels 3 indicateurs présentez-vous en priorité pour démontrer la valeur de votre déploiement ?", options:["Nombre de créations, nombre de QR Codes distribués, nombre de zones couvertes","Taux d'activation, volume de transactions générées, croissance mensuelle du portefeuille actif","Nombre d'agents formés, nombre de formations réalisées, satisfaction des marchands","Nombre de marchands prospectés, nombre de refus, nombre de relances effectuées"], correct:1, points:2 },
+  { type:'open', text:"Vous êtes Responsable Ville. Vous encadrez 4 superviseurs : 2 équipes de 15 agents et 2 équipes de 20 agents (70 agents terrain, objectif 10 enrôlements/agent/jour). Votre analyse mensuelle révèle : 62 créations au total sur 70 agents, 19 marchands actifs (31%), taux de conversion prospect→création 41%. Décrivez en détail votre diagnostic superviseur par superviseur, les causes possibles de ce niveau de performance, et le plan d'action structuré que vous soumettez à votre direction.", options:[], correct:0, points:4 }
+],
+
+'inspecteur-orange': [
+  { type:'qcm', text:"Vos audits de la semaine sur un même agent révèlent : (1) Boutiquier textile, 4 employés, CA ≈200m XOF → profil Essentiel ; (2) Épicier solo, CA ≈55k XOF → profil Classique ; (3) Restaurant, 8 employés, CA ≈320m XOF → profil Essentiel. Quel problème systémique détectez-vous ?", options:["Les dossiers 1 et 3 manquent de documents — demander les registres de commerce manquants","Seul le dossier 2 est incorrect (épicier solo ne correspond pas au profil Classique)","L'agent inverse systématiquement les critères : sous-classe les gros commerces et sur-classe les petits — erreur de compréhension des seuils","Ce sont des erreurs isolées sans lien — corriger chaque dossier individuellement"], correct:2, points:2 },
+  { type:'qcm', text:"Commerce de vente de matériaux, 3 employés, CA déclaré 160m XOF/an, RC présent, pas de documents financiers. L'agent l'a créé en profil Essentiel. Votre verdict d'audit ?", options:["Conforme — le profil Essentiel est acceptable pour un CA proche du seuil Classique","Sous-classification double — ce commerce devrait être en profil Premium","Sous-classification — CA 160m XOF (>seuil Essentiel de 150m) et RC disponible répondent aux critères Classique ; reclassifier","Suspendre le dossier et réauditer dans 30 jours pour vérifier l'évolution réelle du CA"], correct:2, points:2 },
+  { type:'qcm', text:"Compte Premium actif depuis 7 mois avec des transactions régulières. Lors d'un audit de routine, vous constatez que la CNI du gérant a expiré il y a 3 mois (elle était valide à la création). Quelle est la procédure correcte ?", options:["Ne rien faire — la CNI était valide à la création, les conditions initiales étaient remplies","Downgrader le compte en Classique jusqu'au renouvellement de la CNI","Notifier le marchand pour renouvellement avec délai de régularisation, escalader au Back Office et assurer le suivi jusqu'à mise à jour","Supprimer immédiatement le compte — une CNI expirée invalide toute la conformité du dossier"], correct:2, points:2 },
+  { type:'qcm', text:"Compte Non-OM créé il y a 6 semaines : statut 'Activé' en Back Office, application installée. Zéro transaction. Lors de votre visite, vous découvrez que le marchand ne sait pas générer son QR Code et n'a jamais été formé après l'activation. Vos deux actions prioritaires ?", options:["Réinstaller l'application et recréer un nouveau compte pour repartir sur une base propre","Former le marchand au QR Code sur place avec test de transaction, puis remonter dans votre rapport que l'agent n'a pas dispensé le tutoriel post-activation Non-OM","Escalader directement au superviseur sans intervenir — ce n'est pas le rôle de l'Inspecteur de former","Remonter une anomalie Back Office — un compte actif sans transaction après 6 semaines devrait être suspendu automatiquement"], correct:1, points:2 },
+  { type:'qcm', text:"En compilant vos 90 audits du trimestre : 38% des comptes Classique manquent du RC, mais 91% ont une patente fiscale. La règle documentaire accepte RC OU patente pour le profil Classique. Que préconisez-vous dans votre rapport ?", options:["Recommander d'exiger uniquement le RC pour standardiser les dossiers Classique","Signaler les 38% sans RC comme non-conformes et demander leur régularisation individuelle","Les dossiers sont conformes — clarifier dans la formation terrain que RC et patente ont la même valeur documentaire pour le Classique","Ne rien signaler — si la patente est acceptée, tous les dossiers sont conformes"], correct:2, points:2 },
+  { type:'qcm', text:"Quels documents sont requis pour valider un compte OM Business Premium lors de votre vérification d'audit ?", options:["Uniquement la CNI du gérant","CNI + Registre de commerce uniquement","CNI + Registre de commerce + Documents financiers (bilans, patente, etc.)","Bail commercial + contrat d'assurance + CNI"], correct:2, points:1 },
+  { type:'qcm', text:"Lors d'une visite terrain, vous observez qu'un marchand Classique n'affiche son QR Code que derrière le comptoir, invisible pour les clients. Quelle est votre action ?", options:["Valider la visite — le QR Code est présent dans le commerce","Signaler une non-conformité opérationnelle et former le marchand sur le bon placement du QR Code (visible et accessible clients)","Supprimer et réimprimer un nouveau QR Code sans autre action","Contacter le superviseur pour décider si le QR Code doit être repositionné"], correct:1, points:1 },
+  { type:'qcm', text:"Vous avez 15 agents à auditer et devez effectuer 40 visites terrain par jour. Votre planning révèle que 6 de vos 15 agents sont affectés à une zone éloignée nécessitant 45 min de trajet. Comment organisez-vous votre semaine ?", options:["Visiter uniquement les 9 agents de la zone proche pour maintenir 40 visites/jour sans perte de temps","Regrouper les visites par zone géographique : dédier 1-2 jours complets à la zone éloignée pour auditer les 6 agents en bloc, et couvrir les 9 agents proches les autres jours","Déléguer l'audit des 6 agents éloignés à un collègue Inspecteur sans les signaler à votre superviseur","Réduire à 20 visites/jour les jours de déplacement zone éloignée sans plan de compensation"], correct:1, points:2 },
+  { type:'vf', text:"Un compte Classique OM Business créé sans registre de commerce ni patente est toujours conforme si le marchand déclare un CA de 200 millions XOF.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"L'Inspecteur peut former le marchand sur place lors d'une visite d'audit si une lacune opérationnelle est identifiée.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Lors d'un audit croisé, vous constatez qu'un même marchand a deux comptes OM Business actifs (un Essentiel créé par un agent A, un Classique créé par un agent B 2 semaines plus tard). Quelle est la bonne procédure ?", options:["Valider les deux — la duplication peut être intentionnelle","Garder le compte le plus récent (Classique), suspendre l'Essentiel et signaler les deux agents pour vérification","Supprimer les deux et demander au marchand de recommencer de zéro","Laisser le Back Office gérer automatiquement la déduplication"], correct:1, points:1 },
+  { type:'qcm', text:"En tant qu'Inspecteur, vous suivez 15 agents. Sur vos 40 visites prévues aujourd'hui, 12 concernent les agents d'un même superviseur. Ce superviseur signale qu'un de ses agents (8 des 12 visites prévues) a un taux d'activation de 18%. Comment priorisez-vous vos visites du jour ?", options:["Répartir équitablement vos 40 visites entre tous les agents sans priorisation","Concentrer davantage de visites sur l'agent à 18% d'activation pour identifier précisément les lacunes et consigner les anomalies dans votre rapport d'audit du jour","Annuler les visites des agents performants pour vous consacrer uniquement à l'agent en difficulté","Signaler l'agent à 18% à la direction régionale sans effectuer les visites"], correct:1, points:2 },
+  { type:'vf', text:"Un Inspecteur peut valider un compte Classique dont le RC a expiré il y a 2 mois si le marchand promet de le renouveler bientôt.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Un commerce a été créé en profil Essentiel il y a 4 mois. Lors de votre audit, vous constatez : CA réel ≈320m XOF, 7 employés, RC disponible. Votre action immédiate ?", options:["Laisser en Essentiel — le profil a été validé par le Back Office à la création","Consigner la sous-classification dans votre rapport, initier la reclassification en Classique et contacter l'agent responsable","Reclassifier directement en Premium car le CA dépasse 300m XOF","Attendre la prochaine visite annuelle pour déclencher la mise à niveau de profil"], correct:1, points:2 },
+  { type:'vf', text:"Un compte Essentiel OM Business peut être créé pour un vendeur ambulant sans local fixe, sans employé et sans registre de commerce.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Lors d'un audit, vous constatez qu'un agent a enregistré 14 créations en une seule journée. Quelle est votre première vérification ?", options:["Féliciter l'agent pour sa productivité exceptionnelle","Vérifier la réalité terrain — présence physique des commerces, conformité documentaire et cohérence des profils attribués","Signaler immédiatement à la direction régionale pour sanction","Valider les 14 dossiers sans audit complémentaire si les documents sont présents"], correct:1, points:2 },
+  { type:'qcm', text:"Un marchand signale que son compte OM Business est bloqué depuis 72h. Quelle est votre première action en tant qu'Inspecteur ?", options:["Conseiller au marchand d'attendre — les blocages se résolvent automatiquement","Recréer un nouveau compte pour contourner le blocage","Vérifier le statut du compte, collecter le numéro de dossier et escalader immédiatement au Back Office avec le détail de l'anomalie","Contacter le service client Orange grand public au nom du marchand"], correct:2, points:1 },
+  { type:'vf', text:"L'Inspecteur OM Business peut décider seul d'upgrader un compte Essentiel en profil Premium sans validation préalable du Back Office.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Pharmacie avec 2 employés, CA déclaré 180 millions XOF/an, registre de commerce valide, patente fiscale valide. Quel profil OM Business est correct ?", options:["Essentiel — la pharmacie a moins de 3 employés","Classique — CA supérieur au seuil Essentiel (150m) avec RC disponible","Premium — le secteur santé est systématiquement classé Premium","Non-OM — les pharmacies ne sont pas éligibles à OM Business"], correct:1, points:1 },
+  { type:'qcm', text:"Lors d'un audit de 5 comptes Non-OM, 3 marchands n'affichent aucun QR Code. Quelle est votre interprétation prioritaire ?", options:["Le QR Code n'est pas obligatoire pour les comptes Non-OM","L'agent n'a pas accompagné les marchands jusqu'à l'étape d'affichage et de mise en service opérationnelle","Les marchands ont perdu le QR Code — problème mineur à signaler","La plateforme Non-OM a un bug d'impression — escalader au technique"], correct:1, points:2 },
+  { type:'qcm', text:"Un agent affiche un taux d'activation de 18% sur ses 28 créations du mois (objectif : 60%). Votre priorité de coaching porte sur :", options:["Augmenter le volume de créations pour espérer plus d'activations naturelles","Le suivi post-création — l'agent crée les comptes mais n'accompagne pas les marchands au premier usage","La prospection — l'agent cible les mauvais marchands dès le départ","Réduire le volume de créations pour se concentrer sur la qualité documentaire"], correct:1, points:2 },
+  { type:'qcm', text:"Lors de votre contrôle d'un compte Classique, le marchand vous montre sa dernière transaction datant de 47 jours. Ce marchand est-il 'actif' selon les standards OM Business ?", options:["Oui — il a eu au moins une transaction dans le mois en cours","Non — un marchand actif doit avoir généré au moins une transaction dans les 30 derniers jours","Oui — une transaction tous les 2 mois est acceptable pour le Classique","Non — seules les transactions des 7 derniers jours comptent"], correct:1, points:1 },
+  { type:'vf', text:"Le suivi J+3 après activation d'un compte est exclusivement la responsabilité de l'agent commercial — l'Inspecteur n'a pas à le vérifier lors de ses audits.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"8 des 10 dossiers audités d'un même agent sont en profil Essentiel. La zone couverte est le marché central avec des grossistes et des importateurs. Votre conclusion ?", options:["Normal — le profil Essentiel est le plus courant quelle que soit la zone","L'agent sous-classe systématiquement — les gros commerces du marché central correspondent aux critères Classique ou Premium","Acceptable si les documents correspondent au profil Essentiel","Il faut attendre 3 mois de plus pour évaluer le profil réel"], correct:1, points:2 },
+  { type:'qcm', text:"Lors d'un audit, un marchand Premium vous présente ses bilans financiers — ils datent de 3 ans et ont été utilisés lors de la création. Votre action ?", options:["Valider — les bilans à la création sont définitifs et ne nécessitent pas de mise à jour","Notifier le marchand de mettre à jour ses documents financiers et consigner dans votre rapport que la conformité documentaire Premium est à renouveler","Dégrader le compte en Classique immédiatement","Supprimer le compte et demander une nouvelle création complète"], correct:1, points:2 },
+  { type:'qcm', text:"Un compte Non-OM est activé il y a 5 semaines. L'agent n'a dispensé aucune formation pratique — le marchand n'a jamais utilisé le service. Qu'est-ce que vous consignez dans votre rapport d'audit ?", options:["Rien — le compte est actif techniquement, l'Inspecteur se limite à la conformité documentaire","Lacune opérationnelle majeure : absence de formation post-activation, risque d'inactivité définitive — recommander une visite de relance immédiate et identifier l'agent responsable","Signaler uniquement l'inactivité sans préciser la cause","Clôturer le compte et le recréer avec un autre agent"], correct:1, points:2 },
+  { type:'vf', text:"Pour un compte Classique OM Business, la présentation d'une patente fiscale suffit si le registre de commerce n'est pas disponible.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Dans le contexte OM Business, que désigne le parcours 'Non-OM' ?", options:["Un marchand qui refuse d'utiliser Orange Money","Un commerçant sans compte Orange Money préalable, intégré directement comme marchand OM Business via l'application dédiée","Un compte suspendu pour inactivité","Un profil Essentiel sans numéro Orange actif"], correct:1, points:1 },
+  { type:'qcm', text:"Lors d'un audit, vous identifiez qu'un agent a reclassifié 3 marchands de Classique à Essentiel sans justification documentaire. L'action la plus appropriée est :", options:["Valider les reclassifications — l'agent connaît mieux ses marchands","Revérifier chaque dossier, annuler les reclassifications non justifiées et exiger une note écrite de l'agent expliquant chaque décision","Signaler uniquement au Superviseur sans action directe","Clôturer les 3 dossiers et les recréer en Classique avec un autre agent"], correct:1, points:2 },
+  { type:'open', text:"Vous êtes Inspecteur OM Business. Vous suivez 15 agents (répartis sur 3 superviseurs) avec un objectif de 40 visites terrain par jour. En milieu de semaine, votre bilan de visites révèle : sur les 6 agents d'un même superviseur, 4 dossiers audités présentent des sous-classifications systématiques, et 2 agents n'ont aucun marchand actif depuis 3 semaines. Décrivez votre rapport d'audit complet, les actions immédiates pour chaque anomalie, et la procédure d'escalade que vous engagez vis-à-vis du superviseur concerné.", options:[], correct:0, points:4 }
+],
+
+'superviseur-orange': [
+  { type:'qcm', text:"Analyse mensuelle de votre équipe de 15 agents (objectif : 10 enrôlements/agent/jour) : 6 agents atteignent bon volume ET bon taux d'activation ; 6 agents ont bon volume MAIS faible taux d'activation (25-30%) ; 3 agents ont faible volume MAIS excellent taux d'activation (84%). Quelle est la stratégie de coaching la plus efficace ?", options:["Plan de formation identique pour les 15 agents cette semaine","Coacher en urgence les 6 agents (bon volume/faible activation) sur le suivi post-création, et organiser un partage de méthode avec les 3 agents à excellent taux","Concentrer le coaching sur les 3 agents à faible volume pour les amener au niveau de production des autres","Sanctionner les 6 sous-performants sur l'activation avec des ultimatums individuels"], correct:1, points:2 },
+  { type:'qcm', text:"Un marchand Premium vous appelle en urgence : il signale un débit non autorisé de 750 000 XOF sur son compte OM Business. Quelle est votre séquence d'actions dans l'heure qui suit ?", options:["Rassurer le marchand par téléphone et attendre 24h pour voir si le débit se corrige automatiquement","Déléguer à l'agent qui a créé le compte de rappeler le marchand et gérer seul","(1) Appeler le marchand pour collecter tous les détails ; (2) ouvrir une réclamation urgente au Back Office ; (3) informer votre hiérarchie ; (4) assurer le suivi jusqu'à résolution avec mises à jour régulières au marchand","Rembourser immédiatement le marchand depuis le budget terrain pour désamorcer avant investigation"], correct:2, points:2 },
+  { type:'qcm', text:"Votre Responsable Ville compare deux superviseurs : Superviseur A (15 agents, objectif 150 enrôlements/jour) = 142 créations, 105 marchands actifs (74%). Superviseur B (20 agents, objectif 200 enrôlements/jour) = 198 créations, 69 marchands actifs (35%). Le RV félicite publiquement le Superviseur B pour son volume. Quelle est votre analyse en tant que pair ?", options:["Valider la félicitation du RV — le volume de créations est bien l'indicateur principal","Aligner les méthodes du Superviseur A sur celles du Superviseur B pour harmoniser le volume","Préparer une analyse chiffrée montrant que le Superviseur A génère plus de marchands actifs malgré une équipe plus petite — et proposer le taux d'activation comme KPI complémentaire obligatoire","Fusionner les deux équipes pour équilibrer les méthodes"], correct:2, points:2 },
+  { type:'qcm', text:"Après 4 semaines de formation intensive sur le traitement des objections, la conversion de votre équipe ne s'améliore pas. Quelle est la cause racine la plus probable ?", options:["La formation n'est pas assez longue — il faut 8 semaines minimum avant d'observer des résultats","Les marchands de ce territoire sont culturellement résistants aux solutions digitales — changer de zone","Le blocage est peut-être en amont (qualification du prospect) ou en aval (closing) — observer chaque agent sur le terrain pour identifier l'étape réelle de rupture","Les agents ne s'investissent pas dans la formation — mise en place de sanctions disciplinaires"], correct:2, points:2 },
+  { type:'qcm', text:"Il reste 2 jours avant la clôture mensuelle. Votre équipe de 15 agents (objectif 10 enrôlements/agent/jour) manque 18 comptes à l'objectif. Taux d'activation actuel : 71%. Option B : ne créer que des comptes qualifiés et rater l'objectif de 18. Comment défendez-vous cette décision au Responsable Ville ?", options:["L'objectif contractuel prime — Option A, atteindre le chiffre coûte que coûte quitte à baisser les critères","Chiffrer le coût réel de l'Option A sur les KPIs futurs (activation qui chuterait vers 45%), valoriser le taux actuel de 71% et proposer un plan de rattrapage qualifié pour le mois suivant avec vos 15 agents","Se concentrer uniquement sur l'activation des marchands existants les 2 derniers jours sans réponse structurée","Demander à chaque agent de faire 11-12 enrôlements les 2 derniers jours pour combler l'écart"], correct:1, points:2 },
+  { type:'qcm', text:"Un compte marchand Premium est bloqué en attente de validation Back Office depuis 5 jours (délai standard 24-48h). L'agent est impuissant. Quelle est la bonne procédure d'escalade ?", options:["Demander au marchand de patienter encore quelques jours","Supprimer le compte et le recréer immédiatement","Informer le marchand de l'action en cours, escalader au Back Office avec numéro de dossier et délai souhaité, assurer le suivi jusqu'à activation","Contacter le 124 (service client Orange grand public) au nom du marchand"], correct:2, points:1 },
+  { type:'qcm', text:"En analysant votre rapport hebdomadaire, un agent a créé 8 comptes Essentiel, dont 3 pour des commerces avec RC et plus de 5 employés. Quel problème identifiez-vous ?", options:["L'agent a créé trop de comptes en une semaine — volume anormal","L'agent sous-classe systématiquement — des commerces avec RC et +5 employés sont Classique minimum, pas Essentiel","Le profil Essentiel doit passer par un Inspecteur avant validation","Un marchand avec RC ne peut jamais être en profil Essentiel"], correct:1, points:1 },
+  { type:'qcm', text:"Votre équipe de 20 agents (objectif : 10 enrôlements/agent/jour, soit 200 créations/mois) a créé 110 comptes ce mois, et seulement 33 marchands ont généré au moins une transaction (30%). Quelle action engagez-vous en priorité ?", options:["Demander aux agents d'accélérer le rythme pour rattraper les 90 créations manquantes","Identifier le double problème : défaut de volume (110 vs 200 objectif) ET défaut d'accompagnement post-création — instaurer un suivi J+3 systématique et analyser pourquoi les agents n'atteignent pas les 10 enrôlements/jour","Sanctionner les agents dont les marchands sont inactifs sans analyse préalable","Réduire l'objectif à 5 enrôlements/agent/jour pour améliorer la qualité"], correct:1, points:1 },
+  { type:'vf', text:"Un agent qui crée 20 comptes par mois avec un taux d'activation de 25% est plus performant qu'un agent qui crée 10 comptes avec un taux d'activation de 80%.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'vf', text:"Le taux d'activation (marchands ayant généré au moins une transaction) est un indicateur de performance plus pertinent que le nombre brut de comptes créés.", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"Lors d'une écoute terrain, vous constatez qu'un agent présente OM Business en commençant par les frais de retrait. Quelle correction apportez-vous ?", options:["Lui interdire de mentionner les frais pour éviter les objections","Le remplacer immédiatement sur ce secteur","Coacher l'agent à recentrer le pitch : valeur et avantages concurrentiels d'abord, tarification ensuite","Lui demander de lire la fiche produit avant chaque visite"], correct:2, points:1 },
+  { type:'qcm', text:"Un agent signale qu'un marchand Non-OM hésite car il croit que 'ses clients doivent aussi avoir une SIM Orange pour payer'. L'argument décisif à transmettre à l'agent est :", options:["Rappeler que l'application OM Business est gratuite au téléchargement","Proposer d'installer une SIM Orange gratuite au marchand pour lever le blocage","Expliquer que c'est le CLIENT qui paye avec son Orange Money — le marchand n'a pas besoin de SIM Orange pour recevoir les paiements","Proposer une période d'essai de 30 jours gratuite"], correct:2, points:1 },
+  { type:'vf', text:"Un superviseur peut valider lui-même une reclassification de profil (ex: Essentiel → Classique) sans passer par l'Inspecteur.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Pour mesurer l'efficacité de votre équipe d'une manière composite, quel indicateur est le plus pertinent ?", options:["Nombre total de créations × nombre d'agents","Taux d'activation × volume de transactions générées par les marchands actifs","Nombre de QR Codes distribués dans la zone","Nombre d'appels passés par les agents aux marchands inactifs"], correct:1, points:1 },
+  { type:'qcm', text:"Un agent affiche 85% de marchands inactifs ce mois contre 55% le mois dernier. Avant de le coacher, quelle information cherchez-vous en priorité ?", options:["Comparer ses objectifs chiffrés avec ceux du mois précédent","Identifier si le changement coïncide avec une nouvelle zone, une modification du processus post-création ou un événement externe (fêtes, saison)","Vérifier le volume de créations du mois pour voir si l'agent a été moins productif","Contrôler l'heure d'arrivée de l'agent au bureau"], correct:1, points:2 },
+  { type:'vf', text:"Un Superviseur peut valider lui-même la création d'un compte Premium OM Business si le dossier documentaire lui semble complet, sans vérification Inspecteur.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Lors de votre rapport mensuel à la direction régionale, quel trio d'indicateurs présente le mieux la santé de votre équipe ?", options:["Nombre d'agents présents, volume d'appels passés, kilomètres parcourus","Nombre de créations, taux d'activation, volume de transactions générées par les marchands actifs","Nombre de formations dispensées, nombre de conflits résolus, satisfaction du Responsable Ville","Budget terrain utilisé, nombre de QR Codes distribués, nombre de comptes suspendus"], correct:1, points:2 },
+  { type:'qcm', text:"Vous avez un agent junior (3 mois d'ancienneté) et un agent confirmé (18 mois). Le coaching différencié consiste à :", options:["Appliquer le même plan de formation pour garantir l'équité dans l'équipe","Coacher le junior sur les fondamentaux (pitch, documentation, profils) et le confirmé sur l'optimisation (taux d'activation, closing, gestion des objections complexes)","Donner plus de dossiers au confirmé et moins au junior pour compenser l'expérience","Demander au confirmé de former lui-même le junior pour vous libérer du temps"], correct:1, points:2 },
+  { type:'qcm', text:"Deux agents signalent le même marchand dans leurs rapports respectifs — ils se sont rendus chez lui le même jour en se croisant. Comment gérez-vous ce conflit de territoire ?", options:["Attribuer le marchand au premier arrivé selon l'heure de création du dossier","Organiser une réunion avec les deux agents, clarifier le découpage territorial et mettre à jour la carte de zone pour éviter les recouvrements futurs","Annuler les deux dossiers et redémarrer de zéro","Laisser le Responsable Ville décider sans intervenir"], correct:1, points:1 },
+  { type:'vf', text:"Le taux de conversion OM Business est calculé sur le nombre de comptes activés par rapport au nombre de prospects visités (pas le nombre de comptes créés).", options:["Vrai","Faux"], correct:0, points:1 },
+  { type:'qcm', text:"À J-3 de la clôture mensuelle, votre équipe manque 22 créations à l'objectif. Les 22 créations restantes nécessiteraient de prospecter sans critères de qualification. Quelle est votre position managériale ?", options:["Ordonner aux agents de créer 22 comptes en 3 jours quitte à baisser les critères","Présenter à votre hiérarchie un scénario chiffré montrant l'impact sur le taux d'activation, et proposer de consolider l'existant + un plan de rattrapage qualifié pour le mois suivant","Ne rien dire à la direction et absorber le manque silencieusement","Demander aux agents de travailler le week-end pour atteindre l'objectif"], correct:1, points:2 },
+  { type:'qcm', text:"Un nouvel agent intègre votre équipe. À quoi consacrez-vous ses 3 premières semaines ?", options:["Le mettre immédiatement en prospection terrain avec des objectifs de création","Semaine 1 : produit et profils ; Semaine 2 : shadowing (accompagnement terrain d'un agent confirmé) ; Semaine 3 : terrain en autonomie supervisée avec debriefs quotidiens","L'affecter au Back Office pour qu'il comprenne la validation documentaire","Le former uniquement par e-learning sans accompagnement terrain"], correct:1, points:1 },
+  { type:'qcm', text:"Un problème technique récurrent empêche les marchands de votre zone de générer leur QR Code depuis 4 jours. Votre séquence d'escalade est :", options:["Attendre que le problème se résolve seul — les bugs se corrigent automatiquement","Informer vos agents de continuer sans QR Code et rattraper plus tard","Documenter les cas affectés, ouvrir un ticket technique avec numéros de compte, escalader au Responsable Ville et assurer un suivi jusqu'à résolution avec délai communiqué aux marchands","Suspendre toutes les activations jusqu'à résolution du bug"], correct:2, points:2 },
+  { type:'qcm', text:"Quel KPI hebdomadaire surveillez-vous en priorité pour détecter un risque sur les objectifs mensuels en milieu de mois ?", options:["Le nombre de réunions d'équipe tenues","Le ratio créations réalisées / créations planifiées × taux d'activation hebdomadaire","Le nombre de kilomètres parcourus par les agents","Le budget terrain restant"], correct:1, points:1 },
+  { type:'vf', text:"Un agent commercial OM Business peut créer des comptes Classique et Premium en totale autonomie, sans aucune validation par le Superviseur ou l'Inspecteur.", options:["Vrai","Faux"], correct:1, points:1 },
+  { type:'qcm', text:"Un marchand Premium vous appelle pour négocier une réduction des frais de commission OM Business. Comment répondez-vous ?", options:["Accepter une réduction à titre commercial pour fidéliser ce gros compte","Expliquer que les tarifs sont fixés par Orange et non négociables au niveau terrain, valoriser les avantages Premium, et remonter la demande au Responsable Ville si le compte représente un enjeu stratégique","Ignorer la demande — un marchand Premium ne peut pas quitter le réseau facilement","Orienter le marchand vers un profil Essentiel pour réduire ses frais"], correct:1, points:1 },
+  { type:'qcm', text:"Votre zone affiche un taux de pénétration OM Business de 12% (commerces éligibles couverts). Quelle stratégie priorisez-vous pour le mois suivant ?", options:["Conserver la même zone et intensifier les visites chez les marchands déjà couverts","Cartographier les segments de commerce non couverts (type de commerce, quartier), cibler les zones à densité commerciale élevée et briefer les agents sur les arguments par profil de commerce","Changer de zone géographique pour trouver un marché plus réceptif","Augmenter le volume de QR Codes distribués sans autre action"], correct:1, points:2 },
+  { type:'qcm', text:"Lors de votre réunion d'équipe hebdomadaire, quel format maximise l'engagement et l'apprentissage collectif ?", options:["Lecture des objectifs par le Superviseur pendant 45 minutes sans interaction","Partage des résultats de la semaine + analyse d'un cas terrain réel par les agents + plan d'action collectif pour la semaine suivante","Présentation des sanctions pour les sous-performants devant l'équipe","Formation produit intensive sans lien avec les résultats terrain récents"], correct:1, points:1 },
+  { type:'qcm', text:"Votre suivi mensuel révèle que 40% des comptes Non-OM créés par votre équipe n'ont généré aucune transaction après 4 semaines. Quelle intervention systémique engagez-vous ?", options:["Suspendre les créations Non-OM jusqu'à résolution","Instaurer un protocole de suivi J+3 et J+14 obligatoire pour chaque compte Non-OM, avec rapport de visite validé par le Superviseur avant clôture du suivi","Attendre que les marchands utilisent le service de manière naturelle","Changer d'agents sur la prospection Non-OM"], correct:1, points:2 },
+  { type:'open', text:"Vous êtes Superviseur OM Business, encadrant une équipe de 15 agents (objectif : 10 enrôlements/agent/jour, soit 150 créations/mois). Votre analyse trimestrielle révèle : 110 créations ce mois (vs 150 objectif), 35 marchands actifs (32% de taux d'activation). Le mois précédent : 91 créations, 56 marchands actifs (61%). Décrivez votre diagnostic agent par agent, les causes possibles de la chute du taux d'activation malgré l'augmentation du volume, et le plan d'action détaillé que vous engagez en tant que Superviseur.", options:[], correct:0, points:4 }
+]
+};
+
+// ============================================================
+// BANQUE DE QUESTIONS PAR POSTE — 30 questions chacun
+// ============================================================
+// QUESTIONS ID30 retirées (fichier Orange uniquement)
+
+function loadSampleQuestions() {
+  state.questions = [
+    { id: 1, type: 'qcm', text: 'Qu\'est-ce que la satisfaction client dans un call center ?', options: ['Le nombre d\'appels traités', 'Le niveau de contentement du client après interaction', 'Le temps de pause des agents', 'La vitesse de connexion internet'], correct: 1, points: 2 },
+    { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
+    { id: 3, type: 'qcm', text: 'Que signifie le sigle DMT (Durée Moyenne de Traitement) ?', options: ['Durée totale des appels dans une journée', 'Temps moyen passé par un agent sur chaque appel', 'Nombre de tickets résolus par heure', 'Délai de réponse au premier appel'], correct: 1, points: 2 },
+    { id: 4, type: 'vf', text: 'L\'écoute active consiste à interrompre le client pour lui proposer des solutions rapidement.', options: ['Vrai', 'Faux'], correct: 1, points: 1 },
+    { id: 5, type: 'qcm', text: 'Quelle est la bonne attitude face à un client mécontent ?', options: ['Raccrocher poliment', 'Écouter, comprendre, s\'excuser si nécessaire et proposer une solution', 'Transférer immédiatement l\'appel', 'Ignorer les plaintes et continuer le script'], correct: 1, points: 2 },
+    { id: 6, type: 'open', text: 'Décrivez en quelques lignes votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
+  ];
+  renderQuestions();
+  alert('✅ Questions exemples chargées !');
+}
+
+// ===================== CANDIDATE ENTRY =====================
+function setupCandidateEntry() {
+  const section = document.getElementById('access-code-section');
+  section.style.display = state.config.accessCode ? 'block' : 'none';
+  const instrBlock = document.getElementById('instructions-block');
+  if(state.config.instructions) {
+    instrBlock.style.display = 'flex';
+    instrBlock.innerHTML = '📋 ' + state.config.instructions;
+  }
+
+  // Adapter le titre et les rôles selon l'opération choisie
+  const hero = document.querySelector('#screen-candidate-entry .identity-hero h1');
+  const heroSub = document.querySelector('#screen-candidate-entry .identity-hero p');
+  const posteSelect = document.getElementById('candidate-poste');
+
+  if(state.currentOperation === 'orange') {
+    if(hero) hero.innerHTML = 'Évaluation <span>Orange Money Business</span>';
+    if(heroSub) heroSub.textContent = 'Opération ORANGE — Renseignez vos informations pour commencer';
+    posteSelect.innerHTML = `
+      <option value="">-- Sélectionnez votre rôle --</option>
+      <option value="agent-orange">Agent OM Business</option>
+      <option value="superviseur-orange">Superviseur OM Business</option>
+      <option value="inspecteur-orange">Inspecteur OM Business</option>
+      <option value="rv-orange">Responsable Ville (OM Business)</option>
+    `;
+  } else if(state.currentOperation === 'id30') {
+    if(hero) hero.innerHTML = 'Bienvenue sur <span>l\'évaluation</span>';
+    if(heroSub) heroSub.textContent = 'Opération ID30 — Renseignez vos informations pour commencer le test';
+    posteSelect.innerHTML = `
+      <option value="">-- Sélectionnez votre poste --</option>
+      <option value="call-center">Agent Call Center (ID30)</option>
+      <option value="back-office">Agent Back Office (ID30)</option>
+      <option value="inspecteur">Inspecteur (ID30 &amp; Orange QR)</option>
+      <option value="superviseur">Superviseur (Agent &amp; Orange Money)</option>
+    `;
+  }
+}
+
+async function startExam() {
+  const firstname = document.getElementById('candidate-firstname').value.trim();
+  const lastname = document.getElementById('candidate-lastname').value.trim();
+  const phone = document.getElementById('candidate-phone').value.trim().replace(/\s+/g, '');
+  const poste = document.getElementById('candidate-poste').value;
+  const errorEl = document.getElementById('candidate-entry-error');
+  const alreadyDoneEl = document.getElementById('eval-already-done');
+
+  alreadyDoneEl.style.display = 'none';
+
+  if(!firstname || !lastname || !phone) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Veuillez remplir tous les champs obligatoires (*).';
+    return;
+  }
+  if(phone.length < 8) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Numéro de téléphone invalide (minimum 8 chiffres).';
+    return;
+  }
+  if(!poste) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Veuillez sélectionner votre poste.';
+    return;
+  }
+  if(state.config.accessCode) {
+    const code = document.getElementById('candidate-access-code').value.trim().toUpperCase();
+    if(code !== state.config.accessCode.toUpperCase()) {
+      errorEl.style.display = 'flex';
+      errorEl.textContent = '❌ Code d\'accès incorrect.';
+      return;
+    }
+  }
+
+  // Connexion / création du candidat via téléphone
+  errorEl.style.display = 'none';
+  const posteMap = {
+    'call-center': 'Call Center', 'back-office': 'Back Office',
+    'inspecteur': 'Inspecteur', 'superviseur': 'Superviseur',
+    'agent-orange': 'Call Center', 'rv-orange': 'Superviseur',
+    'inspecteur-orange': 'Inspecteur', 'superviseur-orange': 'Superviseur'
+  };
+
+  try {
+    var loginResult = await loginOrCreateCandidat({
+      nom: lastname, prenom: firstname, telephone: phone,
+      poste: posteMap[poste] || 'Call Center'
+    });
+
+    if (loginResult.candidat) {
+      state._supabaseCandidatId = loginResult.candidat.id;
+
+      // Vérifier si une évaluation a déjà été passée pour ce poste
+      var sb = getSupabase();
+      var { data: existingEvals } = await sb
+        .from('evaluations')
+        .select('id, poste, score_final, created_at')
+        .eq('candidat_id', loginResult.candidat.id);
+
+      if (existingEvals && existingEvals.length > 0) {
+        // Le candidat a déjà passé une évaluation
+        alreadyDoneEl.style.display = 'flex';
+        alreadyDoneEl.innerHTML = '⚠️ Vous avez déjà passé une évaluation (<strong>' + existingEvals[0].poste + '</strong> — Score : ' + existingEvals[0].score_final + ' pts, le ' + new Date(existingEvals[0].created_at).toLocaleDateString('fr-FR') + '). <br>Une seule tentative est autorisée par poste.';
+        return;
+      }
+    }
+  } catch(e) {
+    console.error('[Supabase] Erreur connexion candidat:', e);
+    // Continuer quand même en mode dégradé
+  }
+
+  // Charger les questions adaptées au poste et à l'opération
+  const posteLabels = {
+    'call-center': 'Agent Call Center — ID30',
+    'back-office': 'Agent Back Office — ID30',
+    'inspecteur': 'Inspecteur — ID30',
+    'superviseur': 'Superviseur — ID30',
+    'agent-orange': 'Agent OM Business — Orange',
+    'rv-orange': 'Responsable Ville — Orange',
+    'inspecteur-orange': 'Inspecteur OM Business — Orange',
+    'superviseur-orange': 'Superviseur — Orange'
+  };
+  const bank = QUESTIONS_BY_POSTE_ORANGE;
+  let rawQuestions = bank[poste] || [];
+  state.questions = rawQuestions.map((q, i) => ({...q, id: i + 1}));
+  if(state.questions.length === 0) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Aucune question disponible pour ce rôle.';
+    return;
+  }
+  state.config.title = 'Évaluation — ' + posteLabels[poste];
+
+  errorEl.style.display = 'none';
+  state.currentCandidate = { firstname, lastname, email: '', phone, poste, posteLabel: posteLabels[poste], operation: state.currentOperation || 'id30' };
+  state.currentAnswers = {};
+  state.currentQuestion = 0;
+  state.startTime = Date.now();
+
+  document.getElementById('exam-title-display').textContent = state.config.title;
+  document.getElementById('exam-candidate-name').textContent = `${firstname} ${lastname}`;
+
+  renderExam();
+  startTimer(state.config.duration * 60);
+  showScreen('screen-exam');
+}
+
+// ===================== EXAM =====================
+function renderExam() {
+  const q = state.questions[state.currentQuestion];
+  const total = state.questions.length;
+  const current = state.currentQuestion;
+
+  document.getElementById('exam-progress').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('question-counter').textContent = `Question ${current + 1} / ${total}`;
+
+  const btn_prev = document.getElementById('btn-prev');
+  const btn_next = document.getElementById('btn-next');
+  const btn_submit = document.getElementById('btn-submit');
+
+  btn_prev.style.display = current > 0 ? 'inline-flex' : 'none';
+  btn_next.style.display = current < total - 1 ? 'inline-flex' : 'none';
+  btn_submit.style.display = current === total - 1 ? 'inline-flex' : 'none';
+  btn_submit.textContent = '🔍 Vérifier & Terminer';
+
+  const letters = ['A','B','C','D','E','F'];
+  const typeBadge = q.type === 'qcm' ? '<span class="q-type-badge badge-qcm">QCM</span>' :
+                    q.type === 'vf' ? '<span class="q-type-badge badge-vf">Vrai/Faux</span>' :
+                    '<span class="q-type-badge badge-open">Question Ouverte</span>';
+  let optionsHTML = '';
+  if(q.multi) {
+    const curSel = Array.isArray(state.currentAnswers[q.id]) ? state.currentAnswers[q.id] : [];
+    optionsHTML = `<div class="alert alert-info" style="margin-bottom:0.8rem;font-size:0.85rem;padding:10px 14px">☑️ Sélectionnez <strong>${q.multi} réponses</strong> pour cette question.</div>
+    <div class="exam-options">` + q.options.map((opt, oi) => `
+      <label class="exam-option ${curSel.includes(oi) ? 'selected' : ''}" onclick="selectMultiAnswer(${q.id}, ${oi}, ${q.multi})">
+        <input type="checkbox" value="${oi}" ${curSel.includes(oi) ? 'checked' : ''} style="pointer-events:none;width:16px;height:16px;accent-color:var(--accent)">
+        <span class="exam-option-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </label>`).join('') + `</div>`;
+  } else if(q.type === 'qcm' || q.type === 'vf') {
+    optionsHTML = `<div class="exam-options">` + q.options.map((opt, oi) => `
+      <label class="exam-option ${state.currentAnswers[q.id] === oi ? 'selected' : ''}" onclick="selectAnswer(${q.id}, ${oi})">
+        <input type="radio" name="exam_q" value="${oi}" ${state.currentAnswers[q.id] === oi ? 'checked' : ''} style="pointer-events:none">
+        <span class="exam-option-letter">${letters[oi]}</span>
+        <span>${opt}</span>
+      </label>`).join('') + `</div>`;
+  } else {
+    optionsHTML = `
+      <div class="alert alert-info" style="margin-bottom:1rem">📝 Cette question sera évaluée séparément. Répondez sur Google Forms.</div>
+      <textarea placeholder="Votre réponse (optionnel pour référence)..." style="min-height:120px" oninput="state.currentAnswers['open_${q.id}'] = this.value">${state.currentAnswers['open_'+q.id] || ''}</textarea>`;
+  }
+
+  document.getElementById('exam-questions-container').innerHTML = `
+    <div class="exam-question-card">
+      <div class="exam-q-meta">
+        ${typeBadge}
+        <span style="font-size:0.78rem;color:var(--text-muted)">${q.points} point${q.points > 1 ? 's' : ''}</span>
+      </div>
+      <div class="exam-q-text">${q.text || '<em style="color:var(--text-muted)">Question sans texte</em>'}</div>
+      ${optionsHTML}
+    </div>`;
+}
+
+function selectAnswer(qId, optionIdx) {
+  state.currentAnswers[qId] = optionIdx;
+  renderExam();
+}
+
+
+function selectMultiAnswer(qId, optionIdx, maxSelect) {
+  let current = Array.isArray(state.currentAnswers[qId]) ? [...state.currentAnswers[qId]] : [];
+  if(current.includes(optionIdx)) {
+    current = current.filter(i => i !== optionIdx);
+  } else {
+    if(current.length >= maxSelect) current = current.slice(1);
+    current.push(optionIdx);
+  }
+  state.currentAnswers[qId] = current;
+  renderExam();
+}
+
+function navigate(dir) {
+  state.currentQuestion += dir;
+  renderExam();
+}
+
+function startTimer(seconds) {
+  state.timeRemaining = seconds;
+  clearInterval(state.timerInterval);
+  updateTimerDisplay();
+  state.timerInterval = setInterval(() => {
+    state.timeRemaining--;
+    updateTimerDisplay();
+    if(state.timeRemaining <= 0) {
+      clearInterval(state.timerInterval);
+      submitExam(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+  const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+  const el = document.getElementById('timer-display');
+  el.textContent = `${m}:${s}`;
+  el.className = 'timer-display';
+  if(state.timeRemaining < 60) el.classList.add('danger');
+  else if(state.timeRemaining < 300) el.classList.add('warning');
+}
+
+function submitExam(auto = false) {
+  if(auto) {
+    // Temps écoulé : soumettre directement
+    finalizeExam();
+    return;
+  }
+  // Afficher l'écran de révision
+  showReview();
+}
+
+// ===================== REVIEW =====================
+function showReview() {
+  const candidate = state.currentCandidate;
+  document.getElementById('review-candidate-name-display').textContent = `${candidate.firstname} ${candidate.lastname}`;
+
+  // Sync timer display
+  syncReviewTimer();
+
+  const letters = ['A','B','C','D','E','F'];
+  const total = state.questions.length;
+  const autoQ = state.questions.filter(q => q.type !== 'open');
+  const answered = autoQ.filter(q => state.currentAnswers[q.id] !== undefined).length;
+  const unanswered = autoQ.filter(q => state.currentAnswers[q.id] === undefined).length;
+  const openQ = state.questions.filter(q => q.type === 'open').length;
+
+  // Summary bar
+  document.getElementById('review-summary-bar').innerHTML = `
+    <div class="review-stat"><div class="dot dot-answered"></div>${answered} répondu(s)</div>
+    ${unanswered > 0 ? `<div class="review-stat"><div class="dot dot-unanswered"></div>${unanswered} sans réponse</div>` : ''}
+    ${openQ > 0 ? `<div class="review-stat"><div class="dot dot-open"></div>${openQ} question(s) ouverte(s)</div>` : ''}
+    <div class="review-stat" style="margin-left:auto;color:var(--text-muted)">${total} question(s) au total</div>`;
+
+  // Warning
+  const warnEl = document.getElementById('warning-unanswered');
+  if(unanswered > 0) {
+    warnEl.style.display = 'block';
+    document.getElementById('unanswered-count').textContent = unanswered;
+  } else {
+    warnEl.style.display = 'none';
+  }
+
+  // Questions list
+  document.getElementById('review-questions-list').innerHTML = state.questions.map((q, idx) => {
+    const ans = state.currentAnswers[q.id];
+    const isOpen = q.type === 'open';
+    let statusIcon, statusClass, answerPreview;
+
+    if(isOpen) {
+      statusIcon = '📝';
+      statusClass = 'open-type';
+      answerPreview = 'Question ouverte';
+    } else if(ans !== undefined) {
+      statusIcon = '✅';
+      statusClass = 'answered';
+      answerPreview = letters[ans] + '. ' + (q.options[ans] || '');
+    } else {
+      statusIcon = '❌';
+      statusClass = 'unanswered';
+      answerPreview = 'Sans réponse';
+    }
+
+    let bodyHTML = '';
+    if(!isOpen) {
+      bodyHTML = `
+        <div class="review-q-full-text">${q.text}</div>
+        <div class="review-options">
+          ${q.options.map((opt, oi) => `
+            <label class="review-option ${ans === oi ? 'selected' : ''}" onclick="reviewSelectAnswer(${q.id}, ${oi}, this)">
+              <input type="radio" name="review_q_${q.id}" value="${oi}" ${ans === oi ? 'checked' : ''} style="pointer-events:none">
+              <span class="review-option-letter">${letters[oi]}</span>
+              <span>${opt}</span>
+            </label>`).join('')}
+        </div>`;
+    } else {
+      bodyHTML = `
+        <div class="review-q-full-text">${q.text}</div>
+        <div class="alert alert-info" style="font-size:0.82rem">📝 Cette question ouverte sera évaluée séparément via Google Forms.</div>
+        <textarea placeholder="Notes personnelles (optionnel)..." style="min-height:80px;margin-top:8px" oninput="state.currentAnswers['open_${q.id}']=this.value">${state.currentAnswers['open_'+q.id]||''}</textarea>`;
+    }
+
+    return `
+      <div class="review-question-block ${statusClass}" id="review-block-${q.id}">
+        <div class="review-q-header" onclick="toggleReviewBlock(${q.id})">
+          <span class="review-status-icon">${statusIcon}</span>
+          <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--accent);font-size:0.8rem;min-width:30px">Q${idx+1}</span>
+          <span class="review-q-text-preview">${q.text || 'Question sans texte'}</span>
+          <span class="review-answer-preview">${answerPreview}</span>
+          <button class="review-edit-btn">${isOpen ? 'Voir' : 'Modifier'}</button>
+        </div>
+        <div class="review-q-body" id="review-body-${q.id}">
+          ${bodyHTML}
+        </div>
+      </div>`;
+  }).join('');
+
+  showScreen('screen-review');
+  document.getElementById('currentMode').textContent = 'Révision';
+}
+
+function toggleReviewBlock(qId) {
+  const body = document.getElementById(`review-body-${qId}`);
+  body.classList.toggle('open');
+}
+
+function reviewSelectAnswer(qId, optionIdx, labelEl) {
+  state.currentAnswers[qId] = optionIdx;
+  // Update UI in review block
+  const block = document.getElementById(`review-block-${qId}`);
+  block.querySelectorAll('.review-option').forEach(opt => opt.classList.remove('selected'));
+  labelEl.classList.add('selected');
+  block.querySelector('input[value="'+optionIdx+'"]').checked = true;
+  // Update header preview
+  const q = state.questions.find(q => q.id === qId);
+  const letters = ['A','B','C','D','E','F'];
+  block.querySelector('.review-answer-preview').textContent = letters[optionIdx] + '. ' + q.options[optionIdx];
+  block.classList.remove('unanswered');
+  block.classList.add('answered');
+  block.querySelector('.review-status-icon').textContent = '✅';
+  // Recount unanswered
+  const autoQ = state.questions.filter(q => q.type !== 'open');
+  const unanswered = autoQ.filter(q => state.currentAnswers[q.id] === undefined).length;
+  const warnEl = document.getElementById('warning-unanswered');
+  if(unanswered > 0) {
+    warnEl.style.display = 'block';
+    document.getElementById('unanswered-count').textContent = unanswered;
+    const bar = document.getElementById('review-summary-bar');
+    const answered = autoQ.length - unanswered;
+    bar.querySelector('.dot-answered').parentElement.innerHTML = `<div class="dot dot-answered"></div>${answered} répondu(s)`;
+  } else {
+    warnEl.style.display = 'none';
+  }
+}
+
+function syncReviewTimer() {
+  // Mirror timer to review screen
+  clearInterval(state.reviewTimerSync);
+  state.reviewTimerSync = setInterval(() => {
+    const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+    const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+    const el = document.getElementById('timer-display-review');
+    if(el) {
+      el.textContent = `${m}:${s}`;
+      el.className = 'timer-display';
+      if(state.timeRemaining < 60) el.classList.add('danger');
+      else if(state.timeRemaining < 300) el.classList.add('warning');
+    }
+  }, 500);
+}
+
+function backToExam() {
+  clearInterval(state.reviewTimerSync);
+  showScreen('screen-exam');
+  document.getElementById('currentMode').textContent = 'Évaluation en cours';
+}
+
+function confirmSubmit() {
+  if(!confirm('✅ Confirmer la soumission définitive ?\n\nVos réponses seront enregistrées et vous ne pourrez plus les modifier.')) return;
+  clearInterval(state.reviewTimerSync);
+  finalizeExam();
+}
+
+function finalizeExam() {
+  clearInterval(state.timerInterval);
+  clearInterval(state.reviewTimerSync);
+  // Calculate score
+  let score = 0, maxScore = 0, correct = 0, wrong = 0;
+  const autoQuestions = state.questions.filter(q => q.type !== 'open');
+  autoQuestions.forEach(q => {
+    maxScore += q.points;
+    const ans = state.currentAnswers[q.id];
+    const isCorrect = q.multi
+      ? (Array.isArray(ans) && JSON.stringify([...ans].sort((a,b)=>a-b)) === JSON.stringify([...q.correct].sort((a,b)=>a-b)))
+      : ans === q.correct;
+    if(ans === undefined || (q.multi && (!Array.isArray(ans) || ans.length === 0))) { wrong++; score -= state.config.pointsWrong; }
+    else if(isCorrect) { correct++; score += q.points; }
+    else { wrong++; score -= state.config.pointsWrong; }
+  });
+  score = Math.max(0, score);
+  const percentage = maxScore > 0 ? Math.round(score / maxScore * 100) : 0;
+  const duration = Math.round((Date.now() - state.startTime) / 1000);
+  const durationStr = `${Math.floor(duration/60)}min ${duration%60}s`;
+
+  // Générer un code personnel unique pour ce candidat
+  const resultCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  const result = {
+    ...state.currentCandidate,
+    score, maxScore, percentage, correct, wrong,
+    duration: durationStr,
+    date: new Date().toLocaleString('fr-FR'),
+    answers: {...state.currentAnswers},
+    resultCode,
+    examTitle: state.config.title
+  };
+  state.results.push(result);
+
+  // Sauvegarder dans localStorage sous le code personnel
+  try {
+    localStorage.setItem('mafa_result_' + resultCode, JSON.stringify(result));
+  } catch(e) {}
+  // Sauvegarder liste complete dans localStorage
+  try { localStorage.setItem('mafa_all_results', JSON.stringify(state.results)); } catch(e) {}
+
+  // ══ SAUVEGARDER DANS SUPABASE ══
+  (async function() {
+    try {
+      var candidatId = state._supabaseCandidatId;
+      if (candidatId) {
+        await saveEvaluation({
+          candidat_id: candidatId,
+          poste: result.posteLabel || state.currentCandidate.poste,
+          score_final: result.score,
+          total_questions: autoQuestions.length,
+          reponses: Object.keys(state.currentAnswers).map(function(k) {
+            return { question_id: k, answer: state.currentAnswers[k] };
+          }),
+          duree_secondes: duration
+        });
+        console.log('[Supabase] Évaluation sauvegardée avec succès');
+      }
+    } catch(e) {
+      console.error('[Supabase] Erreur sauvegarde évaluation:', e);
+    }
+  })();
+
+  // Show results
+  showCandidateResults(result);
+}
+
+function showCandidateResults(result) {
+  document.getElementById('result-candidate-name').textContent = `${result.firstname} ${result.lastname}${result.posteLabel ? ' — ' + result.posteLabel : ''}`;
+  document.getElementById('result-score-value').textContent = result.percentage + '%';
+  document.getElementById('result-stats').textContent = `${result.correct} correcte(s) · ${result.wrong} incorrecte(s) · ${result.duration}`;
+
+  // Score circle
+  const circumference = 439.8;
+  const offset = circumference - (result.percentage / 100 * circumference);
+  const circle = document.getElementById('score-circle');
+  circle.style.strokeDashoffset = offset;
+  const colors = result.percentage >= 80 ? 'var(--success)' : result.percentage >= 60 ? 'var(--accent)' : result.percentage >= 40 ? 'var(--gold)' : 'var(--danger)';
+  circle.style.stroke = colors;
+  document.getElementById('result-score-value').style.color = colors;
+
+  // Mention
+  const mentionEl = document.getElementById('result-mention');
+  if(result.percentage >= 80) { mentionEl.textContent = '🏆 Excellent'; mentionEl.className = 'result-mention mention-excellent'; }
+  else if(result.percentage >= 60) { mentionEl.textContent = '👍 Bien'; mentionEl.className = 'result-mention mention-bien'; }
+  else if(result.percentage >= 40) { mentionEl.textContent = '⚠️ Moyen'; mentionEl.className = 'result-mention mention-moyen'; }
+  else { mentionEl.textContent = '❌ Insuffisant'; mentionEl.className = 'result-mention mention-insuffisant'; }
+
+  // Detail
+  const autoQ = state.questions.filter(q => q.type !== 'open');
+  const letters = ['A','B','C','D','E','F'];
+  document.getElementById('result-answers-list').innerHTML = autoQ.map((q, idx) => {
+    const ans = result.answers[q.id];
+    const isCorrect = q.multi
+      ? (Array.isArray(ans) && JSON.stringify([...ans].sort((a,b)=>a-b)) === JSON.stringify([...q.correct].sort((a,b)=>a-b)))
+      : ans === q.correct;
+    const icon = (ans === undefined || ans === null) ? '⬜' : isCorrect ? '✅' : '❌';
+    const ansDisplay = q.multi
+      ? (Array.isArray(ans) && ans.length > 0 ? ans.map(i => letters[i] + '. ' + q.options[i]).join(' + ') : 'Sans réponse')
+      : (ans !== undefined ? (letters[ans] + '. ' + q.options[ans]) : 'Sans réponse');
+    const correctDisplay = q.multi
+      ? q.correct.map(i => letters[i] + '. ' + q.options[i]).join(' + ')
+      : (letters[q.correct] + '. ' + q.options[q.correct]);
+    return `
+      <div class="result-item">
+        <div class="result-item-icon">${icon}</div>
+        <div class="result-item-text">
+          <div class="q-text">Q${idx+1}. ${q.text || 'Question'}${q.multi ? ' <em style="font-size:0.75rem;color:var(--text-muted)">(2 réponses)</em>' : ''}</div>
+          <div class="q-answer">Votre réponse : ${ansDisplay}</div>
+          ${!isCorrect ? `<div class="q-correct">✓ Bonne réponse : ${correctDisplay}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+
+  // Afficher le code personnel du candidat sur l'écran de résultats
+  const existingCodeBlock = document.getElementById('result-code-block');
+  if(existingCodeBlock) existingCodeBlock.remove();
+  if(result.resultCode) {
+    const codeBlock = document.createElement('div');
+    codeBlock.id = 'result-code-block';
+    codeBlock.style.cssText = 'background:linear-gradient(135deg,#1e3a8a,#1565C0);color:white;border-radius:14px;padding:20px 24px;margin:1.5rem 0;text-align:center';
+    codeBlock.innerHTML = `
+      <div style="font-size:0.75rem;opacity:.8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Votre code personnel</div>
+      <div style="font-size:2.2rem;font-weight:800;letter-spacing:0.25em;font-family:'Syne',sans-serif;margin-bottom:8px">${result.resultCode}</div>
+      <div style="font-size:0.82rem;opacity:.85;line-height:1.6">Notez ce code pour consulter vos résultats ultérieurement.<br>Depuis l'accueil → <strong>Consulter mes résultats</strong></div>`;
+    const heroSection = document.querySelector('.result-hero');
+    if(heroSection) heroSection.insertAdjacentElement('afterend', codeBlock);
+  }
+
+  showScreen('screen-results');
+}
+
+// ===================== LOOKUP PAR CODE =====================
+function lookupResultByCode() {
+  const code = (document.getElementById('lookup-code-input').value || '').trim().toUpperCase();
+  const errorEl = document.getElementById('lookup-error');
+  const resultBlock = document.getElementById('lookup-result-block');
+
+  errorEl.style.display = 'none';
+  resultBlock.style.display = 'none';
+
+  if(!code || code.length < 4) {
+    errorEl.textContent = '❌ Veuillez saisir votre code personnel (6 caractères).';
+    errorEl.style.display = 'flex';
+    return;
+  }
+
+  // Chercher dans localStorage
+  let result = null;
+  try {
+    const stored = localStorage.getItem('mafa_result_' + code);
+    if(stored) result = JSON.parse(stored);
+  } catch(e) {}
+
+  // Chercher aussi dans la session courante
+  if(!result) {
+    result = state.results.find(r => r.resultCode === code) || null;
+  }
+
+  if(!result) {
+    errorEl.textContent = '❌ Aucun résultat trouvé pour ce code. Vérifiez le code ou contactez l\'administrateur.';
+    errorEl.style.display = 'flex';
+    return;
+  }
+
+  const colors = result.percentage >= 80 ? '#10b981' : result.percentage >= 60 ? '#2563eb' : result.percentage >= 40 ? '#eab308' : '#ef4444';
+  const mention = result.percentage >= 80 ? '🏆 Excellent' : result.percentage >= 60 ? '👍 Bien' : result.percentage >= 40 ? '⚠️ Moyen' : '❌ Insuffisant';
+
+  resultBlock.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <div style="background:var(--surface2);padding:1rem 1.5rem;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:10px">
+        <span>📊 Résultats de</span>
+        <span style="color:var(--accent)">${result.firstname} ${result.lastname}</span>
+      </div>
+      <div style="padding:1.5rem;text-align:center">
+        <div style="font-size:3rem;font-weight:800;color:${colors};font-family:'Syne',sans-serif">${result.percentage}%</div>
+        <div style="font-size:0.9rem;color:var(--text-muted);margin:6px 0">${result.score}/${result.maxScore} pts &nbsp;·&nbsp; ${result.correct} correcte(s) &nbsp;·&nbsp; ${result.wrong} incorrecte(s)</div>
+        <div style="display:inline-block;padding:4px 16px;border-radius:20px;font-size:0.85rem;font-weight:600;margin-top:8px;background:rgba(0,0,0,0.06)">${mention}</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:10px">Durée : ${result.duration} &nbsp;·&nbsp; ${result.date}</div>
+      </div>
+    </div>`;
+  resultBlock.style.display = 'block';
+}
+
+// ===================== ADMIN RESULTS =====================
+let adminResultsFilter = 'all';
+function setAdminFilter(filter) {
+  adminResultsFilter = filter;
+  // filtres non utilisés en mode Orange
+  renderResults();
+}
+
+function renderResults() {
+  const container = document.getElementById('results-content');
+  let filtered = state.results;
+  if(adminResultsFilter === 'orange') filtered = state.results.filter(r => r.operation === 'orange');
+  else if(adminResultsFilter === 'id30') filtered = state.results.filter(r => !r.operation || r.operation === 'id30');
+
+  if(filtered.length === 0) {
+    const msg = adminResultsFilter === 'all' ? 'Aucun résultat pour le moment.' :
+                adminResultsFilter === 'orange' ? 'Aucun résultat ORANGE pour le moment.' :
+                'Aucun résultat ID30 pour le moment.';
+    container.innerHTML = `<div class="empty-state"><div class="icon">📊</div><p>${msg}</p></div>`;
+    return;
+  }
+  const sorted = [...filtered].sort((a,b) => b.percentage - a.percentage);
+  const avg = Math.round(sorted.reduce((s,r) => s+r.percentage, 0) / sorted.length);
+  const top = sorted[0].percentage;
+  const opLabelMap = { orange: '🟠', id30: '🔵', undefined: '🔵' };
+
+  container.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-value">${sorted.length}</div><div class="stat-label">Candidats</div></div>
+      <div class="stat-card"><div class="stat-value">${avg}%</div><div class="stat-label">Moyenne</div></div>
+      <div class="stat-card"><div class="stat-value">${top}%</div><div class="stat-label">Meilleur score</div></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Rang</th>
+            <th>Opération</th>
+            <th>Candidat</th>
+            <th>Rôle / Poste</th>
+            <th>Contact</th>
+            <th>Score</th>
+            <th>Durée</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${sorted.map((r, i) => {
+            const rankCls = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-other';
+            const barColor = r.percentage >= 80 ? 'var(--success)' : r.percentage >= 60 ? 'var(--accent)' : r.percentage >= 40 ? 'var(--gold)' : 'var(--danger)';
+            const opEmoji = r.operation === 'orange' ? '🟠' : '🔵';
+            const opLabel = r.operation === 'orange' ? 'ORANGE' : 'ID30';
+            const opStyle = r.operation === 'orange' ? 'color:#c2410c;background:rgba(249,115,22,0.1)' : 'color:#1e40af;background:rgba(37,99,235,0.1)';
+            return `
+            <tr>
+              <td><span class="rank-badge ${rankCls}">${i+1}</span></td>
+              <td><span style="padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;${opStyle}">${opEmoji} ${opLabel}</span></td>
+              <td><strong>${r.firstname} ${r.lastname}</strong></td>
+              <td style="font-size:0.78rem;color:var(--accent);font-weight:600">${r.posteLabel||'—'}</td>
+              <td style="font-size:0.8rem;color:var(--text-muted)">${r.email}<br>${r.phone||''}</td>
+              <td>
+                <div class="score-bar">
+                  <div class="score-bar-track"><div class="score-bar-fill" style="width:${r.percentage}%;background:${barColor}"></div></div>
+                  <strong style="min-width:40px;text-align:right">${r.percentage}%</strong>
+                </div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">${r.score}/${r.maxScore} pts · ${r.correct}✓ ${r.wrong}✗</div>
+              </td>
+              <td style="font-size:0.82rem">${r.duration}</td>
+              <td style="font-size:0.78rem;color:var(--text-muted)">${r.date}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:1rem">
+      <button class="btn btn-orange btn-sm" onclick="exportResults()">📥 Exporter CSV</button>
+      <button class="btn btn-secondary btn-sm" onclick="if(confirm('Effacer tous les résultats ?')){state.results=[];try{localStorage.removeItem('mafa_all_results');}catch(e){}renderResults();}" style="border-color:var(--danger);color:var(--danger)">🗑 Effacer tout</button>
+    </div>`;
+}
+
+// ══ Charger résultats Supabase au démarrage ══
+async function loadResultsFromSupabase() {
+  try {
+    var evals = await getAllResults();
+    if (evals && evals.length > 0) {
+      var supaResults = evals.map(function(ev) {
+        var c = ev.candidats || {};
+        var nameParts = (c.nom || '').split(' ');
+        var totalQ = ev.total_questions || 30;
+        var scoreFinal = ev.score_final || 0;
+        var pct = totalQ > 0 ? Math.round(scoreFinal / totalQ * 100) : 0;
+        return {
+          firstname: nameParts[0] || '',
+          lastname: nameParts.slice(1).join(' ') || '',
+          email: c.email || '',
+          phone: c.telephone || '',
+          posteLabel: ev.poste || c.poste || '',
+          operation: (ev.poste || '').toLowerCase().includes('orange') ? 'orange' : 'id30',
+          score: scoreFinal,
+          maxScore: totalQ,
+          percentage: pct,
+          correct: scoreFinal,
+          wrong: totalQ - scoreFinal,
+          duration: ev.duree_secondes ? Math.floor(ev.duree_secondes/60) + 'min ' + (ev.duree_secondes%60) + 's' : '—',
+          date: new Date(ev.created_at).toLocaleString('fr-FR'),
+          resultCode: ev.id,
+          _fromSupabase: true
+        };
+      });
+      // Fusionner sans doublons (éviter dupliquer le localStorage)
+      var localEmails = state.results.map(function(r) { return r.email + r.date; });
+      supaResults.forEach(function(sr) {
+        if (localEmails.indexOf(sr.email + sr.date) === -1) {
+          state.results.push(sr);
+        }
+      });
+      renderResults();
+    }
+  } catch(e) {
+    console.error('[Supabase] Erreur chargement résultats:', e);
+  }
+}
+
+// ===================== INIT =====================
+// Load sample questions by default for demo
+state.questions = [
+  { id: 1, type: 'qcm', text: 'Qu\'est-ce que la satisfaction client dans un call center ?', options: ['Le nombre d\'appels traités', 'Le niveau de contentement du client après interaction', 'Le temps de pause des agents', 'La vitesse de connexion internet'], correct: 1, points: 2 },
+  { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
+  { id: 3, type: 'open', text: 'Décrivez votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
+];
+state.examActive = true;
+// Restaurer les resultats depuis localStorage
+try {
+  const stored = localStorage.getItem('mafa_all_results');
+  if(stored) state.results = JSON.parse(stored);
+} catch(e) {}
+// Charger aussi depuis Supabase
+loadResultsFromSupabase();
+</script>
+</body>
+</html>
