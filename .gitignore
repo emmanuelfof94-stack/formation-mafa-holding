@@ -14,3 +14,6 @@ desktop.ini
 
 # Répertoire mémoire Claude
 .claude/
+
+# Local Netlify folder
+.netlify

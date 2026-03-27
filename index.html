@@ -10167,7 +10167,192 @@ function enterFormation() {
   </div><!-- fin overlay-content -->
 </div><!-- fin overlay-m6 -->
 
+<!-- ══ MODAL IDENTIFICATION CANDIDAT (obligatoire) ══ -->
+<div id="modal-candidat" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;justify-content:center;align-items:center">
+  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:440px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Sora,sans-serif">
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#CF9E41,#DDB55A);border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:8px">🎓</div>
+      <h3 style="font-size:1.3rem;color:#8D0C23;margin-bottom:4px">Formation MAFA Holding</h3>
+      <p style="font-size:0.82rem;color:#666">Identifiez-vous pour accéder à la plateforme</p>
+    </div>
+    <div id="candidat-error" style="display:none;background:#fee;color:#c00;padding:8px 12px;border-radius:8px;font-size:0.82rem;margin-bottom:12px"></div>
+    <div id="candidat-success" style="display:none;background:#e8f5e9;color:#2e7d32;padding:8px 12px;border-radius:8px;font-size:0.82rem;margin-bottom:12px"></div>
+    <input id="cand-nom" type="text" placeholder="Nom *" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;margin-bottom:10px;font-family:Sora,sans-serif">
+    <input id="cand-prenom" type="text" placeholder="Prénom *" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;margin-bottom:10px;font-family:Sora,sans-serif">
+    <input id="cand-tel" type="tel" placeholder="0XXXXXXXXX *" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;margin-bottom:10px;font-family:Sora,sans-serif">
+    <select id="cand-poste" style="width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;margin-bottom:18px;font-family:Sora,sans-serif;color:#333">
+      <option value="">— Sélectionnez votre poste * —</option>
+      <option value="Call Center">Call Center</option>
+      <option value="Back Office">Back Office</option>
+      <option value="Inspecteur">Inspecteur</option>
+      <option value="Superviseur">Superviseur</option>
+    </select>
+    <button id="btn-submit-candidat" onclick="submitCandidat()" style="width:100%;padding:12px;background:linear-gradient(135deg,#8D0C23,#B5112C);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:Sora,sans-serif">Se connecter / S'inscrire</button>
+    <p style="text-align:center;margin-top:14px">
+      <a href="#" onclick="backToLanding();return false" style="font-size:0.82rem;color:#888;text-decoration:none;display:inline-flex;align-items:center;gap:5px">← Retour à l'accueil</a>
+    </p>
+  </div>
+</div>
 
+<!-- ══ BANDEAU CANDIDAT CONNECTÉ ══ -->
+<div id="candidat-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#8D0C23,#5A0815);color:#fff;padding:8px 20px;font-family:Sora,sans-serif;font-size:0.8rem;align-items:center;justify-content:space-between">
+  <span id="candidat-banner-name"></span>
+  <span id="candidat-banner-progress" style="opacity:0.7"></span>
+  <a href="#" onclick="logoutCandidat();return false" style="color:rgba(255,255,255,0.6);font-size:0.75rem;text-decoration:none;margin-left:12px">Déconnexion</a>
+</div>
+
+<!-- ══ SUPABASE SDK + INTÉGRATION ══ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+// ── État candidat local ──
+var _candidatId = null;
+var _candidatInfo = null;
+
+// Afficher modal au chargement (si pas déjà identifié)
+(function() {
+  try {
+    var stored = localStorage.getItem('mafa_candidat');
+    if (stored) {
+      _candidatInfo = JSON.parse(stored);
+      _candidatId = _candidatInfo.id;
+      showCandidatBanner();
+      loadCandidatProgression();
+      return;
+    }
+  } catch(e) {}
+  // Afficher le modal (obligatoire)
+  document.getElementById('modal-candidat').style.display = 'flex';
+})();
+
+async function submitCandidat() {
+  var nom = document.getElementById('cand-nom').value.trim();
+  var prenom = document.getElementById('cand-prenom').value.trim();
+  var tel = document.getElementById('cand-tel').value.trim().replace(/\s+/g, '');
+  var poste = document.getElementById('cand-poste').value;
+  var errEl = document.getElementById('candidat-error');
+  var successEl = document.getElementById('candidat-success');
+  var btn = document.getElementById('btn-submit-candidat');
+
+  errEl.style.display = 'none';
+  successEl.style.display = 'none';
+
+  if (!nom || !prenom || !tel || !poste) {
+    errEl.textContent = 'Veuillez remplir tous les champs obligatoires (*).';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (tel.length < 8) {
+    errEl.textContent = 'Numéro de téléphone invalide (minimum 8 chiffres).';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Connexion en cours...';
+
+  try {
+    var result = await loginOrCreateCandidat({ nom: nom, prenom: prenom, telephone: tel, poste: poste });
+    if (result.candidat) {
+      _candidatId = result.candidat.id;
+      _candidatInfo = result.candidat;
+      localStorage.setItem('mafa_candidat', JSON.stringify(result.candidat));
+
+      if (result.isNew) {
+        successEl.textContent = 'Compte créé avec succès ! Bienvenue ' + prenom + '.';
+      } else {
+        successEl.textContent = 'Bon retour ' + (result.candidat.prenom || prenom) + ' ! Connexion réussie.';
+      }
+      successEl.style.display = 'block';
+
+      setTimeout(function() {
+        document.getElementById('modal-candidat').style.display = 'none';
+        showCandidatBanner();
+        loadCandidatProgression();
+      }, 1200);
+    } else {
+      errEl.textContent = 'Erreur de connexion. Réessayez.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Se connecter / S\'inscrire';
+    }
+  } catch(e) {
+    console.error(e);
+    errEl.textContent = 'Erreur réseau. Vérifiez votre connexion.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Se connecter / S\'inscrire';
+  }
+}
+
+function backToLanding() {
+  document.getElementById('modal-candidat').style.display = 'none';
+  var ws = document.getElementById('welcome-screen');
+  ws.style.display = 'flex';
+  ws.style.opacity = '1';
+}
+
+function logoutCandidat() {
+  _candidatId = null;
+  _candidatInfo = null;
+  localStorage.removeItem('mafa_candidat');
+  document.getElementById('candidat-banner').style.display = 'none';
+  document.getElementById('modal-candidat').style.display = 'flex';
+  // Reset le formulaire
+  document.getElementById('cand-nom').value = '';
+  document.getElementById('cand-prenom').value = '';
+  document.getElementById('cand-tel').value = '';
+  document.getElementById('cand-poste').value = '';
+  document.getElementById('candidat-error').style.display = 'none';
+  document.getElementById('candidat-success').style.display = 'none';
+  var btn = document.getElementById('btn-submit-candidat');
+  btn.disabled = false;
+  btn.textContent = 'Se connecter / S\'inscrire';
+}
+
+function showCandidatBanner() {
+  if (!_candidatInfo) return;
+  var banner = document.getElementById('candidat-banner');
+  var displayName = (_candidatInfo.prenom || '') + ' ' + (_candidatInfo.nom || '');
+  document.getElementById('candidat-banner-name').textContent = '👤 ' + displayName.trim() + ' — ' + (_candidatInfo.poste || '');
+  banner.style.display = 'flex';
+}
+
+async function loadCandidatProgression() {
+  if (!_candidatId) return;
+  try {
+    var prog = await getProgression(_candidatId);
+    var scores = await getScores(_candidatId);
+    var completedModules = prog.filter(function(p) { return p.completed; }).map(function(p) { return p.module; });
+    var uniqueModules = [...new Set(completedModules)];
+    document.getElementById('candidat-banner-progress').textContent = uniqueModules.length + '/7 modules complétés';
+  } catch(e) {
+    console.error('[Supabase] Erreur chargement progression:', e);
+  }
+}
+
+// Sauvegarder score quiz vers Supabase
+async function saveQuizToSupabase(module, scoresObj) {
+  if (!_candidatId) return;
+  var vals = Object.values(scoresObj);
+  var score = vals.filter(function(v) { return v === true; }).length;
+  var total = vals.length;
+  var details = {};
+  Object.keys(scoresObj).forEach(function(k) { details[k] = scoresObj[k]; });
+
+  try {
+    await saveScore({ candidat_id: _candidatId, module: module, score: score, total: total, details: details });
+    await updateProgression({ candidat_id: _candidatId, module: module, onglet: 'quiz', completed: true });
+    loadCandidatProgression();
+  } catch(e) {
+    console.error('[Supabase] Erreur sauvegarde quiz:', e);
+  }
+}
+
+// Sauvegarder progression quand on ouvre un onglet
+var _origShowModuleTab = null;
+</script>
 
 <script>
 // ── Navigation Overlay ──────────────────────────────────
@@ -10394,6 +10579,52 @@ function answerM3(el, qid, correct, feedback) {
   document.getElementById('m3-prog-fill').style.width = (answered / 20 * 100) + '%';
 }
 
+
+// ── Sauvegarde Supabase automatique quand quiz complété ──────
+(function() {
+  var moduleScores = {
+    m0: function() { return scoresM0; },
+    m1: function() { return scoresM1; },
+    m2: function() { return scoresM2; },
+    m3: function() { return scoresM3; },
+    m4: function() { return scoresM4; },
+    m5: function() { return scoresM5; },
+    m6: function() { return scoresM6; }
+  };
+  var savedModules = {};
+
+  // Vérifier toutes les 2s si un quiz est complété
+  setInterval(function() {
+    Object.keys(moduleScores).forEach(function(mod) {
+      if (savedModules[mod]) return;
+      var scores = moduleScores[mod]();
+      var vals = Object.values(scores);
+      var answered = vals.filter(function(v) { return v !== null; }).length;
+      if (answered === vals.length && answered > 0) {
+        savedModules[mod] = true;
+        saveQuizToSupabase(mod, scores);
+      }
+    });
+  }, 2000);
+})();
+
+// Sauvegarder progression quand on ouvre un module/onglet
+(function() {
+  var origOpen = openModule;
+  openModule = function(mid) {
+    origOpen(mid);
+    if (_candidatId) {
+      updateProgression({ candidat_id: _candidatId, module: mid, onglet: 'cours', completed: false }).catch(function(){});
+    }
+  };
+  var origTab = showModuleTab;
+  showModuleTab = function(moduleId, tabName) {
+    origTab(moduleId, tabName);
+    if (_candidatId) {
+      updateProgression({ candidat_id: _candidatId, module: moduleId, onglet: tabName, completed: tabName === 'resultats' }).catch(function(){});
+    }
+  };
+})();
 
 // ── Drag-to-scroll (page + overlays) ────────────────────────
 (function() {

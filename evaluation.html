@@ -1075,6 +1075,9 @@
 </style>
 </head>
 <body>
+<!-- ══ SUPABASE SDK ══ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 <div class="wrapper">
   <!-- HEADER -->
   <div class="header">
@@ -1354,21 +1357,17 @@
 
       <div class="row">
         <div class="form-group">
-          <label>Prénom *</label>
-          <input type="text" id="candidate-firstname" placeholder="Votre prénom">
-        </div>
-        <div class="form-group">
           <label>Nom *</label>
           <input type="text" id="candidate-lastname" placeholder="Votre nom">
         </div>
+        <div class="form-group">
+          <label>Prénom *</label>
+          <input type="text" id="candidate-firstname" placeholder="Votre prénom">
+        </div>
       </div>
       <div class="form-group">
-        <label>Email *</label>
-        <input type="email" id="candidate-email" placeholder="votre@email.com">
-      </div>
-      <div class="form-group">
-        <label>Contact (téléphone)</label>
-        <input type="tel" id="candidate-phone" placeholder="+225 XX XX XX XX XX">
+        <label>Numéro de téléphone * <span style="font-weight:400;color:var(--text-muted);font-size:0.8rem">(identifiant de votre compte)</span></label>
+        <input type="tel" id="candidate-phone" placeholder="0XXXXXXXXX">
       </div>
       <div class="form-group">
         <label>Votre poste *</label>
@@ -1379,6 +1378,9 @@
           <option value="inspecteur">Inspecteur (ID30 &amp; Orange QR)</option>
           <option value="superviseur">Superviseur (Agent &amp; Orange Money)</option>
         </select>
+      </div>
+      <div id="eval-already-done" class="alert alert-error" style="display:none">
+        Vous avez déjà passé l'évaluation pour ce poste. Une seule tentative est autorisée.
       </div>
 
       <div id="candidate-entry-error" class="alert alert-error" style="display:none"></div>
@@ -2350,27 +2352,29 @@ function setupCandidateEntry() {
   }
 }
 
-function startExam() {
+async function startExam() {
   const firstname = document.getElementById('candidate-firstname').value.trim();
   const lastname = document.getElementById('candidate-lastname').value.trim();
-  const email = document.getElementById('candidate-email').value.trim();
-  const phone = document.getElementById('candidate-phone').value.trim();
+  const phone = document.getElementById('candidate-phone').value.trim().replace(/\s+/g, '');
   const poste = document.getElementById('candidate-poste').value;
   const errorEl = document.getElementById('candidate-entry-error');
+  const alreadyDoneEl = document.getElementById('eval-already-done');
 
-  if(!firstname || !lastname || !email) {
+  alreadyDoneEl.style.display = 'none';
+
+  if(!firstname || !lastname || !phone) {
     errorEl.style.display = 'flex';
     errorEl.textContent = '❌ Veuillez remplir tous les champs obligatoires (*).';
+    return;
+  }
+  if(phone.length < 8) {
+    errorEl.style.display = 'flex';
+    errorEl.textContent = '❌ Numéro de téléphone invalide (minimum 8 chiffres).';
     return;
   }
   if(!poste) {
     errorEl.style.display = 'flex';
     errorEl.textContent = '❌ Veuillez sélectionner votre poste.';
-    return;
-  }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errorEl.style.display = 'flex';
-    errorEl.textContent = '❌ Adresse email invalide.';
     return;
   }
   if(state.config.accessCode) {
@@ -2380,6 +2384,43 @@ function startExam() {
       errorEl.textContent = '❌ Code d\'accès incorrect.';
       return;
     }
+  }
+
+  // Connexion / création du candidat via téléphone
+  errorEl.style.display = 'none';
+  const posteMap = {
+    'call-center': 'Call Center', 'back-office': 'Back Office',
+    'inspecteur': 'Inspecteur', 'superviseur': 'Superviseur',
+    'agent-orange': 'Call Center', 'rv-orange': 'Superviseur',
+    'inspecteur-orange': 'Inspecteur', 'superviseur-orange': 'Superviseur'
+  };
+
+  try {
+    var loginResult = await loginOrCreateCandidat({
+      nom: lastname, prenom: firstname, telephone: phone,
+      poste: posteMap[poste] || 'Call Center'
+    });
+
+    if (loginResult.candidat) {
+      state._supabaseCandidatId = loginResult.candidat.id;
+
+      // Vérifier si une évaluation a déjà été passée pour ce poste
+      var sb = getSupabase();
+      var { data: existingEvals } = await sb
+        .from('evaluations')
+        .select('id, poste, score_final, created_at')
+        .eq('candidat_id', loginResult.candidat.id);
+
+      if (existingEvals && existingEvals.length > 0) {
+        // Le candidat a déjà passé une évaluation
+        alreadyDoneEl.style.display = 'flex';
+        alreadyDoneEl.innerHTML = '⚠️ Vous avez déjà passé une évaluation (<strong>' + existingEvals[0].poste + '</strong> — Score : ' + existingEvals[0].score_final + ' pts, le ' + new Date(existingEvals[0].created_at).toLocaleDateString('fr-FR') + '). <br>Une seule tentative est autorisée par poste.';
+        return;
+      }
+    }
+  } catch(e) {
+    console.error('[Supabase] Erreur connexion candidat:', e);
+    // Continuer quand même en mode dégradé
   }
 
   // Charger les questions adaptées au poste et à l'opération
@@ -2394,7 +2435,6 @@ function startExam() {
     'superviseur-orange': 'Superviseur — Orange'
   };
   const bank = state.currentOperation === 'orange' ? QUESTIONS_BY_POSTE_ORANGE : QUESTIONS_BY_POSTE;
-  // Niveau intermédiaire uniquement pour l'opération Orange (points:1 = intermédiaire)
   let rawQuestions = bank[poste] || [];
   if(state.currentOperation === 'orange') {
     rawQuestions = rawQuestions.filter(q => q.points === 1 && q.type !== 'open');
@@ -2408,7 +2448,7 @@ function startExam() {
   state.config.title = 'Évaluation — ' + posteLabels[poste];
 
   errorEl.style.display = 'none';
-  state.currentCandidate = { firstname, lastname, email, phone, poste, posteLabel: posteLabels[poste], operation: state.currentOperation || 'id30' };
+  state.currentCandidate = { firstname, lastname, email: '', phone, poste, posteLabel: posteLabels[poste], operation: state.currentOperation || 'id30' };
   state.currentAnswers = {};
   state.currentQuestion = 0;
   state.startTime = Date.now();
@@ -2702,6 +2742,28 @@ function finalizeExam() {
   // Sauvegarder liste complete dans localStorage
   try { localStorage.setItem('mafa_all_results', JSON.stringify(state.results)); } catch(e) {}
 
+  // ══ SAUVEGARDER DANS SUPABASE ══
+  (async function() {
+    try {
+      var candidatId = state._supabaseCandidatId;
+      if (candidatId) {
+        await saveEvaluation({
+          candidat_id: candidatId,
+          poste: result.posteLabel || state.currentCandidate.poste,
+          score_final: result.score,
+          total_questions: autoQuestions.length,
+          reponses: Object.keys(state.currentAnswers).map(function(k) {
+            return { question_id: k, answer: state.currentAnswers[k] };
+          }),
+          duree_secondes: duration
+        });
+        console.log('[Supabase] Évaluation sauvegardée avec succès');
+      }
+    } catch(e) {
+      console.error('[Supabase] Erreur sauvegarde évaluation:', e);
+    }
+  })();
+
   // Show results
   showCandidateResults(result);
 }
@@ -2898,6 +2960,49 @@ function renderResults() {
     </div>`;
 }
 
+// ══ Charger résultats Supabase au démarrage ══
+async function loadResultsFromSupabase() {
+  try {
+    var evals = await getAllResults();
+    if (evals && evals.length > 0) {
+      var supaResults = evals.map(function(ev) {
+        var c = ev.candidats || {};
+        var nameParts = (c.nom || '').split(' ');
+        var totalQ = ev.total_questions || 30;
+        var scoreFinal = ev.score_final || 0;
+        var pct = totalQ > 0 ? Math.round(scoreFinal / totalQ * 100) : 0;
+        return {
+          firstname: nameParts[0] || '',
+          lastname: nameParts.slice(1).join(' ') || '',
+          email: c.email || '',
+          phone: c.telephone || '',
+          posteLabel: ev.poste || c.poste || '',
+          operation: (ev.poste || '').toLowerCase().includes('orange') ? 'orange' : 'id30',
+          score: scoreFinal,
+          maxScore: totalQ,
+          percentage: pct,
+          correct: scoreFinal,
+          wrong: totalQ - scoreFinal,
+          duration: ev.duree_secondes ? Math.floor(ev.duree_secondes/60) + 'min ' + (ev.duree_secondes%60) + 's' : '—',
+          date: new Date(ev.created_at).toLocaleString('fr-FR'),
+          resultCode: ev.id,
+          _fromSupabase: true
+        };
+      });
+      // Fusionner sans doublons (éviter dupliquer le localStorage)
+      var localEmails = state.results.map(function(r) { return r.email + r.date; });
+      supaResults.forEach(function(sr) {
+        if (localEmails.indexOf(sr.email + sr.date) === -1) {
+          state.results.push(sr);
+        }
+      });
+      renderResults();
+    }
+  } catch(e) {
+    console.error('[Supabase] Erreur chargement résultats:', e);
+  }
+}
+
 // ===================== INIT =====================
 // Load sample questions by default for demo
 state.questions = [
@@ -2911,6 +3016,8 @@ try {
   const stored = localStorage.getItem('mafa_all_results');
   if(stored) state.results = JSON.parse(stored);
 } catch(e) {}
+// Charger aussi depuis Supabase
+loadResultsFromSupabase();
 </script>
 </body>
 </html>
