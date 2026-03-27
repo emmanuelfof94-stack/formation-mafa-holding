@@ -1193,7 +1193,7 @@
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem">
       <div class="panel-title" style="margin-bottom:0">Panneau <span>Administrateur</span></div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-secondary btn-sm" onclick="try{const s=localStorage.getItem('mafa_all_results');if(s)state.results=JSON.parse(s);}catch(e){}renderResults();showAlert('exam-status','✅ Résultats actualisés !','alert-info');" title="Actualiser les résultats">
+        <button class="btn btn-secondary btn-sm" onclick="loadResultsFromSupabase().then(function(){renderResults();showAlert('exam-status','✅ Résultats actualisés depuis Supabase !','alert-info');})" title="Actualiser les résultats">
           🔄 Actualiser
         </button>
         <button class="btn btn-secondary btn-sm" onclick="adminLogout()" style="border-color:rgba(255,71,87,0.4);color:var(--danger)">
@@ -1546,6 +1546,12 @@ function selectOperation(op) {
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  // Bug 1 fix : charger Supabase avant d'afficher l'admin
+  if (id === 'screen-admin') {
+    state.results = [];
+    try { const s = localStorage.getItem('mafa_all_results'); if(s) state.results = JSON.parse(s); } catch(e) {}
+    loadResultsFromSupabase().then(function() { renderResults(); });
+  }
   const modes = {
     'screen-landing': 'Accueil',
     'screen-operation-choice': 'Choix opération',
@@ -2939,7 +2945,7 @@ function renderResults() {
               <td><span style="padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;${opStyle}">${opEmoji} ${opLabel}</span></td>
               <td><strong>${r.firstname} ${r.lastname}</strong></td>
               <td style="font-size:0.78rem;color:var(--accent);font-weight:600">${r.posteLabel||'—'}</td>
-              <td style="font-size:0.8rem;color:var(--text-muted)">${r.email}<br>${r.phone||''}</td>
+              <td style="font-size:0.8rem;color:var(--text-muted)">${r.phone||''}</td>
               <td>
                 <div class="score-bar">
                   <div class="score-bar-track"><div class="score-bar-fill" style="width:${r.percentage}%;background:${barColor}"></div></div>
@@ -2974,7 +2980,6 @@ async function loadResultsFromSupabase() {
         return {
           firstname: nameParts[0] || '',
           lastname: nameParts.slice(1).join(' ') || '',
-          email: c.email || '',
           phone: c.telephone || '',
           posteLabel: ev.poste || c.poste || '',
           operation: (ev.poste || '').toLowerCase().includes('orange') ? 'orange' : 'id30',
@@ -2990,9 +2995,9 @@ async function loadResultsFromSupabase() {
         };
       });
       // Fusionner sans doublons (éviter dupliquer le localStorage)
-      var localEmails = state.results.map(function(r) { return r.email + r.date; });
+      var localKeys = state.results.map(function(r) { return (r.phone||r.telephone||'') + r.date; });
       supaResults.forEach(function(sr) {
-        if (localEmails.indexOf(sr.email + sr.date) === -1) {
+        if (localKeys.indexOf((sr.phone||'') + sr.date) === -1) {
           state.results.push(sr);
         }
       });
