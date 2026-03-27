@@ -1944,7 +1944,7 @@ function exportResults() {
   let csv = 'Rang,Opération,Prénom,Nom,Email,Téléphone,Rôle/Poste,Score,Pourcentage,Correctes,Incorrectes,Durée,Date\n';
   sorted.forEach((r, i) => {
     const op = r.operation === 'orange' ? 'ORANGE' : 'ID30';
-    csv += `${i+1},"${op}","${r.firstname}","${r.lastname}","${r.email}","${r.phone}","${r.posteLabel||''}",${r.score}/${r.maxScore},${r.percentage}%,${r.correct},${r.wrong},"${r.duration}","${r.date}"\n`;
+    csv += `${i+1},"${op}","${r.firstname}","${r.lastname}","${r.phone||''}","${r.posteLabel||''}",${r.score}/${r.maxScore},${r.percentage}%,${r.correct},${r.wrong},"${r.duration}","${r.date}"\n`;
   });
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -2973,7 +2973,7 @@ async function loadResultsFromSupabase() {
     if (evals && evals.length > 0) {
       var supaResults = evals.map(function(ev) {
         var c = ev.candidats || {};
-        var nameParts = (c.nom || '').split(' ');
+        var nameParts = c.prenom ? [c.prenom, c.nom || ''] : (c.nom || '').split(' ');
         var totalQ = ev.total_questions || 30;
         var scoreFinal = ev.score_final || 0;
         var pct = totalQ > 0 ? Math.round(scoreFinal / totalQ * 100) : 0;
