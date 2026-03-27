@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercices Pratiques — OM Business & Application Agent — Formation MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#8D0C23; --blue-light:#B5112C; --blue-pale:#F9E8EC;
+  --orange:#CF9E41; --orange-light:#DDB55A; --orange-pale:#FAF3E0;
+  --teal:#584B26; --teal-pale:#F3EDD8;
+  --red:#6A091A; --red-pale:#F2D6DC;
+  --grey:#455A64; --grey-light:#ECEFF1;
+  --om-brand:#FF6600; --om-pale:#FFF3E0;
+  --bg:#FCFBF8; --sidebar-w:270px;
+  --green:#2E7D32; --green-pale:#E8F5E9;
+  --purple:#7B1FA2; --purple-pale:#F3E5F5;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:linear-gradient(135deg,var(--blue),#5A0815); color:white; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 3px 16px rgba(141,12,35,.35); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.back-btn { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:white; padding:7px 14px; border-radius:8px; font-size:.82rem; font-weight:600; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,.22); }
+.module-title-top { font-size:1rem; font-weight:700; }
+.module-subtitle-top { font-size:.75rem; color:rgba(255,255,255,.65); }
+.topbar-badge { background:var(--orange); color:var(--teal); padding:5px 12px; border-radius:20px; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+.layout { display:flex; flex:1; }
+.sidebar { width:var(--sidebar-w); background:white; border-right:1px solid #e8ddd0; padding:24px 0; position:sticky; top:51px; height:calc(100vh - 51px); overflow-y:auto; flex-shrink:0; }
+.sidebar-section { padding:0 18px; margin-bottom:8px; }
+.sidebar-section-title { font-size:.65rem; text-transform:uppercase; letter-spacing:.14em; color:var(--grey); font-weight:700; margin-bottom:8px; padding:0 6px; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:10px; cursor:pointer; font-size:.83rem; font-weight:500; color:var(--grey); transition:all .2s; margin-bottom:2px; border:none; background:none; width:100%; text-align:left; font-family:'Sora',sans-serif; }
+.nav-item:hover { background:var(--blue-pale); color:var(--blue); }
+.nav-item.active { background:var(--blue-pale); color:var(--blue); font-weight:700; }
+.nav-divider { height:1px; background:var(--grey-light); margin:12px 18px; }
+.main-content { flex:1; padding:36px 40px; max-width:960px; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* HERO */
+.module-hero { background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:20px; padding:36px; margin-bottom:32px; border:1px solid rgba(207,158,65,.2); }
+.module-hero h1 { font-size:1.85rem; font-weight:800; color:var(--blue); margin-bottom:8px; line-height:1.2; }
+.module-hero p { font-size:.92rem; color:var(--grey); line-height:1.7; max-width:700px; margin-top:10px; }
+.module-hero-meta { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+.meta-chip { font-size:.78rem; padding:5px 12px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+.chip-red { background:var(--blue-pale); color:var(--blue); }
+.chip-gold { background:var(--orange-pale); color:var(--teal); }
+.chip-green { background:var(--green-pale); color:var(--green); }
+.chip-purple { background:var(--purple-pale); color:var(--purple); }
+
+/* SECTION */
+.section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
+.section-heading:first-child { margin-top:0; }
+.section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
+
+/* EXERCICE CARD */
+.exercice-card { background:white; border-radius:16px; padding:28px; margin-bottom:24px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.ex-header { display:flex; align-items:flex-start; gap:16px; margin-bottom:20px; }
+.ex-num { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:.9rem; font-weight:800; font-family:'JetBrains Mono',monospace; flex-shrink:0; color:white; }
+.ex-num-blue { background:var(--blue); }
+.ex-num-orange { background:var(--orange); }
+.ex-num-green { background:var(--green); }
+.ex-num-purple { background:var(--purple); }
+.ex-title-block h3 { font-size:1.05rem; font-weight:700; color:var(--blue); margin-bottom:4px; }
+.ex-meta { display:flex; gap:8px; flex-wrap:wrap; }
+.ex-badge { font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:20px; }
+.badge-intermediaire { background:var(--orange-pale); color:var(--teal); }
+.badge-om { background:var(--blue-pale); color:var(--blue); }
+.badge-agent { background:var(--green-pale); color:var(--green); }
+.badge-durée { background:var(--grey-light); color:var(--grey); }
+
+/* SCENARIO */
+.scenario-box { background:linear-gradient(135deg,#F8F4EE,#FFF8F0); border-radius:12px; padding:20px 22px; margin-bottom:20px; border-left:4px solid var(--orange); }
+.scenario-box .scenario-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--orange-light); font-weight:700; margin-bottom:6px; }
+.scenario-box p { font-size:.9rem; color:#2C3E50; line-height:1.7; }
+.scenario-box strong { color:var(--blue); }
+
+/* QUESTIONS */
+.questions-block { margin-top:18px; }
+.question-item { background:var(--bg); border-radius:10px; padding:14px 16px; margin-bottom:12px; border:1px solid #e8ddd0; }
+.q-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:var(--orange); font-weight:700; margin-bottom:6px; font-family:'JetBrains Mono',monospace; }
+.q-text { font-size:.9rem; color:#2C3E50; line-height:1.6; font-weight:600; }
+.q-input { width:100%; margin-top:10px; padding:10px 14px; border:1.5px solid #e8ddd0; border-radius:8px; font-family:'Sora',sans-serif; font-size:.86rem; color:#2C3E50; background:white; resize:vertical; min-height:60px; transition:border-color .2s; }
+.q-input:focus { outline:none; border-color:var(--blue); }
+.q-options { list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:7px; }
+.q-option { display:flex; align-items:flex-start; gap:10px; padding:9px 14px; border-radius:8px; border:1.5px solid #e8ddd0; cursor:pointer; font-size:.86rem; color:var(--grey); transition:all .2s; background:white; }
+.q-option:hover { border-color:var(--blue); background:var(--blue-pale); color:var(--blue); }
+.q-option.selected { border-color:var(--blue); background:var(--blue-pale); color:var(--blue); font-weight:600; }
+.q-option.correct { border-color:var(--green); background:var(--green-pale); color:var(--green); font-weight:600; }
+.q-option.wrong { border-color:var(--red); background:var(--red-pale); color:var(--red); }
+.q-option-letter { width:26px; height:26px; border-radius:50%; border:2px solid currentColor; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.q-feedback { margin-top:10px; padding:10px 14px; border-radius:8px; font-size:.82rem; line-height:1.5; display:none; }
+.q-feedback.show { display:block; }
+.fb-correct { background:var(--green-pale); color:var(--green); }
+.fb-wrong { background:var(--red-pale); color:var(--red); }
+
+/* CTA BOUTON */
+.ex-btn { background:var(--blue); color:white; border:none; padding:10px 22px; border-radius:10px; font-size:.85rem; font-weight:700; font-family:'Sora',sans-serif; cursor:pointer; transition:background .2s; margin-top:16px; }
+.ex-btn:hover { background:var(--blue-light); }
+.ex-btn-check { background:var(--orange); color:white; }
+.ex-btn-check:hover { background:var(--orange-light); }
+.ex-btn-reset { background:var(--grey-light); color:var(--grey); }
+.ex-btn-reset:hover { background:#d0d8e0; }
+
+/* SCORE */
+.score-bar { background:linear-gradient(135deg,var(--green-pale),var(--blue-pale)); border-radius:12px; padding:16px 20px; margin-top:16px; display:none; border:1px solid rgba(46,125,50,.2); }
+.score-bar.show { display:block; }
+.score-bar .score-val { font-size:1.6rem; font-weight:800; color:var(--blue); }
+.score-bar .score-txt { font-size:.85rem; color:var(--grey); margin-top:4px; }
+
+/* MISE EN SITUATION */
+.situation-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+.situation-card { background:white; border-radius:12px; padding:18px; border:1px solid #e8ddd0; }
+.situation-card h4 { font-size:.9rem; font-weight:700; color:var(--blue); margin-bottom:10px; padding-bottom:8px; border-bottom:2px solid var(--orange-pale); }
+.situation-card p { font-size:.84rem; color:var(--grey); line-height:1.6; }
+.situation-card ul { list-style:none; margin-top:8px; }
+.situation-card ul li { font-size:.84rem; color:var(--grey); padding:4px 0; display:flex; gap:8px; align-items:flex-start; }
+.situation-card ul li::before { content:'▸'; color:var(--orange); flex-shrink:0; }
+
+/* ALERT */
+.alert { border-radius:12px; padding:16px 20px; margin:14px 0; display:flex; gap:12px; font-size:.86rem; line-height:1.6; }
+.alert-icon { font-size:1.2rem; flex-shrink:0; }
+.alert-text { color:var(--grey); }
+.alert-text strong { color:#2C3E50; }
+.alert-info { background:var(--teal-pale); border-left:4px solid var(--teal); }
+.alert-warn { background:var(--orange-pale); border-left:4px solid var(--orange); }
+.alert-success { background:var(--green-pale); border-left:4px solid var(--green); }
+
+/* INFO CARD */
+.info-card { background:white; border-radius:14px; padding:20px 22px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 10px rgba(0,0,0,.04); }
+.info-card h3 { font-size:.95rem; font-weight:700; color:var(--blue); margin-bottom:8px; }
+.info-card p { font-size:.86rem; color:var(--grey); line-height:1.7; }
+
+/* STEPS */
+.steps-list { list-style:none; margin:12px 0; counter-reset:steps; }
+.steps-list li { display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--grey-light); font-size:.86rem; color:var(--grey); line-height:1.5; align-items:flex-start; }
+.steps-list li:last-child { border-bottom:none; }
+.step-dot { width:28px; height:28px; background:var(--blue); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.step-dot-orange { background:var(--orange); }
+.step-dot-green { background:var(--green); }
+
+/* STYLED TABLE */
+.styled-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.05); margin:14px 0 20px; font-size:.83rem; }
+.styled-table th { background:var(--blue); color:white; padding:11px 14px; text-align:left; font-weight:700; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; }
+.styled-table td { padding:10px 14px; border-bottom:1px solid #f0e8e0; color:var(--grey); line-height:1.5; vertical-align:top; }
+.styled-table tr:nth-child(even) td { background:var(--bg); }
+.styled-table tr:last-child td { border-bottom:none; }
+
+/* RECAP CORRECT */
+.recap-block { background:var(--green-pale); border-radius:12px; padding:16px 18px; margin-top:14px; border-left:4px solid var(--green); display:none; }
+.recap-block.show { display:block; }
+.recap-block h4 { font-size:.9rem; font-weight:700; color:var(--green); margin-bottom:8px; }
+.recap-block ul { list-style:none; }
+.recap-block ul li { font-size:.84rem; color:#1B5E20; padding:3px 0; display:flex; gap:8px; }
+.recap-block ul li::before { content:'✓'; color:var(--green); font-weight:700; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Portail</a>
+    <div>
+      <div class="module-title-top">Exercices Pratiques — OM Business & Application Agent</div>
+      <div class="module-subtitle-top">Niveau intermédiaire — Mises en situation terrain</div>
+    </div>
+  </div>
+  <div class="topbar-badge">PRATIQUE</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">OM Business</div>
+      <button class="nav-item active" onclick="showPage('p0',this)">🏠 Introduction</button>
+      <button class="nav-item" onclick="showPage('p1',this)">👤 Exercice 1 — Profils</button>
+      <button class="nav-item" onclick="showPage('p2',this)">📲 Exercice 2 — Enrôlement</button>
+      <button class="nav-item" onclick="showPage('p3',this)">💬 Exercice 3 — Objections</button>
+      <button class="nav-item" onclick="showPage('p4',this)">💰 Exercice 4 — Fonctionnalités</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Application Agent</div>
+      <button class="nav-item" onclick="showPage('p5',this)">🗺️ Exercice 5 — Carte GPS</button>
+      <button class="nav-item" onclick="showPage('p6',this)">📋 Exercice 6 — Enrôlement app</button>
+      <button class="nav-item" onclick="showPage('p7',this)">📊 Exercice 7 — Tableau de bord</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Synthèse</div>
+      <button class="nav-item" onclick="showPage('p8',this)">🎯 Exercice 8 — Cas complet</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PAGE 0 — INTRO -->
+    <div id="p0" class="page active">
+      <div class="module-hero">
+        <h1>Exercices pratiques intermédiaires</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">OM Business</span>
+          <span class="meta-chip chip-green">Application Agent</span>
+          <span class="meta-chip chip-gold">Niveau intermédiaire</span>
+          <span class="meta-chip chip-purple">8 exercices</span>
+        </div>
+        <p>Ces exercices sont basés sur des situations réelles de terrain. Chaque scénario vous plonge dans une situation concrète d'un agent OM Business. Répondez aux questions, puis vérifiez vos réponses pour consolider vos connaissances.</p>
+      </div>
+
+      <div class="section-heading">
+        <div class="section-num">01</div>
+        <h2>Comment utiliser ces exercices</h2>
+      </div>
+
+      <div class="situation-grid">
+        <div class="situation-card">
+          <h4>Structure de chaque exercice</h4>
+          <ul>
+            <li>Un <strong>scénario terrain</strong> réaliste</li>
+            <li>Des <strong>questions QCM</strong> ou à réponse courte</li>
+            <li>Un bouton <strong>Vérifier</strong> pour voir les corrections</li>
+            <li>Un <strong>récapitulatif</strong> des bonnes réponses</li>
+          </ul>
+        </div>
+        <div class="situation-card">
+          <h4>Niveau intermédiaire — Ce qui est testé</h4>
+          <ul>
+            <li>Identifier le bon profil OM Business</li>
+            <li>Suivre la procédure d'enrôlement</li>
+            <li>Répondre aux objections courantes</li>
+            <li>Utiliser correctement l'Application Agent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-text"><strong>Conseil :</strong> Faites chaque exercice sans regarder vos notes au préalable. Puis vérifiez vos réponses et relisez le module correspondant pour les points que vous n'aviez pas en tête.</div>
+      </div>
+
+      <table class="styled-table">
+        <thead><tr><th>Exercice</th><th>Thème</th><th>Module</th><th>Questions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Exercice 1</strong></td><td>Identifier les profils marchands</td><td>OM Business</td><td>5 QCM</td></tr>
+          <tr><td><strong>Exercice 2</strong></td><td>Processus d'enrôlement</td><td>OM Business</td><td>5 QCM</td></tr>
+          <tr><td><strong>Exercice 3</strong></td><td>Répondre aux objections</td><td>OM Business</td><td>4 QCM</td></tr>
+          <tr><td><strong>Exercice 4</strong></td><td>Fonctionnalités OM Business</td><td>OM Business</td><td>5 QCM</td></tr>
+          <tr><td><strong>Exercice 5</strong></td><td>Lecture de la carte GPS</td><td>Application Agent</td><td>4 QCM</td></tr>
+          <tr><td><strong>Exercice 6</strong></td><td>Enrôlement via Application Agent</td><td>Application Agent</td><td>6 QCM</td></tr>
+          <tr><td><strong>Exercice 7</strong></td><td>Tableau de bord & synchronisation</td><td>Application Agent</td><td>4 QCM</td></tr>
+          <tr><td><strong>Exercice 8</strong></td><td>Cas complet terrain</td><td>OM Business + App Agent</td><td>6 QCM</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- PAGE 1 — PROFILS -->
+    <div id="p1" class="page">
+      <div class="section-heading">
+        <div class="section-num">01</div>
+        <h2>Exercice 1 — Identifier les profils marchands</h2>
+      </div>
+
+      <div class="exercice-card" id="ex1">
+        <div class="ex-header">
+          <div class="ex-num ex-num-blue">1</div>
+          <div class="ex-title-block">
+            <h3>Qui est Essentiel, Classique ou Premium ?</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-om">OM Business</span>
+              <span class="ex-badge badge-durée">⏱ 10 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>Vous faites votre tournée dans un marché. Vous rencontrez 5 commerçants différents. Votre mission : déterminer le bon profil OM Business pour chacun avant de leur présenter l'offre adaptée.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <!-- Q1 -->
+          <div class="question-item">
+            <div class="q-label">Marchand 1</div>
+            <div class="q-text">Aminata vend des légumes ambulante, sans local fixe, seule, CA estimé à 60 000 XOF/an. Quel profil ?</div>
+            <ul class="q-options" id="ex1q1">
+              <li class="q-option" onclick="selectOpt('ex1q1',0,2,this)"><span class="q-option-letter">A</span> Premium</li>
+              <li class="q-option" onclick="selectOpt('ex1q1',1,2,this)"><span class="q-option-letter">B</span> Classique</li>
+              <li class="q-option" onclick="selectOpt('ex1q1',2,2,this)"><span class="q-option-letter">C</span> Essentiel</li>
+              <li class="q-option" onclick="selectOpt('ex1q1',3,2,this)"><span class="q-option-letter">D</span> Non éligible</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex1q1"></div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="question-item">
+            <div class="q-label">Marchand 2</div>
+            <div class="q-text">Konan dirige une boulangerie avec 5 employés, CA annuel de 280 millions XOF, et un registre de commerce disponible. Quel profil ?</div>
+            <ul class="q-options" id="ex1q2">
+              <li class="q-option" onclick="selectOpt('ex1q2',0,1,this)"><span class="q-option-letter">A</span> Essentiel</li>
+              <li class="q-option" onclick="selectOpt('ex1q2',1,1,this)"><span class="q-option-letter">B</span> Classique</li>
+              <li class="q-option" onclick="selectOpt('ex1q2',2,1,this)"><span class="q-option-letter">C</span> Premium</li>
+              <li class="q-option" onclick="selectOpt('ex1q2',3,1,this)"><span class="q-option-letter">D</span> Non éligible</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex1q2"></div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="question-item">
+            <div class="q-label">Marchand 3</div>
+            <div class="q-text">Mme Touré dirige un supermarché avec 15 employés, CA de 600 millions XOF, dossier financier complet. Quel profil ?</div>
+            <ul class="q-options" id="ex1q3">
+              <li class="q-option" onclick="selectOpt('ex1q3',0,2,this)"><span class="q-option-letter">A</span> Essentiel</li>
+              <li class="q-option" onclick="selectOpt('ex1q3',1,2,this)"><span class="q-option-letter">B</span> Classique</li>
+              <li class="q-option" onclick="selectOpt('ex1q3',2,2,this)"><span class="q-option-letter">C</span> Premium</li>
+              <li class="q-option" onclick="selectOpt('ex1q3',3,2,this)"><span class="q-option-letter">D</span> Non éligible</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex1q3"></div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="question-item">
+            <div class="q-label">Marchand 4</div>
+            <div class="q-text">Ibrahim est chauffeur VTC indépendant, seul, CA estimé 90 000 XOF/an. Il veut encaisser ses clients à distance. Quel profil ?</div>
+            <ul class="q-options" id="ex1q4">
+              <li class="q-option" onclick="selectOpt('ex1q4',0,0,this)"><span class="q-option-letter">A</span> Essentiel</li>
+              <li class="q-option" onclick="selectOpt('ex1q4',1,0,this)"><span class="q-option-letter">B</span> Classique</li>
+              <li class="q-option" onclick="selectOpt('ex1q4',2,0,this)"><span class="q-option-letter">C</span> Premium</li>
+              <li class="q-option" onclick="selectOpt('ex1q4',3,0,this)"><span class="q-option-letter">D</span> Non éligible</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex1q4"></div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="question-item">
+            <div class="q-label">Marchand 5</div>
+            <div class="q-text">Un épicier déclare un CA de 120 000 XOF/an, 2 employés, sans registre de commerce ni patente. Quel profil OM Business est correct ?</div>
+            <ul class="q-options" id="ex1q5">
+              <li class="q-option" onclick="selectOpt('ex1q5',0,2,this)"><span class="q-option-letter">A</span> Premium — CA proche de la limite Classique</li>
+              <li class="q-option" onclick="selectOpt('ex1q5',1,2,this)"><span class="q-option-letter">B</span> Classique — 2 employés suffisent pour ce profil</li>
+              <li class="q-option" onclick="selectOpt('ex1q5',2,2,this)"><span class="q-option-letter">C</span> Essentiel — CA &lt;150k XOF, 2 employés, pas de document professionnel</li>
+              <li class="q-option" onclick="selectOpt('ex1q5',3,2,this)"><span class="q-option-letter">D</span> Non éligible — absence de registre de commerce rédhibitoire</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex1q5"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex1',['ex1q1','ex1q2','ex1q3','ex1q4','ex1q5'],[2,1,2,0,2],['Aminata est ambulante, seule, CA 60k XOF → profil Essentiel.','Boulangerie 5 emp., CA 280M XOF, RC disponible → critères Classique (CA entre 150k et 400M XOF avec RC).','Supermarché 15 emp., CA 600M XOF, dossier complet → critères Premium (CA >400M XOF, +10 emp., documents financiers).','VTC indépendant, CA 90k XOF → profil Essentiel (CA &lt;150k XOF, 1 employé — le lien de paiement est la fonctionnalité idéale).','CA 120k XOF &lt;150k, 2 employés, sans RC → Essentiel. Le RC n\\'est requis qu\\'à partir du Classique.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex1',['ex1q1','ex1q2','ex1q3','ex1q4','ex1q5'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex1"></div>
+        <div class="recap-block" id="recap-ex1"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 2 — ENRÔLEMENT OM BUSINESS -->
+    <div id="p2" class="page">
+      <div class="section-heading">
+        <div class="section-num">02</div>
+        <h2>Exercice 2 — Processus d'enrôlement OM Business</h2>
+      </div>
+
+      <div class="exercice-card" id="ex2">
+        <div class="ex-header">
+          <div class="ex-num ex-num-orange">2</div>
+          <div class="ex-title-block">
+            <h3>Créer un compte : client OM et client Non-OM</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-om">OM Business</span>
+              <span class="ex-badge badge-durée">⏱ 10 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>Vous êtes en prospection et deux marchands acceptent d'ouvrir un compte OM Business. <strong>Marchand A</strong> a déjà un compte Orange Money actif. <strong>Marchand B</strong> n'a pas de SIM Orange (client Non-OM). Vous devez appliquer la bonne procédure pour chacun.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">Question 1</div>
+            <div class="q-text">Pour le Marchand A (client Orange Money existant), quel est le principal avantage du parcours de création ?</div>
+            <ul class="q-options" id="ex2q1">
+              <li class="q-option" onclick="selectOpt('ex2q1',0,1,this)"><span class="q-option-letter">A</span> Il nécessite un passage obligatoire en agence Orange</li>
+              <li class="q-option" onclick="selectOpt('ex2q1',1,1,this)"><span class="q-option-letter">B</span> La validation est automatique — pas de passage par le Back Office</li>
+              <li class="q-option" onclick="selectOpt('ex2q1',2,1,this)"><span class="q-option-letter">C</span> Il doit fournir une photo de sa pièce d'identité uniquement</li>
+              <li class="q-option" onclick="selectOpt('ex2q1',3,1,this)"><span class="q-option-letter">D</span> Le compte est automatiquement classé Premium</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex2q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 2</div>
+            <div class="q-text">Pour le Marchand B (Non-OM), quelles informations devez-vous collecter lors de la création de compte ?</div>
+            <ul class="q-options" id="ex2q2">
+              <li class="q-option" onclick="selectOpt('ex2q2',0,1,this)"><span class="q-option-letter">A</span> Numéro de téléphone uniquement</li>
+              <li class="q-option" onclick="selectOpt('ex2q2',1,1,this)"><span class="q-option-letter">B</span> Nom, prénom, date de naissance, numéro de pièce et photo de la pièce</li>
+              <li class="q-option" onclick="selectOpt('ex2q2',2,1,this)"><span class="q-option-letter">C</span> Numéro de téléphone + registre de commerce obligatoire</li>
+              <li class="q-option" onclick="selectOpt('ex2q2',3,1,this)"><span class="q-option-letter">D</span> Email + adresse postale + RIB bancaire</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex2q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 3</div>
+            <div class="q-text">Après avoir soumis le dossier du Marchand B (Non-OM), que se passe-t-il avant que son compte soit activé ?</div>
+            <ul class="q-options" id="ex2q3">
+              <li class="q-option" onclick="selectOpt('ex2q3',0,2,this)"><span class="q-option-letter">A</span> Le compte est activé immédiatement</li>
+              <li class="q-option" onclick="selectOpt('ex2q3',1,2,this)"><span class="q-option-letter">B</span> Le marchand doit se rendre en agence pour validation physique</li>
+              <li class="q-option" onclick="selectOpt('ex2q3',2,2,this)"><span class="q-option-letter">C</span> Le dossier passe par la corbeille de validation Back Office avant activation</li>
+              <li class="q-option" onclick="selectOpt('ex2q3',3,2,this)"><span class="q-option-letter">D</span> L'agent doit scanner une deuxième fois la pièce d'identité</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex2q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 4</div>
+            <div class="q-text">Lequel de ces éléments N'EST PAS nécessaire pour créer un compte OM Business Essentiel ?</div>
+            <ul class="q-options" id="ex2q4">
+              <li class="q-option" onclick="selectOpt('ex2q4',0,3,this)"><span class="q-option-letter">A</span> Un numéro de téléphone</li>
+              <li class="q-option" onclick="selectOpt('ex2q4',1,3,this)"><span class="q-option-letter">B</span> La saisie d'informations basiques dans l'application</li>
+              <li class="q-option" onclick="selectOpt('ex2q4',2,3,this)"><span class="q-option-letter">C</span> Une connexion Internet pour finaliser l'enrôlement</li>
+              <li class="q-option" onclick="selectOpt('ex2q4',3,3,this)"><span class="q-option-letter">D</span> Un registre de commerce ou une patente fiscale</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex2q4"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 5</div>
+            <div class="q-text">Quelle action finale est indispensable après avoir créé le compte d'un marchand ?</div>
+            <ul class="q-options" id="ex2q5">
+              <li class="q-option" onclick="selectOpt('ex2q5',0,1,this)"><span class="q-option-letter">A</span> Passer immédiatement au prochain prospect</li>
+              <li class="q-option" onclick="selectOpt('ex2q5',1,1,this)"><span class="q-option-letter">B</span> Effectuer un test de paiement et former le marchand sur les fonctionnalités de base</li>
+              <li class="q-option" onclick="selectOpt('ex2q5',2,1,this)"><span class="q-option-letter">C</span> Envoyer le rapport au superviseur avant de quitter le commerce</li>
+              <li class="q-option" onclick="selectOpt('ex2q5',3,1,this)"><span class="q-option-letter">D</span> Demander au marchand de signer un contrat papier</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex2q5"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex2',['ex2q1','ex2q2','ex2q3','ex2q4','ex2q5'],[1,1,2,3,1],['Pour un client OM existant, son numéro Orange Money sert d\\'identifiant — validation automatique sans Back Office.','Pour un Non-OM : nom, prénom, date de naissance, numéro de pièce + photo de la pièce.','Le dossier Non-OM passe obligatoirement par la corbeille de validation Back Office avant activation.','Le profil Essentiel ne requiert aucun document professionnel (RC ou patente). C\\'est un avantage clé à communiquer.','Un test de paiement post-enrôlement est indispensable pour confirmer que le compte fonctionne et former le marchand.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex2',['ex2q1','ex2q2','ex2q3','ex2q4','ex2q5'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex2"></div>
+        <div class="recap-block" id="recap-ex2"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 3 — OBJECTIONS -->
+    <div id="p3" class="page">
+      <div class="section-heading">
+        <div class="section-num">03</div>
+        <h2>Exercice 3 — Répondre aux objections</h2>
+      </div>
+
+      <div class="exercice-card" id="ex3">
+        <div class="ex-header">
+          <div class="ex-num ex-num-purple">3</div>
+          <div class="ex-title-block">
+            <h3>Traiter les objections courantes des marchands</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-om">OM Business</span>
+              <span class="ex-badge badge-durée">⏱ 8 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>Pendant votre prospection, vous rencontrez des marchands qui posent des questions ou soulèvent des objections. Choisissez la meilleure réponse à apporter dans chaque situation.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">Objection 1</div>
+            <div class="q-text">"Mes clients n'ont pas tous une SIM Orange — OM Business ne me servira à rien." Quelle est la réponse la plus efficace ?</div>
+            <ul class="q-options" id="ex3q1">
+              <li class="q-option" onclick="selectOpt('ex3q1',0,2,this)"><span class="q-option-letter">A</span> "Effectivement, vous avez besoin que vos clients aient une SIM Orange."</li>
+              <li class="q-option" onclick="selectOpt('ex3q1',1,2,this)"><span class="q-option-letter">B</span> "La majorité des gens au Sénégal ont Orange, donc vous n'avez pas à vous inquiéter."</li>
+              <li class="q-option" onclick="selectOpt('ex3q1',2,2,this)"><span class="q-option-letter">C</span> "C'est votre CLIENT qui paye avec son Orange Money — vous, en tant que marchand, n'avez pas besoin de SIM Orange pour recevoir les paiements."</li>
+              <li class="q-option" onclick="selectOpt('ex3q1',3,2,this)"><span class="q-option-letter">D</span> "Vous pouvez acheter une SIM Orange pour chacun de vos clients."</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex3q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Objection 2</div>
+            <div class="q-text">"J'utilise déjà MTN Money depuis 3 ans, mes clients sont habitués." Comment répondez-vous ?</div>
+            <ul class="q-options" id="ex3q2">
+              <li class="q-option" onclick="selectOpt('ex3q2',0,1,this)"><span class="q-option-letter">A</span> "MTN Money n'est pas fiable, vous devriez arrêter immédiatement."</li>
+              <li class="q-option" onclick="selectOpt('ex3q2',1,1,this)"><span class="q-option-letter">B</span> "OM Business complète MTN Money — vous pouvez les utiliser en parallèle et toucher plus de clients. Garder les deux maximise vos encaissements."</li>
+              <li class="q-option" onclick="selectOpt('ex3q2',2,1,this)"><span class="q-option-letter">C</span> "Votre contrat avec MTN vous interdit d'utiliser OM Business."</li>
+              <li class="q-option" onclick="selectOpt('ex3q2',3,1,this)"><span class="q-option-letter">D</span> "Je reviendrai dans 6 mois quand votre contrat MTN sera terminé."</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex3q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Objection 3</div>
+            <div class="q-text">"Je n'ai pas de registre de commerce, je ne peux pas ouvrir un compte." Que dites-vous ?</div>
+            <ul class="q-options" id="ex3q3">
+              <li class="q-option" onclick="selectOpt('ex3q3',0,2,this)"><span class="q-option-letter">A</span> "Effectivement, sans RC vous ne pouvez pas être client OM Business."</li>
+              <li class="q-option" onclick="selectOpt('ex3q3',1,2,this)"><span class="q-option-letter">B</span> "Revenez me voir quand vous aurez votre registre de commerce."</li>
+              <li class="q-option" onclick="selectOpt('ex3q3',2,2,this)"><span class="q-option-letter">C</span> "Pour le profil Essentiel, aucun document n'est requis — vous pouvez ouvrir un compte immédiatement, 100% digital."</li>
+              <li class="q-option" onclick="selectOpt('ex3q3',3,2,this)"><span class="q-option-letter">D</span> "Vous pouvez quand même ouvrir un compte, mais il sera bloqué dans 30 jours."</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex3q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Objection 4</div>
+            <div class="q-text">Un agent présente OM Business en commençant par les frais de retrait. Le marchand est immédiatement réticent. Quelle correction apportez-vous à l'agent ?</div>
+            <ul class="q-options" id="ex3q4">
+              <li class="q-option" onclick="selectOpt('ex3q4',0,1,this)"><span class="q-option-letter">A</span> "Lui interdire de mentionner les frais pour éviter les objections"</li>
+              <li class="q-option" onclick="selectOpt('ex3q4',1,1,this)"><span class="q-option-letter">B</span> "Commencer par les avantages et la valeur ajoutée — puis aborder la tarification ensuite"</li>
+              <li class="q-option" onclick="selectOpt('ex3q4',2,1,this)"><span class="q-option-letter">C</span> "Changer d'agent sur ce secteur"</li>
+              <li class="q-option" onclick="selectOpt('ex3q4',3,1,this)"><span class="q-option-letter">D</span> "Demander au marchand de lire la brochure seul"</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex3q4"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex3',['ex3q1','ex3q2','ex3q3','ex3q4'],[2,1,2,1],['Argument clé : c\\'est le CLIENT qui paye avec Orange Money. Le marchand reçoit sans avoir besoin de SIM Orange.','OM Business est complémentaire à MTN Money. Les deux peuvent coexister pour maximiser les encaissements du marchand.','Le profil Essentiel ne requiert aucun document. C\\'est justement l\\'un des arguments les plus forts de l\\'offre.','Le pitch doit toujours commencer par la valeur (avantages, gains) avant d\\'aborder la tarification.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex3',['ex3q1','ex3q2','ex3q3','ex3q4'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex3"></div>
+        <div class="recap-block" id="recap-ex3"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 4 — FONCTIONNALITÉS -->
+    <div id="p4" class="page">
+      <div class="section-heading">
+        <div class="section-num">04</div>
+        <h2>Exercice 4 — Fonctionnalités OM Business</h2>
+      </div>
+
+      <div class="exercice-card" id="ex4">
+        <div class="ex-header">
+          <div class="ex-num ex-num-blue">4</div>
+          <div class="ex-title-block">
+            <h3>Connaître les fonctionnalités par profil</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-om">OM Business</span>
+              <span class="ex-badge badge-durée">⏱ 10 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>Des marchands vous posent des questions sur les fonctionnalités de l'application OM Business. Vous devez donner la bonne réponse pour chaque situation.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">Question 1</div>
+            <div class="q-text">Un marchand Essentiel veut encaisser un client qui est à 50 km. Il n'a pas de QR Code imprimé. Quelle fonctionnalité lui recommandez-vous ?</div>
+            <ul class="q-options" id="ex4q1">
+              <li class="q-option" onclick="selectOpt('ex4q1',0,1,this)"><span class="q-option-letter">A</span> Le virement bancaire</li>
+              <li class="q-option" onclick="selectOpt('ex4q1',1,1,this)"><span class="q-option-letter">B</span> Le lien de paiement OM Business — envoyé par SMS ou WhatsApp au client</li>
+              <li class="q-option" onclick="selectOpt('ex4q1',2,1,this)"><span class="q-option-letter">C</span> La demande de déplafonnement</li>
+              <li class="q-option" onclick="selectOpt('ex4q1',3,1,this)"><span class="q-option-letter">D</span> Le retrait USSD</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex4q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 2</div>
+            <div class="q-text">Un marchand Classique veut transférer de l'argent vers son autre compte. Combien lui en coûte-t-il ?</div>
+            <ul class="q-options" id="ex4q2">
+              <li class="q-option" onclick="selectOpt('ex4q2',0,2,this)"><span class="q-option-letter">A</span> 1% du montant transféré</li>
+              <li class="q-option" onclick="selectOpt('ex4q2',1,2,this)"><span class="q-option-letter">B</span> 500 XOF forfaitaire</li>
+              <li class="q-option" onclick="selectOpt('ex4q2',2,2,this)"><span class="q-option-letter">C</span> Gratuit — le transfert à soi-même ou à tiers est gratuit</li>
+              <li class="q-option" onclick="selectOpt('ex4q2',3,2,this)"><span class="q-option-letter">D</span> Gratuit uniquement pour le profil Premium</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex4q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 3</div>
+            <div class="q-text">Un marchand Premium veut que ses 3 caissiers puissent encaisser séparément avec leur propre QR Code. Cette fonctionnalité est-elle disponible ?</div>
+            <ul class="q-options" id="ex4q3">
+              <li class="q-option" onclick="selectOpt('ex4q3',0,0,this)"><span class="q-option-letter">A</span> Oui — le profil Premium permet la gestion des rôles du personnel avec QR Codes multiples</li>
+              <li class="q-option" onclick="selectOpt('ex4q3',1,0,this)"><span class="q-option-letter">B</span> Non — un seul QR Code par compte OM Business quel que soit le profil</li>
+              <li class="q-option" onclick="selectOpt('ex4q3',2,0,this)"><span class="q-option-letter">C</span> Oui, mais uniquement pour le profil Classique</li>
+              <li class="q-option" onclick="selectOpt('ex4q3',3,0,this)"><span class="q-option-letter">D</span> Non — cette fonctionnalité n'existe pas dans OM Business</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex4q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 4</div>
+            <div class="q-text">Un marchand Essentiel connaît une forte croissance et souhaite accéder aux fonctionnalités du profil Classique. Quelle démarche lui indiquez-vous ?</div>
+            <ul class="q-options" id="ex4q4">
+              <li class="q-option" onclick="selectOpt('ex4q4',0,1,this)"><span class="q-option-letter">A</span> Il doit créer un nouveau compte Classique depuis zéro</li>
+              <li class="q-option" onclick="selectOpt('ex4q4',1,1,this)"><span class="q-option-letter">B</span> Dans l'application OM Business → Demande de déplafonnement → Profil Classique → Fournir les pièces requises</li>
+              <li class="q-option" onclick="selectOpt('ex4q4',2,1,this)"><span class="q-option-letter">C</span> Il doit attendre 6 mois d'utilisation minimum avant de pouvoir changer de profil</li>
+              <li class="q-option" onclick="selectOpt('ex4q4',3,1,this)"><span class="q-option-letter">D</span> Contacter le service client Orange au 124</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex4q4"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 5</div>
+            <div class="q-text">Qu'est-ce que Tik Tak Pro dans le contexte OM Business ?</div>
+            <ul class="q-options" id="ex4q5">
+              <li class="q-option" onclick="selectOpt('ex4q5',0,2,this)"><span class="q-option-letter">A</span> Un système de localisation GPS des marchands</li>
+              <li class="q-option" onclick="selectOpt('ex4q5',1,2,this)"><span class="q-option-letter">B</span> Un abonnement mensuel pour accéder aux fonctionnalités Premium</li>
+              <li class="q-option" onclick="selectOpt('ex4q5',2,2,this)"><span class="q-option-letter">C</span> Un service de crédit et d'épargne intégré à OM Business, en cours de déploiement</li>
+              <li class="q-option" onclick="selectOpt('ex4q5',3,2,this)"><span class="q-option-letter">D</span> Un outil de formation en ligne pour les agents commerciaux</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex4q5"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex4',['ex4q1','ex4q2','ex4q3','ex4q4','ex4q5'],[1,2,0,1,2],['Le lien de paiement permet d\\'encaisser à distance sans QR Code — idéal pour les marchands Essentiel et les VTC.','Le transfert (à soi-même ou à tiers) est gratuit sur tous les profils OM Business.','Le profil Premium inclut la gestion des rôles du personnel avec QR Codes multiples par caisse.','Déplafonnement → Profil Classique → Fournir RC ou patente. Délai de réponse : 24h environ.','Tik Tak Pro est un service de crédit et d\\'épargne à venir sur OM Business.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex4',['ex4q1','ex4q2','ex4q3','ex4q4','ex4q5'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex4"></div>
+        <div class="recap-block" id="recap-ex4"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 5 — CARTE GPS -->
+    <div id="p5" class="page">
+      <div class="section-heading">
+        <div class="section-num">05</div>
+        <h2>Exercice 5 — Lire la carte de l'Application Agent</h2>
+      </div>
+
+      <div class="exercice-card" id="ex5">
+        <div class="ex-header">
+          <div class="ex-num ex-num-green">5</div>
+          <div class="ex-title-block">
+            <h3>Interpréter la carte GPS et les indicateurs visuels</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-agent">Application Agent</span>
+              <span class="ex-badge badge-durée">⏱ 8 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>Vous ouvrez l'Application Agent en début de journée. La carte affiche votre zone avec plusieurs points de couleur. Vous devez interpréter correctement ces indicateurs avant de commencer votre tournée.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">Question 1</div>
+            <div class="q-text">Vous voyez un point VERT sur la carte. Que représente-t-il ?</div>
+            <ul class="q-options" id="ex5q1">
+              <li class="q-option" onclick="selectOpt('ex5q1',0,1,this)"><span class="q-option-letter">A</span> Un marchand déjà enrôlé avec au moins une transaction ce mois</li>
+              <li class="q-option" onclick="selectOpt('ex5q1',1,1,this)"><span class="q-option-letter">B</span> Une activité à visiter — marchand non encore traité</li>
+              <li class="q-option" onclick="selectOpt('ex5q1',2,1,this)"><span class="q-option-letter">C</span> Une zone interdite à la prospection</li>
+              <li class="q-option" onclick="selectOpt('ex5q1',3,1,this)"><span class="q-option-letter">D</span> Un marchand en attente de validation Back Office</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex5q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 2</div>
+            <div class="q-text">Vous voyez un point JAUNE sur la carte. Que représente-t-il ?</div>
+            <ul class="q-options" id="ex5q2">
+              <li class="q-option" onclick="selectOpt('ex5q2',0,1,this)"><span class="q-option-letter">A</span> Une activité prioritaire à visiter en urgence</li>
+              <li class="q-option" onclick="selectOpt('ex5q2',1,1,this)"><span class="q-option-letter">B</span> Une activité déjà visitée</li>
+              <li class="q-option" onclick="selectOpt('ex5q2',2,1,this)"><span class="q-option-letter">C</span> Un marchand qui a refusé l'offre OM Business</li>
+              <li class="q-option" onclick="selectOpt('ex5q2',3,1,this)"><span class="q-option-letter">D</span> Un compte en cours d'activation par le Back Office</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex5q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 3</div>
+            <div class="q-text">Votre zone affiche 12 points verts et 8 points jaunes. Combien d'activités vous reste-t-il à traiter aujourd'hui ?</div>
+            <ul class="q-options" id="ex5q3">
+              <li class="q-option" onclick="selectOpt('ex5q3',0,0,this)"><span class="q-option-letter">A</span> 12 activités (les points verts = à visiter)</li>
+              <li class="q-option" onclick="selectOpt('ex5q3',1,0,this)"><span class="q-option-letter">B</span> 8 activités (les points jaunes = à revisiter)</li>
+              <li class="q-option" onclick="selectOpt('ex5q3',2,0,this)"><span class="q-option-letter">C</span> 20 activités (toutes doivent être visitées)</li>
+              <li class="q-option" onclick="selectOpt('ex5q3',3,0,this)"><span class="q-option-letter">D</span> 0 activité — les deux couleurs signifient "traité"</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex5q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 4</div>
+            <div class="q-text">Vous vous trouvez dans une zone sans réseau internet. Pouvez-vous quand même consulter la carte des activités sur l'Application Agent ?</div>
+            <ul class="q-options" id="ex5q4">
+              <li class="q-option" onclick="selectOpt('ex5q4',0,0,this)"><span class="q-option-letter">A</span> Oui — l'Application Agent charge les activités et fonctionne hors connexion</li>
+              <li class="q-option" onclick="selectOpt('ex5q4',1,0,this)"><span class="q-option-letter">B</span> Non — la carte nécessite une connexion permanente</li>
+              <li class="q-option" onclick="selectOpt('ex5q4',2,0,this)"><span class="q-option-letter">C</span> Oui, mais uniquement si vous utilisez le WiFi du marchand</li>
+              <li class="q-option" onclick="selectOpt('ex5q4',3,0,this)"><span class="q-option-letter">D</span> Non — l'application se bloque automatiquement sans réseau</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex5q4"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex5',['ex5q1','ex5q2','ex5q3','ex5q4'],[1,1,0,0],['Point VERT = activité à visiter (non encore traitée). C\\'est votre liste de travail du jour.','Point JAUNE = activité déjà visitée. Ces marchands ont déjà été traités.','12 points verts = 12 activités à visiter. Les 8 jaunes sont déjà traitées.','L\\'Application Agent charge les activités à l\\'avance et fonctionne HORS CONNEXION pour la navigation sur la carte.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex5',['ex5q1','ex5q2','ex5q3','ex5q4'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex5"></div>
+        <div class="recap-block" id="recap-ex5"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 6 — ENRÔLEMENT APP AGENT -->
+    <div id="p6" class="page">
+      <div class="section-heading">
+        <div class="section-num">06</div>
+        <h2>Exercice 6 — Enrôlement via l'Application Agent</h2>
+      </div>
+
+      <div class="exercice-card" id="ex6">
+        <div class="ex-header">
+          <div class="ex-num ex-num-green">6</div>
+          <div class="ex-title-block">
+            <h3>Maîtriser les étapes d'enrôlement</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-agent">Application Agent</span>
+              <span class="ex-badge badge-durée">⏱ 12 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>Vous visitez un marchand (point vert sur votre carte) qui accepte d'être enrôlé. Vous avez un QR Code à blanc dans votre sacoche. Suivez les étapes de l'Application Agent pour finaliser l'enrôlement.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">Étape 0 — Sélection</div>
+            <div class="q-text">Une fois sur l'écran d'accueil de l'Application Agent, quelle option sélectionnez-vous pour commencer l'enrôlement ?</div>
+            <ul class="q-options" id="ex6q1">
+              <li class="q-option" onclick="selectOpt('ex6q1',0,2,this)"><span class="q-option-letter">A</span> "Synchroniser les données"</li>
+              <li class="q-option" onclick="selectOpt('ex6q1',1,2,this)"><span class="q-option-letter">B</span> "Consulter le tableau de bord"</li>
+              <li class="q-option" onclick="selectOpt('ex6q1',2,2,this)"><span class="q-option-letter">C</span> "Enrôler des marchands OM Business"</li>
+              <li class="q-option" onclick="selectOpt('ex6q1',3,2,this)"><span class="q-option-letter">D</span> "Voir les détails de l'activité"</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex6q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Étape 1 — Scan</div>
+            <div class="q-text">Après avoir sélectionné l'option d'enrôlement, quelle est la première action à effectuer ?</div>
+            <ul class="q-options" id="ex6q2">
+              <li class="q-option" onclick="selectOpt('ex6q2',0,1,this)"><span class="q-option-letter">A</span> Saisir le numéro de téléphone du marchand</li>
+              <li class="q-option" onclick="selectOpt('ex6q2',1,1,this)"><span class="q-option-letter">B</span> Scanner le QR Code à blanc avec l'application</li>
+              <li class="q-option" onclick="selectOpt('ex6q2',2,1,this)"><span class="q-option-letter">C</span> Demander la pièce d'identité du marchand</li>
+              <li class="q-option" onclick="selectOpt('ex6q2',3,1,this)"><span class="q-option-letter">D</span> Appeler le superviseur pour confirmer l'enrôlement</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex6q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Étape 2 — Vérification</div>
+            <div class="q-text">Après avoir scanné le QR Code, l'application affiche des informations pré-remplies. Que devez-vous faire ?</div>
+            <ul class="q-options" id="ex6q3">
+              <li class="q-option" onclick="selectOpt('ex6q3',0,1,this)"><span class="q-option-letter">A</span> Valider directement sans vérification</li>
+              <li class="q-option" onclick="selectOpt('ex6q3',1,1,this)"><span class="q-option-letter">B</span> Vérifier et valider les informations (numéro marchand, nom, commune)</li>
+              <li class="q-option" onclick="selectOpt('ex6q3',2,1,this)"><span class="q-option-letter">C</span> Supprimer toutes les infos et les ressaisir manuellement</li>
+              <li class="q-option" onclick="selectOpt('ex6q3',3,1,this)"><span class="q-option-letter">D</span> Prendre une photo des informations pour les envoyer au superviseur</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex6q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Étape 3 — OTP</div>
+            <div class="q-text">L'application vous demande maintenant de saisir un OTP. Qui reçoit cet OTP et combien de chiffres contient-il ?</div>
+            <ul class="q-options" id="ex6q4">
+              <li class="q-option" onclick="selectOpt('ex6q4',0,2,this)"><span class="q-option-letter">A</span> Vous-même (l'agent) recevez un OTP à 6 chiffres</li>
+              <li class="q-option" onclick="selectOpt('ex6q4',1,2,this)"><span class="q-option-letter">B</span> Le superviseur reçoit un OTP à 8 chiffres par email</li>
+              <li class="q-option" onclick="selectOpt('ex6q4',2,2,this)"><span class="q-option-letter">C</span> Le MARCHAND reçoit un OTP à 4 chiffres sur son téléphone — vous le saisissez dans l'application</li>
+              <li class="q-option" onclick="selectOpt('ex6q4',3,2,this)"><span class="q-option-letter">D</span> Le Back Office envoie un OTP à 4 chiffres à l'agent</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex6q4"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Étape 4 — Résultat</div>
+            <div class="q-text">L'application affiche "Succès". Quelle est la prochaine action obligatoire avant de quitter le commerce ?</div>
+            <ul class="q-options" id="ex6q5">
+              <li class="q-option" onclick="selectOpt('ex6q5',0,1,this)"><span class="q-option-letter">A</span> Synchroniser les données immédiatement</li>
+              <li class="q-option" onclick="selectOpt('ex6q5',1,1,this)"><span class="q-option-letter">B</span> Effectuer un test de paiement et remettre le QR Code au marchand</li>
+              <li class="q-option" onclick="selectOpt('ex6q5',2,1,this)"><span class="q-option-letter">C</span> Appeler le superviseur pour signaler l'enrôlement réussi</li>
+              <li class="q-option" onclick="selectOpt('ex6q5',3,1,this)"><span class="q-option-letter">D</span> Marquer l'activité comme "terminée" dans votre rapport papier</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex6q5"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Cas d'erreur</div>
+            <div class="q-text">L'application affiche "Échec" lors de l'enrôlement. Quelle est la première cause probable à vérifier ?</div>
+            <ul class="q-options" id="ex6q6">
+              <li class="q-option" onclick="selectOpt('ex6q6',0,1,this)"><span class="q-option-letter">A</span> Le QR Code est en mauvais état ou déjà utilisé — vérifier et utiliser un nouveau QR Code à blanc</li>
+              <li class="q-option" onclick="selectOpt('ex6q6',1,1,this)"><span class="q-option-letter">B</span> Le marchand n'est pas éligible — ne pas insister</li>
+              <li class="q-option" onclick="selectOpt('ex6q6',2,1,this)"><span class="q-option-letter">C</span> Le profil Essentiel est saturé dans la zone</li>
+              <li class="q-option" onclick="selectOpt('ex6q6',3,1,this)"><span class="q-option-letter">D</span> L'application doit être réinstallée</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex6q6"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex6',['ex6q1','ex6q2','ex6q3','ex6q4','ex6q5','ex6q6'],[2,1,1,2,1,0],['Étape 0 : Sélectionner \\'Enrôler des marchands OM Business\\' dans le menu principal.','Étape 1 : Scanner le QR Code à blanc avec l\\'appareil photo de l\\'application.','Étape 2 : Vérifier et valider les infos pré-remplies (numéro marchand, nom, commune).','Étape 3 : C\\'est le MARCHAND qui reçoit un OTP à 4 chiffres. Vous le saisissez dans l\\'app.','Étape 4 : Test de paiement obligatoire + remise du QR Code + explication des fonctionnalités de base.','En cas d\\'échec, vérifier d\\'abord le QR Code (pas déjà utilisé, pas endommagé). Signaler au superviseur si le problème persiste.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex6',['ex6q1','ex6q2','ex6q3','ex6q4','ex6q5','ex6q6'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex6"></div>
+        <div class="recap-block" id="recap-ex6"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 7 — TABLEAU DE BORD & SYNC -->
+    <div id="p7" class="page">
+      <div class="section-heading">
+        <div class="section-num">07</div>
+        <h2>Exercice 7 — Tableau de bord & Synchronisation</h2>
+      </div>
+
+      <div class="exercice-card" id="ex7">
+        <div class="ex-header">
+          <div class="ex-num ex-num-orange">7</div>
+          <div class="ex-title-block">
+            <h3>Utiliser le tableau de bord et synchroniser les données</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-agent">Application Agent</span>
+              <span class="ex-badge badge-durée">⏱ 8 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain</div>
+          <p>En fin de journée, vous rentrez au bureau. Vous avez travaillé plusieurs heures dans une zone sans réseau. Vous devez synchroniser vos données et consulter votre tableau de bord avant le point d'équipe.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">Question 1</div>
+            <div class="q-text">Vous avez effectué 3 enrôlements sans connexion internet. Que devez-vous faire avant de remettre votre rapport ?</div>
+            <ul class="q-options" id="ex7q1">
+              <li class="q-option" onclick="selectOpt('ex7q1',0,1,this)"><span class="q-option-letter">A</span> Les enrôlements hors ligne sont perdus — il faut les refaire en zone couverte</li>
+              <li class="q-option" onclick="selectOpt('ex7q1',1,1,this)"><span class="q-option-letter">B</span> Utiliser la fonction "Synchroniser les données" dès que vous avez une connexion internet</li>
+              <li class="q-option" onclick="selectOpt('ex7q1',2,1,this)"><span class="q-option-letter">C</span> Envoyer les enrôlements manuellement par email au Back Office</li>
+              <li class="q-option" onclick="selectOpt('ex7q1',3,1,this)"><span class="q-option-letter">D</span> Appeler le 0808 pour valider les enrôlements à distance</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex7q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 2</div>
+            <div class="q-text">Quelle information principale pouvez-vous consulter dans le tableau de bord de l'Application Agent ?</div>
+            <ul class="q-options" id="ex7q2">
+              <li class="q-option" onclick="selectOpt('ex7q2',0,1,this)"><span class="q-option-letter">A</span> Le solde de votre compte Orange Money personnel</li>
+              <li class="q-option" onclick="selectOpt('ex7q2',1,1,this)"><span class="q-option-letter">B</span> Vos indicateurs de performance : activités visitées, enrôlements effectués et objectifs</li>
+              <li class="q-option" onclick="selectOpt('ex7q2',2,1,this)"><span class="q-option-letter">C</span> Les transactions effectuées par chacun de vos marchands</li>
+              <li class="q-option" onclick="selectOpt('ex7q2',3,1,this)"><span class="q-option-letter">D</span> Les coordonnées de tous les agents de la ville</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex7q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 3</div>
+            <div class="q-text">Vous remarquez que le déploiement du QR Code d'un marchand a échoué pendant votre session hors connexion. Quelle est la particularité du déploiement QR ?</div>
+            <ul class="q-options" id="ex7q3">
+              <li class="q-option" onclick="selectOpt('ex7q3',0,1,this)"><span class="q-option-letter">A</span> Le déploiement QR fonctionne toujours hors connexion sans problème</li>
+              <li class="q-option" onclick="selectOpt('ex7q3',1,1,this)"><span class="q-option-letter">B</span> Le déploiement du QR Code nécessite une connexion internet — c'est la seule étape qui ne fonctionne pas hors ligne</li>
+              <li class="q-option" onclick="selectOpt('ex7q3',2,1,this)"><span class="q-option-letter">C</span> Le QR Code peut être déployé par SMS sans connexion</li>
+              <li class="q-option" onclick="selectOpt('ex7q3',3,1,this)"><span class="q-option-letter">D</span> Le QR Code est déployé automatiquement lors de la synchronisation</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex7q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">Question 4</div>
+            <div class="q-text">Votre superviseur vous demande combien d'activités vous avez visitées dans la journée. Où trouvez-vous cette information rapidement ?</div>
+            <ul class="q-options" id="ex7q4">
+              <li class="q-option" onclick="selectOpt('ex7q4',0,2,this)"><span class="q-option-letter">A</span> Dans votre carnet de notes papier</li>
+              <li class="q-option" onclick="selectOpt('ex7q4',1,2,this)"><span class="q-option-letter">B</span> En recomptant les points jaunes sur la carte</li>
+              <li class="q-option" onclick="selectOpt('ex7q4',2,2,this)"><span class="q-option-letter">C</span> Dans le tableau de bord de l'Application Agent</li>
+              <li class="q-option" onclick="selectOpt('ex7q4',3,2,this)"><span class="q-option-letter">D</span> En appelant le Back Office</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex7q4"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex7',['ex7q1','ex7q2','ex7q3','ex7q4'],[1,1,1,2],['Les données hors connexion sont sauvegardées localement. La synchronisation les envoie au serveur dès que la connexion revient.','Le tableau de bord affiche vos KPIs du jour : activités visitées, enrôlements effectués, progression par rapport à l\\'objectif.','Seul le déploiement du QR Code nécessite une connexion internet. La navigation et la consultation des activités fonctionnent hors ligne.','Le tableau de bord de l\\'Application Agent centralise tous vos indicateurs de performance du jour.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex7',['ex7q1','ex7q2','ex7q3','ex7q4'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex7"></div>
+        <div class="recap-block" id="recap-ex7"></div>
+      </div>
+    </div>
+
+
+    <!-- PAGE 8 — CAS COMPLET -->
+    <div id="p8" class="page">
+      <div class="section-heading">
+        <div class="section-num">08</div>
+        <h2>Exercice 8 — Cas complet terrain</h2>
+      </div>
+
+      <div class="exercice-card" id="ex8">
+        <div class="ex-header">
+          <div class="ex-num ex-num-purple">8</div>
+          <div class="ex-title-block">
+            <h3>Journée terrain complète — OM Business + Application Agent</h3>
+            <div class="ex-meta">
+              <span class="ex-badge badge-intermediaire">Intermédiaire</span>
+              <span class="ex-badge badge-om">OM Business</span>
+              <span class="ex-badge badge-agent">Application Agent</span>
+              <span class="ex-badge badge-durée">⏱ 15 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-label">Scénario terrain complet</div>
+          <p>Vous êtes Agent OM Business. Ce matin, votre superviseur vous a assigné une zone de <strong>20 activités</strong> dans l'Application Agent. Vous avez <strong>5 QR Codes à blanc</strong> dans votre sacoche. Votre objectif : <strong>enrôler au moins 5 marchands</strong> dans la journée. Suivez votre journée et répondez aux questions à chaque étape.</p>
+        </div>
+
+        <div class="questions-block">
+
+          <div class="question-item">
+            <div class="q-label">8h00 — Départ en zone</div>
+            <div class="q-text">En ouvrant l'Application Agent, vous voyez 15 points verts et 5 points jaunes. Vous êtes en zone sans réseau. Que faites-vous ?</div>
+            <ul class="q-options" id="ex8q1">
+              <li class="q-option" onclick="selectOpt('ex8q1',0,1,this)"><span class="q-option-letter">A</span> Rentrer au bureau — impossible de travailler sans connexion</li>
+              <li class="q-option" onclick="selectOpt('ex8q1',1,1,this)"><span class="q-option-letter">B</span> Commencer la tournée — la carte est disponible hors connexion, les points verts sont vos activités à visiter</li>
+              <li class="q-option" onclick="selectOpt('ex8q1',2,1,this)"><span class="q-option-letter">C</span> Attendre d'avoir du réseau avant de commencer les visites</li>
+              <li class="q-option" onclick="selectOpt('ex8q1',3,1,this)"><span class="q-option-letter">D</span> Appeler le superviseur pour lui demander sa liste papier</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex8q1"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">9h30 — Premier prospect</div>
+            <div class="q-text">Vous rencontrez Fatou, vendeuse de tissu avec 3 employées, CA estimé 180 millions XOF, patente fiscale disponible. Quel profil lui proposez-vous ?</div>
+            <ul class="q-options" id="ex8q2">
+              <li class="q-option" onclick="selectOpt('ex8q2',0,1,this)"><span class="q-option-letter">A</span> Essentiel — petite vendeuse de tissu</li>
+              <li class="q-option" onclick="selectOpt('ex8q2',1,1,this)"><span class="q-option-letter">B</span> Classique — CA 180M XOF (entre 150k et 400M), patente fiscale disponible</li>
+              <li class="q-option" onclick="selectOpt('ex8q2',2,1,this)"><span class="q-option-letter">C</span> Premium — plus de 2 employées obligatoirement</li>
+              <li class="q-option" onclick="selectOpt('ex8q2',3,1,this)"><span class="q-option-letter">D</span> Non éligible — les vendeurs de tissu ne sont pas la cible</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex8q2"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">10h15 — Objection de Fatou</div>
+            <div class="q-text">Fatou dit : "Je n'ai pas de registre de commerce, juste ma patente." Votre réponse pour qu'elle puisse accéder au profil Classique ?</div>
+            <ul class="q-options" id="ex8q3">
+              <li class="q-option" onclick="selectOpt('ex8q3',0,1,this)"><span class="q-option-letter">A</span> "Désolée Fatou, sans registre de commerce vous ne pouvez pas être Classique."</li>
+              <li class="q-option" onclick="selectOpt('ex8q3',1,1,this)"><span class="q-option-letter">B</span> "Votre patente fiscale est acceptée comme document pour le profil Classique — pas besoin de registre de commerce."</li>
+              <li class="q-option" onclick="selectOpt('ex8q3',2,1,this)"><span class="q-option-letter">C</span> "Vous devrez d'abord ouvrir en Essentiel puis déplafonner plus tard."</li>
+              <li class="q-option" onclick="selectOpt('ex8q3',3,1,this)"><span class="q-option-letter">D</span> "Obtenir un RC en 48h est simple, je vous explique où aller."</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex8q3"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">11h00 — Enrôlement de Fatou</div>
+            <div class="q-text">Fatou accepte. Vous avez un QR Code à blanc. Vous avez retrouvé du réseau. Dans quel ordre effectuez-vous les étapes d'enrôlement via l'Application Agent ?</div>
+            <ul class="q-options" id="ex8q4">
+              <li class="q-option" onclick="selectOpt('ex8q4',0,1,this)"><span class="q-option-letter">A</span> OTP → Scan QR → Vérification → Test de paiement</li>
+              <li class="q-option" onclick="selectOpt('ex8q4',1,1,this)"><span class="q-option-letter">B</span> Sélection → Scan QR → Vérification infos → OTP du marchand → Résultat + Test de paiement</li>
+              <li class="q-option" onclick="selectOpt('ex8q4',2,1,this)"><span class="q-option-letter">C</span> Saisie manuelle du numéro → OTP → Scan QR → Résultat</li>
+              <li class="q-option" onclick="selectOpt('ex8q4',3,1,this)"><span class="q-option-letter">D</span> Vérification → Saisie manuelle → OTP → Résultat</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex8q4"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">14h30 — Fin de zone sans réseau</div>
+            <div class="q-text">Vous avez effectué 3 autres enrôlements hors connexion l'après-midi. Vous retrouvez le réseau. Quelle est votre première action dans l'Application Agent ?</div>
+            <ul class="q-options" id="ex8q5">
+              <li class="q-option" onclick="selectOpt('ex8q5',0,1,this)"><span class="q-option-letter">A</span> Appeler le superviseur pour lui dicter les noms des marchands</li>
+              <li class="q-option" onclick="selectOpt('ex8q5',1,1,this)"><span class="q-option-letter">B</span> Synchroniser les données pour envoyer les enrôlements au serveur</li>
+              <li class="q-option" onclick="selectOpt('ex8q5',2,1,this)"><span class="q-option-letter">C</span> Fermer et réouvrir l'application pour qu'elle se mette à jour automatiquement</li>
+              <li class="q-option" onclick="selectOpt('ex8q5',3,1,this)"><span class="q-option-letter">D</span> Refaire les 3 enrôlements car les données hors ligne sont perdues</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex8q5"></div>
+          </div>
+
+          <div class="question-item">
+            <div class="q-label">17h00 — Point d'équipe</div>
+            <div class="q-text">Votre superviseur demande votre bilan de la journée. Où consultez-vous rapidement vos indicateurs (activités visitées, enrôlements, progression) ?</div>
+            <ul class="q-options" id="ex8q6">
+              <li class="q-option" onclick="selectOpt('ex8q6',0,2,this)"><span class="q-option-letter">A</span> Dans votre carnet papier</li>
+              <li class="q-option" onclick="selectOpt('ex8q6',1,2,this)"><span class="q-option-letter">B</span> Dans les SMS reçus du Back Office</li>
+              <li class="q-option" onclick="selectOpt('ex8q6',2,2,this)"><span class="q-option-letter">C</span> Dans le tableau de bord de l'Application Agent</li>
+              <li class="q-option" onclick="selectOpt('ex8q6',3,2,this)"><span class="q-option-letter">D</span> En recomptant les points jaunes sur la carte</li>
+            </ul>
+            <div class="q-feedback" id="fb-ex8q6"></div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+          <button class="ex-btn ex-btn-check" onclick="checkExercice('ex8',['ex8q1','ex8q2','ex8q3','ex8q4','ex8q5','ex8q6'],[1,1,1,1,1,2],['La carte fonctionne hors connexion. Les 15 points verts = 15 activités à visiter. Commencez votre tournée normalement.','CA 180M XOF > seuil Essentiel (150k XOF). Patente disponible. → Profil Classique.','Pour le Classique, le RC et la patente fiscale ont la même valeur documentaire. Fatou est éligible avec sa patente.','Ordre correct : Sélection → Scan QR → Vérification infos → OTP du marchand → Résultat + Test de paiement.','Synchroniser immédiatement dès que le réseau revient pour envoyer tous les enrôlements hors ligne au serveur.','Le tableau de bord de l\\'Application Agent centralise tous vos indicateurs de performance quotidiens.'])">✅ Vérifier mes réponses</button>
+          <button class="ex-btn ex-btn-reset" onclick="resetExercice('ex8',['ex8q1','ex8q2','ex8q3','ex8q4','ex8q5','ex8q6'])">↺ Recommencer</button>
+        </div>
+
+        <div class="score-bar" id="score-ex8"></div>
+        <div class="recap-block" id="recap-ex8"></div>
+      </div>
+
+      <div class="alert alert-success">
+        <div class="alert-icon">🎯</div>
+        <div class="alert-text"><strong>Bravo !</strong> Vous avez terminé tous les exercices pratiques. Pour consolider vos connaissances, revenez sur les modules <strong>OM Business</strong> et <strong>Application Agent</strong> pour les points que vous n'avez pas réussi du premier coup. Puis passez à <strong>l'Évaluation finale</strong>.</div>
+      </div>
+
+      <div style="text-align:center;margin-top:24px;">
+        <a href="evaluation.html" style="display:inline-block;background:var(--blue);color:white;padding:14px 32px;border-radius:12px;font-weight:700;font-size:.95rem;text-decoration:none;">Passer à l'Évaluation finale →</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const letters = ['A','B','C','D','E'];
+
+function selectOpt(groupId, idx, correct, el) {
+  // Désactiver si déjà vérifié
+  const feedbackEl = document.getElementById('fb-' + groupId);
+  if(feedbackEl && feedbackEl.classList.contains('show')) return;
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.dataset.chosen = idx;
+}
+
+function checkExercice(exId, qIds, corrects, feedbacks) {
+  let score = 0;
+  const total = qIds.length;
+  let recapItems = [];
+
+  qIds.forEach((qId, i) => {
+    const group = document.getElementById(qId);
+    const opts = group.querySelectorAll('.q-option');
+    const correct = corrects[i];
+    let chosen = -1;
+    opts.forEach((o,oi) => { if(o.classList.contains('selected')) chosen = oi; });
+
+    // Appliquer les classes
+    opts.forEach((o,oi) => {
+      o.onclick = null; // Désactiver
+      if(oi === correct) { o.classList.add('correct'); o.classList.remove('selected'); }
+      else if(oi === chosen && chosen !== correct) { o.classList.add('wrong'); o.classList.remove('selected'); }
+    });
+
+    // Feedback individuel
+    const fbEl = document.getElementById('fb-' + qId);
+    if(fbEl) {
+      fbEl.classList.add('show');
+      if(chosen === correct) {
+        fbEl.className = 'q-feedback show fb-correct';
+        fbEl.textContent = '✓ ' + feedbacks[i];
+        score++;
+      } else if(chosen === -1) {
+        fbEl.className = 'q-feedback show fb-wrong';
+        fbEl.textContent = '⚠ Sans réponse — ' + feedbacks[i];
+      } else {
+        fbEl.className = 'q-feedback show fb-wrong';
+        fbEl.textContent = '✗ ' + feedbacks[i];
+      }
+    }
+    recapItems.push(feedbacks[i]);
+  });
+
+  // Score global
+  const scoreEl = document.getElementById('score-' + exId);
+  if(scoreEl) {
+    scoreEl.classList.add('show');
+    const pct = Math.round(score / total * 100);
+    const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '📚';
+    scoreEl.innerHTML = `<div class="score-val">${score} / ${total}</div><div class="score-txt">${emoji} ${pct}% de bonnes réponses ${pct >= 80 ? '— Excellent !' : pct >= 60 ? '— Bien, continuez !' : '— Relisez le module correspondant.'}</div>`;
+  }
+
+  // Récap
+  const recapEl = document.getElementById('recap-' + exId);
+  if(recapEl && score < total) {
+    recapEl.classList.add('show');
+    recapEl.innerHTML = `<h4>Points à retenir</h4><ul>${recapItems.map(r => `<li>${r}</li>`).join('')}</ul>`;
+  }
+}
+
+function resetExercice(exId, qIds) {
+  qIds.forEach(qId => {
+    const group = document.getElementById(qId);
+    const opts = group.querySelectorAll('.q-option');
+    const corrects_map = { 0:'selectOpt', 1:'selectOpt', 2:'selectOpt', 3:'selectOpt' };
+    opts.forEach((o,oi) => {
+      o.classList.remove('correct','wrong','selected');
+      // Réactiver les clics
+      const exNum = qId.match(/ex(\d+)/)[0];
+      const qNum = qId;
+      // On remet l'onclick dynamiquement
+      o.setAttribute('onclick', `selectOpt('${qId}',${oi},0,this)`);
+    });
+    const fbEl = document.getElementById('fb-' + qId);
+    if(fbEl) { fbEl.classList.remove('show'); fbEl.textContent = ''; }
+  });
+  const scoreEl = document.getElementById('score-' + exId);
+  if(scoreEl) { scoreEl.classList.remove('show'); }
+  const recapEl = document.getElementById('recap-' + exId);
+  if(recapEl) { recapEl.classList.remove('show'); }
+  // Reload page for clean reset
+  location.reload();
+}
+</script>
+</body>
+</html>

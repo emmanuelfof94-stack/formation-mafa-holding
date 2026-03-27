@@ -3658,6 +3658,14 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
   .portrait-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── CSS M6 — Inspecteur Orange ── */
+#module-m6 .kpi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:20px 0; }
+#module-m6 .kpi-card { background:white; border-radius:14px; padding:20px 16px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+#module-m6 .kpi-val { font-size:1.8rem; font-weight:800; color:var(--blue); }
+#module-m6 .kpi-unit { font-size:.72rem; color:var(--orange); font-weight:700; text-transform:uppercase; }
+#module-m6 .kpi-label { font-size:.75rem; color:var(--grey); margin-top:4px; line-height:1.4; }
+@media (max-width:768px) { #module-m6 .kpi-grid { grid-template-columns:1fr; } }
+
 /* ── OVERLAY PLEIN ÉCRAN ── */
 .module-overlay {
   display: none;
@@ -3770,6 +3778,73 @@ tbody td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align:
 .quiz-feedback.fb-incorrect { background: #F2D6DC; color: #6A091A; }
 .quiz-option.correct { border-color: #584B26 !important; background: #F3EDD8 !important; color: #584B26 !important; }
 .quiz-option.incorrect { border-color: #6A091A !important; background: #F2D6DC !important; color: #6A091A !important; }
+
+/* ── Badge Crystal Solution ── */
+.tag-crystal {
+  background: linear-gradient(90deg, #1B5E20, #2E7D32);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.cs-divider {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 0 2px;
+}
+.cs-divider-line { flex: 1; height: 1px; background: #e2e8f0; }
+.cs-divider-badge {
+  background: linear-gradient(135deg, #1B5E20, #2E7D32);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Barre de téléchargement modules ── */
+.dl-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #F8F9FA;
+  border-bottom: 1px solid #e2e8f0;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.dl-bar-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+  font-family: 'Sora', sans-serif;
+  margin-right: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.dl-btn {
+  padding: 5px 13px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.73rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Sora', sans-serif;
+  transition: all .15s;
+  letter-spacing: 0.02em;
+}
+.dl-btn:disabled { opacity: .55; cursor: wait; }
+.dl-pdf  { background: #FEE2E2; color: #991B1B; }
+.dl-pdf:hover:not(:disabled)  { background: #FECACA; }
+.dl-word { background: #DBEAFE; color: #1D4ED8; }
+.dl-word:hover:not(:disabled) { background: #BFDBFE; }
+.dl-pptx { background: #FEF3C7; color: #92400E; }
+.dl-pptx:hover:not(:disabled) { background: #FDE68A; }
 
 </style>
 </head>
@@ -3951,6 +4026,13 @@ function enterFormation() {
       </div>
     </button>
 
+    <!-- ── Séparateur Crystal Solution ── -->
+    <div class="cs-divider">
+      <div class="cs-divider-line"></div>
+      <div class="cs-divider-badge">💎 Crystal Solution — Activités Orange</div>
+      <div class="cs-divider-line"></div>
+    </div>
+
     <button class="module-card" onclick="openModule('m1')" style="border:none;cursor:pointer;text-align:left;background:white;">
       <div class="card-header">
         <div class="card-icon">📞</div>
@@ -3962,6 +4044,7 @@ function enterFormation() {
       <div class="card-body">
         <p class="card-desc">Maîtrisez les scripts d'appel ID30, la gestion des objections et les procédures de validation Connectel. Apprenez à prendre des rendez-vous et à mettre à jour les dossiers des entrepreneurs.</p>
         <div class="card-tags">
+          <span class="tag tag-crystal">💎 Crystal Solution</span>
           <span class="tag tag-public">👤 Agents Call Center</span>
           <span class="tag tag-duration">⏱ 2 heures</span>
         </div>
@@ -3983,6 +4066,7 @@ function enterFormation() {
       <div class="card-body">
         <p class="card-desc">Maîtrisez le cycle de traitement des dossiers ID30 — validation, rejet, gestion des incomplets. Apprenez les critères qualité et la gestion des dossiers Orange QR Code.</p>
         <div class="card-tags">
+          <span class="tag tag-crystal">💎 Crystal Solution</span>
           <span class="tag tag-public">👤 Agents Back Office</span>
           <span class="tag tag-duration">⏱ 1h30</span>
         </div>
@@ -4025,6 +4109,7 @@ function enterFormation() {
       <div class="card-body">
         <p class="card-desc">Comprenez l'offre OM Business et ses 3 profils (Essentiel, Classique, Premium). Maîtrisez les parcours de création de compte, les fonctionnalités et la tarification.</p>
         <div class="card-tags">
+          <span class="tag tag-crystal">💎 Crystal Solution</span>
           <span class="tag tag-public">👤 Commerciaux OM Business</span>
           <span class="tag tag-duration">⏱ 1h30</span>
         </div>
@@ -4046,6 +4131,7 @@ function enterFormation() {
       <div class="card-body">
         <p class="card-desc">Maîtrisez l'application Agent pour l'enrôlement des marchands, le déploiement des QR Codes, la synchronisation des données et le tableau de bord superviseur.</p>
         <div class="card-tags">
+          <span class="tag tag-crystal">💎 Crystal Solution</span>
           <span class="tag tag-public">👤 Agents &amp; Superviseurs</span>
           <span class="tag tag-duration">⏱ 1 heure</span>
         </div>
@@ -4065,8 +4151,9 @@ function enterFormation() {
         </div>
       </div>
       <div class="card-body">
-        <p class="card-desc">Maîtrisez la Fiche de Visite MAFA : les 8 étapes de documentation terrain, diagnostic des problèmes, niveaux d'urgence P1/P2/P3, checklist de soumission et cas pratiques fréquents.</p>
+        <p class="card-desc">Maîtrisez la Fiche de Visite Crystal Solution : les 8 étapes de documentation terrain, diagnostic des problèmes, niveaux d'urgence P1/P2/P3, checklist de soumission et cas pratiques fréquents.</p>
         <div class="card-tags">
+          <span class="tag tag-crystal">💎 Crystal Solution</span>
           <span class="tag tag-public">🔍 Inspecteurs Orange</span>
           <span class="tag tag-duration">⏱ 1h30</span>
         </div>
@@ -4159,6 +4246,12 @@ function enterFormation() {
     <button class="tab-btn" onclick="showModuleTab('m0','quiz')">✅ Quiz</button>
     <button class="tab-btn" onclick="showModuleTab('m0','resultats')">🏆 Résultats</button>
   </div>
+  <div class="dl-bar">
+    <span class="dl-bar-label">📥 Télécharger :</span>
+    <button class="dl-btn dl-pdf"  onclick="exportPDF('m0','M0_Fondamentaux_Metier','Fondamentaux Métier')">📄 PDF</button>
+    <button class="dl-btn dl-word" onclick="exportWord('m0','M0_Fondamentaux_Metier','Fondamentaux Métier')">📝 Word</button>
+    <button class="dl-btn dl-pptx" onclick="exportPPTX('m0','M0_Fondamentaux_Metier','Fondamentaux Métier')">🖥️ PowerPoint</button>
+  </div>
 
   <!-- ═══ COURS ═══ -->
   <div class="tab-section" id="tab-m0-cours">
@@ -4207,7 +4300,10 @@ function enterFormation() {
 
     <div class="info-card" style="border-left:4px solid #FF6D00;background:#fff8f3">
       <h3 style="color:#E65100">🟠 Partenariat Orange Côte d'Ivoire</h3>
-      <p style="color:#374151;font-size:14px">Dans le cadre de son expansion commerciale, Orange Côte d'Ivoire a également sollicité MAFA Holding pour l'accompagner dans son déploiement marchand à travers plusieurs villes du pays.</p>
+      <p style="color:#374151;font-size:14px">Dans le cadre de son expansion commerciale, Orange Côte d'Ivoire a mandaté <strong>Crystal Solution</strong> — filiale de MAFA Holding spécialisée en <strong>marketing et communication</strong> — pour l'accompagner dans son déploiement marchand à travers plusieurs villes du pays.</p>
+      <div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-left:4px solid #388E3C;border-radius:0 8px 8px 0;padding:10px 14px;margin-top:10px">
+        <p style="margin:0;font-size:13px;color:#1B5E20"><strong>💎 Crystal Solution</strong> est la filiale de MAFA Holding dédiée aux activités Orange (Orange Money, Orange Business). Spécialisée en <strong>marketing et communication</strong>, elle gère toutes les opérations terrain Orange. Tout ce qui concerne l'activité Orange relève de <strong>Crystal Solution</strong>, pas de MAFA Holding directement.</p>
+      </div>
       <ul style="margin:8px 0 0;padding-left:18px;line-height:2;color:#374151">
         <li>Enrôlement et activation des marchands Orange Money sur le terrain</li>
         <li>Déploiement du réseau de points Orange dans les villes ciblées</li>
@@ -4288,7 +4384,7 @@ function enterFormation() {
       <tbody>
         <tr><td><strong>Agent Call Center (CC)</strong></td><td>Contacter les entrepreneurs par téléphone via Connectel pour mettre à jour leurs informations ou vérifier leur activité.</td></tr>
         <tr><td><strong>Agent Back Office (BO)</strong></td><td>Traiter les dossiers transmis : vérifier, corriger, valider ou rejeter chaque fiche entrepreneur.</td></tr>
-        <tr><td><strong>Chef d'équipe</strong></td><td>Supervise et encadre les agents, contrôle la qualité des données et remonte les difficultés terrain.</td></tr>
+        <tr><td><strong>Superviseur</strong></td><td>Supervise et encadre les agents, contrôle la qualité des données et remonte les difficultés terrain.</td></tr>
         <tr><td><strong>Inspecteur</strong></td><td>Effectue des contre-enquêtes terrain, contrôle le passage GPS des agents, vérifie l'exhaustivité du ratissage.</td></tr>
         <tr><td><strong>Responsable de Ville (RV)</strong></td><td>Coordonne toutes les équipes sur la ville, valide les zones couvertes, traite les cas complexes.</td></tr>
       </tbody>
@@ -4297,10 +4393,12 @@ function enterFormation() {
     <div class="info-card" style="border-left:4px solid #1a237e;background:#f0f4ff">
       <h3 style="color:#1a237e">🏗️ Structure hiérarchique terrain</h3>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-        <div style="background:#1a237e;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px">🏙️ Responsable Ville → pilote l'ensemble des opérations sur la ville</div>
-        <div style="background:#283593;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:20px">🔍 Inspecteur → contrôle qualité et contre-enquêtes</div>
-        <div style="background:#3949ab;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:40px">👤 Chef d'équipe → encadre 9 agents identificateurs</div>
-        <div style="background:#5c6bc0;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:60px">👥 9 Agents (AI) → identification et enrôlement îlot par îlot</div>
+        <div style="background:#4a0e72;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px">⚙️ Responsable des Opérations → consignes et pilotage global</div>
+        <div style="background:#1a237e;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:20px">🏙️ Responsable de Ville (RV) → reçoit les consignes, pilote les équipes terrain</div>
+        <div style="background:#3949ab;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:40px">👥 Superviseur → encadre 15 à 20 agents identificateurs</div>
+        <div style="background:#5c6bc0;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:60px">👥 15 à 20 Agents (AI) → identification et enrôlement îlot par îlot</div>
+        <div style="background:#8D0C23;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:20px">🗺️ Responsable Cartographie → coordination technique</div>
+        <div style="background:#b71c1c;color:white;padding:10px 16px;border-radius:8px;font-weight:700;font-size:13px;margin-left:40px">🔍 Inspecteur → contrôle qualité et contre-enquêtes (rattaché au Resp. Cartographie)</div>
       </div>
     </div>
 
@@ -4418,9 +4516,9 @@ function enterFormation() {
         <tr><td>Avoir un langage rassurant, respectueux et adapté</td><td>Déléguer ses fonctions à une autre personne</td></tr>
         <tr><td>Respecter les coutumes et pratiques religieuses locales</td><td>Travailler hors de son îlot ou de sa ZD assignée</td></tr>
         <tr><td>Faire preuve de patience et d'habileté dans la conduite des entretiens</td><td>Saisir des renseignements faux, fantaisistes ou invraisemblables</td></tr>
-        <tr><td>Remonter tout problème au chef d'équipe immédiatement</td><td>Communiquer ou commenter les renseignements collectés</td></tr>
+        <tr><td>Remonter tout problème au superviseur immédiatement</td><td>Communiquer ou commenter les renseignements collectés</td></tr>
         <tr><td>Décliner poliment toute offre de boissons alcooliques</td><td>Être agressif ou menacer les répondants</td></tr>
-        <tr><td>Informer le chef d'équipe en cas de maladie ou absence</td><td>Avoir des discussions sans rapport avec la mission</td></tr>
+        <tr><td>Informer le superviseur en cas de maladie ou absence</td><td>Avoir des discussions sans rapport avec la mission</td></tr>
       </tbody>
     </table>
 
@@ -4435,10 +4533,10 @@ function enterFormation() {
       <ul style="margin:8px 0 0;padding-left:18px;line-height:2.2;color:#374151">
         <li>Assister régulièrement à toutes les séances de formation</li>
         <li>S'approprier les documents de référence remis à la prise de poste</li>
-        <li>Soumettre régulièrement les données collectées au contrôle du chef d'équipe</li>
-        <li>Répondre à toute convocation du chef d'équipe sans délai</li>
+        <li>Soumettre régulièrement les données collectées au contrôle du superviseur</li>
+        <li>Répondre à toute convocation du superviseur sans délai</li>
         <li>Toute permission doit être demandée formellement — <strong>maximum 2 jours</strong></li>
-        <li>En cas de réticence d'un entrepreneur, faire appel au chef d'équipe</li>
+        <li>En cas de réticence d'un entrepreneur, faire appel au superviseur</li>
       </ul>
     </div>
 
@@ -4488,12 +4586,12 @@ function enterFormation() {
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0">
       <div class="db-card" style="background:linear-gradient(135deg,#1a237e,#283593);color:white;padding:20px;border-radius:14px;text-align:center">
-        <div style="font-size:28px;font-weight:800">200 000 F</div>
-        <div style="font-size:12px;margin-top:6px;opacity:0.9">Salaire fixe mensuel<br>(26 jours — 15 fiches/jour validées)</div>
+        <div style="font-size:28px;font-weight:800">100 000 F</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.9">Salaire fixe mensuel<br>(Garanti — part fixe)</div>
       </div>
       <div class="db-card" style="background:linear-gradient(135deg,#2E7D32,#388E3C);color:white;padding:20px;border-radius:14px;text-align:center">
-        <div style="font-size:28px;font-weight:800">40 000 F</div>
-        <div style="font-size:12px;margin-top:6px;opacity:0.9">Prime qualitative MAFA<br>(≥15 fiches/j + présence ≥90%)</div>
+        <div style="font-size:28px;font-weight:800">100 000 F</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.9">Part variable (max)<br>(Définie par % d'atteinte des objectifs)</div>
       </div>
       <div class="db-card" style="background:linear-gradient(135deg,#E65100,#F57C00);color:white;padding:20px;border-radius:14px;text-align:center">
         <div style="font-size:28px;font-weight:800">15 fiches</div>
@@ -4503,19 +4601,221 @@ function enterFormation() {
 
     <table class="styled-table">
       <thead>
-        <tr><th>Scénario</th><th>Salaire fixe</th><th>Prime</th><th>Total</th></tr>
+        <tr><th>Scénario (26 jours)</th><th>Salaire fixe</th><th>Part variable</th><th>Total</th></tr>
       </thead>
       <tbody>
-        <tr style="background:#e8f5e9"><td><strong>26 jours — objectifs atteints</strong></td><td>200 000 F</td><td>40 000 F</td><td><strong>240 000 F</strong></td></tr>
-        <tr><td>26 jours — objectifs non atteints</td><td>200 000 F</td><td>0 F</td><td>200 000 F</td></tr>
-        <tr style="background:#e8f5e9"><td><strong>16 jours — objectifs atteints</strong></td><td>123 076 F</td><td>40 000 F</td><td><strong>163 076 F</strong></td></tr>
-        <tr><td>16 jours — objectifs non atteints</td><td>123 076 F</td><td>0 F</td><td>123 076 F</td></tr>
+        <tr style="background:#e8f5e9"><td><strong>100% objectif atteint</strong></td><td>100 000 F</td><td>100 000 F</td><td><strong>200 000 F</strong></td></tr>
+        <tr><td>75% objectif atteint</td><td>100 000 F</td><td>75 000 F</td><td>175 000 F</td></tr>
+        <tr><td>50% objectif atteint</td><td>100 000 F</td><td>50 000 F</td><td>150 000 F</td></tr>
+        <tr><td>0% objectif atteint</td><td>100 000 F</td><td>0 F</td><td>100 000 F</td></tr>
       </tbody>
     </table>
 
     <div class="alert alert-info">
       <div class="alert-icon">💡</div>
-      <div class="alert-text"><strong>Important :</strong> La validation des fiches est effectuée par le Back Office. Une fiche mal remplie, incomplète ou contenant des informations fantaisistes ne compte pas dans le quota journalier. La présence effective doit être ≥ 90% pour bénéficier de la prime qualitative.</div>
+      <div class="alert-text"><strong>Important :</strong> La validation des fiches est effectuée par le Back Office. Une fiche mal remplie ou incomplète ne compte pas dans le quota journalier. La part variable (100 000 F maximum) est calculée au prorata du pourcentage d'atteinte de l'objectif de 15 fiches/jour.</div>
+    </div>
+
+    <!-- S10 -->
+    <div class="section-heading">
+      <div class="section-num">10</div>
+      <h2>Organigramme terrain — Qui fait quoi ?</h2>
+    </div>
+
+    <div class="info-card" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);border-left:4px solid #3949ab">
+      <p style="color:#1a237e;margin:0">Chaque agent terrain s'inscrit dans une chaîne de commandement précise. Connaître la hiérarchie permet de savoir à qui rendre compte, qui peut décider et comment remonter un problème.</p>
+    </div>
+
+    <div style="overflow-x:auto;margin:18px 0">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0;min-width:560px">
+
+        <!-- Responsable des Operations -->
+        <div style="background:linear-gradient(135deg,#4a0e72,#2d0048);color:white;padding:14px 36px;border-radius:12px;font-weight:700;font-size:14px;text-align:center;box-shadow:0 4px 16px rgba(74,14,114,.35)">
+          ⚙️ RESPONSABLE DES OPÉRATIONS<br><span style="font-size:11px;font-weight:400;opacity:.85">Stratégie · Pilotage global · Consignes terrain</span>
+        </div>
+
+        <!-- Deux branches -->
+        <div style="display:flex;width:100%;justify-content:center;gap:60px;margin-top:0">
+
+          <!-- BRANCHE GAUCHE : RV -> Superviseurs -->
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div style="width:2px;height:22px;background:#CF9E41;opacity:.6"></div>
+            <div style="background:linear-gradient(135deg,#CF9E41,#a07a28);color:white;padding:14px 24px;border-radius:12px;font-weight:700;font-size:13px;text-align:center;box-shadow:0 4px 16px rgba(207,158,65,.3)">
+              🏙️ RESPONSABLE DE VILLE (RV)<br><span style="font-size:11px;font-weight:400;opacity:.9">Reçoit les consignes · Brief/Debrief · Matériel</span>
+            </div>
+            <div style="width:2px;height:22px;background:#CF9E41;opacity:.5"></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+              <div style="background:linear-gradient(135deg,#1565C0,#0d47a1);color:white;padding:12px 14px;border-radius:10px;font-weight:600;font-size:12px;text-align:center;min-width:110px">
+                👥 SUPERVISEUR 1<br><span style="font-size:10px;opacity:.85">15 à 20 agents</span>
+              </div>
+              <div style="background:linear-gradient(135deg,#1565C0,#0d47a1);color:white;padding:12px 14px;border-radius:10px;font-weight:600;font-size:12px;text-align:center;min-width:110px">
+                👥 SUPERVISEUR 2<br><span style="font-size:10px;opacity:.85">15 à 20 agents</span>
+              </div>
+              <div style="background:linear-gradient(135deg,#1565C0,#0d47a1);color:white;padding:12px 14px;border-radius:10px;font-weight:600;font-size:12px;text-align:center;min-width:110px">
+                👥 SUPERVISEUR 3<br><span style="font-size:10px;opacity:.85">15 à 20 agents</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- BRANCHE DROITE : Resp. Cartographie -> Inspecteurs -->
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <div style="width:2px;height:22px;background:#8D0C23;opacity:.5"></div>
+            <div style="background:linear-gradient(135deg,#5A0815,#3d0510);color:white;padding:14px 24px;border-radius:12px;font-weight:700;font-size:13px;text-align:center;box-shadow:0 4px 16px rgba(90,8,21,.3)">
+              🗺️ RESPONSABLE CARTOGRAPHIE<br><span style="font-size:11px;font-weight:400;opacity:.85">Coordination technique · Suivi cartographique</span>
+            </div>
+            <div style="width:2px;height:22px;background:#8D0C23;opacity:.4"></div>
+            <div style="background:linear-gradient(135deg,#8D0C23,#5A0815);color:white;padding:14px 24px;border-radius:12px;font-weight:700;font-size:13px;text-align:center;box-shadow:0 4px 16px rgba(141,12,35,.3)">
+              🔍 INSPECTEUR<br><span style="font-size:11px;font-weight:400;opacity:.85">Contrôle qualité · Contre-enquêtes · Tracking GPS</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card" style="background:#F3EDD8;border-left:4px solid #CF9E41">
+      <p style="margin:0;color:#584B26"><strong>📐 Règle de composition des équipes :</strong> Chaque équipe terrain = 1 Superviseur + 15 à 20 agents identificateurs = <strong>16 à 21 personnes</strong>. Un RV supervise en moyenne <strong>3 équipes</strong>, soit 50 à 65 personnes au total. Les équipes sillonnent les îlots <em>ensemble</em> pour éviter les dispersions et garantir l'encadrement.</p>
+    </div>
+
+    <table class="styled-table">
+      <thead>
+        <tr><th>Rôle</th><th>Responsabilités principales</th><th>Rend compte à</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>🔍 Inspecteur</strong></td><td>Supervision technique, vérification qualité des données, missions terrain, contrôles inopinés</td><td>Responsable Cartographie</td></tr>
+        <tr><td><strong>🏙️ Responsable de Ville (RV)</strong></td><td>Brief/Debrief quotidien, suivi présences, gestion matériel, rapports CE, planification zones</td><td>Responsable des Operations</td></tr>
+        <tr><td><strong>👥 Superviseur</strong></td><td>Attribution des îlots, contrôle des fiches collectées, gestion des incidents de terrain</td><td>RV</td></tr>
+        <tr><td><strong>🧑 Agent identificateur</strong></td><td>Collecte des fiches entrepreneurs, îlot par îlot, bâtiment par bâtiment</td><td>Superviseur</td></tr>
+      </tbody>
+    </table>
+
+    <!-- S11 -->
+    <div class="section-heading">
+      <div class="section-num">11</div>
+      <h2>Le Responsable de Ville (RV) — Missions &amp; tâches</h2>
+    </div>
+
+    <div class="info-card" style="background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-left:4px solid #CF9E41">
+      <p style="margin:0;color:#5D4037">Le Responsable de Ville est le <strong>pilier opérationnel</strong> du terrain. Il est l'interface directe entre le Responsable des Opérations et les équipes de Superviseurs. Sa capacité à planifier, communiquer et contrôler détermine directement la qualité et la productivité de toute la ville.</p>
+    </div>
+
+    <h3 style="color:#8D0C23;margin:20px 0 10px">🎯 Missions fondamentales du RV</h3>
+
+    <table class="styled-table">
+      <thead>
+        <tr><th>Mission</th><th>Contenu détaillé</th><th>Fréquence</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>📋 Contrôle &amp; suivi des travaux</strong></td>
+          <td>Inspection régulière de la qualité et de l'exhaustivité des données collectées. Identification et résolution des anomalies. Contre-enquêtes et contrôles inopinés dans les localités visitées.</td>
+          <td>Quotidienne</td>
+        </tr>
+        <tr>
+          <td><strong>📅 Planification &amp; organisation</strong></td>
+          <td>Élaboration des plannings hebdomadaires et quotidiens. Coordination entre équipes pour éviter retards et doublons. Reconnaissance préalable des zones de dénombrement (ZD) avec les Superviseurs.</td>
+          <td>Hebdomadaire + Journalière</td>
+        </tr>
+        <tr>
+          <td><strong>👥 Gestion des équipes</strong></td>
+          <td>Organisation des <strong>briefs matinaux</strong> et <strong>debriefs du soir</strong>. Suivi des présences et absences. Renseigner le fichier RH dans les délais. Favoriser la communication et la cohésion.</td>
+          <td>Quotidienne</td>
+        </tr>
+        <tr>
+          <td><strong>📊 Suivi des performances</strong></td>
+          <td>Analyse des KPIs : productivité, respect des délais, taux de validation. Mise en place de plans d'amélioration. Rapport hebdomadaire des Superviseurs (rapport CE).</td>
+          <td>Quotidienne + Hebdomadaire</td>
+        </tr>
+        <tr>
+          <td><strong>🖥️ Outils &amp; systèmes</strong></td>
+          <td>Création et gestion des accès utilisateurs (backend). Requêtes BI pour le suivi de données. Utilisation de la cartographie Google Earth pour localiser les équipes et optimiser les itinéraires.</td>
+          <td>Selon besoins</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:#8D0C23;margin:20px 0 10px">📦 Livrables obligatoires du RV</h3>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:12px 0 18px">
+      <div class="info-card" style="background:#E8F5E9;border-left:4px solid #388E3C;padding:14px">
+        <h3 style="color:#1B5E20;margin:0 0 6px;font-size:13px">📋 Fiche de présence</h3>
+        <p style="color:#2E7D32;font-size:12px;margin:0">Collecte quotidienne, validation et archivage. Garantit la transparence terrain.</p>
+      </div>
+      <div class="info-card" style="background:#E3F2FD;border-left:4px solid #1976D2;padding:14px">
+        <h3 style="color:#0D47A1;margin:0 0 6px;font-size:13px">📱 Gestion du matériel</h3>
+        <p style="color:#1565C0;font-size:12px;margin:0">Suivi FAMOCO, cartes SIM, tablettes, accessoires. Inventaire, mouvement de stock, rapports de panne.</p>
+      </div>
+      <div class="info-card" style="background:#FFF3E0;border-left:4px solid #E65100;padding:14px">
+        <h3 style="color:#BF360C;margin:0 0 6px;font-size:13px">📝 Rapport des CE</h3>
+        <p style="color:#E64A19;font-size:12px;margin:0">Format standardisé : avancées, problèmes rencontrés, suggestions. Soumis hebdomadairement ou selon besoins.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">🔑</div>
+      <div class="alert-text"><strong>Brief &amp; Debrief — Rituels quotidiens du RV :</strong><br>
+        <strong>Brief matinal (7h30)</strong> : point sécurité, distribution îlots, rappel objectifs du jour, vérification matériel.<br>
+        <strong>Debrief du soir</strong> : remontée des difficultés rencontrées, comptage fiches collectées, incidents à signaler à l'Inspecteur.
+      </div>
+    </div>
+
+    <!-- S12 -->
+    <div class="section-heading">
+      <div class="section-num">12</div>
+      <h2>L'Inspecteur — Supervision &amp; contrôle qualité</h2>
+    </div>
+
+    <div class="info-card" style="background:linear-gradient(135deg,#F9E8EC,#F2D6DC);border-left:4px solid #8D0C23">
+      <p style="color:#5A0815;margin:0">L'Inspecteur est le garant de la <strong>qualité et de la méthodologie</strong>. Son autorité couvre l'ensemble des opérations terrain de sa ville ou zone. Il reçoit les remontées des RV, effectue des missions de supervision et traite les situations complexes.</p>
+    </div>
+
+    <h3 style="color:#8D0C23;margin:20px 0 10px">🔍 Responsabilités clés de l'Inspecteur</h3>
+
+    <table class="styled-table">
+      <thead>
+        <tr><th>Responsabilité</th><th>Actions concrètes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>✅ Vérification qualité des données</strong></td>
+          <td>Contrôle régulier de l'exhaustivité et de la cohérence des données collectées par les agents. Évaluation quotidienne de la couverture de la zone.</td>
+        </tr>
+        <tr>
+          <td><strong>🎓 Supervision technique</strong></td>
+          <td>Missions d'encadrement technique pour veiller au respect de la méthodologie du dénombrement. Formation terrain et coaching des RV et Superviseurs.</td>
+        </tr>
+        <tr>
+          <td><strong>🚨 Contrôles inopinés</strong></td>
+          <td>Visites surprises sur le terrain pour évaluer le respect des procédures. Traitement des objections complexes et situations difficiles identifiées par les équipes.</td>
+        </tr>
+        <tr>
+          <td><strong>📈 Suivi de la performance globale</strong></td>
+          <td>Analyse des indicateurs de toute la ville. Identification des équipes ou zones sous-performantes. Coordination avec le Responsable des opérations MAFA.</td>
+        </tr>
+        <tr>
+          <td><strong>🔄 Interface hiérarchique</strong></td>
+          <td>Reçoit les rapports des RV, les consolide et les remonte à la Direction des opérations. Transmet les consignes et décisions stratégiques vers les équipes.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-text">
+        <strong>À retenir — Différence RV / Inspecteur :</strong><br>
+        Le <strong>RV</strong> gère le quotidien opérationnel (présences, matériel, briefs). L'<strong>Inspecteur</strong> supervise la qualité et la méthodologie. Tout problème terrain non résolu par le RV remonte obligatoirement à l'Inspecteur avant d'aller à la direction.
+      </div>
+    </div>
+
+    <div class="info-card" style="background:#f3e5f5;border-left:4px solid #7b1fa2">
+      <h3 style="color:#4a148c;margin:0 0 10px">📌 La reconnaissance préalable des zones — Rôle conjoint RV &amp; Inspecteur</h3>
+      <p style="color:#4a148c;margin:0;line-height:1.8">Avant le démarrage des activités terrain, l'Inspecteur et le RV effectuent ensemble la <strong>reconnaissance de la Zone de Dénombrement (ZD)</strong>. Cette étape est obligatoire : elle permet :</p>
+      <ul style="margin:8px 0 0;padding-left:18px;color:#6a1b9a;line-height:2">
+        <li>D'attribuer à chaque Superviseur ses îlots de travail</li>
+        <li>D'identifier les zones difficiles d'accès ou sensibles</li>
+        <li>D'optimiser les itinéraires pour éviter les redondances</li>
+        <li>De valider la cartographie avec les autorités locales si nécessaire</li>
+      </ul>
     </div>
 
   </div><!-- fin tab-m0-cours -->
@@ -4571,10 +4871,116 @@ function enterFormation() {
         </table>
         <div class="alert alert-warn" style="margin-top:14px">
           <div class="alert-icon">⚠️</div>
-          <div class="alert-text"><strong>Rappel :</strong> Le salaire fixe est proratisé sur 26 jours. La prime qualitative (40 000 F) n'est accordée que si ≥ 15 fiches/jour ET présence ≥ 90%.</div>
+          <div class="alert-text"><strong>Rappel :</strong> Le salaire fixe est de 100 000 F (garanti). La part variable (100 000 F max) est calculée selon le % d'atteinte de l'objectif de 15 fiches/jour.</div>
         </div>
       </div>
     </div>
+
+    <!-- ── Exercices RV & Inspecteur ── -->
+    <div style="margin:24px 0 12px">
+      <div style="background:linear-gradient(135deg,#CF9E41,#a07a28);color:white;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:700;display:inline-block">
+        🏙️ Exercices — Responsable de Ville (RV) &amp; Inspecteur
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <div class="exo-header">
+        <span class="exo-num">Exercice 3</span>
+        <span class="exo-title">Préparer et animer un Brief matinal (Rôle : RV)</span>
+      </div>
+      <div class="exo-body">
+        <p><strong>Contexte :</strong> Vous êtes Responsable de Ville. Il est <strong>7h25</strong>. Vos 3 équipes (30 agents) se rassemblent avant le départ terrain. Vous disposez de <strong>10 minutes maximum</strong> pour le brief.</p>
+        <p style="margin-top:10px"><strong>Votre tâche :</strong> Rédigez la liste structurée des points à couvrir dans votre brief matinal, en vous appuyant sur les 4 missions fondamentales du RV vues en cours.</p>
+
+        <div style="background:#FFF8E1;border-radius:10px;padding:16px;margin-top:14px;border:1px solid #FFD54F">
+          <p style="font-size:13px;color:#5D4037;font-weight:700;margin:0 0 10px">Structure suggérée du Brief (à compléter) :</p>
+          <table class="styled-table" style="font-size:12.5px">
+            <thead>
+              <tr><th style="width:28%">Thème</th><th>Ce que vous devez dire / vérifier</th><th style="width:20%">Durée</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>🔐 Sécurité &amp; consignes</strong></td><td style="color:#aaa;font-style:italic">À remplir…</td><td>1 min</td></tr>
+              <tr><td><strong>📍 Attribution des zones</strong></td><td style="color:#aaa;font-style:italic">À remplir…</td><td>3 min</td></tr>
+              <tr><td><strong>🎯 Objectifs du jour</strong></td><td style="color:#aaa;font-style:italic">À remplir…</td><td>2 min</td></tr>
+              <tr><td><strong>📱 Vérification matériel</strong></td><td style="color:#aaa;font-style:italic">À remplir…</td><td>2 min</td></tr>
+              <tr><td><strong>❓ Questions / Problèmes</strong></td><td style="color:#aaa;font-style:italic">À remplir…</td><td>2 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="alert alert-info" style="margin-top:14px">
+          <div class="alert-icon">💡</div>
+          <div class="alert-text"><strong>Situation imprévue :</strong> Lors du brief, un Superviseur vous informe que 2 FAMOCO de son équipe ne fonctionnent plus. Quelle est votre démarche immédiate ? Répondez en 3 étapes maximum.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <div class="exo-header">
+        <span class="exo-num">Exercice 4</span>
+        <span class="exo-title">Rapport de fin de journée &amp; gestion du matériel (Rôle : RV)</span>
+      </div>
+      <div class="exo-body">
+        <p><strong>Contexte :</strong> C'est la fin d'une journée de terrain. Vous devez remplir le <strong>Rapport quotidien CE</strong> et vérifier l'état du matériel de vos 3 équipes avant de le soumettre à l'Inspecteur.</p>
+
+        <p style="margin-top:10px"><strong>Données brutes de la journée :</strong></p>
+        <table class="styled-table" style="font-size:12.5px;margin-top:8px">
+          <thead>
+            <tr><th>Équipe</th><th>Agents présents / 10</th><th>Fiches collectées</th><th>FAMOCO fonctionnels / 10</th><th>Incidents signalés</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Équipe 1 (CE Kouadio)</td><td>10 / 10</td><td>162</td><td>9 / 10</td><td>1 FAMOCO bloqué</td></tr>
+            <tr><td>Équipe 2 (CE Bamba)</td><td>8 / 10</td><td>104</td><td>10 / 10</td><td>2 absences non justifiées</td></tr>
+            <tr><td>Équipe 3 (CE Touré)</td><td>10 / 10</td><td>155</td><td>10 / 10</td><td>Entrepreneur agressif — intervention CE</td></tr>
+          </tbody>
+        </table>
+
+        <p style="margin-top:16px;font-weight:700">Vos tâches :</p>
+        <ol style="line-height:2.2;font-size:13px;padding-left:18px">
+          <li>Calculez le <strong>nombre moyen de fiches par agent présent</strong> pour chaque équipe. Laquelle est en dessous de l'objectif de 15 fiches/agent ?</li>
+          <li>Pour l'équipe 2 : que faites-vous par rapport aux 2 absences non justifiées ? (référez-vous au rôle du RV vu en cours)</li>
+          <li>Rédigez en 5 lignes maximum le <strong>message WhatsApp</strong> que vous envoyez à l'Inspecteur pour résumer la journée.</li>
+        </ol>
+
+        <div class="alert alert-warn" style="margin-top:14px">
+          <div class="alert-icon">📱</div>
+          <div class="alert-text"><strong>Matériel à surveiller :</strong> FAMOCO · Cartes SIM · Tablettes · Chargeurs · Documents cartographiques. Tout matériel manquant, cassé ou perdu doit être signalé dans le rapport du jour avec les circonstances.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exo-card">
+      <div class="exo-header">
+        <span class="exo-num">Exercice 5</span>
+        <span class="exo-title">Contrôle qualité inopinée — Mise en situation Inspecteur</span>
+      </div>
+      <div class="exo-body">
+        <p><strong>Contexte :</strong> Vous êtes Inspecteur. En effectuant un contrôle inopinée dans le quartier attribué à l'Équipe 2, vous constatez les faits suivants :</p>
+
+        <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:14px;margin:12px 0">
+          <ul style="margin:0;padding-left:18px;line-height:2.2;font-size:13px;color:#7f1d1d">
+            <li>Deux agents travaillent <strong>en dehors de leur îlot assigné</strong></li>
+            <li>Un agent collecte des informations supplémentaires non prévues dans le formulaire</li>
+            <li>Le Superviseur n'est pas sur place — il est dans un café à 500 m</li>
+            <li>3 fiches des 10 dernières remplies présentent des <strong>données incohérentes</strong> (coordonnées GPS identiques, noms fantaisistes)</li>
+          </ul>
+        </div>
+
+        <p style="margin-top:12px;font-weight:700">Vos tâches :</p>
+        <ol style="line-height:2.2;font-size:13px;padding-left:18px">
+          <li>Pour chaque fait constaté, identifiez la <strong>règle violée</strong> en vous appuyant sur les obligations professionnelles vues en cours (Section 7).</li>
+          <li>Quelles sont les <strong>3 actions immédiates</strong> que vous prenez sur le terrain ?</li>
+          <li>Que remontez-vous au Responsable des opérations MAFA ? Précisez le format du rapport (verbal, écrit, délai).</li>
+          <li><strong>Bonus :</strong> Comment le RV de cette ville aurait-il pu éviter cette situation ? Proposez 2 mesures préventives concrètes.</li>
+        </ol>
+
+        <div class="alert alert-info" style="margin-top:14px">
+          <div class="alert-icon">📌</div>
+          <div class="alert-text"><strong>Rappel :</strong> Les pratiques interdites ont une <strong>tolérance zéro</strong>. Tout manquement identifié lors d'un contrôle inopinée doit être documenté avec : date, heure, lieu, identité des agents concernés et nature de l'infraction.</div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- fin tab-m0-exo -->
 
   <!-- ═══ QUIZ ═══ -->
@@ -4646,12 +5052,12 @@ function enterFormation() {
     <!-- Q5 -->
     <div class="quiz-question-block" id="m0-q5">
       <div class="quiz-q-num">Question 5 / 20</div>
-      <div class="quiz-q-text">Quel est le montant du salaire fixe mensuel d'un agent (26 jours complets) ?</div>
+      <div class="quiz-q-text">Quel est le montant du salaire fixe mensuel d'un agent identificateur ?</div>
       <div class="quiz-options">
-        <div class="quiz-option" onclick="answerM0(this,'q5',false,'150 000 F n\'est pas le salaire fixe dans la grille de rémunération.')"><span class="option-letter">A</span> 150 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q5',true,'Correct ! Le salaire fixe est de 200 000 FCFA pour 26 jours de travail avec minimum 15 fiches validées par jour.')"><span class="option-letter">B</span> 200 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q5',false,'240 000 F est le total fixe + prime, pas le salaire fixe seul.')"><span class="option-letter">C</span> 240 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q5',false,'250 000 F ne correspond pas à la grille de rémunération.')"><span class="option-letter">D</span> 250 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q5',true,'Correct ! Le salaire fixe est de 100 000 FCFA — garanti chaque mois, indépendamment des objectifs.')"><span class="option-letter">A</span> 100 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q5',false,'150 000 F n\'est pas le salaire fixe dans la grille de rémunération.')"><span class="option-letter">B</span> 150 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q5',false,'200 000 F est le total maximum (fixe + variable 100%) — pas le fixe seul.')"><span class="option-letter">C</span> 200 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q5',false,'250 000 F est le salaire total des inspecteurs et superviseurs, pas des agents.')"><span class="option-letter">D</span> 250 000 FCFA</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q5"></div>
     </div>
@@ -4672,12 +5078,12 @@ function enterFormation() {
     <!-- Q7 -->
     <div class="quiz-question-block" id="m0-q7">
       <div class="quiz-q-num">Question 7 / 20</div>
-      <div class="quiz-q-text">Quel est le montant de la prime qualitative MAFA ?</div>
+      <div class="quiz-q-text">Quel est le montant maximum de la part variable d'un agent identificateur ?</div>
       <div class="quiz-options">
-        <div class="quiz-option" onclick="answerM0(this,'q7',false,'20 000 F n\'est pas le montant de la prime qualitative.')"><span class="option-letter">A</span> 20 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q7',false,'30 000 F n\'est pas le montant de la prime qualitative.')"><span class="option-letter">B</span> 30 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q7',true,'Correct ! La prime qualitative est de 40 000 FCFA, accordée si minimum 15 fiches/j validées + présence effective ≥ 90%.')"><span class="option-letter">C</span> 40 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q7',false,'50 000 F est supérieur au montant réel de la prime qualitative.')"><span class="option-letter">D</span> 50 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q7',false,'40 000 F est l\'ancien montant — la grille a été mise à jour.')"><span class="option-letter">A</span> 40 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q7',false,'75 000 F n\'est pas le maximum de la part variable agent.')"><span class="option-letter">B</span> 75 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q7',true,'Correct ! La part variable est de 100 000 FCFA maximum, calculée au prorata du % d\'atteinte de l\'objectif de 15 fiches/jour.')"><span class="option-letter">C</span> 100 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q7',false,'150 000 F est la part variable des inspecteurs et superviseurs, pas des agents.')"><span class="option-letter">D</span> 150 000 FCFA</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q7"></div>
     </div>
@@ -4716,7 +5122,7 @@ function enterFormation() {
         <div class="quiz-option" onclick="answerM0(this,'q10',false,'Valider les dossiers est le rôle du Back Office, pas du Call Center.')"><span class="option-letter">A</span> Valider et rejeter les dossiers entrepreneurs</div>
         <div class="quiz-option" onclick="answerM0(this,'q10',false,'Le Call Center ne se rend pas sur le terrain — c\'est le rôle des agents identificateurs.')"><span class="option-letter">B</span> Effectuer des visites terrain îlot par îlot</div>
         <div class="quiz-option" onclick="answerM0(this,'q10',true,'Correct ! L\'agent Call Center contacte les entrepreneurs par téléphone via Connectel pour vérifier et mettre à jour leurs informations.')"><span class="option-letter">C</span> Contacter les entrepreneurs par téléphone pour vérifier et mettre à jour leurs informations</div>
-        <div class="quiz-option" onclick="answerM0(this,'q10',false,'La supervision des équipes terrain est le rôle du Responsable de Ville ou du Chef d\'équipe.')"><span class="option-letter">D</span> Superviser les équipes terrain sur le terrain</div>
+        <div class="quiz-option" onclick="answerM0(this,'q10',false,'La supervision des équipes terrain est le rôle du Responsable de Ville ou du Superviseur.')"><span class="option-letter">D</span> Superviser les équipes terrain sur le terrain</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q10"></div>
     </div>
@@ -4766,7 +5172,7 @@ function enterFormation() {
       <div class="quiz-q-text">Laquelle de ces pratiques est formellement interdite et sanctionnable ?</div>
       <div class="quiz-options">
         <div class="quiz-option" onclick="answerM0(this,'q14',false,'Porter son badge est obligatoire — ce n\'est pas interdit.')"><span class="option-letter">A</span> Porter son badge lors des visites terrain</div>
-        <div class="quiz-option" onclick="answerM0(this,'q14',false,'Remonter les problèmes est une obligation professionnelle.')"><span class="option-letter">B</span> Remonter les problèmes au chef d'équipe</div>
+        <div class="quiz-option" onclick="answerM0(this,'q14',false,'Remonter les problèmes est une obligation professionnelle.')"><span class="option-letter">B</span> Remonter les problèmes au superviseur</div>
         <div class="quiz-option" onclick="answerM0(this,'q14',true,'Correct ! Déléguer ses fonctions à une autre personne est formellement interdit — tolérance zéro.')"><span class="option-letter">C</span> Déléguer ses fonctions à une autre personne</div>
         <div class="quiz-option" onclick="answerM0(this,'q14',false,'Décliner poliment les boissons alcooliques est une règle à respecter.')"><span class="option-letter">D</span> Décliner poliment les offres de boissons alcooliques</div>
       </div>
@@ -4913,6 +5319,12 @@ function enterFormation() {
       <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m1','quiz')">✅ Quiz</button>
       <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m1','resultats')">📊 Résultats</button>
     </div>
+    <div class="dl-bar">
+      <span class="dl-bar-label">📥 Télécharger :</span>
+      <button class="dl-btn dl-pdf"  onclick="exportPDF('m1','M1_CallCenter_ID30','Call Center ID30 &amp; Orange Money')">📄 PDF</button>
+      <button class="dl-btn dl-word" onclick="exportWord('m1','M1_CallCenter_ID30','Call Center ID30 &amp; Orange Money')">📝 Word</button>
+      <button class="dl-btn dl-pptx" onclick="exportPPTX('m1','M1_CallCenter_ID30','Call Center ID30 &amp; Orange Money')">🖥️ PowerPoint</button>
+    </div>
 
     <!-- Contenu -->
     <div class="module-content-scroll">
@@ -4957,7 +5369,7 @@ function enterFormation() {
           <li>Appeler les entrepreneurs <strong>en amont</strong> des visites terrain pour prendre des rendez-vous</li>
           <li>Corriger directement les dossiers par téléphone si l'entrepreneur fournit les informations</li>
           <li>Vérifier et mettre à jour les informations de localisation (déplacements suite aux déguerpisements)</li>
-          <li>Atteindre l'objectif quotidien de <strong>15 fiches validées minimum</strong> par agent</li>
+          <li>Atteindre l'objectif quotidien de <strong>80 appels sortants minimum</strong> par agent</li>
           <li>Travailler via <strong>Connectel</strong> — système CRM avec validation à 3 niveaux</li>
         </ul>
       </div>
@@ -5085,8 +5497,8 @@ function enterFormation() {
 
       <div class="kpi-grid">
         <div class="kpi-card">
-          <div class="kpi-val">15</div>
-          <div class="kpi-unit">fiches/jour</div>
+          <div class="kpi-val">80</div>
+          <div class="kpi-unit">appels/jour</div>
           <div class="kpi-label">Objectif quotidien minimum</div>
         </div>
         <div class="kpi-card">
@@ -5124,7 +5536,7 @@ function enterFormation() {
 
       <div class="alert alert-success">
         <div class="alert-icon">✅</div>
-        <div class="alert-text"><strong>Rappel final :</strong> Un agent performant respecte le script, gère les objections avec empathie, complète les dossiers avec précision, et atteint 15 fiches validées par jour avec un score qualité ≥ 85%.</div>
+        <div class="alert-text"><strong>Rappel final :</strong> Un agent performant respecte le script, gère les objections avec empathie, complète les dossiers avec précision, et atteint <strong>80 appels sortants par jour minimum</strong> avec un score qualité ≥ 85%.</div>
       </div>
 
       <!-- ═══════════════════════════════════════════════════════════
@@ -5138,7 +5550,7 @@ function enterFormation() {
 
       <div class="alert alert-info">
         <div class="alert-icon">📌</div>
-        <div class="alert-text"><strong>Deuxième mission du Call Center MAFA :</strong> En plus de l'activité ID30, les agents CC MAFA contactent les marchands Orange Money Business à <strong>J+2 de leur enrôlement</strong> pour s'assurer que tout se passe bien.</div>
+        <div class="alert-text"><strong>Deuxième mission du Call Center Crystal Solution :</strong> En plus de l'activité ID30, les agents CC Crystal Solution contactent les marchands Orange Money Business à <strong>J+2 de leur enrôlement</strong> pour s'assurer que tout se passe bien.</div>
       </div>
 
       <div class="card">
@@ -5218,7 +5630,7 @@ function enterFormation() {
           <div style="border-left:4px solid #2E7D32;padding:12px 16px;background:#F1F8E9;border-radius:0 10px 10px 0">
             <div style="font-size:12px;font-weight:700;color:#2E7D32;margin-bottom:8px">ÉTAPE 1 — Ouverture</div>
             <div class="script-box" style="margin:0">
-              <p>« Bonjour, je suis <em>[Prénom]</em> de l'équipe MAFA, partenaire Orange Money. Est-ce que je parle bien à <em>[Nom du marchand]</em> ? »</p>
+              <p>« Bonjour, je suis <em>[Prénom]</em> de Crystal Solution, partenaire Orange Money. Est-ce que je parle bien à <em>[Nom du marchand]</em> ? »</p>
               <p style="margin-top:8px"><em>Marchand confirme son identité →</em> « Bonjour <em>[Prénom du marchand]</em> ! Je vous appelle aujourd'hui pour m'assurer que tout se passe bien avec votre compte Orange Money Business depuis votre enrôlement le <em>[date d'enrôlement]</em>. Vous avez quelques minutes ? »</p>
               <div class="script-note">⚠️ Après que le marchand a confirmé son identité, ne pas le saluer une deuxième fois avant de continuer.<br>💡 Si non disponible : « Pas de problème, quand puis-je vous rappeler ? »</div>
             </div>
@@ -5269,7 +5681,7 @@ function enterFormation() {
           <div style="border-left:4px solid #E65100;padding:12px 16px;background:#FFF3E0;border-radius:0 10px 10px 0">
             <div style="font-size:12px;font-weight:700;color:#E65100;margin-bottom:8px">ÉTAPE 1 — Ouverture</div>
             <div class="script-box" style="margin:0">
-              <p>« Bonjour, je suis <em>[Prénom]</em> de l'équipe MAFA, partenaire Orange Money. Est-ce que je parle bien à <em>[Nom du marchand]</em> ? »</p>
+              <p>« Bonjour, je suis <em>[Prénom]</em> de Crystal Solution, partenaire Orange Money. Est-ce que je parle bien à <em>[Nom du marchand]</em> ? »</p>
               <p style="margin-top:8px">« Bonjour <em>[Prénom]</em> ! Je vous appelle car nous avons remarqué que votre compte Orange Money Business n'a pas encore été utilisé depuis votre enrôlement le <em>[date]</em>. Je voulais simplement m'assurer que tout va bien et voir comment nous pouvons vous aider. »</p>
             </div>
           </div>
@@ -5328,7 +5740,7 @@ function enterFormation() {
         <div style="background:#F3EDD8;border-radius:10px;padding:14px 16px;margin-top:6px">
           <div style="font-size:12px;font-weight:700;color:#584B26;margin-bottom:8px">📱 SMS à envoyer après le 1er appel manqué</div>
           <div class="script-box" style="margin:0;background:white">
-            <p>« Bonjour <em>[Prénom]</em>, je suis <em>[Nom]</em> de l'équipe MAFA Orange Money. J'ai essayé de vous joindre concernant votre compte Orange Money Business. N'hésitez pas à nous rappeler au <em>[numéro]</em>. Merci. »</p>
+            <p>« Bonjour <em>[Prénom]</em>, je suis <em>[Nom]</em> de Crystal Solution Orange Money. J'ai essayé de vous joindre concernant votre compte Orange Money Business. N'hésitez pas à nous rappeler au <em>[numéro]</em>. Merci. »</p>
             <div class="script-note">L'envoi SMS se fait directement depuis la plateforme Connectel (fonctionnalité déjà disponible).</div>
           </div>
         </div>
@@ -5458,7 +5870,7 @@ function enterFormation() {
 
       <div class="alert alert-success">
         <div class="alert-icon">✅</div>
-        <div class="alert-text"><strong>À retenir :</strong> Un agent CC MAFA performant doit être connecté <strong>avant 9h00</strong>, maintenir <strong>80 appels sortants/jour minimum</strong>, renseigner la disposition <strong>pendant chaque appel</strong>, et escalader vers l'inspecteur tout marchand injoignable après 2 tentatives.</div>
+        <div class="alert-text"><strong>À retenir :</strong> Un agent CC Crystal Solution performant doit être connecté <strong>avant 9h00</strong>, maintenir <strong>80 appels sortants/jour minimum</strong>, renseigner la disposition <strong>pendant chaque appel</strong>, et escalader vers l'inspecteur tout marchand injoignable après 2 tentatives.</div>
       </div>
 
     <!-- /page-cours -->
@@ -5582,12 +5994,12 @@ function enterFormation() {
 
         <div class="quiz-question-block" id="m1-q1">
           <div class="quiz-q-num">Question 01 / 20</div>
-          <div class="quiz-q-text">Quel est l'objectif quotidien minimum d'un agent Call Center sur le projet ID30 ?</div>
+          <div class="quiz-q-text">Quel est l'objectif quotidien minimum d'un agent Call Center (ID30 ou Orange) en appels sortants ?</div>
           <div class="quiz-options">
-            <div class="quiz-option" onclick="answerM1(this,'q1',false,'La cible quotidienne est de 15 fiches validées minimum.')"><span class="option-letter">A</span> 10 fiches validées</div>
-            <div class="quiz-option" onclick="answerM1(this,'q1',true,'Correct ! 15 fiches validées minimum par jour est l\'objectif cible.')"><span class="option-letter">B</span> 15 fiches validées</div>
-            <div class="quiz-option" onclick="answerM1(this,'q1',false,'La cible est de 15 fiches, pas 20.')"><span class="option-letter">C</span> 20 fiches validées</div>
-            <div class="quiz-option" onclick="answerM1(this,'q1',false,'5 fiches est largement insuffisant. La cible est 15 fiches/jour.')"><span class="option-letter">D</span> 5 fiches validées</div>
+            <div class="quiz-option" onclick="answerM1(this,'q1',false,'50 appels est insuffisant. L\'objectif minimum est 80 appels sortants par jour.')"><span class="option-letter">A</span> 50 appels sortants</div>
+            <div class="quiz-option" onclick="answerM1(this,'q1',true,'Correct ! 80 appels sortants minimum par jour — que ce soit sur l\'activité ID30 ou Orange Money.')"><span class="option-letter">B</span> 80 appels sortants</div>
+            <div class="quiz-option" onclick="answerM1(this,'q1',false,'100 appels dépasse l\'objectif fixé. Le minimum est 80 appels sortants/jour.')"><span class="option-letter">C</span> 100 appels sortants</div>
+            <div class="quiz-option" onclick="answerM1(this,'q1',false,'30 appels est bien en dessous de l\'objectif. La cible est 80 appels sortants par jour.')"><span class="option-letter">D</span> 30 appels sortants</div>
           </div>
           <div class="quiz-feedback" id="m1-fb-q1"></div>
         </div>
@@ -5936,6 +6348,12 @@ function enterFormation() {
       <button class="tab-btn-clean" data-tab="exo" onclick="showModuleTab('m2','exo')">✏️ Exercices</button>
       <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m2','quiz')">✅ Quiz</button>
       <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m2','resultats')">📊 Résultats</button>
+    </div>
+    <div class="dl-bar">
+      <span class="dl-bar-label">📥 Télécharger :</span>
+      <button class="dl-btn dl-pdf"  onclick="exportPDF('m2','M2_BackOffice_ID30','Back Office ID30 &amp; Orange Money')">📄 PDF</button>
+      <button class="dl-btn dl-word" onclick="exportWord('m2','M2_BackOffice_ID30','Back Office ID30 &amp; Orange Money')">📝 Word</button>
+      <button class="dl-btn dl-pptx" onclick="exportPPTX('m2','M2_BackOffice_ID30','Back Office ID30 &amp; Orange Money')">🖥️ PowerPoint</button>
     </div>
 
     <!-- Contenu -->
@@ -6413,7 +6831,7 @@ function enterFormation() {
             <div class="quiz-option" onclick="answerM2(this,'q15',false,'Le téléphone n'est pas le canal officiel pour signaler un retour terrain.')"><span class="option-letter">A</span> Par téléphone au superviseur terrain</div>
             <div class="quiz-option" onclick="answerM2(this,'q15',false,'L'email n'est pas le canal de signalement officiel utilisé dans ce processus.')"><span class="option-letter">B</span> Par email à l'agent concerné</div>
             <div class="quiz-option" onclick="answerM2(this,'q15',true,'Correct ! Le Back Office applique le statut officiel dans le système, ce qui déclenche automatiquement l'action terrain.')"><span class="option-letter">C</span> Via le statut 'Rejeté — Retour terrain' dans le système</div>
-            <div class="quiz-option" onclick="answerM2(this,'q15',false,'Le courrier postal n'est pas utilisé dans ce processus numérique.')"><span class="option-letter">D</span> Par courrier postal au chef d'équipe</div>
+            <div class="quiz-option" onclick="answerM2(this,'q15',false,'Le courrier postal n'est pas utilisé dans ce processus numérique.')"><span class="option-letter">D</span> Par courrier postal au superviseur</div>
           </div>
           <div class="quiz-feedback" id="m2-fb-q15"></div>
         </div>
@@ -6602,6 +7020,12 @@ function enterFormation() {
       <button class="tab-btn-clean" data-tab="exo" onclick="showModuleTab('m3','exo')">✏️ Exercices</button>
       <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m3','quiz')">✅ Quiz</button>
       <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m3','resultats')">📊 Résultats</button>
+    </div>
+    <div class="dl-bar">
+      <span class="dl-bar-label">📥 Télécharger :</span>
+      <button class="dl-btn dl-pdf"  onclick="exportPDF('m3','M3_Inspecteur_ID30','Inspecteur ID30')">📄 PDF</button>
+      <button class="dl-btn dl-word" onclick="exportWord('m3','M3_Inspecteur_ID30','Inspecteur ID30')">📝 Word</button>
+      <button class="dl-btn dl-pptx" onclick="exportPPTX('m3','M3_Inspecteur_ID30','Inspecteur ID30')">🖥️ PowerPoint</button>
     </div>
 
     <!-- Contenu -->
@@ -7235,7 +7659,7 @@ function enterFormation() {
 <div class="module-overlay" id="overlay-m4">
   <div class="overlay-topbar">
     <button class="overlay-back" onclick="closeModule()">&#8592; Retour au portail</button>
-    <span class="overlay-topbar-title">🏪 Orange Business — Plateforme Marchande</span>
+    <span class="overlay-topbar-title">🏪 Orange Business — Crystal Solution</span>
   </div>
   <div class="overlay-content">
 <div class="module-page" id="module-m4" style="display:flex;flex-direction:column">
@@ -7267,6 +7691,12 @@ function enterFormation() {
     <button class="tab-btn-clean" data-tab="exo" onclick="showModuleTab('m4','exo')">✏️ Exercices</button>
     <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m4','quiz')">✅ Quiz</button>
     <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m4','resultats')">📊 Résultats</button>
+  </div>
+  <div class="dl-bar">
+    <span class="dl-bar-label">📥 Télécharger :</span>
+    <button class="dl-btn dl-pdf"  onclick="exportPDF('m4','M4_OrangeBusiness','Orange Business – Plateforme Marchande')">📄 PDF</button>
+    <button class="dl-btn dl-word" onclick="exportWord('m4','M4_OrangeBusiness','Orange Business – Plateforme Marchande')">📝 Word</button>
+    <button class="dl-btn dl-pptx" onclick="exportPPTX('m4','M4_OrangeBusiness','Orange Business – Plateforme Marchande')">🖥️ PowerPoint</button>
   </div>
 
   <!-- ══ COURS ══ -->
@@ -8096,7 +8526,7 @@ function enterFormation() {
 <div class="module-overlay" id="overlay-m5">
   <div class="overlay-topbar">
     <button class="overlay-back" onclick="closeModule()">&#8592; Retour au portail</button>
-    <span class="overlay-topbar-title">📱 Application Agent &amp; Superviseur Orange</span>
+    <span class="overlay-topbar-title">📱 Application Agent Orange — Crystal Solution</span>
   </div>
   <div class="overlay-content">
 <div class="module-page" id="module-m5">
@@ -8137,6 +8567,12 @@ function enterFormation() {
       <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m5','quiz')">✅ Quiz</button>
       <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m5','resultats')">📊 Résultats</button>
     </div>
+    <div class="dl-bar">
+      <span class="dl-bar-label">📥 Télécharger :</span>
+      <button class="dl-btn dl-pdf"  onclick="exportPDF('m5','M5_Application_Agent','Application Agent &amp; Superviseur Orange')">📄 PDF</button>
+      <button class="dl-btn dl-word" onclick="exportWord('m5','M5_Application_Agent','Application Agent &amp; Superviseur Orange')">📝 Word</button>
+      <button class="dl-btn dl-pptx" onclick="exportPPTX('m5','M5_Application_Agent','Application Agent &amp; Superviseur Orange')">🖥️ PowerPoint</button>
+    </div>
 
     <!-- Contenu -->
     <div class="module-content-scroll">
@@ -8165,9 +8601,9 @@ function enterFormation() {
       </div>
       <div class="info-card">
         <h3>🔐 Page de connexion</h3>
-        <p>L'application Agent nécessite des <strong>identifiants uniques</strong> attribués par MAFA Holding à chaque agent. Ces identifiants sont personnels et ne doivent jamais être partagés.</p>
+        <p>L'application Agent nécessite des <strong>identifiants uniques</strong> attribués par Crystal Solution à chaque agent. Ces identifiants sont personnels et ne doivent jamais être partagés.</p>
         <ul class="styled-list" style="margin-top:12px">
-          <li>Champ 1 : <strong>Nom d'utilisateur</strong> — attribué par MAFA Holding</li>
+          <li>Champ 1 : <strong>Nom d'utilisateur</strong> — attribué par Crystal Solution</li>
           <li>Champ 2 : <strong>Mot de passe</strong> — à changer dès la première connexion</li>
           <li>En cas d'oubli : contacter le Responsable Ville ou le superviseur</li>
         </ul>
@@ -8874,7 +9310,7 @@ function enterFormation() {
 <div class="module-overlay" id="overlay-m6">
   <div class="overlay-topbar">
     <button class="overlay-back" onclick="closeModule()">← Retour au portail</button>
-    <span class="overlay-topbar-title">🔍 Inspecteur Orange — Fiche de Visite MAFA</span>
+    <span class="overlay-topbar-title">🔍 Inspecteur Orange — Fiche de Visite Crystal Solution</span>
   </div>
   <div class="overlay-content">
 <div class="module-page" id="module-m6">
@@ -8882,21 +9318,21 @@ function enterFormation() {
       <div class="module-breadcrumb">
         <span>Formation</span>
         <span class="crumb-sep">›</span>
-        <span class="crumb-mod">Module 06 — Inspecteur Orange — Fiche de Visite MAFA</span>
+        <span class="crumb-mod">Module 06 — Inspecteur Orange — Fiche de Visite Crystal Solution</span>
         <span class="crumb-sep">·</span>
         <span>5 Sections · 8 Étapes · Cas Pratiques</span>
       </div>
       <div class="module-title-block">
         <div class="module-title-icon" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB)">🔍</div>
         <div class="module-title-text">
-          <h2>Inspecteur Orange — Fiche de Visite MAFA</h2>
+          <h2>Inspecteur Orange — Fiche de Visite Crystal Solution</h2>
           <div class="module-chips"><span class="module-chip chip-audience">🔍 Inspecteurs Orange</span><span class="module-chip chip-duration">⏱ 1h30</span></div>
         </div>
       </div>
       <div class="module-objectives">
         <div class="module-objectives-title">🎯 Objectifs pédagogiques</div>
         <ul>
-          <li>Maîtriser les 8 étapes de la Fiche de Visite MAFA</li>
+          <li>Maîtriser les 8 étapes de la Fiche de Visite Crystal Solution</li>
           <li>Appliquer les niveaux d'urgence P1/P2/P3 correctement</li>
           <li>Réaliser un GPS précis (≤ 15m) et documenter par photo</li>
           <li>Gérer les cas pratiques : injoignable, escalade, concurrent</li>
@@ -8911,6 +9347,12 @@ function enterFormation() {
       <button class="tab-btn-clean" data-tab="quiz" onclick="showModuleTab('m6','quiz')">✅ Quiz</button>
       <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('m6','resultats')">📊 Résultats</button>
     </div>
+    <div class="dl-bar">
+      <span class="dl-bar-label">📥 Télécharger :</span>
+      <button class="dl-btn dl-pdf"  onclick="exportPDF('m6','M6_Inspecteur_Fiche_Visite','Inspecteur Orange – Fiche de Visite Crystal Solution')">📄 PDF</button>
+      <button class="dl-btn dl-word" onclick="exportWord('m6','M6_Inspecteur_Fiche_Visite','Inspecteur Orange – Fiche de Visite Crystal Solution')">📝 Word</button>
+      <button class="dl-btn dl-pptx" onclick="exportPPTX('m6','M6_Inspecteur_Fiche_Visite','Inspecteur Orange – Fiche de Visite Crystal Solution')">🖥️ PowerPoint</button>
+    </div>
 
     <div class="module-content-scroll">
 
@@ -8918,7 +9360,7 @@ function enterFormation() {
       <div class="tab-section" id="tab-m6-cours" style="display:block">
 <div class="module-hero">
         <div class="module-hero-icon">🔍</div>
-        <h1>Fiche de Visite MAFA — Inspector Orange</h1>
+        <h1>Fiche de Visite Crystal Solution — Inspecteur Orange</h1>
         <div class="module-hero-meta">
           <span class="meta-chip chip-red">🔍 Inspecteurs Orange</span>
           <span class="meta-chip chip-gold">⏱ Durée : 1h30</span>
@@ -8941,7 +9383,7 @@ function enterFormation() {
 
       <div class="info-card">
         <h3>🎯 Objectif de la Fiche de Visite</h3>
-        <p>La <strong>Fiche de Visite MAFA</strong> est l'outil numérique officiel pour documenter les visites terrain auprès des marchands Orange Money. Elle remplace les fiches papier et garantit une collecte <strong>structurée, géolocalisée et transmise en temps réel</strong> au superviseur.</p>
+        <p>La <strong>Fiche de Visite Crystal Solution</strong> est l'outil numérique officiel pour documenter les visites terrain auprès des marchands Orange Money. Elle remplace les fiches papier et garantit une collecte <strong>structurée, géolocalisée et transmise en temps réel</strong> au superviseur.</p>
       </div>
 
       <div class="info-card">
@@ -9022,7 +9464,7 @@ function enterFormation() {
         </table>
 
         <div style="margin-top:16px">
-          <div style="font-size:13px;font-weight:700;color:#455A64;margin-bottom:10px">Statuts du Marchand</div>
+          <div style="font-size:13px;font-weight:700;color:#1a2332;margin-bottom:10px;padding:8px 12px;background:#f0f4ff;border-radius:6px;border-left:3px solid var(--blue)">📊 Statuts du Marchand</div>
           <div class="def-grid">
             <div class="def-card" style="border-left:4px solid #4CAF50">
               <div class="def-term" style="color:#2E7D32">🟢 Actif</div>
@@ -9058,6 +9500,10 @@ function enterFormation() {
           <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
             <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">3</span>
             <p style="font-size:13px;color:#2d3748">Le code est <strong>reconnu et affiché en vert</strong> → pré-rempli automatiquement</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
+            <span style="background:#1565C0;color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0">4</span>
+            <p style="font-size:13px;color:#2d3748">Le <strong>code marchand</strong> est pré-rempli automatiquement</p>
           </div>
         </div>
         <div class="alert alert-warn">
@@ -9098,7 +9544,7 @@ function enterFormation() {
 
       <div class="card">
         <div class="card-title">🔍 Étape 4 — Diagnostic Terrain</div>
-        <p style="font-size:13px;color:#455A64;margin-bottom:16px">Cocher <strong>tous les problèmes qui s'appliquent</strong>. Si aucun problème : cocher « Aucun problème ».</p>
+        <div class="alert alert-info" style="margin-bottom:16px"><div class="alert-icon">ℹ️</div><div class="alert-text">Cocher <strong>tous les problèmes qui s'appliquent</strong>. Si aucun problème : cocher « Aucun problème ».</div></div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
           <div style="background:#FFEBEE;border-radius:10px;padding:12px;border-left:4px solid #e53935">
@@ -9136,7 +9582,7 @@ function enterFormation() {
 
       <div class="card">
         <div class="card-title">⚡ Étape 5 — Actions Effectuées</div>
-        <p style="font-size:13px;color:#455A64;margin-bottom:14px">Cocher toutes les actions réalisées pendant la visite :</p>
+        <div class="alert alert-info" style="margin-bottom:14px"><div class="alert-icon">ℹ️</div><div class="alert-text">Cocher toutes les actions réalisées pendant la visite :</div></div>
         <div style="display:flex;flex-direction:column;gap:8px">
           <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>📚</span><span style="font-size:13px;color:#2d3748">Formation complète (30 min+)</span></div>
           <div style="display:flex;gap:10px;align-items:center;background:#f8fafc;border-radius:8px;padding:10px 14px"><span>⚡</span><span style="font-size:13px;color:#2d3748">Rappel rapide des fonctionnalités (15 min)</span></div>
@@ -9205,16 +9651,16 @@ function enterFormation() {
 
       <div class="card">
         <div class="card-title">📋 Étape 8 — Résumé &amp; Soumission</div>
-        <p style="font-size:13px;color:#455A64;margin-bottom:14px">Vérifier ligne par ligne avant d'appuyer sur <strong>« 📤 Soumettre la fiche »</strong> :</p>
+        <div class="alert alert-info" style="margin-bottom:14px"><div class="alert-icon">ℹ️</div><div class="alert-text">Vérifier ligne par ligne avant d'appuyer sur <strong>« 📤 Soumettre la fiche »</strong> :</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Référence unique de visite</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Date, heure, inspecteur, marchand, code</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Commune, statut, niveau d'urgence</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Coordonnées GPS + précision</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Problèmes identifiés &amp; actions effectuées</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Résultat de visite + numéro ticket</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ Nombre de photos ajoutées</div>
-          <div style="background:#f8fafc;border-radius:8px;padding:10px;font-size:12px;color:#455A64">✓ État des signatures</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Référence unique de visite</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Date, heure, inspecteur, marchand, code</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Commune, statut, niveau d'urgence</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Coordonnées GPS + précision</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Problèmes identifiés &amp; actions effectuées</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Résultat de visite + numéro ticket</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ Nombre de photos ajoutées</div>
+          <div style="background:#E8F5E9;border-radius:8px;padding:10px;font-size:12px;color:#1a2332;font-weight:600;border-left:3px solid #4CAF50">✓ État des signatures</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px">
           <div style="display:flex;gap:12px;align-items:center;background:#E3F2FD;border-radius:10px;padding:12px 16px">
@@ -9265,7 +9711,7 @@ function enterFormation() {
           <div style="display:flex;gap:10px;background:#F3EDD8;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#584B26;font-weight:700;flex-shrink:0">Étape 6</span><span style="font-size:13px;color:#2d3748">Au minimum 1 photo (devanture) ajoutée</span></div>
           <div style="display:flex;gap:10px;background:#F3EDD8;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#584B26;font-weight:700;flex-shrink:0">Étape 7</span><span style="font-size:13px;color:#2d3748">Signature inspecteur apposée</span></div>
           <div style="display:flex;gap:10px;background:#F3EDD8;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#584B26;font-weight:700;flex-shrink:0">Étape 7</span><span style="font-size:13px;color:#2d3748">Case de certification cochée</span></div>
-          <div style="display:flex;gap:10px;background:#f8fafc;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#455A64;font-weight:700;flex-shrink:0">Étape 8</span><span style="font-size:13px;color:#2d3748">Résumé vérifié ligne par ligne avant soumission</span></div>
+          <div style="display:flex;gap:10px;background:#f8fafc;border-radius:8px;padding:10px 14px;align-items:center"><span style="color:#1a2332;font-weight:700;flex-shrink:0">Étape 8</span><span style="font-size:13px;color:#1a2332">Résumé vérifié ligne par ligne avant soumission</span></div>
         </div>
       </div>
 
@@ -9336,7 +9782,7 @@ function enterFormation() {
           <div class="card-title">🔒 Confidentialité</div>
           <ul class="styled-list">
             <li>Données marchands strictement confidentielles</li>
-            <li>Ne pas partager hors du système MAFA</li>
+            <li>Ne pas partager hors du système Crystal Solution</li>
             <li>Signaler tout accès non autorisé au superviseur</li>
             <li>Respecter la politique de données Orange CI</li>
           </ul>
@@ -9443,7 +9889,7 @@ function enterFormation() {
             <div class="quiz-option" onclick="answerM6(this,'q1',false,'P1 = urgent, délai &lt; 2 heures, pas 24h.')">Moins de 24 heures</div>
             <div class="quiz-option" onclick="answerM6(this,'q1',true,'Correct ! P1 = URGENT, traitement obligatoire en moins de 2 heures.')">Moins de 2 heures</div>
             <div class="quiz-option" onclick="answerM6(this,'q1',false,'P3 = standard, délai &lt; 5 jours. P1 est bien plus urgent.')">Moins de 5 jours</div>
-            <div class="quiz-option" onclick="answerM6(this,'q1',false,'Il n\'y a pas de délai de 48h dans la classification MAFA.')">Moins de 48 heures</div>
+            <div class="quiz-option" onclick="answerM6(this,'q1',false,'Il n\'y a pas de délai de 48h dans la classification Crystal Solution.')">Moins de 48 heures</div>
           </div>
           <div class="quiz-feedback" id="m6-fb-q1"></div>
         </div>
@@ -9479,7 +9925,7 @@ function enterFormation() {
             <div class="quiz-option" onclick="answerM6(this,'q4',true,'Correct ! Transaction échouée (argent disparu) = P1 URGENT, traitement &lt; 2 heures.')">P1 — Urgent (&lt; 2 heures)</div>
             <div class="quiz-option" onclick="answerM6(this,'q4',false,'P2 est pour PIN bloqué ou problème réseau. Transaction échouée = P1.')">P2 — Haute (&lt; 24 heures)</div>
             <div class="quiz-option" onclick="answerM6(this,'q4',false,'P3 est pour des problèmes non urgents (formation, float). Argent disparu = P1.')">P3 — Standard (&lt; 5 jours)</div>
-            <div class="quiz-option" onclick="answerM6(this,'q4',false,'Il n\'existe pas de niveau P4 dans la classification MAFA.')">P4 — Informatif</div>
+            <div class="quiz-option" onclick="answerM6(this,'q4',false,'Il n\'existe pas de niveau P4 dans la classification Crystal Solution.')">P4 — Informatif</div>
           </div>
           <div class="quiz-feedback" id="m6-fb-q4"></div>
         </div>
@@ -9510,7 +9956,7 @@ function enterFormation() {
 
         <div class="quiz-question-block" id="m6-q7">
           <div class="quiz-q-num">Question 07 / 20</div>
-          <div class="quiz-q-text">Combien d'étapes comporte la Fiche de Visite MAFA ?</div>
+          <div class="quiz-q-text">Combien d'étapes comporte la Fiche de Visite Crystal Solution ?</div>
           <div class="quiz-options">
             <div class="quiz-option" onclick="answerM6(this,'q7',false,'5 étapes est insuffisant — la fiche en comporte 8.')">5 étapes</div>
             <div class="quiz-option" onclick="answerM6(this,'q7',false,'6 étapes est incorrect — la fiche en comporte 8.')">6 étapes</div>
@@ -9536,7 +9982,7 @@ function enterFormation() {
           <div class="quiz-q-num">Question 09 / 20</div>
           <div class="quiz-q-text">Quel est le format correct d'un code marchand Orange Money ?</div>
           <div class="quiz-options">
-            <div class="quiz-option" onclick="answerM6(this,'q9',false,'Ce format n\'existe pas dans le système MAFA.')">MAFA-12345</div>
+            <div class="quiz-option" onclick="answerM6(this,'q9',false,'Ce format n\'existe pas dans le système Crystal Solution.')">CS-12345</div>
             <div class="quiz-option" onclick="answerM6(this,'q9',true,'Correct ! Le format officiel est OM-CI-XXXXX (Orange Money - Côte d\'Ivoire).')">OM-CI-XXXXX</div>
             <div class="quiz-option" onclick="answerM6(this,'q9',false,'Ce format n\'est pas le format officiel du code marchand.')">CI-OM-12345</div>
             <div class="quiz-option" onclick="answerM6(this,'q9',false,'Un simple numéro à 6 chiffres n\'est pas le format officiel.')">Un numéro à 6 chiffres</div>
@@ -10012,5 +10458,345 @@ function answerM3(el, qid, correct, feedback) {
   <span id="lbox-close" onclick="closeLbox()">&#10005;</span>
   <img id="lbox-img" src="" alt="">
 </div>
+
+<!-- ══════════════════════════════════════════
+     EXPORT MODULES — PDF / WORD / POWERPOINT
+══════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  function loadScript(url, id) {
+    return new Promise(function(resolve, reject) {
+      if (document.getElementById(id)) { resolve(); return; }
+      var s = document.createElement('script');
+      s.src = url; s.id = id;
+      s.onload = resolve;
+      s.onerror = function() { reject(new Error('Impossible de charger : ' + url)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function btnWait(btn) { btn._orig = btn.innerHTML; btn.innerHTML = '⏳ Génération…'; btn.disabled = true; }
+  function btnReset(btn) { btn.innerHTML = btn._orig; btn.disabled = false; }
+
+  // Récupère le contenu d'une section même si elle est cachée
+  function getSection(modId) {
+    var sec = document.getElementById('tab-' + modId + '-cours');
+    var hidden = getComputedStyle(sec).display === 'none';
+    if (hidden) sec.style.setProperty('display', 'block', 'important');
+    return { sec: sec, hidden: hidden };
+  }
+  function releaseSection(s) {
+    if (s.hidden) s.sec.style.removeProperty('display');
+  }
+
+  // ══ PDF — clone hors-écran pour capturer tout le contenu sans contrainte de hauteur ══
+  // ══ PDF — fenêtre d'impression (aucune restriction canvas, images incluses) ══
+  window.exportPDF = function(modId, fileName, title) {
+    var btn = event.currentTarget;
+    btnWait(btn);
+    try {
+      var s = getSection(modId);
+      var content = s.sec.innerHTML;
+      releaseSection(s);
+
+      // Collecter tous les styles internes de la page (sans CORS)
+      var inlineCSS = '';
+      Array.from(document.querySelectorAll('style')).forEach(function(st) {
+        inlineCSS += st.textContent + '\n';
+      });
+
+      // Construire le HTML de la fenêtre d'impression
+      var baseHref = window.location.href.replace(/[^/]*$/, '');
+      var printHTML = '<!DOCTYPE html><html lang="fr"><head>'
+        + '<meta charset="UTF-8">'
+        + '<title>' + title + '</title>'
+        + '<base href="' + baseHref + '">'
+        + '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">'
+        + '<style>' + inlineCSS + '</style>'
+        + '<style>'
+        /* Reset d'impression */
+        + 'html,body{background:#fff!important;margin:0!important;padding:0!important;}'
+        + 'body{font-family:Sora,Arial,sans-serif;color:#1a1a2e;}'
+        /* Masquer éléments non-contenu */
+        + '.dl-bar,.module-tabs,.module-tabs-clean,.module-breadcrumb,'
+        + '.module-header-wrap,.module-objectives,.module-chips,'
+        + '.tab-btn,.tab-btn-clean,.tab-btn-clean.active-red,'
+        + 'button:not(.quiz-option){display:none!important;}'
+        /* Afficher tout le contenu */
+        + '.tab-section{display:block!important;overflow:visible!important;'
+        + 'max-height:none!important;height:auto!important;padding:0 24px!important;}'
+        /* Conteneur principal sans sidebar */
+        + '.main,.sidebar,.topbar,.overlay-topbar{display:none!important;}'
+        /* Typographie & espacement */
+        + 'h1{font-size:22pt;color:#8D0C23;border-bottom:2pt solid #8D0C23;padding-bottom:6pt;margin-bottom:14pt;}'
+        + 'h2{font-size:15pt;color:#8D0C23;margin-top:20pt;}'
+        + 'h3{font-size:12pt;color:#584B26;margin-top:12pt;}'
+        + 'p,li{font-size:11pt;line-height:1.7;}'
+        + 'table{border-collapse:collapse;width:100%;font-size:10pt;}'
+        + 'td,th{border:1pt solid #ccc;padding:5pt 7pt;}'
+        + 'th{background:#F9E8EC;color:#8D0C23;font-weight:700;}'
+        + 'img{max-width:100%;height:auto;border-radius:6pt;}'
+        /* Mise en page impression */
+        + '@page{margin:1.5cm;size:A4;}'
+        + '@media print{'
+        + '  .module-hero{padding:16pt!important;border-radius:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+        + '  .info-card,.alert,.section-heading{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid;}'
+        + '  table{break-inside:avoid;}'
+        + '}'
+        + '</style>'
+        + '</head><body>'
+        + '<div class="tab-section">' + content + '</div>'
+        + '<script>'
+        + '(function(){'
+        + '  var tried=false;'
+        + '  function doPrint(){'
+        + '    if(tried)return; tried=true;'
+        + '    window.focus();'
+        + '    window.print();'
+        + '  }'
+        /* Attendre les images puis imprimer */
+        + '  var imgs=document.querySelectorAll("img");'
+        + '  var loaded=0; var total=imgs.length;'
+        + '  if(total===0){setTimeout(doPrint,400);return;}'
+        + '  function check(){loaded++;if(loaded>=total)setTimeout(doPrint,300);}'
+        + '  Array.from(imgs).forEach(function(i){'
+        + '    if(i.complete)check();'
+        + '    else{i.onload=check;i.onerror=check;}'
+        + '  });'
+        + '  setTimeout(doPrint,2500);' /* sécurité si images bloquées */
+        + '})();'
+        + '<\/script>'
+        + '</body></html>';
+
+      var printWin = window.open('', '_blank', 'width=960,height=800,scrollbars=yes');
+      if (!printWin) {
+        alert('⚠️ Popup bloquée par le navigateur.\n\nAutorisez les popups pour cette page, puis réessayez.');
+        btnReset(btn);
+        return;
+      }
+      printWin.document.write(printHTML);
+      printWin.document.close();
+
+      // Toast d'information
+      _showToast('📄 Fenêtre PDF ouverte — dans la boîte de dialogue, choisissez\n« Enregistrer en PDF » comme imprimante.');
+    } catch(e) {
+      alert('Erreur export PDF : ' + (e.message || e));
+    }
+    btnReset(btn);
+  };
+
+  // Petit toast non-bloquant
+  function _showToast(msg) {
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);'
+      + 'background:#1a1a2e;color:white;padding:12px 20px;border-radius:10px;'
+      + 'font-size:13px;font-family:Sora,sans-serif;max-width:420px;text-align:center;'
+      + 'box-shadow:0 8px 32px rgba(0,0,0,.35);z-index:999999;line-height:1.5;'
+      + 'white-space:pre-line;opacity:0;transition:opacity .3s;';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function() {
+      t.style.opacity = '1';
+      setTimeout(function() {
+        t.style.opacity = '0';
+        setTimeout(function() { document.body.removeChild(t); }, 400);
+      }, 5000);
+    });
+  }
+
+  // ══ WORD — format Word HTML natif (sans CDN, ouvre directement dans Word) ══
+  window.exportWord = function(modId, fileName, title) {
+    var btn = event.currentTarget;
+    btnWait(btn);
+    try {
+      var s = getSection(modId);
+      var content = s.sec.innerHTML;
+      releaseSection(s);
+
+      var html = '<!DOCTYPE html>\n'
+        + '<html xmlns:o="urn:schemas-microsoft-com:office:office"\n'
+        + '      xmlns:w="urn:schemas-microsoft-com:office:word"\n'
+        + '      xmlns="http://www.w3.org/TR/REC-html40">\n'
+        + '<head><meta charset="UTF-8"><title>' + title + '</title>\n'
+        + '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View>'
+        + '<w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->\n'
+        + '<style>\n'
+        + 'body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.75;margin:2.5cm;color:#1a1a2e}\n'
+        + 'h1{font-size:22pt;color:#8D0C23;border-bottom:2pt solid #8D0C23;padding-bottom:6pt;margin:0 0 16pt}\n'
+        + 'h2{font-size:15pt;color:#8D0C23;border-bottom:1pt solid #e0c0c8;padding-bottom:3pt;margin:20pt 0 8pt}\n'
+        + 'h3{font-size:12pt;color:#584B26;margin:12pt 0 5pt;font-weight:bold}\n'
+        + 'p{margin:4pt 0;font-size:11pt}\n'
+        + 'ul,ol{margin:5pt 0;padding-left:16pt}\n'
+        + 'li{margin:3pt 0;font-size:11pt}\n'
+        + 'strong{font-weight:bold}\n'
+        + 'em{font-style:italic}\n'
+        + 'table{border-collapse:collapse;width:100%;margin:10pt 0;font-size:10pt}\n'
+        + 'td,th{border:1pt solid #ccc;padding:6pt 8pt;vertical-align:top}\n'
+        + 'th{background-color:#F9E8EC;font-weight:bold;color:#8D0C23}\n'
+        + 'img{max-width:100%;height:auto}\n'
+        + '.info-card{border-left:3pt solid #8D0C23;padding:8pt 10pt;margin:10pt 0;background:#fafafa}\n'
+        + '.module-hero{text-align:center;padding:14pt 20pt;margin:0 0 14pt;background:#8D0C23;color:white}\n'
+        + '.module-hero h1,.module-hero-title{color:white!important;border:none!important;font-size:20pt}\n'
+        + '.module-hero-icon{font-size:26pt;display:block;margin-bottom:6pt}\n'
+        + '.meta-chip{padding:2pt 6pt;margin:2pt;border:1pt solid #e0c0c8;font-size:9pt;display:inline-block}\n'
+        + '.section-heading{margin-top:20pt;margin-bottom:6pt}\n'
+        + '.section-num{background:#8D0C23;color:white;padding:1pt 5pt;font-weight:bold;font-size:9pt;margin-right:5pt}\n'
+        + '.section-heading h2{display:inline;border:none;padding:0}\n'
+        + '.step-card,.connect-card{border:1pt solid #ddd;padding:8pt;margin:6pt 0;background:#f8f9fa}\n'
+        + 'button,.tab-btn,.tab-btn-clean,.dl-bar,.dl-btn,.module-tabs,.module-tabs-clean,.module-breadcrumb,'
+        + '.module-chips,.module-chip,.quiz-option,.quiz-feedback,.tab-section[style*="none"],'
+        + '.module-title-block,.module-header-wrap,.module-objectives{display:none!important}\n'
+        + '</style></head>\n<body>\n'
+        + '<h1>' + title + '</h1>\n'
+        + content
+        + '\n</body></html>';
+
+      var blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = fileName + '.doc';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 3000);
+    } catch(e) {
+      alert('Erreur export Word : ' + (e.message || e));
+    }
+    btnReset(btn);
+  };
+
+  // ══ POWERPOINT — extraction via .section-heading → contenu suivant ══
+  window.exportPPTX = async function(modId, fileName, title) {
+    var btn = event.currentTarget;
+    btnWait(btn);
+    var s = null;
+    try {
+      await loadScript('https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js', 'lib-pptx');
+
+      s = getSection(modId);
+      var section = s.sec;
+
+      var pptx = new PptxGenJS();
+      pptx.layout = 'LAYOUT_WIDE';
+      pptx.title = title;
+      pptx.author = 'MAFA Holding';
+
+      var RED = '8D0C23', GOLD = 'CF9E41', DARK = '1a1a2e', GREY = '64748B';
+
+      // ── Slide titre ──
+      var ts = pptx.addSlide();
+      ts.background = { color: RED };
+      ts.addShape(pptx.ShapeType.rect, { x: 0, y: 6.85, w: 13.33, h: 0.65, fill: { color: '5A0815' } });
+      ts.addText('MAFA HOLDING', { x: 0.5, y: 0.65, w: 12.33, h: 0.6, fontSize: 13, color: GOLD, bold: true, align: 'center', charSpacing: 5 });
+      ts.addText(title, { x: 0.5, y: 1.55, w: 12.33, h: 3.4, fontSize: 28, color: 'FFFFFF', bold: true, align: 'center', wrap: true, valign: 'middle' });
+      ts.addText('Formation professionnelle · ' + new Date().getFullYear(), { x: 0.5, y: 6.9, w: 12.33, h: 0.45, fontSize: 11, color: GOLD, align: 'center' });
+
+      // ── Slides de contenu ──
+      // Stratégie : trouver tous les .section-heading et collecter
+      // les éléments frères jusqu'au prochain .section-heading
+      var sectionHeadings = Array.from(section.querySelectorAll('.section-heading'));
+
+      // Fallback si pas de .section-heading (structure M0)
+      if (sectionHeadings.length === 0) {
+        sectionHeadings = Array.from(section.querySelectorAll('h2')).map(function(h2) {
+          return h2.closest('div') || h2;
+        });
+      }
+
+      sectionHeadings.forEach(function(sd) {
+        var h2 = sd.querySelector ? (sd.querySelector('h2') || sd) : sd;
+        var headText = h2.textContent.trim().replace(/^\d+\s*[.–\-]?\s*/, '');
+        if (!headText) return;
+
+        var slide = pptx.addSlide();
+        slide.background = { color: 'FFFFFF' };
+        slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 1.0, fill: { color: RED } });
+        slide.addShape(pptx.ShapeType.rect, { x: 0, y: 1.0, w: 13.33, h: 0.05, fill: { color: GOLD } });
+        slide.addText(headText, { x: 0.3, y: 0.08, w: 12.73, h: 0.84, fontSize: 18, color: 'FFFFFF', bold: true, valign: 'middle', wrap: true });
+
+        // Collecter tous les éléments frères jusqu'au prochain section-heading
+        var bullets = [];
+        var el = sd.nextElementSibling;
+        var MAX = 24;
+
+        while (el && bullets.length < MAX) {
+          if (el.classList && (el.classList.contains('section-heading') || el.classList.contains('dl-bar'))) break;
+          if (el.tagName === 'H2') break;
+
+          // Extraire le texte structuré de cet élément
+          _extractBullets(el, bullets, MAX, RED, DARK);
+          el = el.nextElementSibling;
+        }
+
+        if (bullets.length > 0) {
+          slide.addText(bullets, { x: 0.35, y: 1.15, w: 12.63, h: 6.05, valign: 'top', wrap: true, paraSpaceAfter: 2 });
+        } else {
+          slide.addText('Voir le module de formation pour le détail.', { x: 0.4, y: 2, w: 12.53, h: 1, fontSize: 12, color: GREY, italic: true });
+        }
+        slide.addText('MAFA Holding — Formation', { x: 0.3, y: 7.28, w: 12.73, h: 0.22, fontSize: 8, color: 'BBBBBB', align: 'right' });
+      });
+
+      releaseSection(s);
+      await pptx.writeFile({ fileName: fileName + '.pptx' });
+    } catch(e) {
+      if (s) releaseSection(s);
+      alert('Erreur export PowerPoint : ' + (e.message || e));
+    }
+    btnReset(btn);
+  };
+
+  // ── Extraction récursive de texte pour les slides PPTX ──
+  function _extractBullets(el, bullets, MAX, RED, DARK) {
+    if (!el || bullets.length >= MAX) return;
+    var tag = (el.tagName || '').toUpperCase();
+
+    // Sauter les éléments non-contenu
+    if (['BUTTON','SCRIPT','STYLE','INPUT','SELECT'].includes(tag)) return;
+    if (el.classList && (el.classList.contains('dl-bar') || el.classList.contains('tab-btn') || el.classList.contains('tab-btn-clean'))) return;
+
+    if (tag === 'H3') {
+      var t = el.textContent.trim();
+      if (t && bullets.length < MAX) bullets.push({ text: t, options: { bold: true, color: RED, fontSize: 12, paraSpaceBefore: 5, paraSpaceAfter: 2 } });
+      return;
+    }
+
+    if (tag === 'P') {
+      var t2 = el.textContent.trim();
+      if (t2 && t2.length > 2 && t2.length < 500 && bullets.length < MAX)
+        bullets.push({ text: '▸  ' + t2, options: { color: DARK, fontSize: 10.5, paraSpaceAfter: 1 } });
+      return;
+    }
+
+    if (tag === 'LI') {
+      var t3 = el.textContent.trim();
+      if (t3 && t3.length > 2 && t3.length < 500 && bullets.length < MAX)
+        bullets.push({ text: '  •  ' + t3, options: { color: DARK, fontSize: 10.5, paraSpaceAfter: 1 } });
+      return;
+    }
+
+    if (tag === 'TR') {
+      var cells = Array.from(el.querySelectorAll('th, td'));
+      var rowText = cells.map(function(c) { return c.textContent.trim(); }).filter(Boolean).join('   |   ');
+      if (rowText && bullets.length < MAX)
+        bullets.push({ text: rowText, options: { color: DARK, fontSize: 9.5, fontFace: 'Courier New', paraSpaceAfter: 1 } });
+      return;
+    }
+
+    // Élément conteneur : descendre dans les enfants
+    if (el.children && el.children.length > 0) {
+      Array.from(el.children).forEach(function(child) {
+        if (bullets.length < MAX) _extractBullets(child, bullets, MAX, RED, DARK);
+      });
+    } else {
+      // Nœud feuille sans enfants
+      var leaf = el.textContent.trim();
+      if (leaf && leaf.length > 2 && leaf.length < 500 && bullets.length < MAX)
+        bullets.push({ text: '▸  ' + leaf, options: { color: DARK, fontSize: 10.5 } });
+    }
+  }
+
+})();
+</script>
+
 </body>
 </html>

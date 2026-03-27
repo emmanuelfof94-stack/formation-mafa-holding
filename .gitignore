@@ -8,3 +8,9 @@ Formation_Complete_BACKUP*.html
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Fichiers temporaires Office
+~$*
+
+# Répertoire mémoire Claude
+.claude/
