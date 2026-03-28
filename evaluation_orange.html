@@ -2203,12 +2203,12 @@ const QUESTIONS_BY_POSTE_ORANGE = {
 
 function loadSampleQuestions() {
   state.questions = [
-    { id: 1, type: 'qcm', text: 'Qu\'est-ce que la satisfaction client dans un call center ?', options: ['Le nombre d\'appels traités', 'Le niveau de contentement du client après interaction', 'Le temps de pause des agents', 'La vitesse de connexion internet'], correct: 1, points: 2 },
-    { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
-    { id: 3, type: 'qcm', text: 'Que signifie le sigle DMT (Durée Moyenne de Traitement) ?', options: ['Durée totale des appels dans une journée', 'Temps moyen passé par un agent sur chaque appel', 'Nombre de tickets résolus par heure', 'Délai de réponse au premier appel'], correct: 1, points: 2 },
-    { id: 4, type: 'vf', text: 'L\'écoute active consiste à interrompre le client pour lui proposer des solutions rapidement.', options: ['Vrai', 'Faux'], correct: 1, points: 1 },
-    { id: 5, type: 'qcm', text: 'Quelle est la bonne attitude face à un client mécontent ?', options: ['Raccrocher poliment', 'Écouter, comprendre, s\'excuser si nécessaire et proposer une solution', 'Transférer immédiatement l\'appel', 'Ignorer les plaintes et continuer le script'], correct: 1, points: 2 },
-    { id: 6, type: 'open', text: 'Décrivez en quelques lignes votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
+    { id: 1, type: 'qcm', text: 'Quel profil OM Business est adapté à un vendeur ambulant sans local fixe et sans registre de commerce ?', options: ['OM Business Premium', 'OM Business Classique', 'OM Business Essentiel', 'Non éligible à OM Business'], correct: 2, points: 1 },
+    { id: 2, type: 'qcm', text: 'Un marchand MTN vous demande s\'il peut recevoir des paiements Orange Money. Que lui répondez-vous ?', options: ['Non — il doit avoir une SIM Orange', 'Oui — c\'est le client qui paie avec son Orange Money, le marchand n\'a pas besoin de SIM Orange', 'Non — OM Business est réservé aux clients Orange', 'Oui — mais uniquement avec le profil Premium'], correct: 1, points: 1 },
+    { id: 3, type: 'qcm', text: 'Quels sont les 3 profils OM Business par ordre croissant de taille de commerce ?', options: ['Basic, Standard, Premium', 'Essentiel, Classique, Premium', 'Light, Classic, Pro', 'Nano, Micro, Macro'], correct: 1, points: 1 },
+    { id: 4, type: 'qcm', text: 'Quel document est requis pour créer un compte OM Business Classique ?', options: ['CNI uniquement', 'CNI + Registre de commerce ou patente fiscale', 'CNI + Bilans financiers + RC', 'Aucun document'], correct: 1, points: 1 },
+    { id: 5, type: 'qcm', text: 'Un marchand souhaite encaisser des paiements à distance depuis son téléphone. Quelle fonctionnalité lui proposez-vous ?', options: ['Le QR Code imprimé', 'Le lien de paiement OM Business', 'Le retrait USSD', 'Le virement bancaire OM'], correct: 1, points: 1 },
+    { id: 6, type: 'open', text: 'Décrivez les étapes d\'enrôlement d\'un marchand via l\'Application Agent, de la première rencontre à la remise du QR Code.', options: [], correct: 0, points: 3 }
   ];
   renderQuestions();
   alert('✅ Questions exemples chargées !');
