@@ -1155,9 +1155,13 @@
       </div>
       <p class="landing-subtitle">Plateforme d'évaluation des candidats — QCM, Vrai/Faux et questions ouvertes avec correction automatique et classement en temps réel.</p>
       <div class="landing-buttons">
-        <button class="btn btn-primary" onclick="goToEvaluation()" style="padding:13px 28px;font-size:0.95rem">
+        <button class="btn btn-primary" id="btn-start-eval" onclick="tryStartEval()" style="padding:13px 28px;font-size:0.95rem">
           🟠&nbsp; Commencer — Orange Money Business
         </button>
+        <div id="eval-closed-msg" style="display:none;margin-top:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.4);border-radius:12px;padding:14px 18px;color:#ef4444;font-size:0.9rem;font-weight:500;text-align:center">
+          🔒 L'évaluation est temporairement fermée.<br>
+          <span style="font-size:0.82rem;font-weight:400;opacity:.85">Contactez l'administrateur pour obtenir l'accès.</span>
+        </div>
         <button class="btn btn-secondary" onclick="showScreen('screen-check-result')">
           🔑&nbsp; Consulter mes résultats
         </button>
@@ -1271,7 +1275,8 @@
       <div class="config-card">
         <h3>📤 Actions</h3>
         <div style="display:flex;gap:1rem;flex-wrap:wrap">
-          <button class="btn btn-success" onclick="activateExam()">✅ Activer l'évaluation</button>
+          <button class="btn btn-success" id="btn-activate" onclick="activateExam()">✅ Activer l'évaluation</button>
+          <button class="btn btn-danger" id="btn-deactivate" onclick="deactivateExam()" style="display:none">🔒 Fermer l'évaluation</button>
           <button class="btn btn-danger" onclick="resetExam()">🗑 Réinitialiser tout</button>
           <button class="btn btn-orange" onclick="exportResults()">📥 Exporter CSV</button>
         </div>
@@ -1556,6 +1561,17 @@ function selectOperation(op) {
   setupCandidateEntry();
   showScreen('screen-candidate-entry');
 }
+function tryStartEval() {
+  const msg = document.getElementById('eval-closed-msg');
+  if(!state.examActive) {
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 5000);
+    return;
+  }
+  msg.style.display = 'none';
+  goToEvaluation();
+}
+
 function goToEvaluation() {
   state.currentOperation = 'orange';
   setupCandidateEntry();
@@ -1931,7 +1947,16 @@ function activateExam() {
   saveConfig();
   saveQuestions();
   state.examActive = true;
-  showAlert('exam-status', '✅ Évaluation activée ! Les candidats peuvent maintenant composer.', 'alert-success');
+  document.getElementById('btn-activate').style.display = 'none';
+  document.getElementById('btn-deactivate').style.display = '';
+  showAlert('exam-status', '✅ Évaluation ouverte ! Les candidats peuvent maintenant composer.', 'alert-success');
+}
+
+function deactivateExam() {
+  state.examActive = false;
+  document.getElementById('btn-activate').style.display = '';
+  document.getElementById('btn-deactivate').style.display = 'none';
+  showAlert('exam-status', '🔒 Évaluation fermée. Les candidats ne peuvent plus accéder.', 'alert-error');
 }
 
 function showAlert(id, msg, cls) {
@@ -3114,7 +3139,7 @@ state.questions = [
   { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
   { id: 3, type: 'open', text: 'Décrivez votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
 ];
-state.examActive = true;
+state.examActive = false; // Fermé par défaut — activer depuis le panneau Admin
 // Restaurer les resultats depuis localStorage
 try {
   const stored = localStorage.getItem('mafa_all_results');
