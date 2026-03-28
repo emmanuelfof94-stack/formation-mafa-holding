@@ -2745,7 +2745,8 @@ function finalizeExam() {
     date: new Date().toLocaleString('fr-FR'),
     answers: {...state.currentAnswers},
     resultCode,
-    examTitle: state.config.title
+    examTitle: state.config.title,
+    questions: autoQuestions.map(q => ({ id:q.id, type:q.type, text:q.text, options:q.options.slice(), correct:q.correct }))
   };
   state.results.push(result);
 
@@ -2806,8 +2807,11 @@ function showCandidateResults(result) {
   else if(result.percentage >= 40) { mentionEl.textContent = '⚠️ Moyen'; mentionEl.className = 'result-mention mention-moyen'; }
   else { mentionEl.textContent = '❌ Insuffisant'; mentionEl.className = 'result-mention mention-insuffisant'; }
 
-  // Detail
-  const autoQ = state.questions.filter(q => q.type !== 'open');
+  // Detail — utiliser les questions sauvegardées dans result (si disponibles)
+  // sinon fallback sur state.questions (session en cours)
+  const autoQ = (result.questions && result.questions.length > 0)
+    ? result.questions.filter(q => q.type !== 'open')
+    : state.questions.filter(q => q.type !== 'open');
   const letters = ['A','B','C','D','E','F'];
   document.getElementById('result-answers-list').innerHTML = autoQ.map((q, idx) => {
     const ans = result.answers[q.id];
