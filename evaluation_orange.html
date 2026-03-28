@@ -3139,7 +3139,7 @@ state.questions = [
   { id: 2, type: 'vf', text: 'Un agent doit toujours identifier le client avant de traiter sa demande.', options: ['Vrai', 'Faux'], correct: 0, points: 1 },
   { id: 3, type: 'open', text: 'Décrivez votre méthode pour gérer un appel difficile avec un client en colère.', options: [], correct: 0, points: 5 }
 ];
-state.examActive = false; // Fermé par défaut — activer depuis le panneau Admin
+state.examActive = true;
 // Restaurer les resultats depuis localStorage
 try {
   const stored = localStorage.getItem('mafa_all_results');
