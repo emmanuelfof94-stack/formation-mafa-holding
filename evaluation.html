@@ -2767,9 +2767,6 @@ function finalizeExam() {
           poste: result.posteLabel || state.currentCandidate.poste,
           score_final: result.score,
           total_questions: result.maxScore,
-          correct: result.correct,
-          wrong: result.wrong,
-          percentage: result.percentage,
           reponses: Object.keys(state.currentAnswers).map(function(k) {
             return { question_id: k, answer: state.currentAnswers[k] };
           }),
@@ -2779,6 +2776,8 @@ function finalizeExam() {
       }
     } catch(e) {
       console.error('[Supabase] Erreur sauvegarde évaluation:', e);
+      var nb = document.getElementById('supabase-save-warning');
+      if(nb) nb.style.display = 'block';
     }
   })();
 

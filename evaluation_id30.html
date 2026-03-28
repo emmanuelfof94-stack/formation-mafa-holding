@@ -2708,9 +2708,14 @@ function finalizeExam() {
         console.log('[Supabase] Evaluation sauvegardee avec succes');
       } else {
         console.warn('[Supabase] Impossible de sauvegarder - aucun candidat ID');
+        // Afficher alerte discrète pour que le candidat note son code
+        var nb = document.getElementById('supabase-save-warning');
+        if(nb) nb.style.display = 'block';
       }
     } catch(e) {
       console.error('[Supabase] Erreur sauvegarde evaluation:', e);
+      var nb = document.getElementById('supabase-save-warning');
+      if(nb) nb.style.display = 'block';
     }
   })();
 
