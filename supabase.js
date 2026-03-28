@@ -151,12 +151,9 @@ async function getProgression(candidat_id) {
 // EVALUATIONS
 // ══════════════════════════════════════
 
-async function saveEvaluation({ candidat_id, poste, score_final, total_questions, correct, wrong, percentage, reponses, duree_secondes }) {
+async function saveEvaluation({ candidat_id, poste, score_final, total_questions, reponses, duree_secondes }) {
   const sb = getSupabase();
   const payload = { candidat_id, poste, score_final, total_questions, reponses: reponses || [], duree_secondes };
-  if (correct !== undefined) payload.correct = correct;
-  if (wrong !== undefined) payload.wrong = wrong;
-  if (percentage !== undefined) payload.percentage = percentage;
   const { data, error } = await sb
     .from('evaluations')
     .insert(payload)
