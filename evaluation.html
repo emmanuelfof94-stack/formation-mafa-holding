@@ -2757,7 +2757,10 @@ function finalizeExam() {
           candidat_id: candidatId,
           poste: result.posteLabel || state.currentCandidate.poste,
           score_final: result.score,
-          total_questions: autoQuestions.length,
+          total_questions: result.maxScore,
+          correct: result.correct,
+          wrong: result.wrong,
+          percentage: result.percentage,
           reponses: Object.keys(state.currentAnswers).map(function(k) {
             return { question_id: k, answer: state.currentAnswers[k] };
           }),
@@ -2976,7 +2979,12 @@ async function loadResultsFromSupabase() {
         var nameParts = c.prenom ? [c.prenom, c.nom || ''] : (c.nom || '').split(' ');
         var totalQ = ev.total_questions || 30;
         var scoreFinal = ev.score_final || 0;
-        var pct = totalQ > 0 ? Math.round(scoreFinal / totalQ * 100) : 0;
+        // Utiliser le pourcentage stocké si disponible, sinon recalculer
+        var pct = ev.percentage !== undefined && ev.percentage !== null
+          ? ev.percentage
+          : (totalQ > 0 ? Math.round(scoreFinal / totalQ * 100) : 0);
+        // Clamp à 100% pour éviter l'affichage aberrant sur anciennes données
+        pct = Math.min(pct, 100);
         return {
           firstname: nameParts[0] || '',
           lastname: nameParts.slice(1).join(' ') || '',
@@ -2986,8 +2994,8 @@ async function loadResultsFromSupabase() {
           score: scoreFinal,
           maxScore: totalQ,
           percentage: pct,
-          correct: scoreFinal,
-          wrong: totalQ - scoreFinal,
+          correct: ev.correct !== undefined ? ev.correct : Math.round(scoreFinal),
+          wrong: ev.wrong !== undefined ? ev.wrong : Math.max(0, totalQ - scoreFinal),
           duration: ev.duree_secondes ? Math.floor(ev.duree_secondes/60) + 'min ' + (ev.duree_secondes%60) + 's' : '—',
           date: new Date(ev.created_at).toLocaleString('fr-FR'),
           resultCode: ev.id,
