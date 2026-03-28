@@ -1570,6 +1570,13 @@ function showScreen(id) {
     state.results = [];
     try { const s = localStorage.getItem('mafa_all_results'); if(s) state.results = JSON.parse(s); } catch(e) {}
     loadResultsFromSupabase().then(function() { renderResults(); });
+    // Auto-refresh toutes les 30 secondes
+    if (state._adminPollInterval) clearInterval(state._adminPollInterval);
+    state._adminPollInterval = setInterval(function() {
+      loadResultsFromSupabase().then(function() { renderResults(); });
+    }, 30000);
+  } else {
+    if (state._adminPollInterval) { clearInterval(state._adminPollInterval); state._adminPollInterval = null; }
   }
   const modes = {
     'screen-landing': 'Accueil',

@@ -162,7 +162,7 @@ async function saveEvaluation({ candidat_id, poste, score_final, total_questions
 
   if (error) {
     console.error('[Supabase] Erreur sauvegarde évaluation:', error);
-    return null;
+    throw new Error(error.message || JSON.stringify(error));
   }
   return data;
 }
