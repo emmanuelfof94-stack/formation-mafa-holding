@@ -2600,21 +2600,38 @@ function finalizeExam() {
   (async function() {
     try {
       var candidatId = state._supabaseCandidatId;
+      // Fallback : si candidatId absent (echec login), creer le candidat maintenant
+      if (!candidatId) {
+        try {
+          var c = state.currentCandidate;
+          var fallback = await loginOrCreateCandidat({
+            nom: c.lastname || '',
+            prenom: c.firstname || '',
+            telephone: c.phone || '0000000000',
+            poste: c.poste || ''
+          });
+          if (fallback && fallback.candidat) candidatId = fallback.candidat.id;
+        } catch(fe) {
+          console.warn('[Supabase] Fallback candidat echoue:', fe);
+        }
+      }
       if (candidatId) {
         await saveEvaluation({
           candidat_id: candidatId,
           poste: result.posteLabel || state.currentCandidate.poste,
           score_final: result.score,
-          total_questions: autoQuestions.length,
+          total_questions: result.maxScore,
           reponses: Object.keys(state.currentAnswers).map(function(k) {
             return { question_id: k, answer: state.currentAnswers[k] };
           }),
           duree_secondes: duration
         });
-        console.log('[Supabase] Évaluation sauvegardée avec succès');
+        console.log('[Supabase] Evaluation sauvegardee avec succes');
+      } else {
+        console.warn('[Supabase] Impossible de sauvegarder - aucun candidat ID');
       }
     } catch(e) {
-      console.error('[Supabase] Erreur sauvegarde évaluation:', e);
+      console.error('[Supabase] Erreur sauvegarde evaluation:', e);
     }
   })();
 
