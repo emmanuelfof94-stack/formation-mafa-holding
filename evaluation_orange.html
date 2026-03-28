@@ -2861,6 +2861,7 @@ function renderResults() {
     return;
   }
   const sorted = [...filtered].sort((a,b) => b.percentage - a.percentage);
+  window._adminResults = sorted; // référence globale pour openCandidateDetail
   const avg = Math.round(sorted.reduce((s,r) => s+r.percentage, 0) / sorted.length);
   const top = sorted[0].percentage;
   const opLabelMap = { orange: '🟠', id30: '🔵', undefined: '🔵' };
@@ -2909,7 +2910,7 @@ function renderResults() {
               </td>
               <td style="font-size:0.82rem">${r.duration}</td>
               <td style="font-size:0.78rem;color:var(--text-muted)">${r.date}</td>
-              <td><button class="btn btn-secondary btn-sm" style="padding:4px 12px;font-size:0.75rem" onclick="openCandidateDetail(state.results.find(x=>String(x.resultCode)==='${r.resultCode}'))">&#128269; Voir</button></td>
+              <td><button class="btn btn-secondary btn-sm" style="padding:4px 12px;font-size:0.75rem" onclick="openCandidateDetail(window._adminResults[${i}])">&#128269; Voir</button></td>
             </tr>`;
           }).join('')}
         </tbody>
@@ -2989,10 +2990,14 @@ function getQuestionsForPoste(posteLabel) {
 }
 
 function openCandidateDetail(result) {
-  if (!result) return;
   const modal = document.getElementById('admin-detail-modal');
   const content = document.getElementById('admin-detail-content');
-  if (!modal || !content) return;
+  if (!modal || !content) { alert('Erreur : modal introuvable dans le DOM.'); return; }
+  if (!result) {
+    content.innerHTML = '<div style="padding:2rem;text-align:center;color:red">Résultat introuvable.</div>';
+    modal.classList.add('active');
+    return;
+  }
 
   const questions = result._fromSupabase
     ? getQuestionsForPoste(result.posteLabel)
