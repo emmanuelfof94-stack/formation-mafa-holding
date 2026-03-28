@@ -2336,6 +2336,8 @@ async function startExam() {
   };
   const bank = QUESTIONS_BY_POSTE_ORANGE;
   let rawQuestions = bank[poste] || [];
+  // Assigner les IDs stables depuis la position du bank (avant mélange)
+  rawQuestions = rawQuestions.map((q, i) => ({...q, id: i + 1}));
   // Mélange aléatoire : questions fermées mélangées, questions ouvertes à la fin
   (function shuffleBank() {
     const open = rawQuestions.filter(q => q.type === 'open');
@@ -2346,7 +2348,7 @@ async function startExam() {
     }
     rawQuestions = [...closed, ...open];
   })();
-  state.questions = rawQuestions.map((q, i) => ({...q, id: i + 1}));
+  state.questions = rawQuestions; // IDs déjà stables depuis le bank
   if(state.questions.length === 0) {
     errorEl.style.display = 'flex';
     errorEl.textContent = '❌ Aucune question disponible pour ce rôle.';
@@ -2907,7 +2909,7 @@ function renderResults() {
               </td>
               <td style="font-size:0.82rem">${r.duration}</td>
               <td style="font-size:0.78rem;color:var(--text-muted)">${r.date}</td>
-              <td><button class="btn btn-secondary btn-sm" style="padding:4px 12px;font-size:0.75rem" onclick="openCandidateDetail(state.results.find(x=>x.resultCode==='${r.resultCode}'))">&#128269; Voir</button></td>
+              <td><button class="btn btn-secondary btn-sm" style="padding:4px 12px;font-size:0.75rem" onclick="openCandidateDetail(state.results.find(x=>String(x.resultCode)==='${r.resultCode}'))">&#128269; Voir</button></td>
             </tr>`;
           }).join('')}
         </tbody>
@@ -2944,7 +2946,7 @@ async function loadResultsFromSupabase() {
           wrong: totalQ - scoreFinal,
           duration: ev.duree_secondes ? Math.floor(ev.duree_secondes/60) + 'min ' + (ev.duree_secondes%60) + 's' : '—',
           date: new Date(ev.created_at).toLocaleString('fr-FR'),
-          resultCode: ev.id,
+          resultCode: String(ev.id),
           _fromSupabase: true
         };
       });
