@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évolution O'CALM → OM Business V9 — Formation MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#8D0C23; --blue-light:#B5112C; --blue-pale:#F9E8EC;
+  --orange:#CF9E41; --orange-light:#DDB55A; --orange-pale:#FAF3E0;
+  --teal:#584B26; --teal-pale:#F3EDD8;
+  --red:#6A091A; --red-pale:#F2D6DC;
+  --grey:#455A64; --grey-light:#ECEFF1;
+  --om-brand:#FF6600; --om-pale:#FFF3E0;
+  --bg:#FCFBF8; --sidebar-w:270px;
+  --ocalm:#1565C0; --ocalm-pale:#E3F2FD;
+  --omv9:#2E7D32; --omv9-pale:#E8F5E9;
+  --diff:#7B1FA2; --diff-pale:#F3E5F5;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:linear-gradient(135deg,var(--blue),#5A0815); color:white; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 3px 16px rgba(141,12,35,.35); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.back-btn { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:white; padding:7px 14px; border-radius:8px; font-size:.82rem; font-weight:600; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,.22); }
+.module-title-top { font-size:1rem; font-weight:700; }
+.module-subtitle-top { font-size:.75rem; color:rgba(255,255,255,.65); }
+.topbar-badge { background:var(--orange); color:var(--teal); padding:5px 12px; border-radius:20px; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+
+.layout { display:flex; flex:1; }
+.sidebar { width:var(--sidebar-w); background:white; border-right:1px solid #e8ddd0; padding:24px 0; position:sticky; top:51px; height:calc(100vh - 51px); overflow-y:auto; flex-shrink:0; }
+.sidebar-section { padding:0 18px; margin-bottom:8px; }
+.sidebar-section-title { font-size:.65rem; text-transform:uppercase; letter-spacing:.14em; color:var(--grey); font-weight:700; margin-bottom:8px; padding:0 6px; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:10px; cursor:pointer; font-size:.83rem; font-weight:500; color:var(--grey); transition:all .2s; margin-bottom:2px; border:none; background:none; width:100%; text-align:left; font-family:'Sora',sans-serif; }
+.nav-item:hover { background:var(--blue-pale); color:var(--blue); }
+.nav-item.active { background:var(--blue-pale); color:var(--blue); font-weight:700; }
+.nav-divider { height:1px; background:var(--grey-light); margin:12px 18px; }
+
+.main-content { flex:1; padding:36px 40px; max-width:980px; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* HERO */
+.module-hero { background:linear-gradient(135deg,var(--ocalm-pale),var(--omv9-pale)); border-radius:20px; padding:36px; margin-bottom:32px; border:1px solid rgba(21,101,192,.15); }
+.module-hero-icon { font-size:3rem; margin-bottom:12px; }
+.module-hero h1 { font-size:1.85rem; font-weight:800; color:var(--blue); margin-bottom:8px; line-height:1.2; }
+.module-hero p { font-size:.92rem; color:var(--grey); line-height:1.7; max-width:720px; }
+.module-hero-meta { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+.meta-chip { font-size:.78rem; padding:5px 12px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+.chip-blue { background:var(--ocalm-pale); color:var(--ocalm); }
+.chip-green { background:var(--omv9-pale); color:var(--omv9); }
+.chip-purple { background:var(--diff-pale); color:var(--diff); }
+.chip-red { background:var(--blue-pale); color:var(--blue); }
+.chip-gold { background:var(--orange-pale); color:var(--teal); }
+
+/* VERSION TAGS */
+.v-tag { font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; padding:4px 10px; border-radius:20px; display:inline-block; }
+.v-old { background:var(--ocalm); color:white; }
+.v-new { background:var(--omv9); color:white; }
+.v-diff { background:var(--diff); color:white; }
+
+/* SECTION HEADING */
+.section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
+.section-heading:first-child { margin-top:0; }
+.section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
+
+/* CARDS */
+.info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
+.info-card p { font-size:.88rem; color:var(--grey); line-height:1.7; }
+.info-card ul { list-style:none; margin-top:10px; }
+.info-card ul li { font-size:.86rem; color:var(--grey); padding:5px 0; border-bottom:1px solid var(--grey-light); display:flex; gap:8px; align-items:flex-start; line-height:1.5; }
+.info-card ul li:last-child { border-bottom:none; }
+.info-card ul li::before { content:'▸'; color:var(--orange); flex-shrink:0; margin-top:1px; }
+
+/* COMPARAISON 2 COLONNES */
+.vs-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:16px 0 24px; }
+.vs-card { border-radius:14px; padding:22px; border:2px solid; }
+.vs-old { background:var(--ocalm-pale); border-color:var(--ocalm); }
+.vs-new { background:var(--omv9-pale); border-color:var(--omv9); }
+.vs-card .vs-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.vs-card .vs-title { font-size:.95rem; font-weight:700; color:#2C3E50; }
+.vs-card ul { list-style:none; }
+.vs-card ul li { font-size:.84rem; color:var(--grey); padding:5px 0; border-bottom:1px solid rgba(0,0,0,.07); display:flex; gap:8px; align-items:flex-start; line-height:1.5; }
+.vs-card ul li:last-child { border-bottom:none; }
+.vs-old ul li::before { content:'●'; color:var(--ocalm); flex-shrink:0; font-size:.6rem; margin-top:4px; }
+.vs-new ul li::before { content:'●'; color:var(--omv9); flex-shrink:0; font-size:.6rem; margin-top:4px; }
+
+/* DIFF HIGHLIGHT */
+.diff-card { background:var(--diff-pale); border-radius:14px; padding:22px 24px; margin-bottom:16px; border:2px solid var(--diff); }
+.diff-card h3 { font-size:1rem; font-weight:700; color:var(--diff); margin-bottom:12px; }
+.diff-card ul { list-style:none; }
+.diff-card ul li { font-size:.86rem; color:#4A148C; padding:6px 0; border-bottom:1px solid rgba(123,31,162,.12); display:flex; gap:8px; align-items:flex-start; line-height:1.5; }
+.diff-card ul li:last-child { border-bottom:none; }
+.diff-card ul li::before { content:'✦'; color:var(--diff); flex-shrink:0; font-size:.8rem; margin-top:1px; }
+
+/* TABLEAU COMPARATIF */
+.styled-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); margin:16px 0 24px; font-size:.83rem; }
+.styled-table th { background:var(--blue); color:white; padding:12px 16px; text-align:left; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+.styled-table th.th-old { background:var(--ocalm); }
+.styled-table th.th-new { background:var(--omv9); }
+.styled-table th.th-diff { background:var(--diff); }
+.styled-table td { padding:11px 16px; border-bottom:1px solid #f0e8e0; color:var(--grey); line-height:1.5; vertical-align:top; }
+.styled-table tr:nth-child(even) td { background:var(--bg); }
+.styled-table tr:last-child td { border-bottom:none; }
+.td-old { background:var(--ocalm-pale) !important; color:var(--ocalm) !important; font-weight:600; }
+.td-new { background:var(--omv9-pale) !important; color:var(--omv9) !important; font-weight:600; }
+.td-absent { color:#B0BEC5 !important; font-style:italic; }
+
+/* ALERTS */
+.alert { border-radius:12px; padding:16px 20px; margin:14px 0; display:flex; gap:12px; font-size:.86rem; line-height:1.6; }
+.alert-icon { font-size:1.2rem; flex-shrink:0; }
+.alert-text { color:var(--grey); }
+.alert-text strong { color:#2C3E50; }
+.alert-info { background:var(--teal-pale); border-left:4px solid var(--teal); }
+.alert-warn { background:var(--orange-pale); border-left:4px solid var(--orange); }
+.alert-success { background:var(--omv9-pale); border-left:4px solid var(--omv9); }
+.alert-diff { background:var(--diff-pale); border-left:4px solid var(--diff); }
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:32px; margin:16px 0 24px; }
+.timeline::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:3px; background:linear-gradient(180deg,var(--ocalm),var(--diff),var(--omv9)); border-radius:2px; }
+.timeline-item { position:relative; margin-bottom:22px; }
+.timeline-dot { position:absolute; left:-27px; top:4px; width:14px; height:14px; border-radius:50%; border:3px solid white; box-shadow:0 0 0 2px; }
+.dot-old { background:var(--ocalm); box-shadow:0 0 0 2px var(--ocalm); }
+.dot-new { background:var(--omv9); box-shadow:0 0 0 2px var(--omv9); }
+.dot-diff { background:var(--diff); box-shadow:0 0 0 2px var(--diff); }
+.timeline-content { background:white; border-radius:12px; padding:14px 18px; border:1px solid #e8ddd0; }
+.timeline-content strong { font-size:.9rem; color:#2C3E50; }
+.timeline-content p { font-size:.82rem; color:var(--grey); margin-top:4px; line-height:1.5; }
+
+/* PROCESS STEPS */
+.steps-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0 24px; }
+.step-card { background:white; border-radius:14px; padding:18px 20px; border:1px solid #e8ddd0; display:flex; gap:14px; align-items:flex-start; }
+.step-num { background:var(--blue); color:white; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; margin-top:2px; }
+.step-card h4 { font-size:.9rem; font-weight:700; color:#2C3E50; margin-bottom:4px; }
+.step-card p { font-size:.82rem; color:var(--grey); line-height:1.5; }
+
+/* BADGE INLINE */
+.badge-inline { font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:700; padding:2px 8px; border-radius:10px; display:inline-block; vertical-align:middle; margin-left:4px; }
+.bi-old { background:var(--ocalm-pale); color:var(--ocalm); }
+.bi-new { background:var(--omv9-pale); color:var(--omv9); }
+.bi-diff { background:var(--diff-pale); color:var(--diff); }
+
+/* STYLED LIST */
+.styled-list { list-style:none; padding:0; margin:12px 0; }
+.styled-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:.87rem; color:var(--grey); line-height:1.5; border-bottom:1px solid var(--grey-light); }
+.styled-list li:last-child { border-bottom:none; }
+.styled-list li::before { content:'▸'; color:var(--orange); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+
+/* NOTICE IMPORTANT */
+.notice-box { background:white; border:2px solid var(--orange); border-radius:14px; padding:20px 24px; margin:18px 0; }
+.notice-box h4 { color:var(--teal); font-size:.95rem; font-weight:700; margin-bottom:8px; }
+.notice-box p { font-size:.86rem; color:var(--grey); line-height:1.6; }
+
+/* CHECKLIST */
+.checklist { list-style:none; margin:12px 0; }
+.checklist li { display:flex; align-items:flex-start; gap:10px; padding:7px 0; font-size:.86rem; color:var(--grey); line-height:1.5; border-bottom:1px solid var(--grey-light); }
+.checklist li:last-child { border-bottom:none; }
+.check-icon { flex-shrink:0; margin-top:1px; font-size:1rem; }
+.ci-old { color:var(--ocalm); }
+.ci-new { color:var(--omv9); }
+.ci-warn { color:var(--orange); }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Portail</a>
+    <div>
+      <div class="module-title-top">Évolution O'CALM → OM Business V9</div>
+      <div class="module-subtitle-top">Module comparatif — Transition & nouveautés</div>
+    </div>
+  </div>
+  <div class="topbar-badge">ÉVOLUTION</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Navigation</div>
+      <button class="nav-item active" onclick="showPage('p0',this)">🏠 Vue d'ensemble</button>
+      <button class="nav-item" onclick="showPage('p1',this)">🔄 Nomenclature & Identité</button>
+      <button class="nav-item" onclick="showPage('p2',this)">👤 Profils Marchands</button>
+      <button class="nav-item" onclick="showPage('p3',this)">📱 Applications & Outils</button>
+      <button class="nav-item" onclick="showPage('p4',this)">⚙️ Processus & Procédures</button>
+      <button class="nav-item" onclick="showPage('p5',this)">💰 Fonctionnalités</button>
+      <button class="nav-item" onclick="showPage('p6',this)">📋 Documentation</button>
+      <button class="nav-item" onclick="showPage('p7',this)">🎯 Tableau synthèse</button>
+      <button class="nav-item" onclick="showPage('p8',this)">⚠️ Points de vigilance</button>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Légende</div>
+      <div style="padding:6px 6px;font-size:.78rem;color:var(--grey);display:flex;flex-direction:column;gap:6px;">
+        <div><span class="v-tag v-old">O'CALM</span> Ancienne version</div>
+        <div><span class="v-tag v-new">V9 OMB</span> Nouvelle version</div>
+        <div><span class="v-tag v-diff">NOUVEAU</span> Ajout V9</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PAGE 0 — VUE D'ENSEMBLE -->
+    <div id="p0" class="page active">
+
+      <div class="module-hero">
+        <div class="module-hero-icon">🔄</div>
+        <h1>De O'CALM à OM Business V9</h1>
+        <p>Ce module présente les évolutions entre la solution O'CALM (module de formation opérationnel terrain) et la nouvelle plateforme OM Business V9 (brief produit). Il permet aux équipes d'identifier ce qui change, ce qui est nouveau, et ce qu'il faut retenir pour la transition.</p>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-blue">O'CALM 50 — v1</span>
+          <span class="meta-chip chip-green">OM Business — V9</span>
+          <span class="meta-chip chip-purple">8 axes d'évolution</span>
+          <span class="meta-chip chip-gold">Formation comparative</span>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <div class="section-num">01</div>
+        <h2>Contexte de l'évolution</h2>
+      </div>
+
+      <div class="vs-grid">
+        <div class="vs-card vs-old">
+          <div class="vs-header"><span class="v-tag v-old">O'CALM</span><span class="vs-title">Ancienne solution</span></div>
+          <ul>
+            <li>Offre ciblée : marchands informels uniquement</li>
+            <li>Enrôlement via MAXIT ou OMA</li>
+            <li>Formation axée terrain commercial</li>
+            <li>Un seul profil : "OCALM 50"</li>
+            <li>Fonctionnalité principale : encaissement QR</li>
+            <li>Application Agent pour localisation GPS</li>
+          </ul>
+        </div>
+        <div class="vs-card vs-new">
+          <div class="vs-header"><span class="v-tag v-new">V9 OMB</span><span class="vs-title">Nouvelle plateforme</span></div>
+          <ul>
+            <li>Plateforme unifiée : 3 profils marchands</li>
+            <li>Application OM Business + accès web</li>
+            <li>Vision stratégique produit complète</li>
+            <li>Couverture : informel, PME, grandes entreprises</li>
+            <li>Onboarding 100% digital</li>
+            <li>Inclusion financière sans SIM Orange (OTT)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-text"><strong>Nature des documents :</strong> O'CALM est un module de formation terrain (comment faire), OM Business V9 est un brief produit stratégique (ce que le produit est). Ils sont complémentaires mais ne couvrent pas le même périmètre.</div>
+      </div>
+
+      <div class="section-heading">
+        <div class="section-num">02</div>
+        <h2>Les 8 axes d'évolution principaux</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot dot-old"></div>
+          <div class="timeline-content">
+            <strong>1. Nomenclature</strong>
+            <p><span class="badge-inline bi-old">AVANT</span> "OCALM 50", "OMB Informel" → <span class="badge-inline bi-new">APRÈS</span> "OM Business Essentiel / Classique / Premium"</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-diff"></div>
+          <div class="timeline-content">
+            <strong>2. Profils marchands</strong>
+            <p>1 profil unique → 3 profils segmentés par chiffre d'affaires et taille d'entreprise</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-diff"></div>
+          <div class="timeline-content">
+            <strong>3. Applications d'enrôlement</strong>
+            <p>MAXIT + OMA (outils terrain) → Application OM Business unifiée + version Web</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-diff"></div>
+          <div class="timeline-content">
+            <strong>4. Périmètre fonctionnel</strong>
+            <p>Enrôlement QR uniquement → Encaissement + transfert + retrait + historique + remboursement + déplafonnement</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-new"></div>
+          <div class="timeline-content">
+            <strong>5. Clients sans SIM Orange</strong>
+            <p>Non couvert → Inclus explicitement (OTT — Over The Top)</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-new"></div>
+          <div class="timeline-content">
+            <strong>6. Création de compte Non-OM</strong>
+            <p>Non décrite → Parcours complet avec validation Back Office</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-new"></div>
+          <div class="timeline-content">
+            <strong>7. Déplafonnement</strong>
+            <p>Non couvert → Procédure formelle avec documentation officielle par profil</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot dot-new"></div>
+          <div class="timeline-content">
+            <strong>8. Services futurs</strong>
+            <p>Aucun → Tik Tak Pro (crédit & épargne, en cours de déploiement)</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /p0 -->
+
+
+    <!-- PAGE 1 — NOMENCLATURE -->
+    <div id="p1" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">01</div>
+        <h2>Nomenclature & Identité produit</h2>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text"><strong>Point de vigilance :</strong> Les deux documents utilisent des noms différents pour désigner des réalités proches. Ce changement de terminologie est intentionnel — il marque le passage à une gamme structurée.</div>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Concept</th>
+            <th class="th-old">O'CALM (ancienne version)</th>
+            <th class="th-new">OM Business V9</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Nom de la solution</strong></td>
+            <td class="td-old">O'CALM 50</td>
+            <td class="td-new">OM Business</td>
+          </tr>
+          <tr>
+            <td><strong>Nom du profil informel</strong></td>
+            <td class="td-old">OCALM 50 / OMB Informel</td>
+            <td class="td-new">OM Business Essentiel</td>
+          </tr>
+          <tr>
+            <td><strong>Nom du profil PME</strong></td>
+            <td class="td-absent">Non défini</td>
+            <td class="td-new">OM Business Classique</td>
+          </tr>
+          <tr>
+            <td><strong>Nom du profil grand compte</strong></td>
+            <td class="td-absent">Non défini</td>
+            <td class="td-new">OM Business Premium</td>
+          </tr>
+          <tr>
+            <td><strong>Anciens clients O'Calm</strong></td>
+            <td class="td-old">O'Calm 50</td>
+            <td class="td-new">Intégrés à OM Business Essentiel</td>
+          </tr>
+          <tr>
+            <td><strong>Anciens clients Small Business</strong></td>
+            <td class="td-absent">Non mentionné</td>
+            <td class="td-new">Intégrés à OM Business Classique</td>
+          </tr>
+          <tr>
+            <td><strong>Anciens clients Classiques USSD</strong></td>
+            <td class="td-absent">Non mentionné</td>
+            <td class="td-new">Intégrés à OM Business</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-card">
+        <h3>Ce que cela change pour les agents terrain</h3>
+        <ul>
+          <li>Ne plus parler de "O'CALM 50" lors des démarchages — le nom commercial est désormais <strong>OM Business Essentiel</strong></li>
+          <li>Positionner l'offre comme une <strong>gamme structurée</strong> (Essentiel, Classique, Premium) selon le profil du marchand</li>
+          <li>Les anciens marchands OCALM 50 sont déjà dans le système — ils peuvent évoluer vers un profil supérieur</li>
+        </ul>
+      </div>
+
+    </div><!-- /p1 -->
+
+
+    <!-- PAGE 2 — PROFILS MARCHANDS -->
+    <div id="p2" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">02</div>
+        <h2>Profils Marchands</h2>
+      </div>
+
+      <div class="vs-grid">
+        <div class="vs-card vs-old">
+          <div class="vs-header"><span class="v-tag v-old">O'CALM</span><span class="vs-title">1 seul profil</span></div>
+          <ul>
+            <li>Commerçants informels uniquement</li>
+            <li>Pas de segmentation par CA ou taille</li>
+            <li>Micro-marchands, artisans, ambulants</li>
+            <li>Aucun critère de sélection documenté</li>
+            <li>Offre unique : QR code d'encaissement</li>
+          </ul>
+        </div>
+        <div class="vs-card vs-new">
+          <div class="vs-header"><span class="v-tag v-new">V9 OMB</span><span class="vs-title">3 profils segmentés</span></div>
+          <ul>
+            <li>Segmentation par CA annuel et nb employés</li>
+            <li>Profil Essentiel : CA &lt; 150 000 XOF/an</li>
+            <li>Profil Classique : CA 150k–400M XOF/an</li>
+            <li>Profil Premium : CA &gt; 400M XOF/an</li>
+            <li>Fonctionnalités différenciées par profil</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Critère</th>
+            <th class="th-new">Essentiel <span style="font-weight:400;font-size:.78rem;">(≈ O'CALM)</span></th>
+            <th class="th-new">Classique</th>
+            <th class="th-new">Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CA annuel</strong></td>
+            <td>&lt; 150 000 XOF</td>
+            <td>150 000 – 400M XOF</td>
+            <td>&gt; 400M XOF</td>
+          </tr>
+          <tr>
+            <td><strong>Taille</strong></td>
+            <td>1 à 5 employés</td>
+            <td>2 à 10 employés</td>
+            <td>+10 employés</td>
+          </tr>
+          <tr>
+            <td><strong>Cibles</strong></td>
+            <td>Épiciers, ambulants, artisans, VTC, auto-entrepreneurs</td>
+            <td>Détaillants, supérettes, maquis, bars, boulangeries, quincailleries</td>
+            <td>Stations-services, supermarchés, pharmacies, hôtels, organismes publics</td>
+          </tr>
+          <tr>
+            <td><strong>QR Code</strong></td>
+            <td>QR mobile</td>
+            <td>Plusieurs QR imprimés</td>
+            <td>Gestion multi-caisses</td>
+          </tr>
+          <tr>
+            <td><strong>Encaissement à distance</strong></td>
+            <td>Lien de paiement</td>
+            <td>Lien de paiement</td>
+            <td>Lien de paiement</td>
+          </tr>
+          <tr>
+            <td><strong>Retrait sans frais</strong></td>
+            <td>Oui</td>
+            <td>Oui</td>
+            <td>Oui</td>
+          </tr>
+          <tr>
+            <td><strong>Gestion des rôles</strong></td>
+            <td>Non</td>
+            <td>Non</td>
+            <td>Oui</td>
+          </tr>
+          <tr>
+            <td><strong>Déplafonnement</strong></td>
+            <td>Non</td>
+            <td>Annexe 1</td>
+            <td>Annexe 2</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-text"><strong>Opportunité commerciale :</strong> Les agents terrain peuvent désormais proposer une <strong>montée en gamme</strong> aux marchands déjà enrôlés sous O'CALM 50 vers un profil Classique ou Premium selon leur activité réelle.</div>
+      </div>
+
+    </div><!-- /p2 -->
+
+
+    <!-- PAGE 3 — APPLICATIONS & OUTILS -->
+    <div id="p3" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">03</div>
+        <h2>Applications & Outils</h2>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text"><strong>Changement d'outils :</strong> Les applications MAXIT et OMA (utilisées pour l'enrôlement O'CALM) sont remplacées ou complétées par l'application unifiée <strong>OM Business</strong>. Vérifiez auprès de votre responsable quel canal est actif dans votre zone.</div>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Outil / App</th>
+            <th class="th-old">O'CALM</th>
+            <th class="th-new">OM Business V9</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MAXIT</strong></td>
+            <td class="td-old">Canal principal d'enrôlement</td>
+            <td class="td-absent">Non mentionné</td>
+          </tr>
+          <tr>
+            <td><strong>OMA (Orange Money Afrique)</strong></td>
+            <td class="td-old">Canal alternatif d'enrôlement</td>
+            <td class="td-absent">Non mentionné</td>
+          </tr>
+          <tr>
+            <td><strong>Application Agent</strong></td>
+            <td class="td-old">Localisation GPS + enrôlement terrain</td>
+            <td class="td-absent">Non mentionné</td>
+          </tr>
+          <tr>
+            <td><strong>Application OM Business</strong></td>
+            <td class="td-absent">Non mentionné</td>
+            <td class="td-new">Plateforme principale du marchand</td>
+          </tr>
+          <tr>
+            <td><strong>Web OM Business</strong></td>
+            <td class="td-absent">Non disponible</td>
+            <td class="td-new">Accès web complémentaire</td>
+          </tr>
+          <tr>
+            <td><strong>USSD</strong></td>
+            <td class="td-absent">Non couvert</td>
+            <td class="td-new">Canal alternatif pour retrait</td>
+          </tr>
+          <tr>
+            <td><strong>Back Office</strong></td>
+            <td class="td-absent">Non mentionné</td>
+            <td class="td-new">Validation des comptes Non-OM</td>
+          </tr>
+          <tr>
+            <td><strong>QR Code mobile</strong></td>
+            <td class="td-old">Profil OCALM 50</td>
+            <td class="td-new">Profil Essentiel</td>
+          </tr>
+          <tr>
+            <td><strong>QR Code imprimé (multi)</strong></td>
+            <td class="td-absent">Non disponible</td>
+            <td class="td-new">Profil Classique</td>
+          </tr>
+          <tr>
+            <td><strong>Tik Tak Pro</strong></td>
+            <td class="td-absent">Non disponible</td>
+            <td class="td-new">En cours — crédit & épargne</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="vs-grid" style="margin-top:24px;">
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>🔌 Fonctionnement hors connexion</h3>
+          <p><span class="badge-inline bi-old">O'CALM</span> L'Application Agent fonctionnait <strong>hors connexion</strong> pour charger les activités. La connexion n'était requise que pour le déploiement du QR code.</p>
+        </div>
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>🌐 Accès OTT (sans SIM Orange)</h3>
+          <p><span class="badge-inline bi-new">V9 OMB</span> La nouvelle plateforme OM Business est accessible <strong>sans SIM Orange</strong> (OTT — Over The Top). Un marchand peut s'inscrire même sans être client Orange.</p>
+        </div>
+      </div>
+
+    </div><!-- /p3 -->
+
+
+    <!-- PAGE 4 — PROCESSUS & PROCÉDURES -->
+    <div id="p4" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">04</div>
+        <h2>Processus & Procédures</h2>
+      </div>
+
+      <div class="section-heading" style="margin-top:8px;margin-bottom:12px;">
+        <div class="section-num" style="background:var(--ocalm);width:28px;height:28px;font-size:.75rem;">★</div>
+        <h2 style="font-size:1rem;color:var(--ocalm);">Enrôlement O'CALM (ancienne procédure)</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>Parcours de déploiement OCALM 50 — 7 étapes</h3>
+        <ul>
+          <li><strong>Étape 1</strong> — OMCI met à disposition des QR codes à blanc</li>
+          <li><strong>Étape 2</strong> — Commercial propose l'offre avec argumentaire en 5 points</li>
+          <li><strong>Étape 3</strong> — Vérification que le client a un compte OM fonctionnel</li>
+          <li><strong>Étape 4</strong> — Association du QR code au numéro marchand (via MAXIT ou OMA)</li>
+          <li><strong>Étape 5</strong> — Formation du commerçant sur les fonctionnalités + parcours QR</li>
+          <li><strong>Étape 6</strong> — Affichage du QR chez le commerçant</li>
+          <li><strong>Étape 7</strong> — Test de paiement + communication du numéro hotline <strong>0808</strong></li>
+        </ul>
+      </div>
+
+      <div class="section-heading" style="margin-top:8px;margin-bottom:12px;">
+        <div class="section-num" style="background:var(--omv9);width:28px;height:28px;font-size:.75rem;">★</div>
+        <h2 style="font-size:1rem;color:var(--omv9);">Création de compte OM Business V9 (nouvelle procédure)</h2>
+      </div>
+
+      <div class="vs-grid">
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>Clients déjà Orange Money (OM)</h3>
+          <ul>
+            <li>Parcours simplifié depuis l'application OM Business</li>
+            <li>Identification par numéro OM existant</li>
+            <li>Validation automatique (pas de Back Office)</li>
+            <li>Compte activé immédiatement</li>
+          </ul>
+        </div>
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>Clients NON Orange Money <span class="badge-inline bi-new">NOUVEAU</span></h3>
+          <ul>
+            <li>Saisie du numéro + demande de création</li>
+            <li>Nom, prénom, date de naissance, numéro de pièce</li>
+            <li>Photo de la pièce d'identité</li>
+            <li>Validation par la <strong>corbeille Back Office</strong></li>
+            <li>Notification "compte activé" après validation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="diff-card" style="margin-top:24px;">
+        <h3>Éléments uniquement présents dans O'CALM (perdus dans la transition)</h3>
+        <ul>
+          <li><strong>Parcours Duplicata QR</strong> — procédure de remplacement d'un QR code perdu ou endommagé (via MAXIT ou OMA)</li>
+          <li><strong>Points verts / jaunes</strong> sur la carte de l'Application Agent (activité à visiter / déjà visitée)</li>
+          <li><strong>Hotline 0808</strong> — numéro de support à communiquer aux marchands après enrôlement</li>
+          <li><strong>Mode hors connexion</strong> — chargement des activités sans réseau dans l'Application Agent</li>
+          <li><strong>Attitude commerciale</strong> — tenue, éthique, résilience, communication, adaptabilité</li>
+          <li><strong>Argumentaire commercial en 5 points</strong> — script structuré avec conclusion persuasive</li>
+        </ul>
+      </div>
+
+    </div><!-- /p4 -->
+
+
+    <!-- PAGE 5 — FONCTIONNALITÉS -->
+    <div id="p5" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">05</div>
+        <h2>Fonctionnalités disponibles</h2>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Fonctionnalité</th>
+            <th class="th-old">O'CALM</th>
+            <th class="th-new">OM Business V9</th>
+            <th class="th-diff">Évolution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Encaissement QR</strong></td>
+            <td class="td-old">✅ Oui (QR mobile)</td>
+            <td class="td-new">✅ Oui (QR mobile + imprimé)</td>
+            <td>Étendu</td>
+          </tr>
+          <tr>
+            <td><strong>Lien de paiement à distance</strong></td>
+            <td class="td-absent">❌ Non disponible</td>
+            <td class="td-new">✅ Tous profils</td>
+            <td class="td-new">Nouveau</td>
+          </tr>
+          <tr>
+            <td><strong>Retrait sans frais</strong></td>
+            <td class="td-old">✅ Jusqu'à 50 000 FCFA/mois</td>
+            <td class="td-new">✅ Tous profils</td>
+            <td>Étendu</td>
+          </tr>
+          <tr>
+            <td><strong>Transfert</strong></td>
+            <td class="td-absent">❌ Non couvert</td>
+            <td class="td-new">✅ Gratuit (soi ou tiers)</td>
+            <td class="td-new">Nouveau</td>
+          </tr>
+          <tr>
+            <td><strong>Historique de transactions</strong></td>
+            <td class="td-absent">❌ Non couvert</td>
+            <td class="td-new">✅ Inclus</td>
+            <td class="td-new">Nouveau</td>
+          </tr>
+          <tr>
+            <td><strong>Remboursement</strong></td>
+            <td class="td-absent">❌ Non couvert</td>
+            <td class="td-new">✅ Section dédiée</td>
+            <td class="td-new">Nouveau</td>
+          </tr>
+          <tr>
+            <td><strong>Déplafonnement</strong></td>
+            <td class="td-absent">❌ Non couvert</td>
+            <td class="td-new">✅ Procédure formelle</td>
+            <td class="td-new">Nouveau</td>
+          </tr>
+          <tr>
+            <td><strong>Assistance client</strong></td>
+            <td class="td-old">Hotline 0808 uniquement</td>
+            <td class="td-new">✅ Section dédiée dans l'app</td>
+            <td>Amélioré</td>
+          </tr>
+          <tr>
+            <td><strong>Tik Tak Pro (crédit/épargne)</strong></td>
+            <td class="td-absent">❌ Non disponible</td>
+            <td class="td-new">⏳ En cours (à venir)</td>
+            <td class="td-new">Futur</td>
+          </tr>
+          <tr>
+            <td><strong>Encaissement max/jour</strong></td>
+            <td class="td-old">2 millions FCFA</td>
+            <td class="td-absent">Non spécifié (varie par profil)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Encaissement max/mois</strong></td>
+            <td class="td-old">10 millions FCFA</td>
+            <td class="td-absent">Non spécifié (varie par profil)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Frais d'installation</strong></td>
+            <td class="td-old">0 FCFA</td>
+            <td class="td-new">Onboarding 100% digital (gratuit)</td>
+            <td>Maintenu</td>
+          </tr>
+          <tr>
+            <td><strong>Documents requis</strong></td>
+            <td class="td-old">0 (aucun document)</td>
+            <td class="td-new">0 pour Essentiel / Documents requis pour Classique & Premium</td>
+            <td>Modifié</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-info">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-text"><strong>Transfert gratuit :</strong> L'une des nouveautés majeures est le <strong>transfert d'argent gratuit</strong> (vers soi-même ou vers un tiers) pour tous les marchands OM Business, tous profils confondus.</div>
+      </div>
+
+    </div><!-- /p5 -->
+
+
+    <!-- PAGE 6 — DOCUMENTATION -->
+    <div id="p6" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">06</div>
+        <h2>Documentation & Déplafonnement</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>O'CALM — Documentation requise</h3>
+        <p><strong>Zéro document requis</strong> pour l'enrôlement O'CALM 50. L'offre était conçue pour être simple et accessible : seul un compte Orange Money fonctionnel était nécessaire.</p>
+      </div>
+
+      <div class="diff-card">
+        <h3>OM Business V9 — Déplafonnement Profil Classique (Annexe 1)</h3>
+        <ul>
+          <li>Pièce d'identité en cours de validité des dirigeants (recto/verso)</li>
+          <li>Procuration légalisée si signature par tiers (+ pièce d'identité du signataire)</li>
+          <li>Au choix : Registre de commerce actualisé / Carte du commerçant / Autorisation d'exercice</li>
+          <li>Ou : Taxe forfaitaire / Patente de l'année / Déclaration Fiscale d'Existence (DFE)</li>
+          <li>Ou : Carte d'entreprenant</li>
+          <li>Coordonnées GPS du commerce</li>
+        </ul>
+      </div>
+
+      <div class="diff-card" style="border-color:var(--omv9);background:var(--omv9-pale);">
+        <h3 style="color:var(--omv9);">OM Business V9 — Déplafonnement Profil Premium (Annexe 2)</h3>
+        <ul style="color:#1B5E20;">
+          <li>Documentation spécifique selon la forme juridique de l'entreprise</li>
+          <li>Contenu détaillé disponible dans l'Annexe 2 du Brief V9</li>
+          <li>Exigences renforcées par rapport au profil Classique</li>
+          <li>Vérification Back Office obligatoire</li>
+        </ul>
+      </div>
+
+      <table class="styled-table" style="margin-top:24px;">
+        <thead>
+          <tr>
+            <th>Profil</th>
+            <th class="th-new">Documents requis à l'enrôlement</th>
+            <th class="th-new">Documents pour déplafonnement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Essentiel</strong> <span style="font-size:.75rem;color:var(--grey);">(ex O'CALM)</span></td>
+            <td class="td-new">Aucun (100% digital)</td>
+            <td class="td-absent">Non applicable</td>
+          </tr>
+          <tr>
+            <td><strong>Classique</strong></td>
+            <td class="td-new">Photo pièce d'identité + selfie</td>
+            <td class="td-new">Annexe 1 (justificatif commercial)</td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td>
+            <td class="td-new">Dossier complet selon forme juridique</td>
+            <td class="td-new">Annexe 2 (dossier renforcé)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="notice-box">
+        <h4>Information importante pour les agents</h4>
+        <p>Lors de la prospection, si un marchand souhaite accéder au profil Classique ou Premium, <strong>prévenez-le à l'avance des documents nécessaires</strong> pour éviter un abandon en cours de parcours. Préparez la liste de documents selon sa forme juridique.</p>
+      </div>
+
+    </div><!-- /p6 -->
+
+
+    <!-- PAGE 7 — TABLEAU SYNTHÈSE -->
+    <div id="p7" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">07</div>
+        <h2>Tableau de synthèse complet</h2>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th class="th-old">O'CALM</th>
+            <th class="th-new">OM Business V9</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Nature du document de référence</strong></td>
+            <td>Module de formation terrain</td>
+            <td>Brief produit stratégique</td>
+          </tr>
+          <tr>
+            <td><strong>Audience cible formation</strong></td>
+            <td>Commerciaux et agents terrain</td>
+            <td>Équipes commerciales + management</td>
+          </tr>
+          <tr>
+            <td><strong>Nombre de profils marchands</strong></td>
+            <td class="td-old">1 (OCALM 50)</td>
+            <td class="td-new">3 (Essentiel, Classique, Premium)</td>
+          </tr>
+          <tr>
+            <td><strong>Application d'enrôlement</strong></td>
+            <td class="td-old">MAXIT + OMA</td>
+            <td class="td-new">App OM Business + Web</td>
+          </tr>
+          <tr>
+            <td><strong>Clients sans SIM Orange</strong></td>
+            <td class="td-absent">Non couvert</td>
+            <td class="td-new">Inclus (OTT)</td>
+          </tr>
+          <tr>
+            <td><strong>Création compte Non-OM</strong></td>
+            <td class="td-absent">Non couverte</td>
+            <td class="td-new">Parcours + Back Office</td>
+          </tr>
+          <tr>
+            <td><strong>Transfert d'argent</strong></td>
+            <td class="td-absent">Non couvert</td>
+            <td class="td-new">Gratuit (soi ou tiers)</td>
+          </tr>
+          <tr>
+            <td><strong>Historique transactions</strong></td>
+            <td class="td-absent">Non couvert</td>
+            <td class="td-new">Inclus</td>
+          </tr>
+          <tr>
+            <td><strong>Remboursement</strong></td>
+            <td class="td-absent">Non couvert</td>
+            <td class="td-new">Section dédiée</td>
+          </tr>
+          <tr>
+            <td><strong>Déplafonnement</strong></td>
+            <td class="td-absent">Non couvert</td>
+            <td class="td-new">Détaillé (Annexes 1 & 2)</td>
+          </tr>
+          <tr>
+            <td><strong>Assistance client (app)</strong></td>
+            <td>Hotline 0808 uniquement</td>
+            <td class="td-new">Section dédiée dans l'app</td>
+          </tr>
+          <tr>
+            <td><strong>QR Code imprimé multi-caisses</strong></td>
+            <td class="td-absent">Non disponible</td>
+            <td class="td-new">Profil Classique</td>
+          </tr>
+          <tr>
+            <td><strong>Accès web</strong></td>
+            <td class="td-absent">Non disponible</td>
+            <td class="td-new">Disponible</td>
+          </tr>
+          <tr>
+            <td><strong>Tik Tak Pro</strong></td>
+            <td class="td-absent">Non disponible</td>
+            <td class="td-new">En cours de déploiement</td>
+          </tr>
+          <tr>
+            <td><strong>Attitude commerciale</strong></td>
+            <td class="td-old">Section dédiée + script</td>
+            <td class="td-absent">Non présent dans le brief V9</td>
+          </tr>
+          <tr>
+            <td><strong>Argumentaire en 5 points</strong></td>
+            <td class="td-old">Script complet</td>
+            <td class="td-absent">Non présent dans le brief V9</td>
+          </tr>
+          <tr>
+            <td><strong>Mode hors connexion</strong></td>
+            <td class="td-old">Application Agent</td>
+            <td class="td-absent">Non mentionné</td>
+          </tr>
+          <tr>
+            <td><strong>Duplicata QR code</strong></td>
+            <td class="td-old">Procédure documentée</td>
+            <td class="td-absent">Non mentionné</td>
+          </tr>
+          <tr>
+            <td><strong>Vision stratégique globale</strong></td>
+            <td class="td-absent">Absente</td>
+            <td class="td-new">Présente (3 piliers)</td>
+          </tr>
+          <tr>
+            <td><strong>Grille tarifaire</strong></td>
+            <td>Implicite (gratuit à l'onboarding)</td>
+            <td class="td-new">Grille complète (visuelle)</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div><!-- /p7 -->
+
+
+    <!-- PAGE 8 — POINTS DE VIGILANCE -->
+    <div id="p8" class="page">
+
+      <div class="section-heading">
+        <div class="section-num">08</div>
+        <h2>Points de vigilance pour la transition</h2>
+      </div>
+
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text"><strong>Document V9 plus récent :</strong> Le Brief OM Business V9 (daté juin 2025) est plus récent que le module O'CALM. Certaines informations du module O'CALM peuvent être obsolètes ou pré-fusion des profils.</div>
+      </div>
+
+      <div class="info-card">
+        <h3>1. Changement de terminologie — À mémoriser</h3>
+        <ul>
+          <li>Ne plus utiliser "O'CALM 50" en prospection → dire "OM Business Essentiel"</li>
+          <li>Introduire les 3 niveaux : Essentiel / Classique / Premium selon le profil du marchand</li>
+          <li>"OMB Informel" est remplacé par "OM Business Essentiel"</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>2. Outils terrain — Vérification requise</h3>
+        <ul>
+          <li>MAXIT et OMA sont les outils de l'ancien système — vérifier leur statut actuel avec votre superviseur</li>
+          <li>L'Application Agent (GPS + enrôlement) n'est pas mentionnée dans le Brief V9 — confirmer si elle reste active</li>
+          <li>La nouvelle App OM Business est le canal principal — se former sur son utilisation</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>3. Fonctionnalités non couvertes dans le Brief V9</h3>
+        <ul>
+          <li><strong>Duplicata QR :</strong> procédure non documentée dans V9 — demander au superviseur la nouvelle procédure</li>
+          <li><strong>Hotline 0808 :</strong> toujours valide ? Confirmer le numéro de support actuel</li>
+          <li><strong>Mode hors connexion :</strong> disponible dans la nouvelle app ? À vérifier terrain</li>
+        </ul>
+      </div>
+
+      <div class="diff-card">
+        <h3>4. Compléments formation O'CALM à conserver</h3>
+        <ul>
+          <li>L'<strong>attitude commerciale</strong> (tenue, éthique, résilience) reste valide et doit être maintenue dans la formation des agents</li>
+          <li>L'<strong>argumentaire en 5 points</strong> reste une base solide à adapter au nouveau vocabulaire OM Business</li>
+          <li>Le <strong>test de paiement post-enrôlement</strong> reste une bonne pratique à conserver</li>
+          <li>La <strong>vérification du compte OM fonctionnel</strong> avant enrôlement reste critique (sauf pour les nouveaux profils Non-OM)</li>
+        </ul>
+      </div>
+
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-text"><strong>Recommandation :</strong> Combiner les deux documents pour une formation complète — utiliser le Brief V9 pour la vision produit et les profils, et conserver les sections "Attitude commerciale" et "Argumentaire" du module O'CALM pour la formation terrain.</div>
+      </div>
+
+      <div class="section-heading">
+        <div class="section-num">✓</div>
+        <h2>Checklist de transition pour l'agent terrain</h2>
+      </div>
+
+      <ul class="checklist">
+        <li><span class="check-icon ci-new">✅</span> Je connais les 3 profils OM Business (Essentiel, Classique, Premium) et leurs critères</li>
+        <li><span class="check-icon ci-new">✅</span> Je sais identifier le bon profil pour chaque marchand (CA, taille, besoins)</li>
+        <li><span class="check-icon ci-new">✅</span> Je connais les nouvelles fonctionnalités : transfert gratuit, lien de paiement, historique</li>
+        <li><span class="check-icon ci-new">✅</span> Je suis formé(e) sur l'application OM Business (anciennement MAXIT/OMA)</li>
+        <li><span class="check-icon ci-new">✅</span> Je connais la procédure de création de compte pour les clients Non-OM</li>
+        <li><span class="check-icon ci-warn">⏳</span> Je connais la procédure de déplafonnement et les documents requis par profil</li>
+        <li><span class="check-icon ci-warn">⏳</span> J'ai confirmé le numéro de hotline support actuel avec mon superviseur</li>
+        <li><span class="check-icon ci-warn">⏳</span> J'ai vérifié le statut actuel des outils MAXIT / OMA / Application Agent</li>
+        <li><span class="check-icon ci-old">📌</span> Je conserve mes réflexes O'CALM : attitude, argumentaire, test paiement post-enrôlement</li>
+        <li><span class="check-icon ci-old">📌</span> Je propose la montée en gamme aux marchands OCALM déjà enrôlés si leur activité le justifie</li>
+      </ul>
+
+    </div><!-- /p8 -->
+
+  </main>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

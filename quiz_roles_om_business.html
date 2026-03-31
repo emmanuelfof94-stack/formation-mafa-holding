@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz & Exercices par Rôle — OM Business — Formation MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#8D0C23; --blue-light:#B5112C; --blue-pale:#F9E8EC;
+  --orange:#CF9E41; --orange-light:#DDB55A; --orange-pale:#FAF3E0;
+  --teal:#584B26; --teal-pale:#F3EDD8;
+  --red:#6A091A; --red-pale:#F2D6DC;
+  --grey:#455A64; --grey-light:#ECEFF1;
+  --om-brand:#FF6600; --om-pale:#FFF3E0;
+  --bg:#FCFBF8;
+  --rv:#1565C0; --rv-pale:#E3F2FD;
+  --insp:#2E7D32; --insp-pale:#E8F5E9;
+  --sup:#6A1B9A; --sup-pale:#F3E5F5;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; min-height:100vh; }
+
+/* TOPBAR */
+.topbar { background:linear-gradient(135deg,var(--blue),#5A0815); color:white; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 3px 16px rgba(141,12,35,.35); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.back-btn { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:white; padding:7px 14px; border-radius:8px; font-size:.82rem; font-weight:600; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,.22); }
+.module-title-top { font-size:1rem; font-weight:700; }
+.module-subtitle-top { font-size:.75rem; color:rgba(255,255,255,.65); }
+.topbar-badge { background:var(--orange); color:var(--teal); padding:5px 12px; border-radius:20px; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+
+/* HERO */
+.page-hero { background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:20px; padding:36px; margin:32px 40px 24px; border:1px solid rgba(207,158,65,.2); }
+.page-hero h1 { font-size:1.85rem; font-weight:800; color:var(--blue); margin-bottom:8px; }
+.page-hero p { font-size:.9rem; color:var(--grey); line-height:1.6; margin-top:8px; }
+.hero-chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.meta-chip { font-size:.78rem; padding:5px 12px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+.chip-red { background:var(--blue-pale); color:var(--blue); }
+.chip-gold { background:var(--orange-pale); color:var(--teal); }
+.chip-rv { background:var(--rv-pale); color:var(--rv); }
+.chip-insp { background:var(--insp-pale); color:var(--insp); }
+.chip-sup { background:var(--sup-pale); color:var(--sup); }
+
+/* ROLE TABS */
+.role-tabs-wrapper { padding:0 40px; margin-bottom:8px; }
+.role-tabs { display:flex; gap:8px; border-bottom:2px solid #e8ddd0; }
+.role-tab { padding:12px 24px; border:none; background:none; font-family:'Sora',sans-serif; font-size:.88rem; font-weight:600; color:var(--grey); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .2s; display:flex; align-items:center; gap:8px; }
+.role-tab:hover { color:var(--blue); }
+.role-tab.active-rv { color:var(--rv); border-bottom-color:var(--rv); }
+.role-tab.active-insp { color:var(--insp); border-bottom-color:var(--insp); }
+.role-tab.active-sup { color:var(--sup); border-bottom-color:var(--sup); }
+.role-badge { font-family:'JetBrains Mono',monospace; font-size:.65rem; font-weight:800; padding:2px 8px; border-radius:20px; }
+.badge-rv { background:var(--rv-pale); color:var(--rv); }
+.badge-insp { background:var(--insp-pale); color:var(--insp); }
+.badge-sup { background:var(--sup-pale); color:var(--sup); }
+
+/* CONTENT PANELS */
+.role-panel { display:none; padding:32px 40px 60px; }
+.role-panel.active { display:block; }
+
+/* SUBTABS */
+.subtabs { display:flex; gap:6px; margin-bottom:28px; }
+.subtab { padding:9px 20px; border:2px solid #e8ddd0; border-radius:10px; font-family:'Sora',sans-serif; font-size:.83rem; font-weight:600; color:var(--grey); cursor:pointer; background:white; transition:all .2s; }
+.rv-subtab.active { border-color:var(--rv); background:var(--rv-pale); color:var(--rv); }
+.insp-subtab.active { border-color:var(--insp); background:var(--insp-pale); color:var(--insp); }
+.sup-subtab.active { border-color:var(--sup); background:var(--sup-pale); color:var(--sup); }
+
+/* SECTION HEADING */
+.section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; }
+.section-num-rv { background:var(--rv); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-num-insp { background:var(--insp); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-num-sup { background:var(--sup); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-heading h2 { font-size:1.2rem; font-weight:700; }
+
+/* QUIZ */
+.quiz-score-bar { background:white; border-radius:16px; padding:20px 24px; text-align:center; border:2px solid var(--orange); margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; }
+.quiz-score-bar h3 { font-size:.95rem; color:var(--blue); font-weight:700; }
+.score-display { font-size:2.2rem; font-weight:800; color:var(--blue); }
+.score-display span { font-size:1rem; color:var(--grey); font-weight:400; }
+.score-note { font-size:.78rem; color:var(--grey); margin-top:4px; }
+.quiz-container { max-width:740px; }
+.quiz-question-block { background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 14px rgba(0,0,0,.06); border:1px solid #e8ddd0; }
+.quiz-q-num { font-family:'JetBrains Mono',monospace; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.qnum-rv { color:var(--rv); }
+.qnum-insp { color:var(--insp); }
+.qnum-sup { color:var(--sup); }
+.quiz-q-text { font-size:.95rem; font-weight:600; color:#2C3E50; margin-bottom:18px; line-height:1.5; }
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-option { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; border:2px solid #e8ddd0; cursor:pointer; font-size:.87rem; color:var(--grey); transition:all .2s; background:var(--bg); }
+.quiz-option:hover { border-color:var(--blue); background:var(--blue-pale); color:var(--blue); }
+.quiz-option.correct { border-color:#2E7D32; background:#E8F5E9; color:#2E7D32; font-weight:700; }
+.quiz-option.incorrect { border-color:var(--red); background:var(--red-pale); color:var(--red); }
+.quiz-option.disabled { cursor:default; pointer-events:none; }
+.option-letter { width:28px; height:28px; border-radius:50%; background:white; border:2px solid #ccc; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.quiz-option.correct .option-letter { background:#2E7D32; border-color:#2E7D32; color:white; }
+.quiz-option.incorrect .option-letter { background:var(--red); border-color:var(--red); color:white; }
+.quiz-feedback { margin-top:12px; padding:10px 14px; border-radius:8px; font-size:.82rem; display:none; }
+.quiz-feedback.show { display:block; }
+.quiz-feedback.fb-correct { background:#E8F5E9; color:#1B5E20; }
+.quiz-feedback.fb-incorrect { background:var(--red-pale); color:var(--red); }
+
+/* EXERCISES */
+.exercise-card { background:white; border-radius:16px; padding:28px; margin-bottom:24px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.exercise-header { display:flex; align-items:flex-start; gap:14px; margin-bottom:18px; }
+.exercise-icon { width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; }
+.icon-rv { background:var(--rv-pale); }
+.icon-insp { background:var(--insp-pale); }
+.icon-sup { background:var(--sup-pale); }
+.exercise-header h3 { font-size:1rem; font-weight:700; color:#2C3E50; margin-bottom:4px; }
+.exercise-header p { font-size:.78rem; color:var(--grey); line-height:1.4; }
+.exercise-step { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--grey-light); align-items:flex-start; }
+.exercise-step:last-child { border-bottom:none; }
+.step-n-rv { width:26px; height:26px; background:var(--rv); color:white; border-radius:50%; font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-n-insp { width:26px; height:26px; background:var(--insp); color:white; border-radius:50%; font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-n-sup { width:26px; height:26px; background:var(--sup); color:white; border-radius:50%; font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-text { font-size:.86rem; color:var(--grey); line-height:1.55; padding-top:2px; }
+
+/* ALERTS */
+.alert { border-radius:12px; padding:16px 20px; margin:12px 0; display:flex; gap:12px; font-size:.86rem; line-height:1.6; }
+.alert-icon { font-size:1.2rem; flex-shrink:0; }
+.alert-text { color:var(--grey); }
+.alert-text strong { color:#2C3E50; }
+.alert-info { background:var(--teal-pale); border-left:4px solid var(--teal); }
+.alert-warn { background:var(--orange-pale); border-left:4px solid var(--orange); }
+.alert-success { background:#E8F5E9; border-left:4px solid #2E7D32; }
+.alert-rv { background:var(--rv-pale); border-left:4px solid var(--rv); }
+.alert-insp { background:var(--insp-pale); border-left:4px solid var(--insp); }
+.alert-sup { background:var(--sup-pale); border-left:4px solid var(--sup); }
+
+/* TABLES */
+.styled-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); margin:14px 0 20px; font-size:.84rem; }
+.styled-table th { color:white; padding:12px 16px; text-align:left; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+.th-rv { background:var(--rv); }
+.th-insp { background:var(--insp); }
+.th-sup { background:var(--sup); }
+.styled-table td { padding:11px 16px; border-bottom:1px solid #f0e8e0; color:var(--grey); line-height:1.5; vertical-align:top; }
+.styled-table tr:nth-child(even) td { background:var(--bg); }
+.styled-table tr:last-child td { border-bottom:none; }
+
+/* SCENARIO CARDS */
+.scenario-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0 20px; }
+.scenario-card { border-radius:12px; padding:18px; border:1px solid #e8ddd0; background:white; }
+.scenario-label { font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.scenario-card h4 { font-size:.9rem; font-weight:700; color:#2C3E50; margin-bottom:6px; }
+.scenario-card p { font-size:.82rem; color:var(--grey); line-height:1.5; }
+.scenario-answer { margin-top:10px; padding:8px 12px; border-radius:8px; font-size:.8rem; font-weight:600; }
+.answer-rv { background:var(--rv-pale); color:var(--rv); }
+.answer-insp { background:var(--insp-pale); color:var(--insp); }
+.answer-sup { background:var(--sup-pale); color:var(--sup); }
+
+/* INFO CARD */
+.info-card { background:white; border-radius:14px; padding:20px 24px; margin-bottom:16px; border:1px solid #e8ddd0; }
+.info-card h3 { font-size:.95rem; font-weight:700; color:#2C3E50; margin-bottom:10px; }
+.info-card p { font-size:.87rem; color:var(--grey); line-height:1.7; }
+
+/* STYLED LIST */
+.styled-list { list-style:none; padding:0; margin:10px 0; }
+.styled-list li { display:flex; align-items:flex-start; gap:10px; padding:7px 0; font-size:.86rem; color:var(--grey); line-height:1.5; border-bottom:1px solid var(--grey-light); }
+.styled-list li:last-child { border-bottom:none; }
+.bullet-rv::before { content:'▸'; color:var(--rv); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+.bullet-insp::before { content:'▸'; color:var(--insp); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+.bullet-sup::before { content:'▸'; color:var(--sup); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+
+/* CHECKLIST */
+.checklist { list-style:none; padding:0; margin:10px 0; }
+.checklist li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:.85rem; color:var(--grey); line-height:1.5; }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #ccc; flex-shrink:0; margin-top:1px; }
+.check-rv { border-color:var(--rv); }
+.check-insp { border-color:var(--insp); }
+.check-sup { border-color:var(--sup); }
+
+@media (max-width:768px) {
+  .page-hero { margin:20px; padding:24px; }
+  .role-tabs-wrapper { padding:0 20px; }
+  .role-panel { padding:20px; }
+  .scenario-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="module_om_business.html" class="back-btn">← Module OM Business</a>
+    <div>
+      <div class="module-title-top">Quiz & Exercices par Rôle — OM Business</div>
+      <div class="module-subtitle-top">Évaluation différenciée — Formation MAFA Holding</div>
+    </div>
+  </div>
+  <div class="topbar-badge">🎯 ÉVALUATION RÔLES</div>
+</div>
+
+<div class="page-hero">
+  <div style="font-size:2.5rem; margin-bottom:12px;">🏪</div>
+  <h1>Quiz & Exercices — Orange Business</h1>
+  <p>Évaluations différenciées selon votre rôle terrain. Chaque parcours est conçu pour tester les compétences spécifiques attendues en situation réelle.</p>
+  <div class="hero-chips">
+    <span class="meta-chip chip-rv">🏙️ Responsables Villes</span>
+    <span class="meta-chip chip-insp">🔍 Inspecteurs</span>
+    <span class="meta-chip chip-sup">👁️ Superviseurs</span>
+    <span class="meta-chip chip-gold">5 questions / rôle + 2 exercices</span>
+    <span class="meta-chip chip-red">Niveau Intermédiaire &amp; Expert</span>
+  </div>
+</div>
+
+<!-- ROLE TABS -->
+<div class="role-tabs-wrapper">
+  <div class="role-tabs">
+    <button class="role-tab active-rv" id="tab-rv" onclick="showRole('rv')">
+      🏙️ Responsables Villes <span class="role-badge badge-rv">RV</span>
+    </button>
+    <button class="role-tab" id="tab-insp" onclick="showRole('insp')">
+      🔍 Inspecteurs <span class="role-badge badge-insp">INSP</span>
+    </button>
+    <button class="role-tab" id="tab-sup" onclick="showRole('sup')">
+      👁️ Superviseurs <span class="role-badge badge-sup">SUP</span>
+    </button>
+  </div>
+</div>
+
+<!-- ===================== PANEL RV ===================== -->
+<div class="role-panel active" id="panel-rv">
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+    <div style="width:10px; height:40px; background:var(--rv); border-radius:5px;"></div>
+    <div>
+      <h2 style="font-size:1.3rem; font-weight:800; color:var(--rv);">Responsable Ville</h2>
+      <p style="font-size:.83rem; color:var(--grey);">Développement territorial, pilotage des équipes, performance marché OM Business</p>
+    </div>
+  </div>
+  <div class="subtabs">
+    <button class="subtab rv-subtab active" id="rv-sub-quiz" onclick="showSubtab('rv','quiz')">🎯 Quiz (5 questions)</button>
+    <button class="subtab rv-subtab" id="rv-sub-ex" onclick="showSubtab('rv','ex')">✏️ Exercices (2)</button>
+  </div>
+
+  <!-- RV QUIZ -->
+  <div id="rv-quiz">
+    <div class="quiz-score-bar">
+      <div>
+        <h3>Score RV</h3>
+        <div class="score-note">Diagnostic terrain, stratégie, arbitrages &amp; analyse de données</div>
+      </div>
+      <div>
+        <div class="score-display" id="rv-score-display">0 <span>/ 5</span></div>
+      </div>
+    </div>
+    <div class="quiz-container">
+
+      <div class="quiz-question-block" id="rv-q1">
+        <div class="quiz-q-num qnum-rv">Question RV 01 / 05 — Diagnostic de performance [Intermédiaire]</div>
+        <div class="quiz-q-text">Fin de mois, vos données terrain montrent : 58 comptes créés, 21 marchands ayant généré au moins une transaction, taux de conversion prospect→création de 38%. Quel est le diagnostic prioritaire à remonter à votre hiérarchie ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('rv-q1','rv',false,'Le taux de conversion prospect→création (38%) est dans une fourchette acceptable pour une phase de déploiement — ce n\'est pas l\'alarme prioritaire. Le vrai problème est ailleurs dans les données.')"><span class="option-letter">A</span> Le taux de conversion prospect→création est trop faible — il faut former les agents à mieux convaincre lors des premiers contacts</div>
+          <div class="quiz-option" onclick="ans('rv-q1','rv',true,'Exact ! 21 marchands actifs sur 58 créations = taux d\'activation de seulement 36%. C\'est le signal critique : les agents créent des comptes mais ne s\'assurent pas que les marchands utilisent réellement l\'application. L\'action prioritaire est un plan de suivi post-création systématique (appel J+3, visite de vérification), pas plus de prospection.')"><span class="option-letter">B</span> Le taux d'activation (36%) révèle un défaut d'accompagnement post-création — les créations sans suivi ne génèrent aucune valeur terrain</div>
+          <div class="quiz-option" onclick="ans('rv-q1','rv',false,'58 créations est un volume cohérent selon la taille de l\'équipe et la zone. Augmenter le volume sans corriger le taux d\'activation aggraverait le problème (plus de comptes inactifs).')"><span class="option-letter">C</span> Le volume de créations (58) est insuffisant — il faut recruter des agents supplémentaires ce mois</div>
+          <div class="quiz-option" onclick="ans('rv-q1','rv',false,'Ces données ne permettent pas de conclure à une saturation de territoire — un taux de conversion de 38% signifie encore 62% de prospects non convertis.')"><span class="option-letter">D</span> Le territoire est saturé — il faut redistribuer les agents vers de nouvelles zones de prospection</div>
+        </div>
+        <div class="quiz-feedback" id="fb-rv-q1"></div>
+      </div>
+
+      <div class="quiz-question-block" id="rv-q2">
+        <div class="quiz-q-num qnum-rv">Question RV 02 / 05 — Déploiement sous contrainte [Expert]</div>
+        <div class="quiz-q-text">Vous disposez de 2 agents pour 3 semaines dans un grand marché de 350 commerçants identifiés. La direction veut maximiser les marchands réellement actifs (et non le nombre brut de créations). Quelle stratégie de déploiement adoptez-vous ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('rv-q2','rv',false,'Cibler d\'abord les 40 comptes Premium maximise le CA potentiel, mais ces dossiers prennent 3 à 5 fois plus de temps (documents, RDV dirigeants). En 3 semaines, vous risquez de terminer avec très peu de comptes actifs.')"><span class="option-letter">A</span> Commencer par les 40 commerces Premium (CA &gt;400m XOF) pour maximiser la valeur des transactions générées</div>
+          <div class="quiz-option" onclick="ans('rv-q2','rv',false,'Diviser le marché géographiquement sans priorisation qualitative aboutit au même problème : les agents créeront en volume sans garantir l\'activation. La zone est un outil logistique, pas une stratégie de performance.')"><span class="option-letter">B</span> Diviser le marché en 2 zones et affecter un agent par zone pour couvrir l'ensemble du territoire</div>
+          <div class="quiz-option" onclick="ans('rv-q2','rv',true,'Excellente approche ! Les profils Essentiel/Classique (épiceries, maquis, vendeurs de rue) ont le dossier le plus simple (CNI seule pour Essentiel), permettant de créer 5 à 8 comptes par jour par agent. Planifier un rappel J+3 pour chaque marchand créé garantit l\'activation avant la fin de la mission. C\'est la stratégie volume + qualité optimale sous contrainte de temps.')"><span class="option-letter">C</span> Concentrer les agents sur les profils Essentiel/Classique à forte densité (maquis, épiceries) et intégrer un suivi J+3 systématique pour activer chaque compte créé</div>
+          <div class="quiz-option" onclick="ans('rv-q2','rv',false,'Cibler les SIM Orange existantes peut accélérer la création, mais ne garantit pas l\'usage réel — un marchand déjà abonné peut ignorer OM Business autant qu\'un Non-OM. Ce critère n\'est pas déterminant pour le taux d\'activation.')"><span class="option-letter">D</span> Prioriser les commerçants déjà titulaires d'une SIM Orange pour minimiser les objections et accélérer la création</div>
+        </div>
+        <div class="quiz-feedback" id="fb-rv-q2"></div>
+      </div>
+
+      <div class="quiz-question-block" id="rv-q3">
+        <div class="quiz-q-num qnum-rv">Question RV 03 / 05 — Gestion de multi-objections [Expert]</div>
+        <div class="quiz-q-text">Lors d'une visite, un gérant de supérette (7 employés, CA ≈ 280m XOF/an) vous dit : "J'ai déjà MTN Money depuis 3 ans, mes clients sont habitués à ça, et mon comptable m'a dit que ces applications mobiles créent des problèmes de réconciliation comptable." Quelle est la séquence de réponse la plus efficace ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('rv-q3','rv',false,'Commencer par la complémentarité MTN/OM est un bon argument, mais si vous ignorez l\'objection comptabilité (la plus rationnelle et la plus bloquante), le gérant restera sur ses positions. L\'objection technique doit être adressée en premier pour débloquer la décision.')"><span class="option-letter">A</span> Répondre d'abord sur la complémentarité MTN/OM, puis lever l'objection comptabilité si le prospect revient dessus</div>
+          <div class="quiz-option" onclick="ans('rv-q3','rv',true,'Séquence optimale ! (1) Valider l\'objection comptabilité avec des faits : OM Business génère des relevés de transactions exportables et un historique en temps réel directement dans l\'application — compatible avec les outils de comptabilité standard. (2) Différencier sans dénigrer MTN : chaque solution couvre un segment de clients différent — complémentarité = plus de clients touchés. (3) Proposition de valeur finale : ce gérant Classique peut accepter les paiements OM de tous ses clients Orange Money sans changer de solution actuelle.')"><span class="option-letter">B</span> Adresser d'abord l'objection comptabilité (faits sur les relevés OM Business), puis différencier MTN/OM comme complémentaires, puis présenter la valeur pour ce profil Classique spécifique</div>
+          <div class="quiz-option" onclick="ans('rv-q3','rv',false,'Une démonstration live est un excellent outil, mais sans répondre aux deux objections concrètes (MTN existant + comptabilité), le prospect restera bloqué même après la démo. La démonstration vient après la levée des objections, pas à leur place.')"><span class="option-letter">C</span> Proposer immédiatement une démonstration live de l'application pour court-circuiter les objections théoriques</div>
+          <div class="quiz-option" onclick="ans('rv-q3','rv',false,'Revenir dans 3 jours est une stratégie de fuite, pas de vente. Ce type de profil Classique bien documenté est une opportunité à saisir lors de la visite — une absence prolongée laisse le temps aux objections de se renforcer.')"><span class="option-letter">D</span> Laisser le gérant réfléchir et revenir dans 3 jours avec une documentation écrite sur la sécurité de l'application</div>
+        </div>
+        <div class="quiz-feedback" id="fb-rv-q3"></div>
+      </div>
+
+      <div class="quiz-question-block" id="rv-q4">
+        <div class="quiz-q-num qnum-rv">Question RV 04 / 05 — Analyse comparée d'agents [Intermédiaire]</div>
+        <div class="quiz-q-text">Analyse mensuelle de vos deux meilleurs agents : Agent A = 24 créations, 7 marchands actifs (29%). Agent B = 11 créations, 9 marchands actifs (82%). Sur lequel concentrez-vous votre coaching prioritaire, et sur quel axe ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('rv-q4','rv',false,'Agent B crée moins de comptes mais a un taux d\'activation exceptionnel (82%). Il n\'a pas besoin de coaching — au contraire, sa méthode de suivi post-création est à documenter et transmettre à Agent A.')"><span class="option-letter">A</span> Coacher Agent B pour augmenter son volume de créations à 20+ par mois</div>
+          <div class="quiz-option" onclick="ans('rv-q4','rv',false,'Les deux agents ont des profils radicalement différents et ont besoin d\'un coaching ciblé, pas identique. Un coaching uniforme ne corrige pas les lacunes spécifiques de chacun.')"><span class="option-letter">B</span> Coacher les deux agents sur les mêmes points avec un plan de formation uniforme</div>
+          <div class="quiz-option" onclick="ans('rv-q4','rv',true,'Analyse correcte ! Agent A génère 7 marchands actifs sur 24 créations — soit une valeur opérationnelle similaire à Agent B (9 actifs sur 11 créations), mais avec 2× plus d\'effort. Agent A crée beaucoup sans accompagner. Coaching prioritaire sur Agent A : mise en place du suivi J+3, formation à la prise en main guidée du marchand, et revue des pratiques post-création. Ensuite, organiser un partage de méthodes entre les deux agents.')"><span class="option-letter">C</span> Coacher Agent A sur l'accompagnement post-création (taux d'activation 29%) et faire partager la méthode d'Agent B à toute l'équipe</div>
+          <div class="quiz-option" onclick="ans('rv-q4','rv',false,'Un taux d\'activation de 29% est un signal d\'alarme opérationnel, pas une cause disciplinaire. La sanction sans coaching ne corrige pas la méthode de travail — et démotive un agent avec un bon volume de créations.')"><span class="option-letter">D</span> Sanctionner Agent A pour son faible taux d'activation et lui fixer un ultimatum de 2 semaines</div>
+        </div>
+        <div class="quiz-feedback" id="fb-rv-q4"></div>
+      </div>
+
+      <div class="quiz-question-block" id="rv-q5">
+        <div class="quiz-q-num qnum-rv">Question RV 05 / 05 — Arbitrage stratégique sous pression [Expert]</div>
+        <div class="quiz-q-text">À J-3 de la fin du mois, votre équipe manque 18 comptes pour atteindre l'objectif fixé par la direction. Deux options : (A) pousser les agents à créer rapidement sans critères de sélection pour combler l'écart ; (B) ne créer que les comptes qualifiés et rater l'objectif de 18. Quelle décision prenez-vous et comment la justifiez-vous ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('rv-q5','rv',false,'L\'objectif mensuel est important, mais des comptes mal qualifiés (mauvais profil, documents incorrects, marchands non formés) génèrent des non-conformités, des comptes inactifs le mois suivant, et dégradent les KPIs futurs. Atteindre l\'objectif ce mois au prix du mois prochain est une stratégie perdante.')"><span class="option-letter">A</span> Option A — l'objectif mensuel est contractuel, il faut l'atteindre coûte que coûte</div>
+          <div class="quiz-option" onclick="ans('rv-q5','rv',false,'Cibler uniquement les Essentiel pour aller vite peut sembler raisonnable, mais si ces marchands ne sont pas qualifiés et ne seront jamais actifs, le problème de taux d\'activation s\'aggrave. L\'enjeu n\'est pas le profil mais la qualité de la sélection et du suivi.')"><span class="option-letter">B</span> Option A mais en ciblant uniquement les profils Essentiel (dossier CNI seule) pour aller plus vite</div>
+          <div class="quiz-option" onclick="ans('rv-q5','rv',true,'Décision stratégiquement juste ! Des comptes créés sans qualification sérieuse gonflent les chiffres du mois mais alourdiront le taux d\'inactivité le mois suivant — ce qui sera plus difficile à justifier. La bonne démarche : choisir l\'option B, documenter les 18 comptes "non créés" avec les raisons (prospects insuffisamment qualifiés), remonter une note de position à la direction avec les données de qualité de votre portefeuille actuel (taux d\'activation, transactions générées), et proposer un plan réaliste de rattrapage qualifié sur les 2 premières semaines du mois suivant.')"><span class="option-letter">C</span> Option B — ne créer que des comptes qualifiés, documenter l'écart et le remonter à la direction avec un plan de rattrapage qualifié</div>
+          <div class="quiz-option" onclick="ans('rv-q5','rv',false,'Concentrer les 3 derniers jours uniquement sur l\'activation des marchands existants est une bonne pratique de fond, mais cela abandonne complètement l\'objectif de création sans justification structurée. Ce n\'est pas une réponse complète à la situation.')"><span class="option-letter">D</span> Arrêter toute création et concentrer les 3 jours restants uniquement sur l'activation des marchands déjà créés ce mois</div>
+        </div>
+        <div class="quiz-feedback" id="fb-rv-q5"></div>
+      </div>
+
+    </div>
+  </div><!-- /rv-quiz -->
+
+  <!-- RV EXERCICES -->
+  <div id="rv-ex" style="display:none;">
+    <div class="exercise-card">
+      <div class="exercise-header">
+        <div class="exercise-icon icon-rv">🗺️</div>
+        <div>
+          <h3>Exercice RV 1 — Cartographie et segmentation territoriale</h3>
+          <p>Analyser un marché local et planifier la prospection OM Business — Durée estimée : 20 minutes</p>
+        </div>
+      </div>
+      <div class="alert alert-rv" style="margin-bottom:18px;">
+        <div class="alert-icon">📋</div>
+        <div class="alert-text"><strong>Contexte :</strong> Vous êtes RV du quartier de Cocody-Riviera. On vous confie une zone de 200 commerces recensés. Vous devez élaborer un plan de prospection OM Business optimisé. Analysez les données ci-dessous et répondez aux questions.</div>
+      </div>
+      <table class="styled-table">
+        <thead><tr class="th-rv"><th>Type de commerce</th><th>Nombre</th><th>CA moyen estimé</th><th>Employés moy.</th><th>% avec RC</th></tr></thead>
+        <tbody>
+          <tr><td>Épiceries / Alimentation</td><td>65</td><td>80 000 XOF/an</td><td>1–2</td><td>5%</td></tr>
+          <tr><td>Maquis / Restaurants</td><td>40</td><td>120 000 XOF/an</td><td>3–6</td><td>30%</td></tr>
+          <tr><td>Supérettes / Boutiques</td><td>30</td><td>250 000 XOF/an</td><td>4–8</td><td>75%</td></tr>
+          <tr><td>Pharmacies / Parapharmacies</td><td>15</td><td>350 000 XOF/an</td><td>6–10</td><td>95%</td></tr>
+          <tr><td>Hôtels / Résidences</td><td>10</td><td>600 000 XOF/an</td><td>15–50</td><td>100%</td></tr>
+          <tr><td>Stations-services</td><td>8</td><td>900 000 XOF/an</td><td>20–40</td><td>100%</td></tr>
+          <tr><td>VTC / Taxis informels</td><td>32</td><td>60 000 XOF/an</td><td>1</td><td>0%</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-heading" style="margin-top:22px;">
+        <div class="section-num-rv">Q1</div>
+        <h2 style="color:var(--rv); font-size:1rem;">Segmentation par profil OM Business</h2>
+      </div>
+      <p style="font-size:.87rem; color:var(--grey); margin-bottom:12px;">Reclassez chaque type de commerce dans le profil OM Business correct :</p>
+      <table class="styled-table">
+        <thead><tr class="th-rv"><th>Type de commerce</th><th>Profil OM Business</th><th>Justification clé</th></tr></thead>
+        <tbody>
+          <tr><td>Épiceries / Alimentation</td><td><span style="background:#F3E5F5;color:#7B1FA2;padding:3px 8px;border-radius:4px;font-weight:700;font-size:.78rem;">ESSENTIEL</span></td><td style="font-size:.78rem;">CA &lt;150k, 1–2 employés, commerce informel</td></tr>
+          <tr><td>Maquis / Restaurants</td><td><span style="background:#F3E5F5;color:#7B1FA2;padding:3px 8px;border-radius:4px;font-weight:700;font-size:.78rem;">ESSENTIEL / CLASSIQUE</span></td><td style="font-size:.78rem;">CA variable — vérifier RC + nbr. employés pour arbitrer</td></tr>
+          <tr><td>Supérettes / Boutiques</td><td><span style="background:#E3F2FD;color:#1565C0;padding:3px 8px;border-radius:4px;font-weight:700;font-size:.78rem;">CLASSIQUE</span></td><td style="font-size:.78rem;">CA 150k–400m, RC disponible à 75%</td></tr>
+          <tr><td>Pharmacies</td><td><span style="background:#E3F2FD;color:#1565C0;padding:3px 8px;border-radius:4px;font-weight:700;font-size:.78rem;">CLASSIQUE</span></td><td style="font-size:.78rem;">CA ~350m, 6–10 employés, RC à 95%</td></tr>
+          <tr><td>Hôtels / Stations-services</td><td><span style="background:#E8F5E9;color:#2E7D32;padding:3px 8px;border-radius:4px;font-weight:700;font-size:.78rem;">PREMIUM</span></td><td style="font-size:.78rem;">CA &gt;400m, +15 employés, documentation complète</td></tr>
+          <tr><td>VTC / Taxis informels</td><td><span style="background:#F3E5F5;color:#7B1FA2;padding:3px 8px;border-radius:4px;font-weight:700;font-size:.78rem;">ESSENTIEL</span></td><td style="font-size:.78rem;">CA &lt;150k, 1 personne, pas de RC — lien paiement à distance idéal</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-heading" style="margin-top:22px;">
+        <div class="section-num-rv">Q2</div>
+        <h2 style="color:var(--rv); font-size:1rem;">Plan de prospection — Ordre de priorité</h2>
+      </div>
+      <p style="font-size:.87rem; color:var(--grey); margin-bottom:12px;">En tenant compte du volume, de la facilité de conversion et du potentiel de CA, proposez un ordre de prospection (1 = priorité haute) :</p>
+      <table class="styled-table">
+        <thead><tr class="th-rv"><th>Priorité</th><th>Segment</th><th>Raison stratégique</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;color:var(--rv);">1</td><td>Épiceries + VTC (volume : 97 prospects)</td><td style="font-size:.8rem;">Dossier simple, conversion rapide — impact volume immédiat sur les comptes Essentiels</td></tr>
+          <tr><td style="font-weight:700;color:var(--rv);">2</td><td>Maquis + Supérettes (70 prospects)</td><td style="font-size:.8rem;">CA plus élevé, certains avec RC — potentiel Classique, bon retour sur effort</td></tr>
+          <tr><td style="font-weight:700;color:var(--rv);">3</td><td>Pharmacies (15 prospects)</td><td style="font-size:.8rem;">CA solide, RC élevé — Classique confirmé avec revenus de transactions réguliers</td></tr>
+          <tr><td style="font-weight:700;color:var(--rv);">4</td><td>Hôtels + Stations (18 prospects)</td><td style="font-size:.8rem;">Valeur élevée (Premium) mais cycle long — nécessite rendez-vous dirigeants + documents complets</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="exercise-card">
+      <div class="exercise-header">
+        <div class="exercise-icon icon-rv">📊</div>
+        <div>
+          <h3>Exercice RV 2 — Traitement des objections terrain</h3>
+          <p>Formuler les bonnes réponses face aux 4 objections les plus fréquentes des marchands — Durée : 15 minutes</p>
+        </div>
+      </div>
+      <div class="alert alert-rv" style="margin-bottom:18px;">
+        <div class="alert-icon">💬</div>
+        <div class="alert-text"><strong>Instruction :</strong> Pour chaque objection ci-dessous, rédigez ou évaluez la réponse proposée. Identifiez si elle est efficace (E) ou à améliorer (A).</div>
+      </div>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--rv);">Objection 1</div>
+          <h4>"J'ai déjà MTN Money, c'est suffisant."</h4>
+          <p>Le marchand pense que deux solutions de paiement, c'est trop.</p>
+          <div class="scenario-answer answer-rv">✅ Réponse efficace : "OM Business vous permet de recevoir des paiements de TOUS les clients Orange Money — un segment important. Les deux solutions sont complémentaires, pas concurrentes. Certains de vos clients n'ont que OM."</div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--rv);">Objection 2</div>
+          <h4>"C'est compliqué à utiliser, je ne suis pas à l'aise avec les apps."</h4>
+          <p>Réticence liée à la technologie et à la formation.</p>
+          <div class="scenario-answer answer-rv">✅ Réponse efficace : "L'application est conçue pour être simple. En plus, à l'activation, un tutoriel guidé vous accompagne pas à pas. Et notre équipe est là pour vous former — vous serez opérationnel en 10 minutes."</div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--rv);">Objection 3</div>
+          <h4>"Est-ce que les frais ne vont pas réduire mes marges ?"</h4>
+          <p>Inquiétude sur les coûts liés aux transactions.</p>
+          <div class="scenario-answer answer-rv">✅ Réponse efficace : "L'encaissement par QR Code est totalement gratuit pour vous. Et le transfert à votre propre compte est aussi gratuit. Vous ne payez des frais que pour le retrait — comme n'importe quel retrait Orange Money."</div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--rv);">Objection 4</div>
+          <h4>"Et si mes clients ne connaissent pas Orange Money ?"</h4>
+          <p>Doute sur l'adoption par les clients finaux.</p>
+          <div class="scenario-answer answer-rv">✅ Réponse efficace : "Orange Money est le leader du Mobile Money en Côte d'Ivoire avec des millions d'utilisateurs actifs. Statistiquement, la majorité de vos clients ont un compte OM ou connaissent quelqu'un qui en a un."</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /rv-ex -->
+</div><!-- /panel-rv -->
+
+<!-- ===================== PANEL INSPECTEUR ===================== -->
+<div class="role-panel" id="panel-insp">
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+    <div style="width:10px; height:40px; background:var(--insp); border-radius:5px;"></div>
+    <div>
+      <h2 style="font-size:1.3rem; font-weight:800; color:var(--insp);">Inspecteur</h2>
+      <p style="font-size:.83rem; color:var(--grey);">Conformité documentaire, audit des comptes créés, détection des anomalies et erreurs de classification</p>
+    </div>
+  </div>
+  <div class="subtabs">
+    <button class="subtab insp-subtab active" id="insp-sub-quiz" onclick="showSubtab('insp','quiz')">🎯 Quiz (5 questions)</button>
+    <button class="subtab insp-subtab" id="insp-sub-ex" onclick="showSubtab('insp','ex')">✏️ Exercices (2)</button>
+  </div>
+
+  <!-- INSP QUIZ -->
+  <div id="insp-quiz">
+    <div class="quiz-score-bar">
+      <div>
+        <h3>Score Inspecteur</h3>
+        <div class="score-note">Questions axées conformité, audit &amp; documentation</div>
+      </div>
+      <div>
+        <div class="score-display" id="insp-score-display">0 <span>/ 5</span></div>
+      </div>
+    </div>
+    <div class="quiz-container">
+
+      <div class="quiz-question-block" id="insp-q1">
+        <div class="quiz-q-num qnum-insp">Question INSP 01 / 05 — Détection d'anomalie systémique [Expert]</div>
+        <div class="quiz-q-text">En révisant les dossiers d'un même agent sur une semaine, vous observez : (1) Boutiquier textile, 4 employés, CA ≈ 200m XOF → profil Essentiel ; (2) Épicier solo, CA ≈ 55k XOF → profil Classique ; (3) Restaurant, 8 employés, CA ≈ 320m XOF → profil Essentiel. Quel est le problème systémique détecté ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('insp-q1','insp',false,'Les documents des cas 1 et 3 ne sont pas précisés comme manquants dans l\'énoncé — le problème n\'est pas documentaire mais de classification. Un bon inspecteur distingue une erreur documentaire d\'une erreur de profil.')"><span class="option-letter">A</span> Les dossiers 1 et 3 manquent de documents — il faut demander les RC manquants</div>
+          <div class="quiz-option" onclick="ans('insp-q1','insp',false,'Seul le cas 2 comporte une erreur. L\'épicier solo à 55k XOF/an est un profil Essentiel, pas Classique. Mais les cas 1 et 3 ont aussi des erreurs (dans le sens inverse) — voir réponse B.')"><span class="option-letter">B</span> Seul le dossier 2 est incorrect — l'épicier ne correspond pas au profil Classique</div>
+          <div class="quiz-option" onclick="ans('insp-q1','insp',true,'Diagnostic expert ! L\'agent inverse systématiquement la logique : cas 1 et 3 (CA &gt;150m, plusieurs employés) devraient être Classique minimum, mais il les classe Essentiel. Le cas 2 (CA &lt;150k, solo) devrait être Essentiel, mais il le classe Classique. C\'est une inversion totale des critères — erreur de compréhension profonde, non un accident isolé. Action requise : (1) corriger les 3 dossiers, (2) déclencher une session de formation individuelle sur les critères de classification, (3) auditer tous les dossiers de cet agent sur le trimestre.')"><span class="option-letter">C</span> L'agent inverse systématiquement les critères : sur-classe les petits commerces et sous-classe les gros — erreur de compréhension des seuils Essentiel/Classique</div>
+          <div class="quiz-option" onclick="ans('insp-q1','insp',false,'Trois erreurs du même type, dans le même sens, sur la même semaine ne peuvent pas être des coïncidences. Il y a un pattern systémique à identifier et corriger.')"><span class="option-letter">D</span> Ce sont des erreurs isolées sans lien entre elles — corriger chaque dossier individuellement suffit</div>
+        </div>
+        <div class="quiz-feedback" id="fb-insp-q1"></div>
+      </div>
+
+      <div class="quiz-question-block" id="insp-q2">
+        <div class="quiz-q-num qnum-insp">Question INSP 02 / 05 — Cas limite de classification [Intermédiaire]</div>
+        <div class="quiz-q-text">Dossier à auditer : commerce de vente de matériaux de construction, 3 employés, CA déclaré de 160m XOF/an, RC présent, pas de documents financiers. L'agent l'a créé en profil Essentiel. Quel est votre verdict ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('insp-q2','insp',false,'Avec un CA de 160m XOF (au-dessus du seuil Essentiel &lt;150m XOF), 3 employés et un RC disponible, les critères Classique sont clairement remplis. Ce n\'est pas un cas limite — c\'est une sous-classification nette.')"><span class="option-letter">A</span> Conforme — le profil Essentiel est acceptable quand le CA est proche du seuil Classique</div>
+          <div class="quiz-option" onclick="ans('insp-q2','insp',false,'Avec CA à 160m XOF et RC disponible, le profil Premium nécessiterait des documents financiers (bilans, etc.) non fournis ici. Premium serait une sur-classification — le bon profil est Classique.')"><span class="option-letter">B</span> Sous-classification double — ce commerce devrait être en Premium avec documents financiers complets</div>
+          <div class="quiz-option" onclick="ans('insp-q2','insp',true,'Verdict correct ! CA 160m XOF &gt; seuil Essentiel (150m), RC présent, 3 employés → critères Classique remplis. Le profil Essentiel est une sous-classification. Action : reclassifier en Classique, l\'agent doit compléter avec le RC déjà disponible et remettre à la validation. Aucun document financier requis pour ce niveau. Signaler l\'erreur à l\'agent avec explication des seuils.')"><span class="option-letter">C</span> Sous-classification — CA 160m XOF et RC disponible répondent aux critères Classique ; reclassifier et compléter le dossier avec le RC</div>
+          <div class="quiz-option" onclick="ans('insp-q2','insp',false,'Suspendre et réauditer dans 30 jours serait justifié si les données étaient incertaines. Mais ici les critères sont clairs (CA, RC, employés) — la décision peut être prise immédiatement.')"><span class="option-letter">D</span> Suspendre le dossier et le réauditer dans 30 jours pour vérifier l'évolution du CA réel</div>
+        </div>
+        <div class="quiz-feedback" id="fb-insp-q2"></div>
+      </div>
+
+      <div class="quiz-question-block" id="insp-q3">
+        <div class="quiz-q-num qnum-insp">Question INSP 03 / 05 — Conformité post-activation [Expert]</div>
+        <div class="quiz-q-text">Lors d'un audit de routine, vous découvrez qu'un compte Premium validé il y a 7 mois est toujours actif avec des transactions régulières. Problème : la CNI du gérant dans le dossier a expiré il y a 3 mois. À la création, elle était valide. Quelle est la procédure correcte ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('insp-q3','insp',false,'La validité de la CNI à la création est une condition nécessaire mais pas suffisante pour garantir la conformité continue. Les réglementations KYC (Know Your Customer) exigent que les informations d\'identification restent à jour pendant toute la durée de vie du compte.')"><span class="option-letter">A</span> Ne rien faire — la CNI était valide à la création, les conditions étaient remplies</div>
+          <div class="quiz-option" onclick="ans('insp-q3','insp',false,'Downgrader en Classique n\'est pas la procédure pour une CNI expirée — le profil du commerce n\'a pas changé. La régularisation documentaire ne change pas la taille du commerce.')"><span class="option-letter">B</span> Downgrader le compte en Classique jusqu'au renouvellement de la CNI</div>
+          <div class="quiz-option" onclick="ans('insp-q3','insp',true,'Procédure correcte ! Une CNI expirée en cours de vie du compte est une non-conformité KYC. Action : (1) notifier le marchand par écrit du délai de régularisation (généralement 30 jours), (2) mettre le compte en statut "régularisation en cours" sans bloquer les transactions dans un premier temps, (3) escalader au Back Office avec note de suivi, (4) si le délai expire sans renouvellement — suspendre le compte selon la procédure standard.')"><span class="option-letter">C</span> Notifier le marchand pour renouvellement de CNI avec délai de régularisation, escalader au Back Office et assurer le suivi jusqu'à mise à jour du dossier</div>
+          <div class="quiz-option" onclick="ans('insp-q3','insp',false,'Supprimer le compte d\'un marchand Premium actif pour une CNI expirée serait disproportionné et nuirait gravement à la relation commerciale. La procédure prévoit une régularisation avant toute mesure radicale.')"><span class="option-letter">D</span> Supprimer immédiatement le compte — une CNI expirée invalide toute la conformité du dossier</div>
+        </div>
+        <div class="quiz-feedback" id="fb-insp-q3"></div>
+      </div>
+
+      <div class="quiz-question-block" id="insp-q4">
+        <div class="quiz-q-num qnum-insp">Question INSP 04 / 05 — Audit d'un compte Non-OM inactif [Intermédiaire]</div>
+        <div class="quiz-q-text">Lors d'une visite terrain, un marchand Non-OM vous montre son compte créé il y a 6 semaines : statut "Activé" en Back Office, application installée et à jour. Pourtant zéro transaction. En creusant, vous découvrez qu'il ne sait pas générer son QR Code et n'a jamais été formé après l'activation. Quelles sont vos deux actions prioritaires, dans l'ordre ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('insp-q4','insp',false,'Réinstaller l\'application et recréer le compte alors que le Back Office confirme le statut "Activé" serait une perte de temps — le problème n\'est pas technique mais opérationnel et de formation.')"><span class="option-letter">A</span> Réinstaller l'application et recréer un nouveau compte pour repartir sur une base propre</div>
+          <div class="quiz-option" onclick="ans('insp-q4','insp',true,'Actions correctes et ordonnées ! (1) Former immédiatement le marchand à la génération du QR Code et effectuer un test de transaction pour valider l\'opérationnel — c\'est l\'action la plus rapide pour débloquer la situation. (2) Remonter dans votre rapport d\'audit que l\'agent n\'a pas dispensé le tutoriel post-activation Non-OM, constitue une non-conformité terrain à corriger systématiquement sur ses prochains déploiements. Ces deux actions traitent le symptôme (marchand non opérationnel) ET la cause racine (agent non respectueux du protocole).')"><span class="option-letter">B</span> Former le marchand au QR Code sur place et effectuer un test de transaction ; puis remonter en rapport d'audit que l'agent n'a pas dispensé le tutoriel post-activation Non-OM</div>
+          <div class="quiz-option" onclick="ans('insp-q4','insp',false,'Escalader directement au superviseur sans intervenir laisse le marchand dans un état inopérationnel alors que vous êtes sur place et pouvez résoudre le problème en 15 minutes. L\'inspecteur a la responsabilité d\'intervenir lors de ses visites terrain.')"><span class="option-letter">C</span> Ne pas intervenir directement et escalader immédiatement au superviseur pour qu'il envoie l'agent former le marchand</div>
+          <div class="quiz-option" onclick="ans('insp-q4','insp',false,'Remonter une anomalie Back Office est incorrect — le statut "Activé" est confirmé. Il n\'y a pas de problème système. Le blocage est une lacune de formation post-activation, pas un bug.')"><span class="option-letter">D</span> Remonter une anomalie Back Office car un compte actif sans transaction après 6 semaines doit être automatiquement suspendu par le système</div>
+        </div>
+        <div class="quiz-feedback" id="fb-insp-q4"></div>
+      </div>
+
+      <div class="quiz-question-block" id="insp-q5">
+        <div class="quiz-q-num qnum-insp">Question INSP 05 / 05 — Analyse de tendance trimestrielle [Expert]</div>
+        <div class="quiz-q-text">En compilant vos 90 audits du trimestre, vous observez : 38% des comptes Classique créés manquent du Registre de Commerce, mais 91% ont une patente fiscale. La règle documentaire actuelle accepte RC OU patente pour le profil Classique. Quelle est la bonne lecture de cette situation et que préconisez-vous dans votre rapport ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('insp-q5','insp',false,'Exiger uniquement le RC rigidifierait le processus sans bénéfice réel — la patente est un document officiel reconnu et équivalent. Cette approche ralentirait les créations Classique sans améliorer la conformité réelle.')"><span class="option-letter">A</span> Recommander de ne plus accepter la patente et d'exiger exclusivement le RC pour standardiser les dossiers Classique</div>
+          <div class="quiz-option" onclick="ans('insp-q5','insp',false,'Si 38% des dossiers manquent de RC mais ont une patente (document acceptable), ces dossiers ne sont pas non-conformes — la règle RC OU patente est respectée. Les signaler comme non-conformes serait une erreur d\'interprétation de la règle.')"><span class="option-letter">B</span> Signaler les 38% sans RC comme non-conformes et demander leur régularisation individuelle</div>
+          <div class="quiz-option" onclick="ans('insp-q5','insp',true,'Analyse experte ! Les 91% de patentes montrent que les marchands Classique disposent bien d\'un document officiel — les dossiers sont conformes à la règle RC OU patente. Mais la tendance révèle que les agents ne mentionnent pas systématiquement la patente comme alternative au RC. Préconisation au rapport : (1) confirmer que les 38% sans RC sont conformes si patente présente, (2) clarifier dans la formation terrain que RC et patente ont la même valeur documentaire pour le Classique, (3) adapter le guide agent pour mettre en avant les deux options dès la qualification initiale.')"><span class="option-letter">C</span> Les dossiers sont conformes — la patente répond à la règle RC OU patente. Préconiser de clarifier dans la formation terrain que les deux documents ont la même valeur pour éviter des demandes inutiles de RC</div>
+          <div class="quiz-option" onclick="ans('insp-q5','insp',false,'Ne rien signaler serait passer à côté d\'un enseignement important sur les pratiques terrain. Même si les dossiers sont conformes, un rapport d\'inspecteur doit identifier les tendances et proposer des améliorations de processus.')"><span class="option-letter">D</span> Ne rien signaler — si la patente est acceptée, tous les dossiers sont conformes et il n'y a pas de problème à remonter</div>
+        </div>
+        <div class="quiz-feedback" id="fb-insp-q5"></div>
+      </div>
+
+    </div>
+  </div><!-- /insp-quiz -->
+
+  <!-- INSP EXERCICES -->
+  <div id="insp-ex" style="display:none;">
+    <div class="exercise-card">
+      <div class="exercise-header">
+        <div class="exercise-icon icon-insp">📋</div>
+        <div>
+          <h3>Exercice Inspecteur 1 — Audit de dossiers marchands</h3>
+          <p>Examiner 5 dossiers et identifier les non-conformités — Durée : 20 minutes</p>
+        </div>
+      </div>
+      <div class="alert alert-insp" style="margin-bottom:18px;">
+        <div class="alert-icon">🔍</div>
+        <div class="alert-text"><strong>Mission :</strong> Vous êtes Inspecteur OM Business. Examinez les 5 dossiers ci-dessous et pour chacun : (1) confirmez ou corrigez le profil attribué, (2) identifiez les documents manquants le cas échéant, (3) indiquez l'action à prendre.</div>
+      </div>
+      <table class="styled-table">
+        <thead><tr class="th-insp"><th>#</th><th>Description du dossier</th><th>Profil attribué</th><th>Votre verdict</th><th>Action requise</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td style="font-size:.82rem;">Coiffeur indépendant, 1 employé, CA ~40k XOF/an. Documents : CNI uniquement.</td>
+            <td><span style="background:#F3E5F5;color:#7B1FA2;padding:2px 6px;border-radius:4px;font-weight:700;font-size:.75rem;">ESSENTIEL</span></td>
+            <td style="font-size:.8rem;color:#2E7D32;font-weight:700;">✅ Conforme</td>
+            <td style="font-size:.8rem;">Aucune — profil et document corrects</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td style="font-size:.82rem;">Supérette avec 7 employés, CA ≈ 180m XOF/an, patente. Documents : CNI uniquement. Profil Classique créé.</td>
+            <td><span style="background:#E3F2FD;color:#1565C0;padding:2px 6px;border-radius:4px;font-weight:700;font-size:.75rem;">CLASSIQUE</span></td>
+            <td style="font-size:.8rem;color:#6A091A;font-weight:700;">❌ Non-conforme</td>
+            <td style="font-size:.8rem;">Demander RC ou carte commerçant — suspendre validation jusqu'à réception du document</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td style="font-size:.82rem;">Chaîne de stations-services (3 sites), CA &gt; 2 milliards XOF, +80 employés, documents complets. Profil Classique créé.</td>
+            <td><span style="background:#E3F2FD;color:#1565C0;padding:2px 6px;border-radius:4px;font-weight:700;font-size:.75rem;">CLASSIQUE</span></td>
+            <td style="font-size:.8rem;color:#6A091A;font-weight:700;">❌ Sous-classification</td>
+            <td style="font-size:.8rem;">Reclassifier en Premium — contacter agent + client. Documents financiers déjà disponibles.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td style="font-size:.82rem;">VTC (chauffeur Uber), travaille seul, pas de RC, CNI fournie. Profil Essentiel Non-OM créé.</td>
+            <td><span style="background:#F3E5F5;color:#7B1FA2;padding:2px 6px;border-radius:4px;font-weight:700;font-size:.75rem;">ESSENTIEL</span></td>
+            <td style="font-size:.8rem;color:#2E7D32;font-weight:700;">✅ Conforme</td>
+            <td style="font-size:.8rem;">Vérifier que le tutoriel guidé Non-OM a bien été dispensé après activation</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td style="font-size:.82rem;">Restaurant avec 5 employés, CA ≈ 100m XOF/an, RC disponible. Documents : CNI + RC. Profil Premium créé.</td>
+            <td><span style="background:#E8F5E9;color:#2E7D32;padding:2px 6px;border-radius:4px;font-weight:700;font-size:.75rem;">PREMIUM</span></td>
+            <td style="font-size:.8rem;color:#6A091A;font-weight:700;">❌ Sur-classification</td>
+            <td style="font-size:.8rem;">Reclassifier en Classique (CA entre 150k–400m, 5 employés, RC présent). Documents financiers non fournis pour justifier Premium.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="exercise-card">
+      <div class="exercise-header">
+        <div class="exercise-icon icon-insp">🔎</div>
+        <div>
+          <h3>Exercice Inspecteur 2 — Checklist d'audit terrain</h3>
+          <p>Construire et appliquer une checklist de contrôle qualité lors d'une visite marchand — Durée : 15 minutes</p>
+        </div>
+      </div>
+      <div class="alert alert-insp" style="margin-bottom:18px;">
+        <div class="alert-icon">📝</div>
+        <div class="alert-text"><strong>Mission :</strong> Lors d'une visite d'audit chez un marchand Classique (M. Traoré, gérant d'une boulangerie à Yopougon), complétez mentalement la checklist ci-dessous. Identifiez les points à vérifier obligatoirement.</div>
+      </div>
+
+      <div class="section-heading">
+        <div class="section-num-insp">A</div>
+        <h2 style="color:var(--insp); font-size:1rem;">Vérification documentaire (dossier Back Office)</h2>
+      </div>
+      <ul class="checklist">
+        <li><div class="check-box check-insp"></div>CNI du gérant en cours de validité (vérifier date d'expiration)</li>
+        <li><div class="check-box check-insp"></div>Registre de commerce OU carte commerçant présent et lisible</li>
+        <li><div class="check-box check-insp"></div>Photo CNI recto/verso nette dans le dossier numérique</li>
+        <li><div class="check-box check-insp"></div>Cohérence nom CNI / nom sur le compte créé</li>
+        <li><div class="check-box check-insp"></div>Profil attribué correspond aux critères (CA déclaré + nb. employés)</li>
+      </ul>
+
+      <div class="section-heading" style="margin-top:18px;">
+        <div class="section-num-insp">B</div>
+        <h2 style="color:var(--insp); font-size:1rem;">Vérification opérationnelle (chez le marchand)</h2>
+      </div>
+      <ul class="checklist">
+        <li><div class="check-box check-insp"></div>Application OM Business installée et à jour sur le smartphone du gérant</li>
+        <li><div class="check-box check-insp"></div>QR Code visible et affiché à un endroit accessible aux clients</li>
+        <li><div class="check-box check-insp"></div>Test d'encaissement réel effectué (transaction test &gt;1 XOF)</li>
+        <li><div class="check-box check-insp"></div>Historique des transactions accessible et non vide</li>
+        <li><div class="check-box check-insp"></div>Le marchand connaît la procédure de retrait (App ou USSD)</li>
+      </ul>
+
+      <div class="section-heading" style="margin-top:18px;">
+        <div class="section-num-insp">C</div>
+        <h2 style="color:var(--insp); font-size:1rem;">Points de formation à vérifier</h2>
+      </div>
+      <ul class="checklist">
+        <li><div class="check-box check-insp"></div>Le marchand peut générer lui-même un lien de paiement à distance</li>
+        <li><div class="check-box check-insp"></div>Le marchand comprend la différence entre "transfert gratuit à soi-même" et "transfert tiers"</li>
+        <li><div class="check-box check-insp"></div>Le marchand sait contacter l'assistance client en cas de problème</li>
+        <li><div class="check-box check-insp"></div>Pour les Classiques avec plusieurs QR : chaque caisse/employé a son propre QR imprimé</li>
+      </ul>
+
+      <div class="alert alert-success" style="margin-top:18px;">
+        <div class="alert-icon">📊</div>
+        <div class="alert-text"><strong>Rapport d'audit :</strong> À la fin de la visite, l'Inspecteur complète le rapport en notant : nombre de points conformes / total, anomalies détectées, actions correctives demandées à l'agent responsable, délai de régularisation accordé.</div>
+      </div>
+    </div>
+  </div><!-- /insp-ex -->
+</div><!-- /panel-insp -->
+
+<!-- ===================== PANEL SUPERVISEUR ===================== -->
+<div class="role-panel" id="panel-sup">
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+    <div style="width:10px; height:40px; background:var(--sup); border-radius:5px;"></div>
+    <div>
+      <h2 style="font-size:1.3rem; font-weight:800; color:var(--sup);">Superviseur</h2>
+      <p style="font-size:.83rem; color:var(--grey);">Coaching d'équipe, gestion des escalades, suivi de performance, résolution des blocages terrain</p>
+    </div>
+  </div>
+  <div class="subtabs">
+    <button class="subtab sup-subtab active" id="sup-sub-quiz" onclick="showSubtab('sup','quiz')">🎯 Quiz (5 questions)</button>
+    <button class="subtab sup-subtab" id="sup-sub-ex" onclick="showSubtab('sup','ex')">✏️ Exercices (2)</button>
+  </div>
+
+  <!-- SUP QUIZ -->
+  <div id="sup-quiz">
+    <div class="quiz-score-bar">
+      <div>
+        <h3>Score Superviseur</h3>
+        <div class="score-note">Coaching différencié, KPI contradictoires, décisions sous contrainte</div>
+      </div>
+      <div>
+        <div class="score-display" id="sup-score-display">0 <span>/ 5</span></div>
+      </div>
+    </div>
+    <div class="quiz-container">
+
+      <div class="quiz-question-block" id="sup-q1">
+        <div class="quiz-q-num qnum-sup">Question SUP 01 / 05 — Coaching différencié d'équipe [Expert]</div>
+        <div class="quiz-q-text">Analyse mensuelle de votre équipe de 6 agents : 3 agents ont bon volume ET bon taux d'activation ; 2 agents ont bon volume MAIS faible taux d'activation (25–30%) ; 1 agent a faible volume MAIS excellent taux d'activation (84%). Quelle est votre stratégie de coaching la plus efficace ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('sup-q1','sup',false,'Un plan de formation identique pour tous ignore les profils radicalement différents. Les 3 bons performers n\'ont pas besoin du même coaching que les 2 sous-performants sur l\'activation. Un plan uniforme est une perte de ressources.')"><span class="option-letter">A</span> Mettre en place un plan de formation identique pour toute l'équipe cette semaine</div>
+          <div class="quiz-option" onclick="ans('sup-q1','sup',true,'Stratégie optimale ! (1) Les 2 agents à bon volume/faible activation ont besoin d\'un coaching urgent sur le suivi post-création et la prise en main marchande — c\'est votre priorité immédiate. (2) L\'agent à faible volume/excellent taux possède une méthode d\'accompagnement remarquable : organisez un échange de pratiques où il présente sa méthode de suivi aux 2 agents en difficulté. (3) Les 3 bons performers servent de benchmark — interrogez-les pour documenter leurs meilleures pratiques et les partager à l\'équipe.')"><span class="option-letter">B</span> Coacher en urgence les 2 agents (bon volume/faible activation) sur le suivi post-création, et organiser un partage de méthode avec l'agent à excellent taux d'activation</div>
+          <div class="quiz-option" onclick="ans('sup-q1','sup',false,'L\'agent à faible volume/excellent taux n\'est pas un problème prioritaire — son taux de 84% est exceptionnel. Le forcer à produire plus sans comprendre pourquoi son volume est faible (charge de travail ? zone ? méthode ?) pourrait dégrader sa qualité.')"><span class="option-letter">C</span> Concentrer le coaching sur l'agent à faible volume pour l'amener au niveau de production des autres</div>
+          <div class="quiz-option" onclick="ans('sup-q1','sup',false,'Sanctionner les 2 agents sans coaching préalable est une approche managériale contre-productive. Ces agents ont de bons volumes — leur problème est méthodologique, pas motivationnel. La sanction sans formation ne corrige pas une méthode de travail.')"><span class="option-letter">D</span> Sanctionner les 2 agents sous-performants sur l'activation et leur fixer des objectifs individuels sous ultimatum</div>
+        </div>
+        <div class="quiz-feedback" id="fb-sup-q1"></div>
+      </div>
+
+      <div class="quiz-question-block" id="sup-q2">
+        <div class="quiz-q-num qnum-sup">Question SUP 02 / 05 — Gestion de crise financière [Expert]</div>
+        <div class="quiz-q-text">Un marchand Premium vous appelle en urgence : il signale un débit non autorisé de 750 000 XOF sur son compte OM Business ce matin. Il est très agité. L'agent qui a créé le compte est joignable. Vous êtes superviseur. Quelle est votre séquence d'actions dans l'heure qui suit ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('sup-q2','sup',false,'Attendre 24h pour un débit non autorisé de 750 000 XOF est inacceptable — le marchand peut subir d\'autres débits pendant ce temps et perdre confiance définitivement dans OM Business. Le temps est critique dans une réclamation financière.')"><span class="option-letter">A</span> Rassurer le marchand par téléphone et attendre 24h pour voir si le débit se corrige automatiquement</div>
+          <div class="quiz-option" onclick="ans('sup-q2','sup',false,'Déléguer à l\'agent sans supervision directe, surtout sur un litige financier de cette ampleur avec un Premium, est une erreur managériale. Le superviseur doit piloter personnellement la réclamation et en assurer la traçabilité.')"><span class="option-letter">B</span> Demander à l'agent de rappeler directement le marchand et de gérer seul le problème</div>
+          <div class="quiz-option" onclick="ans('sup-q2','sup',true,'Séquence correcte et complète ! (1) Appeler immédiatement le marchand pour noter : montant exact, heure du débit, référence de transaction si disponible — et confirmer qu\'une action est en cours. (2) Ouvrir une réclamation urgente au Back Office avec tous les éléments collectés + numéro de compte marchand. (3) Informer votre hiérarchie (RV) du cas pour traçabilité et soutien éventuel. (4) Suivre activement jusqu\'à résolution et tenir le marchand informé à chaque étape. Cette séquence protège à la fois le marchand et Orange.')"><span class="option-letter">C</span> (1) Appeler le marchand pour collecter les détails et le rassurer ; (2) ouvrir une réclamation urgente au Back Office avec référence de transaction ; (3) informer la hiérarchie ; (4) assurer le suivi jusqu'à résolution avec mises à jour régulières au marchand</div>
+          <div class="quiz-option" onclick="ans('sup-q2','sup',false,'Rembourser sur le budget terrain est totalement hors procédure, constitue une prise de risque financière personnelle, et court-circuite le processus de réclamation officiel qui seul peut traiter la cause racine du débit non autorisé.')"><span class="option-letter">D</span> Rembourser immédiatement le marchand depuis le budget terrain pour désamorcer la situation avant investigation</div>
+        </div>
+        <div class="quiz-feedback" id="fb-sup-q2"></div>
+      </div>
+
+      <div class="quiz-question-block" id="sup-q3">
+        <div class="quiz-q-num qnum-sup">Question SUP 03 / 05 — Interprétation KPI contradictoires [Expert]</div>
+        <div class="quiz-q-text">Vos données mensuelles : Équipe A (3 agents) = 42 créations, 31 marchands actifs (74%). Équipe B (3 agents) = 78 créations, 27 marchands actifs (35%). Le directeur régional félicite publiquement l'Équipe B pour son volume. Quelle est votre analyse et comment la présentez-vous à la direction ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('sup-q3','sup',false,'Valider la position du directeur sans nuance serait une erreur managériale. L\'Équipe A génère plus de marchands réellement actifs (31 vs 27) avec deux fois moins de créations — sa valeur opérationnelle est supérieure. Rester silencieux prive la direction d\'une analyse décisive.')"><span class="option-letter">A</span> Valider la félicitation de la direction — le volume est bien l'indicateur principal de performance</div>
+          <div class="quiz-option" onclick="ans('sup-q3','sup',false,'Demander à l\'Équipe A d\'augmenter son volume sans comprendre pourquoi elle est à 42 créations (charge de zone, qualité de prospection ?) risque de dégrader son excellent taux d\'activation. Copier la méthode de l\'Équipe B reviendrait à adopter l\'approche qui produit 65% de comptes inactifs.')"><span class="option-letter">B</span> Demander à l'Équipe A de s'aligner sur le volume de l'Équipe B pour harmoniser la performance</div>
+          <div class="quiz-option" onclick="ans('sup-q3','sup',true,'Analyse stratégique juste ! L\'Équipe A génère 31 marchands actifs (valeur réelle) contre 27 pour l\'Équipe B, avec 36 créations de moins. L\'Équipe B a 51 comptes inactifs qui alourdissent les statistiques futures. Présentation à la direction : chiffrer la valeur en transactions générées et en revenus (pas en créations brutes), montrer que l\'Équipe B a un coût caché d\'accompagnement élevé pour activer ses 65% de dormants, proposer un indicateur composite (créations × taux d\'activation) comme KPI de référence. Défendre l\'approche qualité sans dénigrer l\'Équipe B.')"><span class="option-letter">C</span> Présenter à la direction un rapport chiffré montrant qu'Équipe A génère plus de marchands actifs avec moins d'efforts — et proposer le taux d'activation comme KPI complémentaire au volume</div>
+          <div class="quiz-option" onclick="ans('sup-q3','sup',false,'Fusionner les équipes sans analyser les méthodes de chacune risque de diluer les bonnes pratiques de l\'Équipe A dans les mauvaises habitudes de l\'Équipe B. La solution n\'est pas organisationnelle mais méthodologique.')"><span class="option-letter">D</span> Fusionner les deux équipes pour équilibrer les méthodes et homogénéiser les résultats</div>
+        </div>
+        <div class="quiz-feedback" id="fb-sup-q3"></div>
+      </div>
+
+      <div class="quiz-question-block" id="sup-q4">
+        <div class="quiz-q-num qnum-sup">Question SUP 04 / 05 — Diagnostic de blocage commercial [Intermédiaire]</div>
+        <div class="quiz-q-text">Après 4 semaines de formations intensives sur le traitement des objections, les chiffres de conversion de votre équipe ne s'améliorent pas. Quelle est selon vous la cause racine la plus probable, et comment l'identifiez-vous ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('sup-q4','sup',false,'Doubler la durée de formation sans changer le contenu ni diagnostiquer la vraie cause racine ne produira pas de résultats différents. C\'est la définition de l\'inefficacité : faire la même chose en espérant un résultat différent.')"><span class="option-letter">A</span> La formation sur les objections n'est pas assez longue — il faut passer de 4 à 8 semaines minimum</div>
+          <div class="quiz-option" onclick="ans('sup-q4','sup',false,'La résistance culturelle peut exister, mais c\'est une conclusion prématurée sans données. Avant d\'invoquer des facteurs externes, l\'analyse interne du processus de vente s\'impose.')"><span class="option-letter">B</span> Les marchands de ce territoire sont culturellement résistants aux solutions digitales — changer de zone</div>
+          <div class="quiz-option" onclick="ans('sup-q4','sup',true,'Diagnostic expert ! Si les objections sont bien traitées mais la conversion ne suit pas, le blocage est probablement en amont ou en aval des objections. Pour identifier la vraie cause : (1) accompagner chaque agent sur le terrain 2 jours pour observer la séquence complète (prospection → qualification → présentation → objections → closing) ; (2) analyser le taux de conversion à chaque étape — si les objections sont bien gérées mais le closing échoue, le problème est dans la finalisation ; si peu de prospects arrivent aux objections, le problème est dans la qualification initiale. La formation sur les objections ne peut corriger une défaillance en amont.')"><span class="option-letter">C</span> Le blocage est peut-être en amont (mauvaise qualification du prospect) ou en aval (closing absent) — observer les agents sur le terrain pour diagnostiquer l'étape réelle de rupture</div>
+          <div class="quiz-option" onclick="ans('sup-q4','sup',false,'Sanctionner les agents après 4 semaines de formation active serait contre-productif. Si la formation n\'a pas produit de résultats, c\'est d\'abord une question de pertinence du contenu de formation ou de diagnostic du vrai problème.')"><span class="option-letter">D</span> Les agents ne s'investissent pas — mettre en place des sanctions pour les moins performants</div>
+        </div>
+        <div class="quiz-feedback" id="fb-sup-q4"></div>
+      </div>
+
+      <div class="quiz-question-block" id="sup-q5">
+        <div class="quiz-q-num qnum-sup">Question SUP 05 / 05 — Décision stratégique sous contrainte [Expert]</div>
+        <div class="quiz-q-text">Il reste 2 jours avant la clôture du mois. Votre équipe manque 16 comptes pour l'objectif. Option A : forcer un sprint de création non-qualifié pour atteindre le chiffre. Option B : ne créer que des comptes qualifiés et finir à -16 sur l'objectif. Votre taux d'activation actuel est de 71%. Quelle décision prenez-vous et comment la défendez-vous auprès du directeur régional ?</div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="ans('sup-q5','sup',false,'Atteindre l\'objectif avec 16 comptes non qualifiés crée un problème immédiat au mois suivant : ces comptes seront inactifs, le taux d\'activation s\'effondrera (de 71% vers 40–45%), et la direction posera les mêmes questions mais sur un problème plus grave. C\'est repousser la contrainte en l\'aggravant.')"><span class="option-letter">A</span> Option A — l'objectif mensuel est contractuel, atteindre le chiffre est non-négociable</div>
+          <div class="quiz-option" onclick="ans('sup-q5','sup',true,'Décision stratégiquement solide ! Voici comment la défendre : (1) calculer le coût réel de l\'Option A — 16 comptes inactifs = dégradation de 71% à ~52% de taux d\'activation au mois suivant, avec des KPIs futurs plus difficiles à corriger ; (2) valoriser le résultat actuel : 71% d\'activation est un résultat supérieur à la moyenne, il génère des transactions réelles et des revenus ; (3) proposer un plan de rattrapage pour le mois suivant avec les 16 prospects identifiés mais non convertis ce mois. Cette approche montre un management par la valeur et non par le volume brut.')"><span class="option-letter">B</span> Option B — présenter au directeur les données de taux d'activation (71%) comme preuve de qualité, chiffrer le risque de l'Option A sur les KPIs du mois suivant, et proposer un plan de rattrapage structuré</div>
+          <div class="quiz-option" onclick="ans('sup-q5','sup',false,'Cibler uniquement les profils Essentiel pour aller vite peut sembler un compromis raisonnable, mais si ces profils ne sont pas des marchands réellement qualifiés (fréquentation suffisante, motivation à utiliser l\'app), ils seront des comptes inactifs. Le profil ne garantit pas la qualité — c\'est la qualification du prospect qui compte.')"><span class="option-letter">C</span> Option A mais en ciblant uniquement les profils Essentiel (dossier CNI seule) pour minimiser le temps de création</div>
+          <div class="quiz-option" onclick="ans('sup-q5','sup',false,'Concentrer 2 jours sur l\'activation des marchands existants améliore les stats actuelles, mais abandonne complètement l\'objectif de création sans argumentation structurée face à la direction. Ce n\'est pas une réponse complète à la situation décrite.')"><span class="option-letter">D</span> Suspendre toute prospection et consacrer les 2 jours à activer les marchands déjà créés ce mois</div>
+        </div>
+        <div class="quiz-feedback" id="fb-sup-q5"></div>
+      </div>
+
+    </div>
+  </div><!-- /sup-quiz -->
+
+  <!-- SUP EXERCICES -->
+  <div id="sup-ex" style="display:none;">
+    <div class="exercise-card">
+      <div class="exercise-header">
+        <div class="exercise-icon icon-sup">🎙️</div>
+        <div>
+          <h3>Exercice Superviseur 1 — Analyse et correction d'un pitch commercial</h3>
+          <p>Identifier les erreurs dans un discours de vente OM Business et proposer la version corrigée — Durée : 20 minutes</p>
+        </div>
+      </div>
+      <div class="alert alert-sup" style="margin-bottom:18px;">
+        <div class="alert-icon">🎯</div>
+        <div class="alert-text"><strong>Contexte :</strong> Vous observez un agent en situation de vente. Voici le pitch qu'il utilise. Pour chaque partie, identifiez si elle est correcte (✅), à améliorer (⚠️) ou incorrecte (❌).</div>
+      </div>
+
+      <div class="exercise-step">
+        <div class="step-n-sup">1</div>
+        <div class="step-text">
+          <strong>Pitch agent (partie 1) :</strong> "Bonjour Monsieur, je viens vous parler d'Orange Money Business. C'est une application pour recevoir des paiements. Ça coûte des frais selon les transactions."<br>
+          <span style="background:var(--orange-pale); color:var(--teal); padding:4px 10px; border-radius:6px; font-size:.8rem; font-weight:600; display:inline-block; margin-top:8px;">⚠️ À améliorer — Le nom est inexact (c'est OM Business, pas "Orange Money Business"), et commencer par les frais crée une résistance immédiate. Commencer par la valeur : "Accepter tous les paiements Orange Money de vos clients, gratuitement."</span>
+        </div>
+      </div>
+      <div class="exercise-step">
+        <div class="step-n-sup">2</div>
+        <div class="step-text">
+          <strong>Pitch agent (partie 2) :</strong> "Avec OM Business, vous avez un QR Code que vous affichez, et vos clients scannent pour vous payer. Et si un client n'a pas de SIM Orange, il ne peut pas payer."<br>
+          <span style="background:var(--red-pale); color:var(--red); padding:4px 10px; border-radius:6px; font-size:.8rem; font-weight:600; display:inline-block; margin-top:8px;">❌ Incorrect — La deuxième phrase est fausse : un client AVEC Orange Money peut payer peu importe son opérateur SIM. De plus, il existe aussi le lien de paiement à distance pour les achats en ligne ou à distance. Corriger immédiatement.</span>
+        </div>
+      </div>
+      <div class="exercise-step">
+        <div class="step-n-sup">3</div>
+        <div class="step-text">
+          <strong>Pitch agent (partie 3) :</strong> "Pour créer votre compte, j'ai besoin de votre CNI. Même si vous n'avez pas de SIM Orange, on peut créer votre compte — il faut juste votre pièce d'identité."<br>
+          <span style="background:#E8F5E9; color:#1B5E20; padding:4px 10px; border-radius:6px; font-size:.8rem; font-weight:600; display:inline-block; margin-top:8px;">✅ Correct — L'agent mentionne correctement le parcours Non-OM et les documents requis pour l'Essentiel. Bon point à valoriser lors du debriefing.</span>
+        </div>
+      </div>
+      <div class="exercise-step">
+        <div class="step-n-sup">4</div>
+        <div class="step-text">
+          <strong>Pitch agent (partie 4) :</strong> "Pour retirer votre argent, il n'y a pas de frais du tout — c'est gratuit pour tout."<br>
+          <span style="background:var(--red-pale); color:var(--red); padding:4px 10px; border-radius:6px; font-size:.8rem; font-weight:600; display:inline-block; margin-top:8px;">❌ Incorrect — Le retrait est soumis à des frais selon le montant et le canal (App ou USSD). Seul le TRANSFERT À SOI-MÊME et l'ENCAISSEMENT QR sont gratuits. Une information erronée sur les frais crée de la défiance et des réclamations post-inscription.</span>
+        </div>
+      </div>
+      <div class="alert alert-info" style="margin-top:18px;">
+        <div class="alert-icon">💡</div>
+        <div class="alert-text"><strong>Action de coaching :</strong> Le Superviseur débriefe l'agent sur les 2 erreurs factuelles (parties 2 et 4), valorise les points corrects (partie 3), et fait un jeu de rôle correctif avant la prochaine visite terrain.</div>
+      </div>
+    </div>
+
+    <div class="exercise-card">
+      <div class="exercise-header">
+        <div class="exercise-icon icon-sup">⚡</div>
+        <div>
+          <h3>Exercice Superviseur 2 — Gestion de situations de crise terrain</h3>
+          <p>Analyser 4 situations de blocage et définir le plan d'action du Superviseur — Durée : 20 minutes</p>
+        </div>
+      </div>
+      <div class="alert alert-sup" style="margin-bottom:18px;">
+        <div class="alert-icon">🚨</div>
+        <div class="alert-text"><strong>Instruction :</strong> Pour chaque situation ci-dessous, définissez les actions immédiates du Superviseur (dans l'ordre) et les mesures préventives pour éviter la récurrence.</div>
+      </div>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--sup);">Situation A</div>
+          <h4>5 marchands se plaignent simultanément que leurs QR Codes ne fonctionnent plus depuis ce matin.</h4>
+          <p>Tous les 5 sont en profil Essentiel, créés par le même agent la semaine dernière.</p>
+          <div class="scenario-answer answer-sup">
+            <strong>Actions :</strong><br>
+            1. Vérifier si les 5 comptes ont bien reçu la notification d'activation.<br>
+            2. Tester un encaissement sur un des QR pour confirmer le problème.<br>
+            3. Escalader au Back Office si confirmation d'un incident système.<br>
+            4. Informer les marchands avec un délai estimé de résolution.<br>
+            <strong>Prévention :</strong> Instaurer un test d'encaissement systématique à J+1 après création.
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--sup);">Situation B</div>
+          <h4>Un marchand Premium menace de désinstaller l'application car le déplafonnement promis n'est toujours pas actif après 2 semaines.</h4>
+          <p>L'agent impliqué n'a pas remonté l'information au Superviseur.</p>
+          <div class="scenario-answer answer-sup">
+            <strong>Actions :</strong><br>
+            1. Contacter personnellement le marchand pour s'excuser du délai et s'engager à résoudre sous 48h.<br>
+            2. Escalader en urgence au Back Office avec le dossier complet.<br>
+            3. Debriefier l'agent sur l'obligation de remonter les cas de blocage immédiatement.<br>
+            <strong>Prévention :</strong> Créer un reporting hebdomadaire des comptes Premium sans déplafonnement actif.
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--sup);">Situation C</div>
+          <h4>Un agent refuse d'utiliser la procédure Non-OM car il juge "trop long" le tutoriel guidé post-activation.</h4>
+          <p>Résultat : ses marchands Non-OM ne savent pas utiliser l'application.</p>
+          <div class="scenario-answer answer-sup">
+            <strong>Actions :</strong><br>
+            1. Rappeler à l'agent que le tutoriel guidé est une étape obligatoire du parcours Non-OM.<br>
+            2. Re-former l'agent sur la valeur du tutoriel (réduction des appels support + activation réelle).<br>
+            3. Organiser des sessions de rattrapage auprès des marchands Non-OM impactés.<br>
+            <strong>Prévention :</strong> Inclure la vérification du tutoriel dans la checklist de suivi J+3.
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-label" style="color:var(--sup);">Situation D</div>
+          <h4>Votre meilleur agent demande comment présenter Tik Tak Pro à ses clients Premium qui posent des questions sur le crédit.</h4>
+          <p>La fonctionnalité n'est pas encore disponible mais suscite de l'intérêt.</p>
+          <div class="scenario-answer answer-sup">
+            <strong>Actions :</strong><br>
+            1. Confirmer à l'agent que Tik Tak Pro est bien annoncé comme fonctionnalité à venir.<br>
+            2. Lui fournir le discours officiel : "Service de crédit et d'épargne intégré — prochainement disponible dans OM Business."<br>
+            3. Lui demander de noter l'intérêt des marchands (liste de prospects intéressés par Tik Tak Pro).<br>
+            <strong>Note :</strong> Ne pas promettre de date d'activation sans confirmation officielle d'Orange.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /sup-ex -->
+</div><!-- /panel-sup -->
+
+<script>
+// ROLE SCORES
+const roleScores = {
+  rv: { q1:null, q2:null, q3:null, q4:null, q5:null },
+  insp: { q1:null, q2:null, q3:null, q4:null, q5:null },
+  sup: { q1:null, q2:null, q3:null, q4:null, q5:null }
+};
+
+function showRole(role) {
+  document.querySelectorAll('.role-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + role).classList.add('active');
+  document.querySelectorAll('.role-tab').forEach(t => {
+    t.className = 'role-tab';
+  });
+  document.getElementById('tab-' + role).classList.add('active-' + role);
+}
+
+function showSubtab(role, tab) {
+  const quizEl = document.getElementById(role + '-quiz');
+  const exEl = document.getElementById(role + '-ex');
+  const quizBtn = document.getElementById(role + '-sub-quiz');
+  const exBtn = document.getElementById(role + '-sub-ex');
+  if (tab === 'quiz') {
+    quizEl.style.display = 'block';
+    exEl.style.display = 'none';
+    quizBtn.classList.add('active');
+    exBtn.classList.remove('active');
+  } else {
+    quizEl.style.display = 'none';
+    exEl.style.display = 'block';
+    quizBtn.classList.remove('active');
+    exBtn.classList.add('active');
+  }
+}
+
+function ans(qid, role, correct, feedback) {
+  const block = document.getElementById(qid);
+  if (block.querySelector('.correct') || block.querySelector('.incorrect')) return;
+  block.querySelectorAll('.quiz-option').forEach(o => o.classList.add('disabled'));
+  event.currentTarget.classList.add(correct ? 'correct' : 'incorrect');
+  const qKey = qid.replace(role + '-', '');
+  const fb = document.getElementById('fb-' + qid);
+  fb.textContent = (correct ? '✅ ' : '❌ ') + feedback;
+  fb.className = 'quiz-feedback show ' + (correct ? 'fb-correct' : 'fb-incorrect');
+  roleScores[role][qKey] = correct;
+  const total = Object.values(roleScores[role]).filter(v => v === true).length;
+  document.getElementById(role + '-score-display').innerHTML = total + ' <span>/ 5</span>';
+}
+</script>
+</body>
+</html>
