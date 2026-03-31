@@ -416,6 +416,89 @@ body::before {
 .admin-actions { display:flex;gap:.75rem;flex-wrap:wrap; }
 .empty-msg { text-align:center;padding:3rem;color:var(--text-muted);font-size:.9rem; }
 
+/* ADMIN DETAIL */
+.detail-back {
+  display:inline-flex;align-items:center;gap:.4rem;
+  color:var(--text-muted);font-size:.85rem;cursor:pointer;
+  margin-bottom:1.5rem;background:none;border:none;padding:0;
+}
+.detail-back:hover { color:var(--primary); }
+.detail-header {
+  background:var(--surface);border-radius:14px;
+  padding:1.5rem;box-shadow:var(--shadow-sm);
+  margin-bottom:1.5rem;
+  display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;
+}
+.detail-header h2 { font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700; }
+.detail-score-chips { display:flex;gap:.75rem;flex-wrap:wrap; }
+.chip {
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:.4rem .9rem;font-size:.82rem;
+}
+.chip strong { color:var(--primary); }
+.qcm-review-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+  gap:.75rem;margin-bottom:1.5rem;
+}
+.qrev-item {
+  background:var(--surface);border-radius:10px;
+  padding:.9rem 1.1rem;box-shadow:var(--shadow-sm);
+  border-left:3px solid var(--border);font-size:.83rem;
+}
+.qrev-item.ok { border-left-color:var(--success); }
+.qrev-item.ko { border-left-color:var(--danger); }
+.qrev-num { font-size:.72rem;font-weight:600;color:var(--text-muted);margin-bottom:.3rem; }
+.qrev-q { font-weight:500;color:var(--text);margin-bottom:.4rem;line-height:1.4; }
+.qrev-ans { font-size:.8rem; }
+.qrev-ans .given { margin-bottom:.1rem; }
+.qrev-ans .correct-ans { color:var(--success); }
+.cas-review-card {
+  background:var(--surface);border-radius:14px;
+  padding:1.5rem;box-shadow:var(--shadow);
+  border:1.5px solid var(--border);margin-bottom:1.2rem;
+}
+.cas-review-card h3 {
+  font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;
+  color:var(--primary);margin-bottom:1rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cas-ans-block { margin-bottom:1rem; }
+.cas-ans-label {
+  font-size:.75rem;font-weight:600;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem;
+}
+.cas-ans-text {
+  background:var(--surface2);border-radius:8px;
+  padding:.7rem .9rem;font-size:.85rem;color:var(--text);
+  line-height:1.5;border:1px solid var(--border);min-height:2.5rem;
+  white-space:pre-wrap;
+}
+.cas-ans-text.empty { color:var(--text-muted);font-style:italic; }
+.grade-row {
+  display:flex;align-items:center;gap:.75rem;
+  background:#fff8e1;border:1px solid #ffe082;
+  border-radius:10px;padding:.75rem 1rem;margin-top:1rem;
+}
+.grade-row label { font-size:.85rem;font-weight:500;flex:1; }
+.grade-input {
+  width:70px;padding:.4rem .6rem;border:1.5px solid var(--border);
+  border-radius:8px;font-size:1rem;text-align:center;
+  font-family:'Syne',sans-serif;font-weight:700;outline:none;
+}
+.grade-input:focus { border-color:var(--primary); }
+.grade-max { font-size:.8rem;color:var(--text-muted); }
+.save-grades-section {
+  background:var(--surface);border-radius:12px;
+  padding:1.2rem;box-shadow:var(--shadow-sm);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;margin-top:1.5rem;
+  border:1.5px solid var(--border);
+}
+.save-grades-section .total-preview {
+  font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;
+}
+.save-grades-section .total-preview span { color:var(--primary); }
+
 /* NAV BACK */
 .back-link {
   display:inline-flex;align-items:center;gap:.4rem;
@@ -634,17 +717,97 @@ body::before {
           <tr>
             <th>#</th>
             <th>Nom</th>
-            <th>QCM</th>
-            <th>Total</th>
-            <th>%</th>
+            <th>QCM /20</th>
+            <th>Cas 01 /5</th>
+            <th>Cas 02 /6</th>
+            <th>Total /31</th>
+            <th>%QCM</th>
             <th>Résultat</th>
             <th>Durée</th>
             <th>Code</th>
             <th>Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="admin-tbody"></tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- ══════════════ ADMIN DETAIL ══════════════ -->
+  <div class="screen" id="screen-admin-detail">
+    <button class="detail-back" onclick="showScreen('screen-admin');buildAdminPanel()">← Retour au panel admin</button>
+    <div class="detail-header">
+      <div>
+        <h2 id="detail-name">—</h2>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-top:.2rem;" id="detail-meta">—</div>
+      </div>
+      <div class="detail-score-chips">
+        <div class="chip">QCM : <strong id="detail-qcm">—</strong></div>
+        <div class="chip">Cas 01 : <strong id="detail-c1">—</strong>/5</div>
+        <div class="chip">Cas 02 : <strong id="detail-c2">—</strong>/6</div>
+        <div class="chip">Total : <strong id="detail-total">—</strong>/31</div>
+      </div>
+    </div>
+
+    <div class="section-title"><span>Détail QCM</span><span class="badge">20 questions</span></div>
+    <div class="qcm-review-grid" id="detail-qcm-grid"></div>
+
+    <div class="section-title"><span>Réponses — Cas Pratiques</span><span class="badge">À corriger</span></div>
+
+    <div class="cas-review-card">
+      <h3>Cas 01 — Call Center <span style="font-size:.75rem;font-weight:500;color:var(--text-muted)">5 points</span></h3>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q1 — Première action avant modification du compte (1 pt)</div>
+        <div class="cas-ans-text" id="d-c1q1"></div>
+      </div>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q2 — Alternatives si échec KYC (1 pt)</div>
+        <div class="cas-ans-text" id="d-c1q2"></div>
+      </div>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q3 — Durée max selon norme DMT (1 pt)</div>
+        <div class="cas-ans-text" id="d-c1q3"></div>
+      </div>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q4 — 2 étapes de post-traitement obligatoires (2 pts)</div>
+        <div class="cas-ans-text" id="d-c1q4"></div>
+      </div>
+      <div class="grade-row">
+        <label>Note Cas 01</label>
+        <input type="number" class="grade-input" id="grade-c1" min="0" max="5" placeholder="0" oninput="updateTotalPreview()">
+        <span class="grade-max">/ 5 pts</span>
+      </div>
+    </div>
+
+    <div class="cas-review-card">
+      <h3>Cas 02 — Back Office <span style="font-size:.75rem;font-weight:500;color:var(--text-muted)">6 points</span></h3>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q1 — Documents non conformes et justification (2 pts)</div>
+        <div class="cas-ans-text" id="d-c2q1"></div>
+      </div>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q2 — Statut et action déclenchée (1 pt)</div>
+        <div class="cas-ans-text" id="d-c2q2"></div>
+      </div>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q3 — Dossier en attente depuis 4 jours, relance ? (1 pt)</div>
+        <div class="cas-ans-text" id="d-c2q3"></div>
+      </div>
+      <div class="cas-ans-block">
+        <div class="cas-ans-label">Q4 — Délai de traitement + vérification cohérence (2 pts)</div>
+        <div class="cas-ans-text" id="d-c2q4"></div>
+      </div>
+      <div class="grade-row">
+        <label>Note Cas 02</label>
+        <input type="number" class="grade-input" id="grade-c2" min="0" max="6" placeholder="0" oninput="updateTotalPreview()">
+        <span class="grade-max">/ 6 pts</span>
+      </div>
+    </div>
+
+    <div class="save-grades-section">
+      <div class="total-preview">Score total : <span id="total-preview">—</span> / 31</div>
+      <button class="btn btn-primary" onclick="saveGrades()">Enregistrer les notes</button>
     </div>
   </div>
 
@@ -922,7 +1085,20 @@ function soumettre(autoSubmit) {
     elapsed: elapsedStr,
     date: new Date().toLocaleDateString('fr-FR'),
     time: new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}),
-    pct: pct
+    pct: pct,
+    cas: {
+      c1q1: document.getElementById('cas1-q1').value.trim(),
+      c1q2: document.getElementById('cas1-q2').value.trim(),
+      c1q3: document.getElementById('cas1-q3').value.trim(),
+      c1q4: document.getElementById('cas1-q4').value.trim(),
+      c2q1: document.getElementById('cas2-q1').value.trim(),
+      c2q2: document.getElementById('cas2-q2').value.trim(),
+      c2q3: document.getElementById('cas2-q3').value.trim(),
+      c2q4: document.getElementById('cas2-q4').value.trim()
+    },
+    gradeC1: null,
+    gradeC2: null,
+    totalFinal: null
   };
 
   localStorage.setItem('bocc_r_' + code, JSON.stringify(result));
@@ -1016,23 +1192,29 @@ function buildAdminPanel() {
   // Table
   var tbody = document.getElementById('admin-tbody');
   if (!total) {
-    tbody.innerHTML = '<tr><td colspan="9" class="empty-msg">Aucun résultat enregistré.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="12" class="empty-msg">Aucun résultat enregistré.</td></tr>';
     return;
   }
   tbody.innerHTML = all.map(function(r, i) {
     var rank = i+1;
     var rankClass = rank===1?'gold':rank===2?'silver':rank===3?'bronze':'other';
     var pass = r.pct >= 60;
+    var c1 = (r.gradeC1 !== null && r.gradeC1 !== undefined) ? r.gradeC1 : '<span style="color:#f59e0b">—</span>';
+    var c2 = (r.gradeC2 !== null && r.gradeC2 !== undefined) ? r.gradeC2 : '<span style="color:#f59e0b">—</span>';
+    var tot = (r.totalFinal !== null && r.totalFinal !== undefined) ? '<strong>'+r.totalFinal+'</strong>' : '<span style="color:#f59e0b">—</span>';
     return '<tr>' +
       '<td><span class="rank-badge '+rankClass+'">'+(i+1)+'</span></td>' +
       '<td>'+escHtml(r.name)+'</td>' +
-      '<td>'+r.qcmScore+'/'+r.qcmTotal+'</td>' +
       '<td>'+r.qcmScore+'/20</td>' +
+      '<td>'+c1+'/5</td>' +
+      '<td>'+c2+'/6</td>' +
+      '<td>'+tot+'/31</td>' +
       '<td><strong>'+r.pct+'%</strong></td>' +
       '<td><span class="'+(pass?'pill-pass':'pill-fail')+'">'+(pass?'Admis':'Non admis')+'</span></td>' +
       '<td>'+r.elapsed+'</td>' +
-      '<td style="font-family:\'Syne\',sans-serif;letter-spacing:.1em;">'+r.code+'</td>' +
-      '<td>'+r.date+' '+r.time+'</td>' +
+      '<td style="font-family:\'Syne\',sans-serif;letter-spacing:.1em;font-size:.78rem;">'+r.code+'</td>' +
+      '<td>'+r.date+'<br><span style="font-size:.75rem;color:var(--text-muted)">'+r.time+'</span></td>' +
+      '<td><button class="btn btn-secondary" style="padding:.3rem .8rem;font-size:.75rem;" onclick="viewCandidate(\''+r.code+'\')">Voir</button></td>' +
       '</tr>';
   }).join('');
 }
@@ -1072,6 +1254,117 @@ function resetAllResults() {
 // ═══════════════════════════════════════════
 //  UTILS
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+//  ADMIN DETAIL VIEW
+// ═══════════════════════════════════════════
+var currentDetailCode = null;
+
+function viewCandidate(code) {
+  var raw = localStorage.getItem('bocc_r_' + code);
+  if (!raw) return;
+  var r = JSON.parse(raw);
+  currentDetailCode = code;
+
+  document.getElementById('detail-name').textContent = r.name;
+  document.getElementById('detail-meta').textContent = 'Code : ' + r.code + '  ·  ' + r.date + ' ' + r.time + '  ·  Durée : ' + r.elapsed;
+  document.getElementById('detail-qcm').textContent = r.qcmScore + '/' + r.qcmTotal;
+
+  var c1 = (r.gradeC1 !== null && r.gradeC1 !== undefined) ? r.gradeC1 : '—';
+  var c2 = (r.gradeC2 !== null && r.gradeC2 !== undefined) ? r.gradeC2 : '—';
+  var tot = (r.totalFinal !== null && r.totalFinal !== undefined) ? r.totalFinal : '—';
+  document.getElementById('detail-c1').textContent = c1;
+  document.getElementById('detail-c2').textContent = c2;
+  document.getElementById('detail-total').textContent = tot;
+
+  // QCM grid
+  var grid = document.getElementById('detail-qcm-grid');
+  grid.innerHTML = '';
+  QCM.forEach(function(q, i) {
+    var a = r.answers[i];
+    var isOk = (a === q.correct);
+    var div = document.createElement('div');
+    div.className = 'qrev-item ' + (isOk ? 'ok' : 'ko');
+    var givenTxt = (a !== null && a !== undefined) ? q.opts[a] : '<em>Sans réponse</em>';
+    var correctTxt = q.opts[q.correct];
+    div.innerHTML =
+      '<div class="qrev-num">Q'+(i+1)+' — '+(isOk?'✓ Correct':'✗ Incorrect')+'</div>' +
+      '<div class="qrev-q">'+q.q+'</div>' +
+      '<div class="qrev-ans">' +
+        '<div class="given">Réponse donnée : <strong>'+givenTxt+'</strong></div>' +
+        (!isOk ? '<div class="correct-ans">Bonne réponse : '+correctTxt+'</div>' : '') +
+      '</div>';
+    grid.appendChild(div);
+  });
+
+  // Cas answers
+  var cas = r.cas || {};
+  function setAns(id, val) {
+    var el = document.getElementById(id);
+    if (val) { el.textContent = val; el.classList.remove('empty'); }
+    else { el.textContent = 'Aucune réponse fournie'; el.classList.add('empty'); }
+  }
+  setAns('d-c1q1', cas.c1q1); setAns('d-c1q2', cas.c1q2);
+  setAns('d-c1q3', cas.c1q3); setAns('d-c1q4', cas.c1q4);
+  setAns('d-c2q1', cas.c2q1); setAns('d-c2q2', cas.c2q2);
+  setAns('d-c2q3', cas.c2q3); setAns('d-c2q4', cas.c2q4);
+
+  // Grade inputs
+  document.getElementById('grade-c1').value = (r.gradeC1 !== null && r.gradeC1 !== undefined) ? r.gradeC1 : '';
+  document.getElementById('grade-c2').value = (r.gradeC2 !== null && r.gradeC2 !== undefined) ? r.gradeC2 : '';
+  updateTotalPreview();
+
+  showScreen('screen-admin-detail');
+}
+
+function updateTotalPreview() {
+  var raw = localStorage.getItem('bocc_r_' + currentDetailCode);
+  if (!raw) return;
+  var r = JSON.parse(raw);
+  var c1 = parseFloat(document.getElementById('grade-c1').value);
+  var c2 = parseFloat(document.getElementById('grade-c2').value);
+  var qcm = r.qcmScore;
+  if (!isNaN(c1) && !isNaN(c2)) {
+    document.getElementById('total-preview').textContent = (qcm + c1 + c2);
+  } else {
+    document.getElementById('total-preview').textContent = qcm + ' + cas';
+  }
+}
+
+function saveGrades() {
+  if (!currentDetailCode) return;
+  var raw = localStorage.getItem('bocc_r_' + currentDetailCode);
+  if (!raw) return;
+  var r = JSON.parse(raw);
+
+  var c1val = document.getElementById('grade-c1').value;
+  var c2val = document.getElementById('grade-c2').value;
+
+  if (c1val === '' || c2val === '') { alert('Veuillez saisir les deux notes avant d\'enregistrer.'); return; }
+  var c1 = parseFloat(c1val);
+  var c2 = parseFloat(c2val);
+  if (c1 < 0 || c1 > 5) { alert('La note du Cas 01 doit être entre 0 et 5.'); return; }
+  if (c2 < 0 || c2 > 6) { alert('La note du Cas 02 doit être entre 0 et 6.'); return; }
+
+  r.gradeC1 = c1;
+  r.gradeC2 = c2;
+  r.totalFinal = r.qcmScore + c1 + c2;
+
+  // Mise à jour dans localStorage (individuel)
+  localStorage.setItem('bocc_r_' + currentDetailCode, JSON.stringify(r));
+
+  // Mise à jour dans le tableau global
+  var all = JSON.parse(localStorage.getItem('bocc_all') || '[]');
+  var idx = all.findIndex(function(x){ return x.code === currentDetailCode; });
+  if (idx >= 0) { all[idx] = r; localStorage.setItem('bocc_all', JSON.stringify(all)); }
+
+  // Rafraîchir les chips
+  document.getElementById('detail-c1').textContent = c1;
+  document.getElementById('detail-c2').textContent = c2;
+  document.getElementById('detail-total').textContent = r.totalFinal;
+
+  alert('Notes enregistrées ! Total final : ' + r.totalFinal + '/31');
+}
+
 function genCode() {
   var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var c = '';
