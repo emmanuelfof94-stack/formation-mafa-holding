@@ -6,1009 +6,1080 @@
 <title>Évaluation Back Office &amp; Call Center — MAFA HOLDING</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #8D0C23;
-    --accent: #8D0C23;
-    --accent2: #B5112C;
-    --gold: #CF9E41;
-    --surface: #ffffff;
-    --surface2: #f8fafc;
-    --border: #e2e8f0;
-    --text: #0f172a;
-    --text-muted: #64748b;
-    --success: #10b981;
-    --danger: #ef4444;
-    --radius: 10px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow: 0 4px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #f1f5fb;
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    display: block;
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #8D0C23, #CF9E41, #8D0C23);
-    z-index: 9999;
-    pointer-events: none;
-  }
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 5rem;
-  }
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    padding: 1.1rem 1.5rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
-  }
-  .logo-main { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text); }
-  .logo-sub { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; }
-  .back-link { margin-left: auto; font-size: 0.85rem; color: var(--text-muted); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px; transition: all 0.2s; }
-  .back-link:hover { border-color: var(--accent); color: var(--accent); }
+:root {
+  --primary: #8D0C23;
+  --accent: #8D0C23;
+  --accent2: #B5112C;
+  --gold: #CF9E41;
+  --surface: #ffffff;
+  --surface2: #f8fafc;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --radius: 10px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:#f1f5fb;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before {
+  content:'';display:block;position:fixed;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#8D0C23,#CF9E41,#8D0C23);
+  z-index:9999;pointer-events:none;
+}
+.wrapper {
+  position:relative;z-index:1;
+  max-width:860px;margin:0 auto;
+  padding:2.5rem 1.5rem 5rem;
+}
+.header {
+  text-align:center;margin-bottom:2.5rem;
+}
+.header .logo-band {
+  display:inline-flex;align-items:center;gap:.75rem;
+  background:var(--primary);color:#fff;
+  padding:.55rem 1.4rem;border-radius:50px;
+  font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;
+}
+.header h1 {
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;
+  color:var(--text);line-height:1.2;
+}
+.header h1 span { color:var(--primary); }
+.header p {
+  margin-top:.5rem;color:var(--text-muted);font-size:.95rem;
+}
 
-  /* SCREENS */
-  .screen { display: none; }
-  .screen.active { display: block; }
+/* SCREENS */
+.screen { display:none; }
+.screen.active { display:block; }
 
-  /* INTRO SCREEN */
-  .intro-card {
-    background: var(--surface);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
-  .intro-hero {
-    background: linear-gradient(135deg, #8D0C23 0%, #B5112C 50%, #584B26 100%);
-    padding: 3rem 2rem;
-    text-align: center;
-    color: white;
-  }
-  .intro-hero h1 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
-  .intro-hero p { opacity: 0.85; font-size: 1rem; }
-  .intro-badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 1.5rem; }
-  .badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 4px 14px; font-size: 0.8rem; }
-  .intro-body { padding: 2.5rem; }
-  .form-group { margin-bottom: 1.5rem; }
-  .form-label { display: block; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 8px; }
-  .form-input, .form-select {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    color: var(--text);
-    background: var(--surface);
-    transition: border-color 0.2s;
-    appearance: none;
-  }
-  .form-input:focus, .form-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(141,12,35,0.1); }
-  .btn-start {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #8D0C23, #B5112C);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-family: 'Syne', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    margin-top: 0.5rem;
-  }
-  .btn-start:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(141,12,35,0.35); }
-  .btn-start:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-  .intro-info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-  .info-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
-  .info-item-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
-  .info-item-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
-  .btn-check-results { width: 100%; padding: 12px; background: transparent; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; margin-top: 1rem; transition: all 0.2s; }
-  .btn-check-results:hover { border-color: var(--accent); color: var(--accent); }
+/* INTRO */
+.intro-card {
+  background:var(--surface);border-radius:16px;
+  padding:2.5rem;box-shadow:var(--shadow);
+  max-width:520px;margin:0 auto;
+}
+.intro-card h2 {
+  font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:700;
+  margin-bottom:1.5rem;color:var(--text);
+}
+.form-group { margin-bottom:1.2rem; }
+.form-group label {
+  display:block;font-size:.85rem;font-weight:500;
+  color:var(--text-muted);margin-bottom:.4rem;
+}
+.form-group input, .form-group select {
+  width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);
+  border-radius:var(--radius);font-size:.95rem;
+  font-family:'DM Sans',sans-serif;outline:none;
+  transition:border-color .2s;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color:var(--primary);
+}
+.info-box {
+  background:#fff8e1;border:1px solid #ffe082;border-radius:var(--radius);
+  padding:1rem 1.2rem;margin-bottom:1.5rem;
+}
+.info-box ul { padding-left:1.2rem; }
+.info-box ul li { font-size:.88rem;color:#5d4037;margin-bottom:.3rem; }
+.btn {
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.75rem 2rem;border:none;border-radius:50px;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;transition:all .2s;
+}
+.btn-primary {
+  background:var(--primary);color:#fff;
+  box-shadow:0 4px 14px rgba(141,12,35,.25);
+}
+.btn-primary:hover { background:var(--accent2);transform:translateY(-1px); }
+.btn-secondary {
+  background:var(--surface2);color:var(--text-muted);
+  border:1.5px solid var(--border);
+}
+.btn-secondary:hover { background:var(--border); }
+.btn-danger {
+  background:#ef4444;color:#fff;
+  box-shadow:0 4px 14px rgba(239,68,68,.25);
+}
+.btn-danger:hover { background:#dc2626; }
+.btn-gold {
+  background:var(--gold);color:#fff;
+  box-shadow:0 4px 14px rgba(207,158,65,.25);
+}
+.btn-gold:hover { background:#b8892f; }
+.btn-full { width:100%; }
 
-  /* EXAM SCREEN */
-  .exam-topbar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem 1.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .timer-block { text-align: center; }
-  .timer-display { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); letter-spacing: 0.05em; line-height: 1; }
-  .timer-display.warning { color: #d97706; }
-  .timer-display.danger { color: var(--danger); animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-  .timer-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-  .exam-topbar-info { flex: 1; }
-  .exam-topbar-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
-  .exam-topbar-role { font-size: 0.8rem; color: var(--text-muted); }
+/* TIMER BAR */
+.timer-bar {
+  position:sticky;top:0;z-index:100;
+  background:var(--surface);border-bottom:1.5px solid var(--border);
+  padding:.7rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:var(--shadow-sm);
+}
+.timer-bar .t-label { font-size:.8rem;color:var(--text-muted); }
+.timer-bar .t-val {
+  font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;
+  color:var(--primary);
+}
+.timer-bar .t-score { font-size:.9rem;font-weight:500; }
+.timer-bar.warn .t-val { color:#f59e0b; }
+.timer-bar.danger .t-val { color:#ef4444;animation:pulse .8s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
 
-  .section-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    box-shadow: var(--shadow-sm);
-  }
-  .section-header {
-    padding: 1.2rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-header h2 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
-  .section-pts { margin-left: auto; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 12px; font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
-  .section-body { padding: 1.5rem; }
+/* EXAM */
+.section-title {
+  font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;
+  color:var(--primary);margin:2rem 0 1rem;
+  padding-bottom:.5rem;border-bottom:2px solid var(--border);
+  display:flex;align-items:center;gap:.6rem;
+}
+.section-title .badge {
+  background:var(--primary);color:#fff;
+  font-size:.7rem;padding:.2rem .6rem;border-radius:50px;
+}
+.q-card {
+  background:var(--surface);border-radius:12px;
+  padding:1.4rem 1.6rem;margin-bottom:1rem;
+  box-shadow:var(--shadow-sm);border:1.5px solid var(--border);
+  transition:border-color .2s;
+}
+.q-card.answered { border-color:#cbd5e1; }
+.q-num {
+  font-size:.75rem;font-weight:600;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;
+}
+.q-text {
+  font-size:.97rem;font-weight:500;color:var(--text);
+  margin-bottom:1rem;line-height:1.5;
+}
+.options { display:flex;flex-direction:column;gap:.5rem; }
+.opt {
+  display:flex;align-items:center;gap:.75rem;
+  padding:.6rem .9rem;border-radius:8px;
+  border:1.5px solid var(--border);cursor:pointer;
+  font-size:.9rem;transition:all .15s;
+}
+.opt:hover:not(.locked) { border-color:var(--primary);background:#fdf2f4; }
+.opt.selected { border-color:var(--primary);background:#fdf2f4; }
+.opt.correct { border-color:var(--success);background:#f0fdf4;color:#065f46; }
+.opt.incorrect { border-color:var(--danger);background:#fef2f2;color:#7f1d1d; }
+.opt.locked { cursor:default; }
+.opt-icon { width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0; }
+.opt.correct .opt-icon { background:var(--success);border-color:var(--success); }
+.opt.incorrect .opt-icon { background:var(--danger);border-color:var(--danger); }
+.opt.selected:not(.correct):not(.incorrect) .opt-icon { background:var(--primary);border-color:var(--primary); }
+.feedback {
+  margin-top:.75rem;padding:.6rem .9rem;border-radius:8px;
+  font-size:.83rem;line-height:1.5;display:none;
+}
+.feedback.show { display:block; }
+.feedback.ok { background:#f0fdf4;color:#065f46;border-left:3px solid var(--success); }
+.feedback.ko { background:#fef2f2;color:#7f1d1d;border-left:3px solid var(--danger); }
 
-  /* QCM */
-  .qcm-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
-  .qcm-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .q-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 0.8rem; }
-  .q-num { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .q-pts { background: #F9E8EC; color: #8D0C23; border-radius: 20px; padding: 2px 10px; font-size: 0.72rem; font-weight: 600; }
-  .q-text { font-size: 0.97rem; font-weight: 500; line-height: 1.6; margin-bottom: 1rem; }
-  .q-options { display: flex; flex-direction: column; gap: 8px; }
-  .q-option {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--surface2);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: all 0.18s;
-    font-size: 0.9rem;
-  }
-  .q-option:hover { border-color: #f9a8b4; background: #FFF5F7; }
-  .q-option.selected { border-color: var(--accent); background: #FFF0F2; box-shadow: 0 0 0 3px rgba(141,12,35,0.08); }
-  .q-option.correct { border-color: #10b981; background: #ecfdf5; }
-  .q-option.incorrect { border-color: #ef4444; background: #fff1f2; }
-  .q-option input[type="radio"] { accent-color: var(--accent); }
-  .q-letter { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--accent); min-width: 18px; }
-  .q-feedback { padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 8px; display: none; }
-  .q-feedback.show { display: block; }
-  .q-feedback.fb-ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-  .q-feedback.fb-err { background: #fff1f2; color: #991b1b; border: 1px solid #fecaca; }
+/* CAS PRATIQUE */
+.cas-card {
+  background:var(--surface);border-radius:14px;
+  padding:1.8rem;margin-bottom:1.5rem;
+  box-shadow:var(--shadow);border:1.5px solid var(--border);
+}
+.cas-card h3 {
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--primary);margin-bottom:.3rem;
+}
+.cas-pts {
+  display:inline-block;background:#fff8e1;border:1px solid #ffe082;
+  color:#92400e;font-size:.75rem;font-weight:600;
+  padding:.15rem .6rem;border-radius:50px;margin-bottom:1rem;
+}
+.cas-scenario {
+  background:var(--surface2);border-radius:8px;
+  padding:1rem 1.2rem;margin-bottom:1.2rem;
+  font-size:.88rem;line-height:1.6;color:#334155;
+  border-left:3px solid var(--gold);
+}
+.cas-question {
+  font-size:.9rem;font-weight:500;margin-bottom:.5rem;color:var(--text);
+}
+.cas-question span {
+  display:inline-block;background:var(--primary);color:#fff;
+  font-size:.7rem;padding:.15rem .5rem;border-radius:50px;margin-right:.4rem;
+}
+.cas-textarea {
+  width:100%;min-height:90px;padding:.7rem 1rem;
+  border:1.5px solid var(--border);border-radius:var(--radius);
+  font-family:'DM Sans',sans-serif;font-size:.88rem;
+  resize:vertical;outline:none;transition:border-color .2s;
+  margin-bottom:.8rem;
+}
+.cas-textarea:focus { border-color:var(--primary); }
+.submit-section {
+  text-align:center;margin-top:2.5rem;padding-top:2rem;
+  border-top:1.5px solid var(--border);
+}
+.submit-section p { font-size:.85rem;color:var(--text-muted);margin-bottom:1rem; }
 
-  /* OPEN / CAS */
-  .open-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
-  .open-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .cas-scenario { background: #f8f9fa; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.7; }
-  .cas-scenario strong { display: block; margin-bottom: 0.4rem; font-family: 'Syne', sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
-  .sub-q { font-size: 0.9rem; font-weight: 500; margin-bottom: 6px; margin-top: 1rem; }
-  textarea.answer-input {
-    width: 100%;
-    min-height: 90px;
-    padding: 10px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    resize: vertical;
-    transition: border-color 0.2s;
-  }
-  textarea.answer-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(141,12,35,0.08); }
-  .model-answer-box {
-    background: #FFFBEB;
-    border: 1px solid #FDE68A;
-    border-radius: 8px;
-    padding: 1rem 1.2rem;
-    font-size: 0.85rem;
-    line-height: 1.7;
-    display: none;
-    margin-top: 0.8rem;
-  }
-  .model-answer-box.show { display: block; }
-  .model-answer-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #92400e; margin-bottom: 0.5rem; }
+/* RESULTS */
+.results-card {
+  background:var(--surface);border-radius:16px;
+  padding:2.5rem;box-shadow:var(--shadow);
+  max-width:680px;margin:0 auto;
+}
+.score-ring-wrap {
+  text-align:center;margin-bottom:2rem;
+}
+.score-ring {
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  width:140px;height:140px;border-radius:50%;
+  border:6px solid var(--border);position:relative;
+  background:conic-gradient(var(--primary) 0deg, var(--border) 0deg);
+  transition:background 1s;
+}
+.score-ring .s-pct {
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+  color:var(--text);z-index:1;
+}
+.score-ring .s-label {
+  font-size:.72rem;color:var(--text-muted);z-index:1;
+}
+.score-ring::after {
+  content:'';position:absolute;inset:8px;
+  background:var(--surface);border-radius:50%;
+}
+.score-ring .s-pct, .score-ring .s-label { position:relative;z-index:2; }
+.result-meta {
+  display:flex;flex-wrap:wrap;gap:1rem;
+  justify-content:center;margin-bottom:2rem;
+}
+.meta-item {
+  text-align:center;background:var(--surface2);
+  border-radius:10px;padding:.8rem 1.2rem;
+  border:1px solid var(--border);min-width:120px;
+}
+.meta-item .m-val {
+  font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;
+  color:var(--primary);
+}
+.meta-item .m-lbl { font-size:.75rem;color:var(--text-muted); }
+.result-badge {
+  text-align:center;margin-bottom:1.5rem;
+}
+.badge-pill {
+  display:inline-block;padding:.5rem 1.5rem;border-radius:50px;
+  font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;
+  letter-spacing:.05em;
+}
+.badge-pill.pass { background:#dcfce7;color:#166534; }
+.badge-pill.fail { background:#fee2e2;color:#991b1b; }
+.code-section {
+  background:var(--surface2);border-radius:10px;
+  padding:1.2rem;text-align:center;margin-bottom:1.5rem;
+  border:1.5px dashed var(--border);
+}
+.code-section p { font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem; }
+.code-section .code-val {
+  font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;
+  color:var(--primary);letter-spacing:.2em;
+}
+.detail-title {
+  font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;
+  color:var(--text);margin:1.5rem 0 .75rem;
+  padding-bottom:.4rem;border-bottom:1px solid var(--border);
+}
+.detail-row {
+  display:flex;align-items:center;gap:.75rem;
+  padding:.5rem 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;
+}
+.detail-row .dr-num { color:var(--text-muted);width:24px;flex-shrink:0;font-size:.78rem; }
+.detail-row .dr-q { flex:1;color:var(--text); }
+.detail-row .dr-s { font-weight:600;flex-shrink:0; }
+.dr-s.ok { color:var(--success); }
+.dr-s.ko { color:var(--danger); }
+.cas-model {
+  background:var(--surface2);border-radius:10px;
+  padding:1rem 1.2rem;margin-bottom:.8rem;
+  border-left:3px solid var(--gold);
+}
+.cas-model h4 {
+  font-size:.88rem;font-weight:600;color:#92400e;margin-bottom:.4rem;
+}
+.cas-model p { font-size:.83rem;color:#334155;line-height:1.6; }
+.actions-row {
+  display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:1.5rem;
+}
 
-  .btn-submit {
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(135deg, #1B6B3A, #2E7D32);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    margin-top: 1rem;
-  }
-  .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(27,107,58,0.3); }
-  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+/* CHECK SCREEN */
+.check-card {
+  background:var(--surface);border-radius:16px;
+  padding:2.5rem;box-shadow:var(--shadow);
+  max-width:480px;margin:0 auto;text-align:center;
+}
+.check-card h2 {
+  font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;
+  margin-bottom:1rem;
+}
+.check-card input {
+  width:100%;padding:.8rem 1rem;border:1.5px solid var(--border);
+  border-radius:var(--radius);font-size:1.2rem;text-align:center;
+  letter-spacing:.2em;font-family:'Syne',sans-serif;
+  text-transform:uppercase;outline:none;margin-bottom:1rem;
+}
+.check-card input:focus { border-color:var(--primary); }
+#check-msg {
+  min-height:1.5rem;font-size:.88rem;margin-bottom:1rem;
+}
+#check-msg.err { color:var(--danger); }
+#check-msg.ok { color:var(--success); }
 
-  /* RESULTS SCREEN */
-  .result-hero { text-align: center; padding: 3rem 1.5rem 2rem; }
-  .result-score-ring {
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    margin: 0 auto 1.5rem;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    position: relative;
-  }
-  .result-score-ring svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
-  .score-value { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; position: relative; z-index: 1; }
-  .score-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; position: relative; z-index: 1; }
-  .result-name { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
-  .result-mention { display: inline-block; padding: 4px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-top: 0.5rem; }
-  .mention-excellent { background: rgba(16,185,129,0.12); color: #065f46; border: 1px solid rgba(16,185,129,0.3); }
-  .mention-bien { background: rgba(37,99,235,0.1); color: #1d4ed8; border: 1px solid rgba(37,99,235,0.3); }
-  .mention-moyen { background: rgba(245,158,11,0.12); color: #92400e; border: 1px solid rgba(245,158,11,0.3); }
-  .mention-insuffisant { background: rgba(239,68,68,0.12); color: #991b1b; border: 1px solid rgba(239,68,68,0.3); }
+/* ADMIN */
+.admin-login-card {
+  background:var(--surface);border-radius:16px;
+  padding:2.5rem;box-shadow:var(--shadow);
+  max-width:400px;margin:0 auto;text-align:center;
+}
+.admin-login-card h2 {
+  font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;
+  margin-bottom:1.5rem;
+}
+.admin-login-card input {
+  width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);
+  border-radius:var(--radius);font-size:.95rem;
+  font-family:'DM Sans',sans-serif;text-align:center;
+  outline:none;margin-bottom:.75rem;
+}
+.admin-login-card input:focus { border-color:var(--primary); }
+#admin-login-msg { font-size:.85rem;color:var(--danger);min-height:1.2rem;margin-bottom:.75rem; }
 
-  .code-box {
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    margin: 1.5rem 0;
-  }
-  .code-box p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem; }
-  .code-value { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: 0.15em; color: var(--accent); }
+.admin-panel-header {
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;margin-bottom:2rem;
+}
+.admin-panel-header h2 {
+  font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;
+}
+.stats-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:1rem;margin-bottom:2rem;
+}
+.stat-box {
+  background:var(--surface);border-radius:12px;
+  padding:1.1rem;box-shadow:var(--shadow-sm);
+  border:1px solid var(--border);text-align:center;
+}
+.stat-box .sv {
+  font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;
+  color:var(--primary);
+}
+.stat-box .sl { font-size:.75rem;color:var(--text-muted);margin-top:.2rem; }
+.admin-table-wrap {
+  background:var(--surface);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.admin-table {
+  width:100%;border-collapse:collapse;font-size:.85rem;
+}
+.admin-table th {
+  background:var(--primary);color:#fff;
+  padding:.75rem 1rem;text-align:left;
+  font-family:'Syne',sans-serif;font-size:.75rem;
+  letter-spacing:.05em;text-transform:uppercase;
+}
+.admin-table td {
+  padding:.65rem 1rem;border-bottom:1px solid var(--border);
+}
+.admin-table tr:last-child td { border-bottom:none; }
+.admin-table tr:hover td { background:var(--surface2); }
+.rank-badge {
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:50%;
+  font-size:.72rem;font-weight:700;font-family:'Syne',sans-serif;
+}
+.rank-badge.gold { background:#fef9c3;color:#92400e; }
+.rank-badge.silver { background:#f1f5f9;color:#475569; }
+.rank-badge.bronze { background:#fef3c7;color:#92400e; }
+.rank-badge.other { background:#f1f5f9;color:#64748b; }
+.pill-pass { background:#dcfce7;color:#166534;padding:.15rem .6rem;border-radius:50px;font-size:.75rem;font-weight:600; }
+.pill-fail { background:#fee2e2;color:#991b1b;padding:.15rem .6rem;border-radius:50px;font-size:.75rem;font-weight:600; }
+.admin-actions { display:flex;gap:.75rem;flex-wrap:wrap; }
+.empty-msg { text-align:center;padding:3rem;color:var(--text-muted);font-size:.9rem; }
 
-  .result-section { margin-top: 2rem; }
-  .result-section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); padding: 1rem 1.5rem; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; }
-  .result-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.5rem; border: 1px solid var(--border); border-top: none; background: var(--surface); }
-  .result-item:last-child { border-radius: 0 0 var(--radius) var(--radius); }
-  .result-item-icon { font-size: 1.1rem; margin-top: 2px; }
-  .result-item-body { flex: 1; }
-  .result-item-q { font-size: 0.88rem; font-weight: 500; margin-bottom: 4px; }
-  .result-item-a { font-size: 0.82rem; color: var(--text-muted); }
-  .result-item-correct { font-size: 0.82rem; color: var(--success); margin-top: 2px; }
-  .open-result-model { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 6px; padding: 0.8rem; font-size: 0.82rem; line-height: 1.6; margin-top: 6px; }
-  .btn-action { padding: 10px 20px; border-radius: 8px; border: none; font-family: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.18s; }
-  .btn-primary-red { background: var(--accent); color: white; }
-  .btn-primary-red:hover { background: #B5112C; }
-  .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-  .result-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 2rem; }
-  .result-scores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-  .score-mini-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; }
-  .score-mini-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 4px; }
-  .score-mini-val { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; }
+/* NAV BACK */
+.back-link {
+  display:inline-flex;align-items:center;gap:.4rem;
+  color:var(--text-muted);font-size:.85rem;text-decoration:none;
+  margin-bottom:1.5rem;
+}
+.back-link:hover { color:var(--primary); }
 
-  /* CHECK SCREEN */
-  .check-card { background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 2.5rem; text-align: center; max-width: 480px; margin: 0 auto; }
-  .check-card h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .check-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
-  .code-input { width: 100%; padding: 14px; text-align: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.15em; border: 2px solid var(--border); border-radius: 10px; margin-bottom: 1rem; text-transform: uppercase; }
-  .code-input:focus { outline: none; border-color: var(--accent); }
-  .alert { padding: 12px 16px; border-radius: 8px; font-size: 0.88rem; margin-top: 1rem; }
-  .alert-err { background: #fff1f2; border: 1px solid #fecaca; color: #991b1b; }
-  @media (max-width: 600px) {
-    .intro-info-grid { grid-template-columns: 1fr 1fr; }
-    .result-scores-grid { grid-template-columns: 1fr 1fr; }
-    .timer-display { font-size: 1.5rem; }
-  }
+@media(max-width:600px){
+  .wrapper { padding:1.5rem 1rem 4rem; }
+  .header h1 { font-size:1.4rem; }
+  .intro-card, .results-card, .check-card { padding:1.5rem; }
+}
 </style>
 </head>
 <body>
 <div class="wrapper">
 
-  <!-- HEADER -->
+  <a href="index.html" class="back-link">← Retour au portail</a>
+
   <div class="header">
-    <div>
-      <div class="logo-main">MAFA HOLDING</div>
-      <div class="logo-sub">FORMATION · ÉVALUATION</div>
+    <div class="logo-band">
+      <span>MAFA HOLDING</span>
+      <span style="opacity:.5">|</span>
+      <span>Évaluation Finale</span>
     </div>
-    <a href="index.html" class="back-link">← Retour au portail</a>
+    <h1>Back Office &amp; <span>Call Center</span></h1>
+    <p>Projet ID30 — Connectel</p>
   </div>
 
-  <!-- ══════════════════════════════════════════════════
-       SCREEN 1 : INTRO / IDENTIFICATION
-  ══════════════════════════════════════════════════ -->
+  <!-- ══════════════ INTRO ══════════════ -->
   <div class="screen active" id="screen-intro">
     <div class="intro-card">
-      <div class="intro-hero">
-        <div style="font-size:3rem;margin-bottom:0.8rem">📝</div>
-        <h1>Évaluation — Projet ID30</h1>
-        <p>Back Office &amp; Call Center · Niveau Intermédiaire</p>
-        <div class="intro-badges">
-          <span class="badge">⏱ 50 minutes</span>
-          <span class="badge">✅ 10 QCM</span>
-          <span class="badge">✏️ 3 questions ouvertes</span>
-          <span class="badge">📂 2 cas pratiques</span>
-        </div>
+      <h2>Démarrer l'évaluation</h2>
+      <div class="form-group">
+        <label for="inp-name">Nom complet *</label>
+        <input type="text" id="inp-name" placeholder="Ex : Dupont Marie">
       </div>
-      <div class="intro-body">
-        <div class="intro-info-grid">
-          <div class="info-item"><div class="info-item-label">Durée</div><div class="info-item-value" style="color:#8D0C23">50 min</div></div>
-          <div class="info-item"><div class="info-item-label">Total points</div><div class="info-item-value">30 pts</div></div>
-          <div class="info-item"><div class="info-item-label">QCM (auto-corrigés)</div><div class="info-item-value">10 pts</div></div>
-          <div class="info-item"><div class="info-item-label">Ouvertes + Cas</div><div class="info-item-value">20 pts</div></div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="inp-name">Votre nom complet *</label>
-          <input class="form-input" id="inp-name" type="text" placeholder="Prénom NOM" autocomplete="off">
-        </div>
-
-        <button class="btn-start" onclick="demarrerEvaluation()">▶ Démarrer l'évaluation (50 min)</button>
-        <button class="btn-check-results" onclick="showScreen('screen-check')">🔑 Consulter mes résultats avec un code</button>
+      <div class="info-box">
+        <ul>
+          <li><strong>20 questions QCM</strong> — 1 point chacune</li>
+          <li><strong>2 cas pratiques</strong> — 11 points au total</li>
+          <li><strong>Durée : 40 minutes</strong></li>
+          <li>Répondez à toutes les questions avant de soumettre</li>
+          <li>Votre code résultat vous est remis à la fin</li>
+        </ul>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="demarrer()">Commencer l'évaluation</button>
+      <div style="margin-top:.75rem;text-align:center;">
+        <button class="btn btn-secondary" style="font-size:.8rem;padding:.5rem 1.2rem;" onclick="showScreen('screen-check')">Consulter mes résultats</button>
+        <button class="btn btn-secondary" style="font-size:.8rem;padding:.5rem 1.2rem;margin-left:.5rem;" onclick="showScreen('screen-admin-login')">Admin</button>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════
-       SCREEN 2 : EXAMEN
-  ══════════════════════════════════════════════════ -->
+  <!-- ══════════════ EXAM ══════════════ -->
   <div class="screen" id="screen-exam">
-
-    <!-- TOP BAR -->
-    <div class="exam-topbar">
-      <div class="timer-block">
-        <div class="timer-display" id="timer-display">40:00</div>
-        <div class="timer-label">Temps restant</div>
+    <div class="timer-bar" id="timer-bar">
+      <div>
+        <div class="t-label">Temps restant</div>
+        <div class="t-val" id="timer-val">40:00</div>
       </div>
-      <div class="exam-topbar-info">
-        <div class="exam-topbar-name" id="topbar-name">—</div>
-        <div class="exam-topbar-role" id="topbar-role">—</div>
-      </div>
-      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;color:var(--text-muted)" id="qcm-score-live">QCM : 0 / 10</div>
+      <div class="t-score">Score QCM : <strong id="live-score">0</strong>/20</div>
+      <div style="font-size:.8rem;color:var(--text-muted);" id="answered-count">0/20 répondus</div>
     </div>
 
-    <!-- PARTIE 1 : QCM -->
-    <div class="section-card">
-      <div class="section-header" style="border-left:4px solid #8D0C23;">
-        <span style="font-size:1.4rem">✅</span>
-        <h2>Partie 1 — QCM auto-corrigés</h2>
-        <span class="section-pts">10 pts · 1 pt / question</span>
-      </div>
-      <div class="section-body" id="qcm-container">
-        <!-- Questions injectées par JS -->
-      </div>
+    <div class="section-title">
+      <span>QCM</span>
+      <span class="badge">20 questions · 1 pt chacune</span>
+    </div>
+    <div id="qcm-container"></div>
+
+    <div class="section-title">
+      <span>Cas Pratiques</span>
+      <span class="badge">2 cas · 11 pts</span>
     </div>
 
-    <!-- PARTIE 2 : OUVERTES -->
-    <div class="section-card">
-      <div class="section-header" style="border-left:4px solid #584B26;">
-        <span style="font-size:1.4rem">✏️</span>
-        <h2>Partie 2 — Questions ouvertes</h2>
-        <span class="section-pts">9 pts · 3 pts / question</span>
+    <!-- CAS 01 -->
+    <div class="cas-card">
+      <h3>Cas Pratique 01 — Call Center</h3>
+      <div class="cas-pts">5 points</div>
+      <div class="cas-scenario">
+        <strong>Situation :</strong> Vous êtes agent Call Center. Un client appelle pour déclarer que sa carte bancaire enregistrée sur la plateforme ID30 a été compromise. Il souhaite la mettre à jour mais ne se souvient plus de son code PIN. Il fournit son nom, prénom et numéro de compte.
       </div>
-      <div class="section-body">
-
-        <div class="open-block">
-          <div class="q-meta"><span class="q-num">Question 01 / 03</span><span class="q-pts">3 pts</span></div>
-          <div class="q-text">Décrivez les 3 niveaux du processus de validation Connectel. Pour chaque niveau, précisez le rôle de l'acteur concerné et les actions attendues.</div>
-          <textarea class="answer-input" id="open-1" placeholder="Rédigez votre réponse ici…"></textarea>
-          <div class="model-answer-box" id="model-open-1">
-            <div class="model-answer-title">✅ Réponse modèle</div>
-            <strong>Niveau 1 — Collecte terrain (Call Center / Agent terrain) :</strong> L'agent entre en contact avec l'entrepreneur (appel ou visite). Il présente le programme ID30, collecte les données d'identité (nom, prénom, photo, CNI, téléphone), obtient le consentement et crée le dossier dans Connectel.<br><br>
-            <strong>Niveau 2 — Vérification administrative (Back Office) :</strong> L'agent BO contrôle la complétude (tous documents présents), la lisibilité (photos nettes, documents valides), la cohérence des données et la conformité KYC. Il attribue le statut : Validé, Incomplet ou Rejeté.<br><br>
-            <strong>Niveau 3 — Validation finale (Superviseur) :</strong> Le superviseur effectue un contrôle par échantillonnage. Il valide définitivement les dossiers conformes, les transmet à Orange Money pour activation, gère les litiges et prend les décisions sur les cas complexes.
-          </div>
-        </div>
-
-        <div class="open-block">
-          <div class="q-meta"><span class="q-num">Question 02 / 03</span><span class="q-pts">3 pts</span></div>
-          <div class="q-text">Un entrepreneur vous dit : « Je ne comprends pas pourquoi vous avez mes coordonnées, c'est de l'espionnage ! » Rédigez votre script de réponse complet en tant qu'agent Call Center.</div>
-          <textarea class="answer-input" id="open-2" placeholder="Rédigez votre réponse ici…"></textarea>
-          <div class="model-answer-box" id="model-open-2">
-            <div class="model-answer-title">✅ Réponse modèle</div>
-            <strong>Empathie :</strong> « Je comprends tout à fait votre inquiétude, M./Mme [Nom], et je vous remercie de me le signaler. »<br><br>
-            <strong>Explication :</strong> « Vos coordonnées nous ont été transmises dans le cadre du Programme ID30, une initiative officielle du Ministère du Commerce et de l'Industrie, en partenariat avec Orange Money. »<br><br>
-            <strong>Réassurance :</strong> « Vos données sont strictement confidentielles, sécurisées et utilisées uniquement dans ce cadre. »<br><br>
-            <strong>Reprise ou respect du refus :</strong> Si intéressé : « Puis-je vous expliquer comment ce programme peut vous aider ? ». Si refus : « Je comprends. Je note vos préférences. Bonne continuation. »<br>
-            → Statut <em>« Refus / Méfiance »</em> dans Connectel.
-          </div>
-        </div>
-
-        <div class="open-block">
-          <div class="q-meta"><span class="q-num">Question 03 / 03</span><span class="q-pts">3 pts</span></div>
-          <div class="q-text">Quelles sont les 5 règles d'or d'un agent Back Office pour garantir la qualité de traitement des dossiers ? Expliquez brièvement chacune.</div>
-          <textarea class="answer-input" id="open-3" placeholder="Rédigez votre réponse ici…"></textarea>
-          <div class="model-answer-box" id="model-open-3">
-            <div class="model-answer-title">✅ Réponse modèle</div>
-            <strong>Règle 1 — Vérifier avant de valider :</strong> Ne jamais valider un dossier sans contrôler l'intégralité des pièces. Un dossier validé à tort crée des erreurs en cascade.<br><br>
-            <strong>Règle 2 — Tout noter dans Connectel :</strong> Chaque action (statut, commentaire, demande de correction) doit être tracée dans l'outil pour assurer la traçabilité.<br><br>
-            <strong>Règle 3 — Respecter les délais :</strong> Un dossier reçu doit être traité dans les 48h ouvrables. Les dossiers en attente de reconfirmation doivent être relancés sous 48h.<br><br>
-            <strong>Règle 4 — Communiquer clairement les corrections :</strong> Toute demande de correction doit être précise (quelle pièce, quel problème, délai attendu).<br><br>
-            <strong>Règle 5 — Escalader les cas complexes :</strong> En cas de doute, escalader immédiatement au superviseur sans tenter de décider seul.
-          </div>
-        </div>
-
-      </div>
+      <div class="cas-question"><span>Q1</span> Quelle est la première action à effectuer avant toute modification sur le compte ? <em style="font-size:.78rem;color:var(--text-muted)">(1 pt)</em></div>
+      <textarea class="cas-textarea" id="cas1-q1" placeholder="Votre réponse..."></textarea>
+      <div class="cas-question"><span>Q2</span> Le client échoue à la vérification KYC standard. Quelles étapes alternatives proposez-vous ? <em style="font-size:.78rem;color:var(--text-muted)">(1 pt)</em></div>
+      <textarea class="cas-textarea" id="cas1-q2" placeholder="Votre réponse..."></textarea>
+      <div class="cas-question"><span>Q3</span> Après validation, combien de temps maximum doit durer cet appel selon la norme DMT ? <em style="font-size:.78rem;color:var(--text-muted)">(1 pt)</em></div>
+      <textarea class="cas-textarea" id="cas1-q3" placeholder="Votre réponse..."></textarea>
+      <div class="cas-question"><span>Q4</span> L'appel est terminé. Décrivez les 2 étapes de post-traitement obligatoires. <em style="font-size:.78rem;color:var(--text-muted)">(2 pts)</em></div>
+      <textarea class="cas-textarea" id="cas1-q4" placeholder="Votre réponse..."></textarea>
     </div>
 
-    <!-- PARTIE 3 : CAS PRATIQUES -->
-    <div class="section-card">
-      <div class="section-header" style="border-left:4px solid #1a2332;">
-        <span style="font-size:1.4rem">📂</span>
-        <h2>Partie 3 — Cas pratiques</h2>
-        <span class="section-pts">11 pts · 5+6</span>
+    <!-- CAS 02 -->
+    <div class="cas-card">
+      <h3>Cas Pratique 02 — Back Office</h3>
+      <div class="cas-pts">6 points</div>
+      <div class="cas-scenario">
+        <strong>Situation :</strong> Vous traitez un dossier d'activation de compte pour un commerçant (KYB). Le gérant soumet les documents suivants : extrait Kbis de 14 mois, pièce d'identité valide, justificatif de domicile de 4 mois, et un RIB au nom de la société. Le dossier a été soumis il y a 4 jours sans réponse.
       </div>
-      <div class="section-body">
-
-        <!-- CAS 1 -->
-        <div class="open-block">
-          <div class="q-meta"><span class="q-num">Cas 01 — Call Center</span><span class="q-pts">5 pts</span></div>
-          <div class="cas-scenario">
-            <strong>📋 Scénario</strong>
-            Vous êtes agent Call Center. Vous appelez Mme Ahou Kouamé. Elle décroche et dit avec une voix irritée : <em>« Encore vous ! C'est la troisième fois cette semaine ! J'ai déjà dit non à vos collègues ! Je vais porter plainte ! »</em><br><br>
-            <strong>Contexte Connectel :</strong> 2 appels précédents enregistrés : « Sans réponse » et « Intéressée, à rappeler ». Aucune note de refus précédent. Statut actuel : « À contacter ».
-          </div>
-          <div class="sub-q">1/3 — Quelle est la source du problème ? (1 pt)</div>
-          <textarea class="answer-input" id="cas-1-1" placeholder="Identifiez et expliquez l'erreur…" style="min-height:70px"></textarea>
-          <div class="sub-q">2/3 — Rédigez exactement ce que vous dites à Mme Kouamé (2 pts)</div>
-          <textarea class="answer-input" id="cas-1-2" placeholder="Rédigez le script complet (ton, contenu, conclusion)…" style="min-height:100px"></textarea>
-          <div class="sub-q">3/3 — Listez toutes vos actions post-appel dans Connectel (2 pts)</div>
-          <textarea class="answer-input" id="cas-1-3" placeholder="Statut, notes, signalements…" style="min-height:80px"></textarea>
-          <div class="model-answer-box" id="model-cas-1">
-            <div class="model-answer-title">✅ Correction modèle — 5 points</div>
-            <strong>Analyse (1 pt) :</strong> Erreur de qualification par un collègue — le 2e appel noté « Intéressée, à rappeler » est incorrect (elle avait déjà refusé). Cette mauvaise saisie du statut a déclenché un 3e appel non souhaité.<br><br>
-            <strong>Script (2 pts) :</strong> « Mme Kouamé, je vous présente toutes mes excuses pour ce dérangement répété. Il y a eu une erreur dans notre système de suivi. Je note immédiatement votre refus définitif et m'assure personnellement que vous ne serez plus contactée. Encore désolé pour la gêne occasionnée. Bonne journée. » — Ton calme et professionnel, sans se défausser sur le collègue.<br><br>
-            <strong>Actions Connectel (2 pts) :</strong> (1) Statut → « Refus définitif — Ne pas rappeler » ; (2) Note détaillée : « Cliente très mécontente — 3 appels en une semaine, qualification précédente incorrecte. Bloquer tout rappel. » ; (3) Signalement au superviseur pour analyse et sensibilisation équipe.
-          </div>
-        </div>
-
-        <!-- CAS 2 -->
-        <div class="open-block">
-          <div class="q-meta"><span class="q-num">Cas 02 — Back Office</span><span class="q-pts">6 pts</span></div>
-          <div class="cas-scenario">
-            <strong>📋 Scénario</strong>
-            Vous êtes agent Back Office. Vous recevez le dossier de M. Konan Yves, entrepreneur à Bouaké.<br><br>
-            <strong>Résultat de votre contrôle :</strong><br>
-            ✓ Nom / Prénom — Lisible et cohérent<br>
-            ✗ Photo de profil — Floue, visage non identifiable<br>
-            ✗ Numéro de téléphone — Format incorrect (07 58 41 3X)<br>
-            ✓ CNI recto — Lisible, valide jusqu'au 2027<br>
-            ⚠ CNI verso — Absent du dossier<br>
-            ⚠ Coordonnées GPS — Non renseignées
-          </div>
-          <div class="sub-q">1/4 — Diagnostic : classez chaque problème (Bloquant / À corriger / Mineur) et expliquez pourquoi (2 pts)</div>
-          <textarea class="answer-input" id="cas-2-1" placeholder="Bloquants : … — À corriger : … — Mineurs : …" style="min-height:90px"></textarea>
-          <div class="sub-q">2/4 — Quel statut attribuez-vous dans Connectel ? Justifiez. (1 pt)</div>
-          <textarea class="answer-input" id="cas-2-2" placeholder="Statut choisi et justification…" style="min-height:70px"></textarea>
-          <div class="sub-q">3/4 — Rédigez le message complet de retour à l'équipe terrain (2 pts)</div>
-          <textarea class="answer-input" id="cas-2-3" placeholder="Message structuré avec corrections demandées, délai et référence dossier…" style="min-height:110px"></textarea>
-          <div class="sub-q">4/4 — Quel est le délai de correction attendu ? Que faites-vous si vous n'avez pas de retour ? (1 pt)</div>
-          <textarea class="answer-input" id="cas-2-4" placeholder="Délai, relance, escalade…" style="min-height:70px"></textarea>
-          <div class="model-answer-box" id="model-cas-2">
-            <div class="model-answer-title">✅ Correction modèle — 6 points</div>
-            <strong>Diagnostic (2 pts) :</strong><br>
-            • <strong>Bloquants</strong> : Photo floue (KYC biométrique impossible) + Numéro illisible (compte Orange Money impossible à créer).<br>
-            • <strong>À corriger obligatoirement</strong> : CNI verso absent (pièce réglementaire obligatoire).<br>
-            • <strong>Mineur</strong> : GPS non renseigné (peut être complété si adresse connue).<br><br>
-            <strong>Statut (1 pt) :</strong> <em>« Incomplet — À corriger »</em> (pas Rejeté — données de base correctes, dossier récupérable).<br><br>
-            <strong>Message terrain (2 pts) :</strong> « Bonjour, le dossier de M. Konan Yves (Bouaké) nécessite 3 corrections : (1) Photo de profil floue — refaire une photo nette, fond uni, bon éclairage ; (2) Numéro de téléphone — confirmer le numéro complet (10 chiffres) ; (3) CNI verso absent — photographier le verso. Merci de corriger dans les 48h. Réf : [ID Connectel]. »<br><br>
-            <strong>Délai &amp; suivi (1 pt) :</strong> 48h ouvrables. Si pas de retour à 48h : relance message + appel. À 72h sans retour : escalade superviseur. Dossier reste « Incomplet » jusqu'à correction complète.
-          </div>
-        </div>      </div>
+      <div class="cas-question"><span>Q1</span> Identifiez les documents non conformes et expliquez pourquoi. <em style="font-size:.78rem;color:var(--text-muted)">(2 pts)</em></div>
+      <textarea class="cas-textarea" id="cas2-q1" placeholder="Votre réponse..."></textarea>
+      <div class="cas-question"><span>Q2</span> Quel statut attribuez-vous au dossier et quelle action déclenchez-vous ? <em style="font-size:.78rem;color:var(--text-muted)">(1 pt)</em></div>
+      <textarea class="cas-textarea" id="cas2-q2" placeholder="Votre réponse..."></textarea>
+      <div class="cas-question"><span>Q3</span> Le dossier est en attente depuis 4 jours. Selon la procédure, aurait-il dû être relancé ? Justifiez. <em style="font-size:.78rem;color:var(--text-muted)">(1 pt)</em></div>
+      <textarea class="cas-textarea" id="cas2-q3" placeholder="Votre réponse..."></textarea>
+      <div class="cas-question"><span>Q4</span> Une fois les documents conformes reçus, quel est le délai standard de traitement et comment vérifiez-vous la cohérence des données ? <em style="font-size:.78rem;color:var(--text-muted)">(2 pts)</em></div>
+      <textarea class="cas-textarea" id="cas2-q4" placeholder="Votre réponse..."></textarea>
     </div>
 
-    <!-- BOUTON SOUMETTRE -->
-    <button class="btn-submit" id="btn-submit" onclick="soumettreEvaluation()">
-      ✅ Soumettre l'évaluation et voir mes résultats
-    </button>
+    <div class="submit-section">
+      <p>Vérifiez vos réponses avant de soumettre. Cette action est irréversible.</p>
+      <button class="btn btn-primary" onclick="soumettre()">Soumettre l'évaluation</button>
+    </div>
+  </div>
 
-  </div><!-- /screen-exam -->
-
-  <!-- ══════════════════════════════════════════════════
-       SCREEN 3 : RÉSULTATS
-  ══════════════════════════════════════════════════ -->
+  <!-- ══════════════ RESULTS ══════════════ -->
   <div class="screen" id="screen-results">
-
-    <div class="result-hero">
-      <div class="result-score-ring" id="result-ring">
-        <svg width="150" height="150" viewBox="0 0 150 150">
-          <circle cx="75" cy="75" r="65" fill="none" stroke="#e2e8f0" stroke-width="10"/>
-          <circle id="result-arc" cx="75" cy="75" r="65" fill="none" stroke="#8D0C23" stroke-width="10" stroke-linecap="round"
-            stroke-dasharray="408.41" stroke-dashoffset="408.41"/>
-        </svg>
-        <div class="score-value" id="result-score-pct">—</div>
-        <div class="score-label">Score QCM /10</div>
+    <div class="results-card">
+      <div class="score-ring-wrap">
+        <div class="score-ring" id="score-ring">
+          <span class="s-pct" id="res-pct">0%</span>
+          <span class="s-label">QCM</span>
+        </div>
       </div>
-      <div class="result-name" id="result-name">—</div>
-      <div style="color:var(--text-muted);font-size:0.85rem" id="result-role">—</div>
-      <div class="result-mention" id="result-mention"></div>
-    </div>
-
-    <!-- Score grid -->
-    <div class="result-scores-grid">
-      <div class="score-mini-card">
-        <div class="score-mini-label">QCM</div>
-        <div class="score-mini-val" id="r-qcm">0/10</div>
+      <div class="result-meta">
+        <div class="meta-item">
+          <div class="m-val" id="res-qcm">0/20</div>
+          <div class="m-lbl">Score QCM</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-val" id="res-total">0/31</div>
+          <div class="m-lbl">Total estimé</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-val" id="res-time">--</div>
+          <div class="m-lbl">Temps utilisé</div>
+        </div>
       </div>
-      <div class="score-mini-card">
-        <div class="score-mini-label">Questions ouvertes</div>
-        <div class="score-mini-val" style="font-size:1rem;color:var(--text-muted)">Auto-évaluation</div>
+      <div class="result-badge">
+        <span class="badge-pill" id="res-badge">--</span>
       </div>
-      <div class="score-mini-card">
-        <div class="score-mini-label">Cas pratiques</div>
-        <div class="score-mini-val" style="font-size:1rem;color:var(--text-muted)">Auto-évaluation</div>
+      <div class="code-section">
+        <p>Votre code résultat (à conserver)</p>
+        <div class="code-val" id="res-code">------</div>
+      </div>
+
+      <div class="detail-title">Détail QCM</div>
+      <div id="qcm-detail"></div>
+
+      <div class="detail-title">Corrigé — Cas Pratiques</div>
+      <div class="cas-model">
+        <h4>Cas 01 — Éléments de réponse attendus (5 pts)</h4>
+        <p><strong>Q1 :</strong> Vérification de l'identité du client (KYC) — confirmer nom, prénom, date de naissance ou code secret avant toute action sur le compte.<br>
+        <strong>Q2 :</strong> Proposer une vérification secondaire (question secrète, envoi de code OTP sur mobile enregistré) ou escalader au superviseur si échec répété.<br>
+        <strong>Q3 :</strong> La DMT (Durée Moyenne de Traitement) est de <strong>5 minutes</strong> par appel. Un appel complexe peut dépasser légèrement mais doit rester dans les normes.<br>
+        <strong>Q4 :</strong> (1) Saisir la fiche de traitement dans le CRM avec le motif et l'action effectuée. (2) Clôturer le ticket ou le transmettre au Back Office si un traitement complémentaire est nécessaire.</p>
+      </div>
+      <div class="cas-model">
+        <h4>Cas 02 — Éléments de réponse attendus (6 pts)</h4>
+        <p><strong>Q1 :</strong> Documents non conformes : <em>Extrait Kbis de 14 mois</em> (validité max = 3 mois) et <em>justificatif de domicile de 4 mois</em> (validité max = 3 mois). La pièce d'identité et le RIB sont valides.<br>
+        <strong>Q2 :</strong> Statut : <strong>Dossier incomplet / en attente de compléments</strong>. Action : envoyer une notification au commerçant listant les documents à renouveler.<br>
+        <strong>Q3 :</strong> Oui — le délai de relance standard est <strong>48 heures</strong>. À J+2 sans réponse, une relance automatique ou manuelle doit être effectuée. Le dossier en attente depuis 4 jours est en retard.<br>
+        <strong>Q4 :</strong> Délai standard de traitement = <strong>48 heures</strong> après réception des documents conformes. Vérification de cohérence : contrôler que le nom du gérant sur le Kbis correspond à la pièce d'identité, et que le RIB est bien au nom de la société enregistrée.</p>
+      </div>
+
+      <div class="actions-row">
+        <button class="btn btn-secondary" onclick="showScreen('screen-intro')">Retour à l'accueil</button>
+        <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
       </div>
     </div>
+  </div>
 
-    <!-- Code de résultat -->
-    <div class="code-box">
-      <p>🔑 Notez ce code pour consulter vos résultats ultérieurement</p>
-      <div class="code-value" id="result-code">—</div>
-      <div style="font-size:0.75rem;color:var(--text-muted);margin-top:8px">Ce code est unique et lié à cet appareil</div>
-    </div>
-
-    <!-- Détail QCM -->
-    <div class="result-section">
-      <div class="result-section-title">✅ Détail QCM — Réponses et corrections</div>
-      <div id="result-qcm-detail"></div>
-    </div>
-
-    <!-- Questions ouvertes avec modèles -->
-    <div class="result-section" style="margin-top:1.5rem">
-      <div class="result-section-title">✏️ Questions ouvertes — Réponses modèles</div>
-      <div id="result-open-detail"></div>
-    </div>
-
-    <!-- Cas pratiques avec modèles -->
-    <div class="result-section" style="margin-top:1.5rem">
-      <div class="result-section-title">📂 Cas pratiques — Corrections</div>
-      <div id="result-cas-detail"></div>
-    </div>
-
-    <div class="result-actions">
-      <a href="index.html" class="btn-action btn-outline">← Retour au portail</a>
-      <button onclick="window.print()" class="btn-action btn-outline">🖨️ Imprimer</button>
-      <button onclick="showScreen('screen-intro')" class="btn-action btn-primary-red">🔄 Nouvelle évaluation</button>
-    </div>
-
-  </div><!-- /screen-results -->
-
-  <!-- ══════════════════════════════════════════════════
-       SCREEN 4 : CONSULTER PAR CODE
-  ══════════════════════════════════════════════════ -->
+  <!-- ══════════════ CHECK ══════════════ -->
   <div class="screen" id="screen-check">
     <div class="check-card">
-      <div style="font-size:3rem;margin-bottom:1rem">🔑</div>
       <h2>Consulter mes résultats</h2>
-      <p>Saisissez le code reçu à la fin de votre évaluation pour retrouver vos résultats.</p>
-      <input class="code-input" id="check-code-input" type="text" maxlength="6" placeholder="XXXXXX" oninput="this.value=this.value.toUpperCase()">
-      <button class="btn-start" onclick="consulterResultats()">Afficher mes résultats</button>
-      <div class="alert alert-err" id="check-error" style="display:none">Code introuvable. Vérifiez le code ou effectuez une nouvelle évaluation.</div>
-      <button class="btn-check-results" onclick="showScreen('screen-intro')" style="margin-top:1rem">← Retour</button>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1.2rem;">Entrez votre code résultat reçu à la fin de l'évaluation.</p>
+      <input type="text" id="check-input" placeholder="ABC123" maxlength="6" oninput="this.value=this.value.toUpperCase()">
+      <div id="check-msg"></div>
+      <button class="btn btn-primary btn-full" onclick="consulter()">Rechercher</button>
+      <div style="margin-top:.75rem;">
+        <button class="btn btn-secondary btn-full" onclick="showScreen('screen-intro')">Retour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ADMIN LOGIN ══════════════ -->
+  <div class="screen" id="screen-admin-login">
+    <div class="admin-login-card">
+      <h2>Accès Administrateur</h2>
+      <input type="password" id="admin-pwd-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkAdmin()">
+      <div id="admin-login-msg"></div>
+      <button class="btn btn-primary btn-full" onclick="checkAdmin()">Connexion</button>
+      <div style="margin-top:.75rem;">
+        <button class="btn btn-secondary btn-full" onclick="showScreen('screen-intro')">Retour</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ADMIN PANEL ══════════════ -->
+  <div class="screen" id="screen-admin">
+    <div class="admin-panel-header">
+      <h2>Panel Administrateur — Résultats</h2>
+      <div class="admin-actions">
+        <button class="btn btn-gold" onclick="exportCSV()">Exporter CSV</button>
+        <button class="btn btn-danger" onclick="resetAllResults()">Tout effacer</button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-intro')">Quitter</button>
+      </div>
+    </div>
+    <div class="stats-grid" id="admin-stats"></div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>QCM</th>
+            <th>Total</th>
+            <th>%</th>
+            <th>Résultat</th>
+            <th>Durée</th>
+            <th>Code</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="admin-tbody"></tbody>
+      </table>
     </div>
   </div>
 
 </div><!-- /wrapper -->
 
 <script>
-// ════════════════════════════════════════════════════════
-// DONNÉES — QUESTIONS QCM
-// ════════════════════════════════════════════════════════
-var QCM_QUESTIONS = [
+// ═══════════════════════════════════════════
+//  QUESTIONS QCM
+// ═══════════════════════════════════════════
+var QCM = [
   {
-    text: "Dans le projet ID30, que signifie l'acronyme KYC et à quelle étape s'applique-t-il ?",
-    options: [
-      { text: "Keep Your Customer — lors du suivi post-enrôlement", correct: false, feedback: "KYC ne signifie pas « Keep Your Customer ». La bonne réponse est Know Your Customer." },
-      { text: "Know Your Customer — lors de la collecte et vérification des données d'identité", correct: true, feedback: "Correct ! KYC = Know Your Customer. Il s'applique lors de la collecte et vérification des données d'identité du bénéficiaire." },
-      { text: "Know Your Company — lors de l'analyse de l'activité de l'entrepreneur", correct: false, feedback: "KYC ne désigne pas Know Your Company. KYB (Know Your Business) concerne l'entreprise, pas KYC." },
-      { text: "Key Yearly Control — lors de l'audit annuel de qualité", correct: false, feedback: "KYC n'est pas un rapport qualité annuel. C'est un processus de vérification d'identité." }
-    ]
+    q:"Qu'est-ce que le KYC dans le cadre du projet ID30 ?",
+    opts:["Un logiciel de caisse","La vérification d'identité du client","Le système de paiement sans contact","Un type de carte bancaire"],
+    correct:1,
+    expl:"KYC (Know Your Customer) désigne l'ensemble des procédures de vérification d'identité obligatoires avant l'activation d'un compte ou la réalisation d'une opération sensible."
   },
   {
-    text: "Quel est l'objectif quotidien minimum d'un agent Call Center en termes de dossiers validés ?",
-    options: [
-      { text: "10 dossiers validés par jour", correct: false, feedback: "10 dossiers est en dessous de l'objectif fixé pour un agent Call Center." },
-      { text: "15 dossiers validés par jour", correct: true, feedback: "Correct ! L'objectif quotidien minimum est de 15 dossiers (fiches) validés par agent Call Center. En dessous : risque de ne pas couvrir le salaire fixe." },
-      { text: "20 dossiers validés par jour", correct: false, feedback: "20 dossiers correspond à un objectif très performant, pas le minimum requis." },
-      { text: "25 dossiers validés par jour", correct: false, feedback: "25 dossiers est un objectif exceptionnel, pas le minimum standard." }
-    ]
+    q:"Quel est l'objectif journalier d'un agent Call Center en nombre de dossiers traités ?",
+    opts:["50 dossiers","75 dossiers","100 dossiers","150 dossiers"],
+    correct:2,
+    expl:"L'objectif journalier est de 100 dossiers traités par jour pour un agent Call Center."
   },
   {
-    text: "En Back Office, lors de la réception d'un dossier, quel est le premier contrôle obligatoire ?",
-    options: [
-      { text: "Saisir immédiatement les données dans Connectel", correct: false, feedback: "La saisie dans Connectel intervient après la vérification de complétude, pas avant." },
-      { text: "Vérifier la complétude et la lisibilité de tous les documents requis", correct: true, feedback: "Correct ! La première étape est la vérification de la complétude du dossier : tous les documents doivent être présents et lisibles avant tout traitement." },
-      { text: "Transférer au superviseur pour pré-validation", correct: false, feedback: "Le transfert au superviseur n'est pas la première étape — il intervient si le dossier pose un problème complexe." },
-      { text: "Contacter l'agent terrain pour vérifier l'identité", correct: false, feedback: "Contacter le terrain n'est pas le premier réflexe. On vérifie d'abord la complétude sur les pièces reçues." }
-    ]
+    q:"Quelle est la Durée Moyenne de Traitement (DMT) normée pour un appel Call Center ?",
+    opts:["3 minutes","5 minutes","8 minutes","10 minutes"],
+    correct:1,
+    expl:"La DMT normée est de 5 minutes par appel. Au-delà, l'appel est considéré hors norme."
   },
   {
-    text: "Un entrepreneur dit catégoriquement : « Je ne suis pas intéressé, ne me rappelez plus jamais. » Quelle est la réponse correcte de l'agent Call Center ?",
-    options: [
-      { text: "Insister en expliquant les avantages du programme pour convaincre", correct: false, feedback: "Insister après un refus clair est contraire aux bonnes pratiques et peut détériorer l'image du projet." },
-      { text: "Raccrocher immédiatement sans autre commentaire", correct: false, feedback: "Raccrocher sans rien dire manque de professionnalisme et ne permet pas de noter correctement le statut." },
-      { text: "Remercier poliment, noter le statut « Refus définitif » dans Connectel et ne plus rappeler", correct: true, feedback: "Correct ! L'agent doit remercier poliment, noter le statut « Refus définitif » dans Connectel et s'assurer que ce contact ne sera plus relancé." },
-      { text: "Proposer de le rappeler dans un mois pour un meilleur moment", correct: false, feedback: "Proposer un rappel ultérieur ne respecte pas la demande explicite du client qui dit de ne plus appeler." }
-    ]
+    q:"Un agent Back Office reçoit un dossier incomplet. Quel statut doit-il attribuer ?",
+    opts:["Validé","En attente de compléments","Rejeté définitivement","Archivé"],
+    correct:1,
+    expl:"Un dossier incomplet reçoit le statut 'En attente de compléments'. Le client est notifié pour fournir les pièces manquantes."
   },
   {
-    text: "Quel est le taux d'erreur maximum acceptable pour un agent Back Office selon les standards qualité du projet ID30 ?",
-    options: [
-      { text: "10 %", correct: false, feedback: "10% est bien au-dessus du seuil acceptable. C'est un niveau critique nécessitant intervention immédiate." },
-      { text: "5 %", correct: false, feedback: "5% reste trop élevé selon les standards qualité du projet ID30." },
-      { text: "< 3 %", correct: true, feedback: "Correct ! Le taux d'erreur maximum acceptable est de 3%. Au-delà, le superviseur doit intervenir pour identifier les causes et corriger." },
-      { text: "1 %", correct: false, feedback: "1% est un objectif d'excellence, pas le seuil maximum acceptable standard." }
-    ]
+    q:"Quel est le délai standard de relance d'un dossier Back Office sans réponse du client ?",
+    opts:["24 heures","48 heures","72 heures","1 semaine"],
+    correct:1,
+    expl:"La relance doit être effectuée dans les 48 heures suivant l'absence de réponse du client."
   },
   {
-    text: "Dans le processus Connectel à 3 niveaux, quel niveau correspond au rôle du Back Office ?",
-    options: [
-      { text: "Niveau 1 — Collecte terrain et prise de contact", correct: false, feedback: "Le niveau 1 correspond à la prise de contact et la collecte terrain par le Call Center / agent terrain." },
-      { text: "Niveau 2 — Vérification administrative et contrôle qualité des données", correct: true, feedback: "Correct ! Le Back Office intervient au Niveau 2 : vérification administrative, contrôle qualité KYC/KYB et attribution du statut (Validé, Incomplet, Rejeté)." },
-      { text: "Niveau 3 — Validation finale et transmission à Orange Money", correct: false, feedback: "Le niveau 3 est la validation finale par le superviseur ou le référent qualité." },
-      { text: "Niveau 4 — Audit de conformité mensuel", correct: false, feedback: "Il n'existe pas de Niveau 4 dans le processus Connectel standard." }
-    ]
+    q:"La 'Proof of Life' (Preuve de Vie) consiste à :",
+    opts:["Vérifier que le compte est actif","Confirmer physiquement la présence du client via une action en temps réel (selfie, geste)","Scanner un QR Code","Appeler le client une deuxième fois"],
+    correct:1,
+    expl:"La Proof of Life est une vérification biométrique ou comportementale en temps réel confirmant que la personne est bien présente et vivante lors de l'opération."
   },
   {
-    text: "Un entrepreneur dit : « Je suis déjà enrôlé, on m'a déjà contacté ! ». Comment l'agent Call Center doit-il réagir ?",
-    options: [
-      { text: "Lui proposer de se ré-enrôler pour mettre ses informations à jour", correct: false, feedback: "Proposer un ré-enrôlement sans vérification crée des doublons et est contraire à la procédure." },
-      { text: "Ignorer sa déclaration et continuer le script normalement", correct: false, feedback: "Ignorer sa déclaration et continuer le script est contraire à la procédure et génère des doublons." },
-      { text: "Vérifier dans Connectel si le contact est déjà enregistré, et si oui, confirmer et clôturer sans doublon", correct: true, feedback: "Correct ! L'agent doit vérifier dans Connectel si le contact est déjà enregistré. Si oui, confirmer, noter et clôturer sans créer de doublon." },
-      { text: "Transférer au Back Office pour vérification", correct: false, feedback: "La vérification dans Connectel se fait directement par l'agent CC — ce n'est pas une raison de transférer au Back Office." }
-    ]
+    q:"Quel document a une validité maximale de 3 mois pour un dossier KYB commerçant ?",
+    opts:["Pièce d'identité","Extrait Kbis","RIB bancaire","Numéro SIRET"],
+    correct:1,
+    expl:"L'extrait Kbis doit dater de moins de 3 mois. Au-delà, il est considéré non conforme pour le KYB."
   },
   {
-    text: "Quel est le score de qualité minimum requis pour un agent Back Office selon les KPI du projet ID30 ?",
-    options: [
-      { text: "70 %", correct: false, feedback: "70% est le seuil d'alerte rouge — en dessous, l'agent est en situation critique." },
-      { text: "80 %", correct: false, feedback: "80% est en dessous du standard minimum exigé dans le projet ID30." },
-      { text: "≥ 85 %", correct: true, feedback: "Correct ! Le score de qualité minimum requis est de 85%. Ce KPI mesure la conformité des dossiers traités par rapport aux standards ID30." },
-      { text: "95 %", correct: false, feedback: "95% est un objectif d'excellence, pas le minimum requis." }
-    ]
+    q:"Pour un dossier KYB, le justificatif de domicile doit dater de moins de :",
+    opts:["1 mois","3 mois","6 mois","1 an"],
+    correct:1,
+    expl:"Le justificatif de domicile (professionnel ou personnel du gérant) doit dater de moins de 3 mois."
   },
   {
-    text: "En Back Office, quel statut Connectel attribuer à un dossier dont la photo d'identité est floue et illisible ?",
-    options: [
-      { text: "Validé — avec une remarque dans le champ commentaire", correct: false, feedback: "Un dossier avec photo illisible ne peut pas être validé — la vérification KYC est impossible." },
-      { text: "Rejeté définitivement — le dossier ne peut pas être traité", correct: false, feedback: "Archiver définitivement un dossier incomplet est trop radical — il faut d'abord demander la correction." },
-      { text: "Incomplet / À corriger — avec note explicative précisant la pièce concernée", correct: true, feedback: "Correct ! Le statut « Incomplet / À corriger » est attribué avec une note précisant exactement ce qui doit être corrigé (photo floue, à refaire en meilleure qualité)." },
-      { text: "En suspens — en attente de décision superviseur", correct: false, feedback: "En suspens est un statut d'attente passive — pour un problème identifié et corrigeable, « Incomplet / À corriger » est le bon statut." }
-    ]
+    q:"Quel est l'objectif minimum de déploiements QR Code par jour ?",
+    opts:["3 déploiements","5 déploiements","8 déploiements","10 déploiements"],
+    correct:1,
+    expl:"L'objectif minimum est de 5 déploiements QR Code par jour. L'objectif premium est de 10/jour."
   },
   {
-    text: "Quel est le rôle principal de Connectel dans le cadre du projet ID30 ?",
-    options: [
-      { text: "Gérer les communications internes entre agents", correct: false, feedback: "Connectel n'est pas un outil de messagerie interne." },
-      { text: "Traiter les paiements Orange Money des entrepreneurs", correct: false, feedback: "Le traitement des paiements Orange Money n'est pas le rôle de Connectel." },
-      { text: "CRM de gestion des appels sortants, des dossiers entrepreneurs et du suivi qualité", correct: true, feedback: "Correct ! Connectel est le CRM utilisé pour les appels sortants, la gestion des dossiers entrepreneurs, le suivi des statuts et le contrôle qualité du projet ID30." },
-      { text: "Outil RH de gestion des plannings et congés agents", correct: false, feedback: "Connectel n'est pas un outil RH — il est dédié à la gestion de la relation client et des dossiers du projet." }
-    ]
+    q:"Lors d'un appel entrant, quelle est la première étape systématique avant toute action sur un compte ?",
+    opts:["Proposer une offre commerciale","Vérifier l'identité du client (KYC)","Lire l'historique du compte","Passer l'appel au superviseur"],
+    correct:1,
+    expl:"La vérification KYC est obligatoire en premier. Aucune action sur le compte ne peut être effectuée sans avoir confirmé l'identité du client."
+  },
+  {
+    q:"Un client souhaite modifier son IBAN. Quelle procédure Back Office s'applique ?",
+    opts:["Modification immédiate sans vérification","Vérification KYC + validation du nouveau RIB avant modification","Le client modifie lui-même via l'application","Transmission directe à la banque partenaire"],
+    correct:1,
+    expl:"Toute modification d'IBAN requiert une vérification KYC complète et une validation du nouveau RIB (nom concordant avec le titulaire du compte)."
+  },
+  {
+    q:"Quel est le taux de rejet maximum acceptable pour les dossiers Back Office ?",
+    opts:["5%","10%","15%","20%"],
+    correct:1,
+    expl:"Le taux de rejet maximum acceptable est de 10%. Au-delà, une analyse qualité est déclenchée."
+  },
+  {
+    q:"La tolérance GPS pour la validation de présence sur site est de :",
+    opts:["5 mètres","10 mètres","50 mètres","100 mètres"],
+    correct:2,
+    expl:"La tolérance GPS est de 50 mètres. Au-delà, la présence sur site ne peut pas être validée automatiquement."
+  },
+  {
+    q:"Qu'est-ce que le KYB ?",
+    opts:["Know Your Buyer — identification de l'acheteur final","Know Your Business — vérification d'identité d'une entreprise","Keep Your Balance — suivi des soldes","Know Your Bank — référencement bancaire"],
+    correct:1,
+    expl:"KYB (Know Your Business) est la procédure de vérification d'identité appliquée aux personnes morales (entreprises, commerçants)."
+  },
+  {
+    q:"Lors d'une incohérence de données dans un dossier (ex : prénom différent sur deux documents), que fait l'agent Back Office ?",
+    opts:["Valide le dossier avec une note","Corrige lui-même les données","Rejette le dossier et demande des documents corrigés","Ignore si les autres données concordent"],
+    correct:2,
+    expl:"Toute incohérence de données entraîne un rejet partiel du dossier avec demande de documents corrigés. L'agent ne modifie jamais lui-même les données client."
+  },
+  {
+    q:"Un agent Call Center traite 40 dossiers en une journée. Quelle est son évaluation par rapport à l'objectif ?",
+    opts:["Excellent — au-dessus de l'objectif","Satisfaisant — dans la norme","Insuffisant — en dessous de l'objectif de 100/jour","Acceptable — légèrement en dessous"],
+    correct:2,
+    expl:"L'objectif est de 100 dossiers/jour. Avec 40 dossiers, l'agent est à 40% de l'objectif — performance insuffisante nécessitant un accompagnement."
+  },
+  {
+    q:"Quel est le délai standard de traitement d'un dossier Back Office après réception de tous les documents conformes ?",
+    opts:["24 heures","48 heures","72 heures","5 jours"],
+    correct:1,
+    expl:"Le délai standard de traitement est de 48 heures après réception complète des documents conformes."
+  },
+  {
+    q:"Lors d'un escalade superviseur, l'agent Call Center doit :",
+    opts:["Raccrocher et rappeler le superviseur séparément","Rester en ligne avec le client, prévenir le superviseur et assurer la transition","Mettre le client en attente indéfiniment","Transférer sans prévenir le superviseur"],
+    correct:1,
+    expl:"Lors d'une escalade, l'agent reste en ligne, informe le superviseur du contexte, et assure une transition fluide sans laisser le client sans information."
+  },
+  {
+    q:"Qu'indique le statut 'Validé' sur un dossier Back Office ?",
+    opts:["Le dossier est en cours de vérification","Tous les documents sont conformes et le compte peut être activé","Le client a été contacté","Le dossier est archivé en attente"],
+    correct:1,
+    expl:"Le statut 'Validé' signifie que tous les documents ont été vérifiés et sont conformes. L'activation du compte peut être déclenchée."
+  },
+  {
+    q:"Un agent traite 8 dossiers en une journée (objectif : 100/jour). Comment interpréter cette performance ?",
+    opts:["Performance acceptable, l'objectif est indicatif","Performance insuffisante, très en dessous de l'objectif","Performance correcte, dans les tolérances","Performance à surveiller mais non critique"],
+    correct:1,
+    expl:"8 dossiers représente seulement 8% de l'objectif journalier de 100 dossiers. Cette performance est très insuffisante et nécessite une intervention immédiate du superviseur."
   }
 ];
 
-// Modèles réponses ouvertes (pour résultats)
-var OPEN_MODELS = [
-  {
-    q: "Décrivez les 3 niveaux du processus de validation Connectel.",
-    model: "<strong>Niveau 1 — Collecte terrain (Call Center) :</strong> Prise de contact, présentation ID30, collecte données identité, consentement, création dossier Connectel.<br><strong>Niveau 2 — Back Office :</strong> Vérification complétude, lisibilité, cohérence KYC/KYB. Statut : Validé / Incomplet / Rejeté.<br><strong>Niveau 3 — Superviseur :</strong> Contrôle par échantillonnage, validation définitive, transmission Orange Money, gestion litiges."
-  },
-  {
-    q: "Script de réponse face à un entrepreneur soupçonnant un espionnage.",
-    model: "<strong>Empathie :</strong> Reconnaître la préoccupation. <strong>Explication :</strong> Programme officiel Ministère du Commerce + Orange Money. <strong>Réassurance :</strong> Données confidentielles et sécurisées. <strong>Action :</strong> Si intéressé → expliquer ; si refus → noter « Refus / Méfiance » dans Connectel."
-  },
-  {
-    q: "5 règles d'or d'un agent Back Office.",
-    model: "(1) Vérifier avant de valider — ne jamais valider sans contrôle complet. (2) Tout noter dans Connectel — traçabilité absolue. (3) Respecter les délais — 48h ouvrables pour traitement. (4) Communiquer clairement les corrections — message précis au terrain. (5) Escalader les cas complexes — ne jamais décider seul en cas de doute."
-  }
-];
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+var candidateName = '';
+var answers = new Array(QCM.length).fill(null);
+var answered = 0;
+var qcmScore = 0;
+var timerInterval = null;
+var secondsLeft = 40 * 60;
+var startTs = null;
+var submitted = false;
+var ADMIN_PWD = 'MAFA2025';
 
-var CAS_MODELS = [
-  {
-    title: "Cas 01 — Call Center (Mme Ahou Kouamé)",
-    model: "<strong>Source (1 pt) :</strong> Erreur de qualification — le 2e appel noté « Intéressée, à rappeler » est incorrect, elle avait déjà refusé. La mauvaise saisie du statut génère un 3e appel non souhaité.<br><br><strong>Script (1 pt) :</strong> « Mme Kouamé, je vous présente toutes mes excuses pour ce dérangement répété. Il y a eu une erreur dans notre système de suivi. Je note immédiatement votre refus définitif et m'assure que vous ne serez plus contactée. Encore désolé. Bonne journée. »<br><br><strong>Actions Connectel (1 pt) :</strong> Statut → « Refus définitif — Ne pas rappeler ». Note explicative + signalement superviseur pour sensibilisation qualité."
-  },
-  {
-    title: "Cas 02 — Back Office (M. Konan Yves)",
-    model: "<strong>Diagnostic (1 pt) :</strong> Bloquants : photo floue + numéro incorrect. À corriger : CNI verso absent. Mineur : GPS manquant.<br><br><strong>Statut + Message (1 pt) :</strong> « Incomplet — À corriger ». Message précis listant les 3 corrections avec délai 48h et référence dossier.<br><br><strong>Délai &amp; suivi (1 pt) :</strong> 48h ouvrables. Si pas de retour : relance message + appel. À 72h sans retour : escalade superviseur."
-  }
-];
-
-// ════════════════════════════════════════════════════════
-// ÉTAT GLOBAL
-// ════════════════════════════════════════════════════════
-var state = {
-  name: '',
-  role: '',
-  answers: {},   // q0..q9 → index choisi
-  correct: {},   // q0..q9 → true/false
-  submitted: false,
-  code: null,
-  timerInterval: null,
-  secondsLeft: 40 * 60
-};
-
-// ════════════════════════════════════════════════════════
-// NAVIGATION SCREENS
-// ════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+//  SCREENS
+// ═══════════════════════════════════════════
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
-  var el = document.getElementById(id);
-  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
 }
 
-// ════════════════════════════════════════════════════════
-// BUILD QCM HTML
-// ════════════════════════════════════════════════════════
-function buildQCM() {
-  var container = document.getElementById('qcm-container');
-  var html = '';
-  QCM_QUESTIONS.forEach(function(q, qi) {
-    html += '<div class="qcm-block" id="qcm-block-' + qi + '">';
-    html += '<div class="q-meta"><span class="q-num">Question ' + String(qi+1).padStart(2,'0') + ' / 10</span><span class="q-pts">1 pt</span></div>';
-    html += '<div class="q-text">' + q.text + '</div>';
-    html += '<div class="q-options">';
-    var letters = ['A','B','C','D'];
-    q.options.forEach(function(opt, oi) {
-      html += '<div class="q-option" id="opt-' + qi + '-' + oi + '" onclick="choisirReponse(' + qi + ',' + oi + ')">';
-      html += '<input type="radio" name="q' + qi + '" id="r-' + qi + '-' + oi + '" style="pointer-events:none">';
-      html += '<span class="q-letter">' + letters[oi] + '</span>';
-      html += '<span>' + opt.text + '</span>';
-      html += '</div>';
-    });
-    html += '</div>';
-    html += '<div class="q-feedback" id="fb-' + qi + '"></div>';
-    html += '</div>';
-  });
-  container.innerHTML = html;
-}
-
-// ════════════════════════════════════════════════════════
-// CHOIX RÉPONSE QCM
-// ════════════════════════════════════════════════════════
-function choisirReponse(qi, oi) {
-  if (state.submitted) return;
-  if (state.answers[qi] !== undefined) return; // déjà répondu
-
-  var q = QCM_QUESTIONS[qi];
-  var isCorrect = q.options[oi].correct;
-  state.answers[qi] = oi;
-  state.correct[qi] = isCorrect;
-
-  // Style des options
-  var letters = ['A','B','C','D'];
-  q.options.forEach(function(opt, i) {
-    var el = document.getElementById('opt-' + qi + '-' + i);
-    if (!el) return;
-    el.style.cursor = 'default';
-    if (opt.correct) { el.classList.add('correct'); }
-    else if (i === oi && !isCorrect) { el.classList.add('incorrect'); }
-    else { el.style.opacity = '0.55'; }
-  });
-
-  // Feedback
-  var fb = document.getElementById('fb-' + qi);
-  if (fb) {
-    fb.textContent = (isCorrect ? '✅ ' : '❌ ') + q.options[oi].feedback;
-    fb.className = 'q-feedback show ' + (isCorrect ? 'fb-ok' : 'fb-err');
-  }
-
-  // Score live
-  var correctCount = Object.values(state.correct).filter(Boolean).length;
-  var el = document.getElementById('qcm-score-live');
-  if (el) el.textContent = 'QCM : ' + correctCount + ' / 10';
-}
-
-// ════════════════════════════════════════════════════════
-// TIMER
-// ════════════════════════════════════════════════════════
-function startTimer() {
-  state.secondsLeft = 50 * 60;
-  state.timerInterval = setInterval(function() {
-    state.secondsLeft--;
-    var m = Math.floor(state.secondsLeft / 60);
-    var s = state.secondsLeft % 60;
-    var display = document.getElementById('timer-display');
-    if (display) {
-      display.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-      display.className = 'timer-display';
-      if (state.secondsLeft <= 300) display.classList.add('warning');
-      if (state.secondsLeft <= 60) display.classList.add('danger');
-    }
-    if (state.secondsLeft <= 0) {
-      clearInterval(state.timerInterval);
-      if (!state.submitted) soumettreEvaluation();
-    }
-  }, 1000);
-}
-
-// ════════════════════════════════════════════════════════
-// DÉMARRER ÉVALUATION
-// ════════════════════════════════════════════════════════
-function demarrerEvaluation() {
+// ═══════════════════════════════════════════
+//  START
+// ═══════════════════════════════════════════
+function demarrer() {
   var name = document.getElementById('inp-name').value.trim();
-  if (!name) { alert('Veuillez saisir votre nom complet.'); return; }
-
-  state.name = name;
-  state.role = 'Back Office & Call Center';
-  state.answers = {};
-  state.correct = {};
-  state.submitted = false;
-  state.code = null;
-
-  document.getElementById('topbar-name').textContent = name;
-  document.getElementById('topbar-role').textContent = '📞 Call Center · 📂 Back Office — Projet ID30';
-  document.getElementById('qcm-score-live').textContent = 'QCM : 0 / 10';
-
+  if (!name) { alert('Veuillez entrer votre nom complet.'); return; }
+  candidateName = name;
+  answers = new Array(QCM.length).fill(null);
+  answered = 0;
+  qcmScore = 0;
+  submitted = false;
+  secondsLeft = 40 * 60;
+  startTs = Date.now();
   buildQCM();
   showScreen('screen-exam');
   startTimer();
 }
 
-// ════════════════════════════════════════════════════════
-// SOUMETTRE ÉVALUATION
-// ════════════════════════════════════════════════════════
-function soumettreEvaluation() {
-  if (state.submitted) return;
-  state.submitted = true;
+// ═══════════════════════════════════════════
+//  BUILD QCM
+// ═══════════════════════════════════════════
+function buildQCM() {
+  var c = document.getElementById('qcm-container');
+  c.innerHTML = '';
+  QCM.forEach(function(q, qi) {
+    var card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'qcard-' + qi;
+    var optsHtml = q.opts.map(function(o, oi) {
+      return '<div class="opt" id="opt-'+qi+'-'+oi+'" onclick="pick('+qi+','+oi+')">' +
+        '<div class="opt-icon"></div><span>'+o+'</span></div>';
+    }).join('');
+    card.innerHTML =
+      '<div class="q-num">Question '+(qi+1)+' / '+QCM.length+'</div>' +
+      '<div class="q-text">'+q.q+'</div>' +
+      '<div class="options">'+optsHtml+'</div>' +
+      '<div class="feedback" id="fb-'+qi+'"></div>';
+    c.appendChild(card);
+  });
+}
 
-  if (state.timerInterval) clearInterval(state.timerInterval);
+// ═══════════════════════════════════════════
+//  PICK ANSWER
+// ═══════════════════════════════════════════
+function pick(qi, oi) {
+  if (answers[qi] !== null) return;
+  answers[qi] = oi;
+  var q = QCM[qi];
+  var isOk = (oi === q.correct);
+  if (isOk) qcmScore++;
+  answered++;
 
-  var btn = document.getElementById('btn-submit');
-  if (btn) { btn.disabled = true; btn.textContent = '✅ Évaluation soumise'; }
+  // lock all options
+  q.opts.forEach(function(_, i) {
+    var el = document.getElementById('opt-'+qi+'-'+i);
+    el.classList.add('locked');
+    if (i === q.correct) el.classList.add('correct');
+    else if (i === oi) el.classList.add('incorrect');
+  });
 
-  // Déverrouiller les réponses modèles
-  document.querySelectorAll('.model-answer-box').forEach(function(el) { el.classList.add('show'); });
+  // feedback
+  var fb = document.getElementById('fb-'+qi);
+  fb.textContent = (isOk ? '✓ Correct — ' : '✗ Incorrect — ') + q.expl;
+  fb.className = 'feedback show ' + (isOk ? 'ok' : 'ko');
 
-  // Calculer le score QCM
-  var qcmCorrect = Object.values(state.correct).filter(Boolean).length;
-  var pct = Math.round(qcmCorrect / 10 * 100);
+  document.getElementById('qcard-'+qi).classList.add('answered');
+  document.getElementById('live-score').textContent = qcmScore;
+  document.getElementById('answered-count').textContent = answered + '/20 répondus';
+}
 
-  // Générer code unique
-  state.code = Math.random().toString(36).substr(2, 6).toUpperCase();
+// ═══════════════════════════════════════════
+//  TIMER
+// ═══════════════════════════════════════════
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(function() {
+    secondsLeft--;
+    var m = Math.floor(secondsLeft / 60);
+    var s = secondsLeft % 60;
+    document.getElementById('timer-val').textContent =
+      (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    var bar = document.getElementById('timer-bar');
+    bar.classList.remove('warn','danger');
+    if (secondsLeft <= 60) bar.classList.add('danger');
+    else if (secondsLeft <= 300) bar.classList.add('warn');
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!submitted) soumettre(true);
+    }
+  }, 1000);
+}
 
-  // Sauvegarder dans localStorage
+// ═══════════════════════════════════════════
+//  SUBMIT
+// ═══════════════════════════════════════════
+function soumettre(autoSubmit) {
+  if (submitted) return;
+  if (!autoSubmit) {
+    var unanswered = answers.filter(function(a){ return a === null; }).length;
+    if (unanswered > 0) {
+      if (!confirm('Vous n\'avez pas répondu à ' + unanswered + ' question(s). Soumettre quand même ?')) return;
+    }
+  }
+  submitted = true;
+  clearInterval(timerInterval);
+
+  var elapsed = Math.round((Date.now() - startTs) / 1000);
+  var em = Math.floor(elapsed / 60);
+  var es = elapsed % 60;
+  var elapsedStr = (em < 10 ? '0' : '') + em + ':' + (es < 10 ? '0' : '') + es;
+
+  var code = genCode();
+  var pct = Math.round((qcmScore / QCM.length) * 100);
+
   var result = {
-    code: state.code,
-    name: state.name,
-    role: state.role,
-    date: new Date().toISOString(),
-    qcmScore: qcmCorrect,
-    qcmTotal: 10,
-    pct: pct,
-    answers: state.answers,
-    correct: state.correct
+    code: code,
+    name: candidateName,
+    qcmScore: qcmScore,
+    qcmTotal: QCM.length,
+    answers: answers.slice(),
+    elapsed: elapsedStr,
+    date: new Date().toLocaleDateString('fr-FR'),
+    time: new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}),
+    pct: pct
   };
-  try {
-    localStorage.setItem('mafa_bocc_' + state.code, JSON.stringify(result));
-    var all = JSON.parse(localStorage.getItem('mafa_bocc_all') || '[]');
-    all.push(result);
-    localStorage.setItem('mafa_bocc_all', JSON.stringify(all));
-  } catch(e) {}
+
+  localStorage.setItem('bocc_r_' + code, JSON.stringify(result));
+  var all = JSON.parse(localStorage.getItem('bocc_all') || '[]');
+  all.push(result);
+  localStorage.setItem('bocc_all', JSON.stringify(all));
 
   afficherResultats(result);
+}
+
+// ═══════════════════════════════════════════
+//  DISPLAY RESULTS
+// ═══════════════════════════════════════════
+function afficherResultats(r) {
+  var pct = r.pct;
+  var deg = Math.round(pct * 3.6);
+  document.getElementById('score-ring').style.background =
+    'conic-gradient(#8D0C23 ' + deg + 'deg, #e2e8f0 ' + deg + 'deg)';
+  document.getElementById('res-pct').textContent = pct + '%';
+  document.getElementById('res-qcm').textContent = r.qcmScore + '/' + r.qcmTotal;
+  document.getElementById('res-total').textContent = r.qcmScore + '/20 QCM';
+  document.getElementById('res-time').textContent = r.elapsed;
+  document.getElementById('res-code').textContent = r.code;
+
+  var pass = pct >= 60;
+  var badge = document.getElementById('res-badge');
+  badge.textContent = pass ? 'ADMIS — ' + pct + '%' : 'NON ADMIS — ' + pct + '%';
+  badge.className = 'badge-pill ' + (pass ? 'pass' : 'fail');
+
+  // QCM detail
+  var det = document.getElementById('qcm-detail');
+  det.innerHTML = '';
+  QCM.forEach(function(q, i) {
+    var a = r.answers[i];
+    var isOk = (a === q.correct);
+    var row = document.createElement('div');
+    row.className = 'detail-row';
+    row.innerHTML =
+      '<span class="dr-num">'+(i+1)+'</span>' +
+      '<span class="dr-q">'+q.q.substring(0,70)+(q.q.length>70?'…':'')+'</span>' +
+      '<span class="dr-s '+(isOk?'ok':'ko')+'">'+(isOk?'+1 pt':'0 pt')+'</span>';
+    det.appendChild(row);
+  });
+
   showScreen('screen-results');
 }
 
-// ════════════════════════════════════════════════════════
-// AFFICHER RÉSULTATS
-// ════════════════════════════════════════════════════════
-function afficherResultats(result) {
-  // Anneau score
-  var arc = document.getElementById('result-arc');
-  var circ = 2 * Math.PI * 65;
-  if (arc) {
-    var offset = circ - (result.pct / 100 * circ);
-    arc.style.strokeDashoffset = offset;
-    arc.style.stroke = result.pct >= 85 ? '#10b981' : result.pct >= 70 ? '#2563eb' : result.pct >= 50 ? '#d97706' : '#ef4444';
-  }
+// ═══════════════════════════════════════════
+//  CONSULT BY CODE
+// ═══════════════════════════════════════════
+function consulter() {
+  var code = document.getElementById('check-input').value.trim().toUpperCase();
+  var msg = document.getElementById('check-msg');
+  if (code.length !== 6) { msg.className='err'; msg.textContent='Code invalide (6 caractères requis).'; return; }
+  var raw = localStorage.getItem('bocc_r_' + code);
+  if (!raw) { msg.className='err'; msg.textContent='Aucun résultat trouvé pour ce code.'; return; }
+  msg.className='ok'; msg.textContent='Résultat trouvé !';
+  setTimeout(function(){ afficherResultats(JSON.parse(raw)); }, 400);
+}
 
-  var el = function(id) { return document.getElementById(id); };
-  if (el('result-score-pct')) el('result-score-pct').textContent = result.pct + '%';
-  if (el('result-name')) el('result-name').textContent = result.name;
-  if (el('result-role')) el('result-role').textContent = '📞 Call Center · 📂 Back Office — Projet ID30';
-  if (el('r-qcm')) el('r-qcm').textContent = result.qcmScore + '/10';
-  if (el('result-code')) el('result-code').textContent = result.code;
-
-  // Mention
-  var mention = el('result-mention');
-  if (mention) {
-    var m, cls;
-    if (result.pct >= 90) { m = '🏆 Excellent'; cls = 'mention-excellent'; }
-    else if (result.pct >= 75) { m = '👍 Bien'; cls = 'mention-bien'; }
-    else if (result.pct >= 50) { m = '⚠️ Moyen'; cls = 'mention-moyen'; }
-    else { m = '❌ Insuffisant'; cls = 'mention-insuffisant'; }
-    mention.textContent = m;
-    mention.className = 'result-mention ' + cls;
-  }
-
-  // Détail QCM
-  var qcmDetail = el('result-qcm-detail');
-  if (qcmDetail) {
-    var html = '';
-    QCM_QUESTIONS.forEach(function(q, qi) {
-      var chosen = result.answers[qi];
-      var isOk = result.correct[qi];
-      var icon = isOk ? '✅' : (chosen === undefined ? '⬜' : '❌');
-      var chosenText = (chosen !== undefined) ? q.options[chosen].text : '<em>Sans réponse</em>';
-      var correctOpt = q.options.find(function(o) { return o.correct; });
-      html += '<div class="result-item">';
-      html += '<div class="result-item-icon">' + icon + '</div>';
-      html += '<div class="result-item-body">';
-      html += '<div class="result-item-q">Q' + (qi+1) + '. ' + q.text + '</div>';
-      html += '<div class="result-item-a">Votre réponse : ' + chosenText + '</div>';
-      if (!isOk) html += '<div class="result-item-correct">✅ Bonne réponse : ' + correctOpt.text + '</div>';
-      html += '</div></div>';
-    });
-    qcmDetail.innerHTML = html;
-  }
-
-  // Détail questions ouvertes
-  var openDetail = el('result-open-detail');
-  if (openDetail) {
-    var html = '';
-    var openIds = ['open-1', 'open-2', 'open-3'];
-    OPEN_MODELS.forEach(function(om, i) {
-      var userAnswer = '';
-      try { var ta = document.getElementById(openIds[i]); if (ta) userAnswer = ta.value.trim(); } catch(e) {}
-      html += '<div class="result-item" style="flex-direction:column;gap:8px">';
-      html += '<div class="result-item-q">Q' + (i+1) + '. ' + om.q + '</div>';
-      if (userAnswer) html += '<div class="result-item-a">Votre réponse : <em>' + userAnswer.substr(0,200) + (userAnswer.length>200?'…':'') + '</em></div>';
-      else html += '<div class="result-item-a"><em>Sans réponse</em></div>';
-      html += '<div class="open-result-model"><strong>📋 Réponse modèle :</strong><br>' + om.model + '</div>';
-      html += '</div>';
-    });
-    openDetail.innerHTML = html;
-  }
-
-  // Détail cas pratiques
-  var casDetail = el('result-cas-detail');
-  if (casDetail) {
-    var html = '';
-    CAS_MODELS.forEach(function(cm, i) {
-      html += '<div class="result-item" style="flex-direction:column;gap:8px">';
-      html += '<div class="result-item-q">' + cm.title + '</div>';
-      html += '<div class="open-result-model"><strong>📋 Correction :</strong><br>' + cm.model + '</div>';
-      html += '</div>';
-    });
-    casDetail.innerHTML = html;
+// ═══════════════════════════════════════════
+//  ADMIN
+// ═══════════════════════════════════════════
+function checkAdmin() {
+  var pwd = document.getElementById('admin-pwd-input').value;
+  if (pwd === ADMIN_PWD) {
+    document.getElementById('admin-pwd-input').value = '';
+    document.getElementById('admin-login-msg').textContent = '';
+    buildAdminPanel();
+    showScreen('screen-admin');
+  } else {
+    document.getElementById('admin-login-msg').textContent = 'Mot de passe incorrect.';
   }
 }
 
-// ════════════════════════════════════════════════════════
-// CONSULTER PAR CODE
-// ════════════════════════════════════════════════════════
-function consulterResultats() {
-  var code = document.getElementById('check-code-input').value.trim().toUpperCase();
-  var errEl = document.getElementById('check-error');
-  if (!code) { if (errEl) { errEl.style.display='block'; errEl.textContent='Veuillez saisir un code.'; } return; }
+function buildAdminPanel() {
+  var all = JSON.parse(localStorage.getItem('bocc_all') || '[]');
+  all.sort(function(a,b){ return b.qcmScore - a.qcmScore; });
 
-  var saved = null;
-  try { saved = JSON.parse(localStorage.getItem('mafa_bocc_' + code)); } catch(e) {}
+  // Stats
+  var total = all.length;
+  var avg = total ? Math.round(all.reduce(function(s,r){ return s+r.pct; },0)/total) : 0;
+  var best = total ? all[0].pct : 0;
+  var passCount = all.filter(function(r){ return r.pct >= 60; }).length;
+  var passRate = total ? Math.round((passCount/total)*100) : 0;
 
-  if (!saved) {
-    if (errEl) { errEl.style.display='block'; errEl.textContent='Code introuvable. Vérifiez le code ou effectuez une nouvelle évaluation.'; }
+  document.getElementById('admin-stats').innerHTML =
+    stat('Candidats',total) + stat('Moyenne',avg+'%') +
+    stat('Meilleur score',best+'%') + stat('Taux de réussite',passRate+'%');
+
+  // Table
+  var tbody = document.getElementById('admin-tbody');
+  if (!total) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-msg">Aucun résultat enregistré.</td></tr>';
     return;
   }
-  if (errEl) errEl.style.display='none';
+  tbody.innerHTML = all.map(function(r, i) {
+    var rank = i+1;
+    var rankClass = rank===1?'gold':rank===2?'silver':rank===3?'bronze':'other';
+    var pass = r.pct >= 60;
+    return '<tr>' +
+      '<td><span class="rank-badge '+rankClass+'">'+(i+1)+'</span></td>' +
+      '<td>'+escHtml(r.name)+'</td>' +
+      '<td>'+r.qcmScore+'/'+r.qcmTotal+'</td>' +
+      '<td>'+r.qcmScore+'/20</td>' +
+      '<td><strong>'+r.pct+'%</strong></td>' +
+      '<td><span class="'+(pass?'pill-pass':'pill-fail')+'">'+(pass?'Admis':'Non admis')+'</span></td>' +
+      '<td>'+r.elapsed+'</td>' +
+      '<td style="font-family:\'Syne\',sans-serif;letter-spacing:.1em;">'+r.code+'</td>' +
+      '<td>'+r.date+' '+r.time+'</td>' +
+      '</tr>';
+  }).join('');
+}
 
-  // Reconstruire les résultats (sans l'exam screen)
-  state.name = saved.name;
-  state.role = saved.role;
-  state.answers = saved.answers;
-  state.correct = saved.correct;
-  state.submitted = true;
-  state.code = saved.code;
+function stat(label, value) {
+  return '<div class="stat-box"><div class="sv">'+value+'</div><div class="sl">'+label+'</div></div>';
+}
 
-  // On n'a pas les textareas, passer des réponses vides
-  afficherResultats(saved);
-  showScreen('screen-results');
+function exportCSV() {
+  var all = JSON.parse(localStorage.getItem('bocc_all') || '[]');
+  if (!all.length) { alert('Aucun résultat à exporter.'); return; }
+  var rows = [['Nom','QCM','Total%','Résultat','Durée','Code','Date','Heure']];
+  all.forEach(function(r) {
+    rows.push([
+      r.name, r.qcmScore+'/'+r.qcmTotal, r.pct+'%',
+      r.pct>=60?'Admis':'Non admis',
+      r.elapsed, r.code, r.date, r.time
+    ]);
+  });
+  var csv = rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
+  var blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'resultats_bocc_'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function resetAllResults() {
+  if (!confirm('Supprimer TOUS les résultats ? Cette action est irréversible.')) return;
+  var all = JSON.parse(localStorage.getItem('bocc_all') || '[]');
+  all.forEach(function(r){ localStorage.removeItem('bocc_r_'+r.code); });
+  localStorage.removeItem('bocc_all');
+  buildAdminPanel();
+}
+
+// ═══════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════
+function genCode() {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var c = '';
+  for (var i=0;i<6;i++) c += chars[Math.floor(Math.random()*chars.length)];
+  return c;
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
