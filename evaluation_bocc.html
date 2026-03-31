@@ -669,6 +669,12 @@ body::before {
       <div class="actions-row">
         <button class="btn btn-secondary" onclick="showScreen('screen-intro')">Retour à l'accueil</button>
         <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
+        <button class="btn btn-gold" onclick="copierBlobResultat()" id="btn-share">Copier pour l'admin</button>
+      </div>
+      <div id="share-msg" style="text-align:center;margin-top:.75rem;font-size:.82rem;color:var(--success);min-height:1.2rem;"></div>
+      <div style="background:var(--surface2);border:1.5px dashed var(--border);border-radius:10px;padding:1rem;margin-top:1rem;display:none;" id="share-box">
+        <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:.5rem;">Code de partage à transmettre à l'administrateur :</p>
+        <textarea id="share-blob-txt" readonly style="width:100%;height:80px;font-size:.72rem;font-family:monospace;border:1px solid var(--border);border-radius:6px;padding:.5rem;resize:none;background:#fff;color:var(--text);"></textarea>
       </div>
     </div>
   </div>
@@ -710,6 +716,16 @@ body::before {
         <button class="btn btn-secondary" onclick="showScreen('screen-intro')">Quitter</button>
       </div>
     </div>
+    <!-- Import -->
+    <div style="background:var(--surface);border-radius:12px;padding:1.2rem;box-shadow:var(--shadow-sm);border:1.5px solid var(--border);margin-bottom:1.5rem;">
+      <div style="font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:.75rem;">Importer un résultat candidat</div>
+      <div style="display:flex;gap:.75rem;align-items:flex-start;flex-wrap:wrap;">
+        <textarea id="import-blob-input" placeholder="Collez ici le code de partage du candidat..." style="flex:1;min-width:200px;height:70px;padding:.6rem .9rem;border:1.5px solid var(--border);border-radius:8px;font-family:monospace;font-size:.78rem;outline:none;resize:none;"></textarea>
+        <button class="btn btn-primary" style="white-space:nowrap;" onclick="importerResultat()">Importer</button>
+      </div>
+      <div id="import-msg" style="font-size:.82rem;margin-top:.5rem;min-height:1.2rem;"></div>
+    </div>
+
     <div class="stats-grid" id="admin-stats"></div>
     <div class="admin-table-wrap">
       <table class="admin-table">
@@ -1113,6 +1129,9 @@ function soumettre(autoSubmit) {
 //  DISPLAY RESULTS
 // ═══════════════════════════════════════════
 function afficherResultats(r) {
+  _lastResult = r;
+  document.getElementById('share-msg').textContent = '';
+  document.getElementById('share-box').style.display = 'none';
   var pct = r.pct;
   var deg = Math.round(pct * 3.6);
   document.getElementById('score-ring').style.background =
@@ -1363,6 +1382,56 @@ function saveGrades() {
   document.getElementById('detail-total').textContent = r.totalFinal;
 
   alert('Notes enregistrées ! Total final : ' + r.totalFinal + '/31');
+}
+
+// ═══════════════════════════════════════════
+//  PARTAGE RÉSULTAT (cross-device)
+// ═══════════════════════════════════════════
+var _lastResult = null;
+
+function copierBlobResultat() {
+  if (!_lastResult) return;
+  var blob = btoa(unescape(encodeURIComponent(JSON.stringify(_lastResult))));
+  var box = document.getElementById('share-box');
+  var txt = document.getElementById('share-blob-txt');
+  txt.value = blob;
+  box.style.display = 'block';
+  // Tenter copie automatique
+  try {
+    navigator.clipboard.writeText(blob).then(function() {
+      document.getElementById('share-msg').textContent = '✓ Code copié dans le presse-papiers !';
+    }).catch(function() {
+      document.getElementById('share-msg').textContent = 'Sélectionnez et copiez le texte ci-dessous.';
+    });
+  } catch(e) {
+    txt.select();
+    document.getElementById('share-msg').textContent = 'Sélectionnez et copiez le texte ci-dessous.';
+  }
+}
+
+function importerResultat() {
+  var blob = document.getElementById('import-blob-input').value.trim();
+  var msg = document.getElementById('import-msg');
+  if (!blob) { msg.style.color='var(--danger)'; msg.textContent='Veuillez coller le code de partage.'; return; }
+  try {
+    var r = JSON.parse(decodeURIComponent(escape(atob(blob))));
+    if (!r.code || !r.name || r.qcmScore === undefined) throw new Error('Format invalide');
+
+    // Sauvegarder localement
+    localStorage.setItem('bocc_r_' + r.code, JSON.stringify(r));
+    var all = JSON.parse(localStorage.getItem('bocc_all') || '[]');
+    var exists = all.findIndex(function(x){ return x.code === r.code; });
+    if (exists >= 0) { all[exists] = r; } else { all.push(r); }
+    localStorage.setItem('bocc_all', JSON.stringify(all));
+
+    document.getElementById('import-blob-input').value = '';
+    msg.style.color = 'var(--success)';
+    msg.textContent = '✓ Résultat de ' + r.name + ' importé avec succès (code : ' + r.code + ')';
+    buildAdminPanel();
+  } catch(e) {
+    msg.style.color = 'var(--danger)';
+    msg.textContent = 'Code invalide ou corrompu. Vérifiez que le candidat a bien copié le code complet.';
+  }
 }
 
 function genCode() {
