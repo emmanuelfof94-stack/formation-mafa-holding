@@ -578,6 +578,25 @@ function submitQuiz(id) {
   document.getElementById('modalBadge').className = 'badge-result ' + badge;
   modal.classList.add('open');
 }
+
+// Navigation par ancre URL — ex: Module4_Exercices.html#cc-inter
+(function() {
+  var navMap = {
+    'cc-inter':  { btn: '.nav-item:nth-child(2)', mob: 'mnav-cc-inter' },
+    'cc-expert': { btn: '.nav-item:nth-child(3)', mob: 'mnav-cc-expert' },
+    'bo-inter':  { btn: '.nav-item:nth-child(4)', mob: 'mnav-bo-inter' },
+    'bo-expert': { btn: '.nav-item:nth-child(5)', mob: 'mnav-bo-expert' }
+  };
+  function loadHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (navMap[hash]) {
+      showP(hash, document.querySelector(navMap[hash].btn));
+      mobileActive(navMap[hash].mob);
+    }
+  }
+  window.addEventListener('load', loadHash);
+  window.addEventListener('hashchange', loadHash);
+})();
 </script>
 </body>
 </html>
