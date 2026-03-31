@@ -331,7 +331,7 @@
         <h1>Évaluation — Projet ID30</h1>
         <p>Back Office &amp; Call Center · Niveau Intermédiaire</p>
         <div class="intro-badges">
-          <span class="badge">⏱ 40 minutes</span>
+          <span class="badge">⏱ 50 minutes</span>
           <span class="badge">✅ 10 QCM</span>
           <span class="badge">✏️ 3 questions ouvertes</span>
           <span class="badge">📂 2 cas pratiques</span>
@@ -339,24 +339,17 @@
       </div>
       <div class="intro-body">
         <div class="intro-info-grid">
-          <div class="info-item"><div class="info-item-label">Durée</div><div class="info-item-value" style="color:#8D0C23">40 min</div></div>
-          <div class="info-item"><div class="info-item-label">Total points</div><div class="info-item-value">25 pts</div></div>
+          <div class="info-item"><div class="info-item-label">Durée</div><div class="info-item-value" style="color:#8D0C23">50 min</div></div>
+          <div class="info-item"><div class="info-item-label">Total points</div><div class="info-item-value">30 pts</div></div>
           <div class="info-item"><div class="info-item-label">QCM (auto-corrigés)</div><div class="info-item-value">10 pts</div></div>
-          <div class="info-item"><div class="info-item-label">Ouvertes + Cas</div><div class="info-item-value">15 pts</div></div>
+          <div class="info-item"><div class="info-item-label">Ouvertes + Cas</div><div class="info-item-value">20 pts</div></div>
         </div>
         <div class="form-group">
           <label class="form-label" for="inp-name">Votre nom complet *</label>
           <input class="form-input" id="inp-name" type="text" placeholder="Prénom NOM" autocomplete="off">
         </div>
-        <div class="form-group">
-          <label class="form-label" for="inp-role">Votre poste *</label>
-          <select class="form-select" id="inp-role">
-            <option value="">— Sélectionnez votre poste —</option>
-            <option value="call-center">Agent Call Center (ID30)</option>
-            <option value="back-office">Agent Back Office (ID30)</option>
-          </select>
-        </div>
-        <button class="btn-start" onclick="demarrerEvaluation()">▶ Démarrer l'évaluation (40 min)</button>
+
+        <button class="btn-start" onclick="demarrerEvaluation()">▶ Démarrer l'évaluation (50 min)</button>
         <button class="btn-check-results" onclick="showScreen('screen-check')">🔑 Consulter mes résultats avec un code</button>
       </div>
     </div>
@@ -449,39 +442,39 @@
       <div class="section-header" style="border-left:4px solid #1a2332;">
         <span style="font-size:1.4rem">📂</span>
         <h2>Partie 3 — Cas pratiques</h2>
-        <span class="section-pts">6 pts</span>
+        <span class="section-pts">11 pts · 5+6</span>
       </div>
       <div class="section-body">
 
         <!-- CAS 1 -->
         <div class="open-block">
-          <div class="q-meta"><span class="q-num">Cas 01 — Call Center</span><span class="q-pts">3 pts</span></div>
+          <div class="q-meta"><span class="q-num">Cas 01 — Call Center</span><span class="q-pts">5 pts</span></div>
           <div class="cas-scenario">
             <strong>📋 Scénario</strong>
             Vous êtes agent Call Center. Vous appelez Mme Ahou Kouamé. Elle décroche et dit avec une voix irritée : <em>« Encore vous ! C'est la troisième fois cette semaine ! J'ai déjà dit non à vos collègues ! Je vais porter plainte ! »</em><br><br>
             <strong>Contexte Connectel :</strong> 2 appels précédents enregistrés : « Sans réponse » et « Intéressée, à rappeler ». Aucune note de refus précédent. Statut actuel : « À contacter ».
           </div>
           <div class="sub-q">1/3 — Quelle est la source du problème ? (1 pt)</div>
-          <textarea class="answer-input" id="cas-1-1" placeholder="Répondez ici…" style="min-height:60px"></textarea>
-          <div class="sub-q">2/3 — Rédigez ce que vous dites à Mme Kouamé (1 pt)</div>
-          <textarea class="answer-input" id="cas-1-2" placeholder="Rédigez le script…" style="min-height:80px"></textarea>
-          <div class="sub-q">3/3 — Actions post-appel dans Connectel (1 pt)</div>
-          <textarea class="answer-input" id="cas-1-3" placeholder="Décrivez vos actions…" style="min-height:60px"></textarea>
+          <textarea class="answer-input" id="cas-1-1" placeholder="Identifiez et expliquez l'erreur…" style="min-height:70px"></textarea>
+          <div class="sub-q">2/3 — Rédigez exactement ce que vous dites à Mme Kouamé (2 pts)</div>
+          <textarea class="answer-input" id="cas-1-2" placeholder="Rédigez le script complet (ton, contenu, conclusion)…" style="min-height:100px"></textarea>
+          <div class="sub-q">3/3 — Listez toutes vos actions post-appel dans Connectel (2 pts)</div>
+          <textarea class="answer-input" id="cas-1-3" placeholder="Statut, notes, signalements…" style="min-height:80px"></textarea>
           <div class="model-answer-box" id="model-cas-1">
-            <div class="model-answer-title">✅ Correction modèle — 3 points</div>
-            <strong>Analyse (1 pt) :</strong> Erreur de qualification par le collègue — le 2e appel noté « Intéressée, à rappeler » est faux (elle avait déjà refusé). Source : mauvaise saisie du statut qui génère un 3e appel non souhaité.<br><br>
-            <strong>Script (1 pt) :</strong> « Mme Kouamé, je vous présente toutes mes excuses pour ce dérangement répété. Il y a eu une erreur dans notre système de suivi. Je note immédiatement votre refus définitif et m'assure que vous ne serez plus contactée. Encore désolé. Bonne journée. » — Ton calme, bref, sans se défausser sur le collègue.<br><br>
-            <strong>Actions Connectel (1 pt) :</strong> (1) Statut → « Refus définitif — Ne pas rappeler » ; (2) Note : « Cliente très mécontente — 3 appels en une semaine, qualification précédente incorrecte. Bloquer tout rappel. » ; (3) Signaler au superviseur l'erreur de qualification pour sensibilisation qualité.
+            <div class="model-answer-title">✅ Correction modèle — 5 points</div>
+            <strong>Analyse (1 pt) :</strong> Erreur de qualification par un collègue — le 2e appel noté « Intéressée, à rappeler » est incorrect (elle avait déjà refusé). Cette mauvaise saisie du statut a déclenché un 3e appel non souhaité.<br><br>
+            <strong>Script (2 pts) :</strong> « Mme Kouamé, je vous présente toutes mes excuses pour ce dérangement répété. Il y a eu une erreur dans notre système de suivi. Je note immédiatement votre refus définitif et m'assure personnellement que vous ne serez plus contactée. Encore désolé pour la gêne occasionnée. Bonne journée. » — Ton calme et professionnel, sans se défausser sur le collègue.<br><br>
+            <strong>Actions Connectel (2 pts) :</strong> (1) Statut → « Refus définitif — Ne pas rappeler » ; (2) Note détaillée : « Cliente très mécontente — 3 appels en une semaine, qualification précédente incorrecte. Bloquer tout rappel. » ; (3) Signalement au superviseur pour analyse et sensibilisation équipe.
           </div>
         </div>
 
         <!-- CAS 2 -->
         <div class="open-block">
-          <div class="q-meta"><span class="q-num">Cas 02 — Back Office</span><span class="q-pts">3 pts</span></div>
+          <div class="q-meta"><span class="q-num">Cas 02 — Back Office</span><span class="q-pts">6 pts</span></div>
           <div class="cas-scenario">
             <strong>📋 Scénario</strong>
             Vous êtes agent Back Office. Vous recevez le dossier de M. Konan Yves, entrepreneur à Bouaké.<br><br>
-            <strong>Résultat du contrôle :</strong><br>
+            <strong>Résultat de votre contrôle :</strong><br>
             ✓ Nom / Prénom — Lisible et cohérent<br>
             ✗ Photo de profil — Floue, visage non identifiable<br>
             ✗ Numéro de téléphone — Format incorrect (07 58 41 3X)<br>
@@ -489,21 +482,25 @@
             ⚠ CNI verso — Absent du dossier<br>
             ⚠ Coordonnées GPS — Non renseignées
           </div>
-          <div class="sub-q">1/3 — Classez les problèmes (bloquant / à corriger / mineur) (1 pt)</div>
-          <textarea class="answer-input" id="cas-2-1" placeholder="Classez et expliquez…" style="min-height:70px"></textarea>
-          <div class="sub-q">2/3 — Quel statut dans Connectel ? Rédigez le message de retour au terrain (1 pt)</div>
-          <textarea class="answer-input" id="cas-2-2" placeholder="Statut et message…" style="min-height:80px"></textarea>
-          <div class="sub-q">3/3 — Délai attendu et procédure si pas de retour (1 pt)</div>
-          <textarea class="answer-input" id="cas-2-3" placeholder="Délai et procédure…" style="min-height:60px"></textarea>
+          <div class="sub-q">1/4 — Diagnostic : classez chaque problème (Bloquant / À corriger / Mineur) et expliquez pourquoi (2 pts)</div>
+          <textarea class="answer-input" id="cas-2-1" placeholder="Bloquants : … — À corriger : … — Mineurs : …" style="min-height:90px"></textarea>
+          <div class="sub-q">2/4 — Quel statut attribuez-vous dans Connectel ? Justifiez. (1 pt)</div>
+          <textarea class="answer-input" id="cas-2-2" placeholder="Statut choisi et justification…" style="min-height:70px"></textarea>
+          <div class="sub-q">3/4 — Rédigez le message complet de retour à l'équipe terrain (2 pts)</div>
+          <textarea class="answer-input" id="cas-2-3" placeholder="Message structuré avec corrections demandées, délai et référence dossier…" style="min-height:110px"></textarea>
+          <div class="sub-q">4/4 — Quel est le délai de correction attendu ? Que faites-vous si vous n'avez pas de retour ? (1 pt)</div>
+          <textarea class="answer-input" id="cas-2-4" placeholder="Délai, relance, escalade…" style="min-height:70px"></textarea>
           <div class="model-answer-box" id="model-cas-2">
-            <div class="model-answer-title">✅ Correction modèle — 3 points</div>
-            <strong>Diagnostic (1 pt) :</strong> Bloquants : Photo floue (KYC impossible) + Numéro de téléphone illisible (compte OM impossible à créer). À corriger obligatoirement : CNI verso absent. Mineur : GPS non renseigné (peut être corrigé sans retour terrain en cas d'adresse connue).<br><br>
-            <strong>Statut + Message (1 pt) :</strong> Statut → « Incomplet — À corriger » (pas Rejeté — les données de base sont correctes). Message : « Bonjour, le dossier de M. Konan Yves (Bouaké) présente 3 corrections : (1) Photo floue — refaire une photo nette, fond neutre ; (2) Numéro de téléphone illisible — confirmer le numéro complet (10 chiffres) ; (3) CNI verso absent — photographier le verso. Merci de corriger dans les 48h. Réf : [ID Connectel]. »<br><br>
-            <strong>Délai &amp; suivi (1 pt) :</strong> 48h ouvrables. Si pas de retour : relance message + appel. Si pas de retour à 72h : escalade superviseur. Le dossier reste en statut « Incomplet » jusqu'à correction complète.
+            <div class="model-answer-title">✅ Correction modèle — 6 points</div>
+            <strong>Diagnostic (2 pts) :</strong><br>
+            • <strong>Bloquants</strong> : Photo floue (KYC biométrique impossible) + Numéro illisible (compte Orange Money impossible à créer).<br>
+            • <strong>À corriger obligatoirement</strong> : CNI verso absent (pièce réglementaire obligatoire).<br>
+            • <strong>Mineur</strong> : GPS non renseigné (peut être complété si adresse connue).<br><br>
+            <strong>Statut (1 pt) :</strong> <em>« Incomplet — À corriger »</em> (pas Rejeté — données de base correctes, dossier récupérable).<br><br>
+            <strong>Message terrain (2 pts) :</strong> « Bonjour, le dossier de M. Konan Yves (Bouaké) nécessite 3 corrections : (1) Photo de profil floue — refaire une photo nette, fond uni, bon éclairage ; (2) Numéro de téléphone — confirmer le numéro complet (10 chiffres) ; (3) CNI verso absent — photographier le verso. Merci de corriger dans les 48h. Réf : [ID Connectel]. »<br><br>
+            <strong>Délai &amp; suivi (1 pt) :</strong> 48h ouvrables. Si pas de retour à 48h : relance message + appel. À 72h sans retour : escalade superviseur. Dossier reste « Incomplet » jusqu'à correction complète.
           </div>
-        </div>
-
-      </div>
+        </div>      </div>
     </div>
 
     <!-- BOUTON SOUMETTRE -->
@@ -526,7 +523,7 @@
             stroke-dasharray="408.41" stroke-dashoffset="408.41"/>
         </svg>
         <div class="score-value" id="result-score-pct">—</div>
-        <div class="score-label">Score QCM</div>
+        <div class="score-label">Score QCM /10</div>
       </div>
       <div class="result-name" id="result-name">—</div>
       <div style="color:var(--text-muted);font-size:0.85rem" id="result-role">—</div>
@@ -812,7 +809,7 @@ function choisirReponse(qi, oi) {
 // TIMER
 // ════════════════════════════════════════════════════════
 function startTimer() {
-  state.secondsLeft = 40 * 60;
+  state.secondsLeft = 50 * 60;
   state.timerInterval = setInterval(function() {
     state.secondsLeft--;
     var m = Math.floor(state.secondsLeft / 60);
@@ -836,19 +833,17 @@ function startTimer() {
 // ════════════════════════════════════════════════════════
 function demarrerEvaluation() {
   var name = document.getElementById('inp-name').value.trim();
-  var role = document.getElementById('inp-role').value;
   if (!name) { alert('Veuillez saisir votre nom complet.'); return; }
-  if (!role) { alert('Veuillez sélectionner votre poste.'); return; }
 
   state.name = name;
-  state.role = role;
+  state.role = 'Back Office & Call Center';
   state.answers = {};
   state.correct = {};
   state.submitted = false;
   state.code = null;
 
   document.getElementById('topbar-name').textContent = name;
-  document.getElementById('topbar-role').textContent = role === 'call-center' ? '📞 Agent Call Center (ID30)' : '📂 Agent Back Office (ID30)';
+  document.getElementById('topbar-role').textContent = '📞 Call Center · 📂 Back Office — Projet ID30';
   document.getElementById('qcm-score-live').textContent = 'QCM : 0 / 10';
 
   buildQCM();
@@ -917,7 +912,7 @@ function afficherResultats(result) {
   var el = function(id) { return document.getElementById(id); };
   if (el('result-score-pct')) el('result-score-pct').textContent = result.pct + '%';
   if (el('result-name')) el('result-name').textContent = result.name;
-  if (el('result-role')) el('result-role').textContent = result.role === 'call-center' ? '📞 Agent Call Center (ID30)' : '📂 Agent Back Office (ID30)';
+  if (el('result-role')) el('result-role').textContent = '📞 Call Center · 📂 Back Office — Projet ID30';
   if (el('r-qcm')) el('r-qcm').textContent = result.qcmScore + '/10';
   if (el('result-code')) el('result-code').textContent = result.code;
 
