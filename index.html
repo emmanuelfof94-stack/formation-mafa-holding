@@ -4164,6 +4164,29 @@ function enterFormation() {
       </div>
     </button>
 
+    <!-- Carte Évaluation Back Office & Call Center -->
+    <button class="module-card" onclick="openModule('eval-bocc')" style="border:none;cursor:pointer;text-align:left;background:white;">
+      <div class="card-header" style="background:linear-gradient(135deg,#6A091A,#8D0C23);">
+        <div class="card-icon" style="background:rgba(255,255,255,0.15);color:white;">📝</div>
+        <div class="card-meta">
+          <div class="card-num" style="color:rgba(255,255,255,0.75);">Évaluation Intermédiaire</div>
+          <h3 style="color:white;">Back Office &amp; Call Center</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Évaluation officielle niveau intermédiaire — QCM auto-corrigés, questions ouvertes et cas pratiques. Résultats consultables et réponses modèles disponibles après soumission.</p>
+        <div class="card-tags">
+          <span class="tag" style="background:#F9E8EC;color:#8D0C23;">📞 Call Center</span>
+          <span class="tag" style="background:#F9E8EC;color:#8D0C23;">📂 Back Office</span>
+          <span class="tag tag-duration">⏱ 40 min</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-link-btn">Commencer l'évaluation</span>
+        <span class="progress-mini">10 QCM · 3 ouvertes · 2 cas</span>
+      </div>
+    </button>
+
     <!-- Carte Évaluation Orange -->
     <a href="evaluation_orange.html" style="text-decoration:none;display:block;" class="module-card">
       <div class="card-header" style="background:linear-gradient(135deg,#f97316,#ea580c);">
@@ -10191,6 +10214,388 @@ function enterFormation() {
   </div><!-- fin overlay-content -->
 </div><!-- fin overlay-m6 -->
 
+<!-- ══════════════════════════════════════════════════════
+     OVERLAY ÉVALUATION — Back Office & Call Center — Niveau Intermédiaire
+══════════════════════════════════════════════════════════ -->
+<div class="module-overlay" id="overlay-eval-bocc">
+  <div class="overlay-topbar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <button class="overlay-back" onclick="closeModule()">&#8592; Retour au portail</button>
+    <span class="overlay-topbar-title">📝 Évaluation Back Office &amp; Call Center — Intermédiaire</span>
+    <span id="eval-timer-display" style="font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:white;background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:8px;letter-spacing:.05em;min-width:80px;text-align:center">40:00</span>
+  </div>
+  <div class="overlay-content">
+  <div class="module-page" id="module-eval-bocc">
+
+    <div class="module-header-wrap">
+      <div class="module-breadcrumb">
+        <span>Formation</span><span class="crumb-sep">›</span>
+        <span class="crumb-mod">Évaluation — Back Office &amp; Call Center</span>
+        <span class="crumb-sep">·</span><span>Niveau Intermédiaire · 40 minutes · 30 points</span>
+      </div>
+      <div class="module-title-block">
+        <div class="module-title-icon" style="background:linear-gradient(135deg,#F2D6DC,#F9E8EC)">📝</div>
+        <div class="module-title-text">
+          <h2>Évaluation Officielle — Back Office &amp; Call Center</h2>
+          <div class="module-chips">
+            <span class="module-chip chip-audience">📞 Agents Call Center</span>
+            <span class="module-chip chip-audience">📂 Agents Back Office</span>
+            <span class="module-chip chip-duration">⏱ 40 min</span>
+            <span class="module-chip" style="background:#F2D6DC;color:#6A091A">🎯 Niveau Intermédiaire</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onglets -->
+    <div class="module-tabs-clean" style="flex-shrink:0">
+      <button class="tab-btn-clean active-red" data-tab="intro" onclick="showModuleTab('eval-bocc','intro')">📋 Introduction</button>
+      <button class="tab-btn-clean" data-tab="qcm" onclick="showModuleTab('eval-bocc','qcm')">✅ QCM</button>
+      <button class="tab-btn-clean" data-tab="ouvertes" onclick="showModuleTab('eval-bocc','ouvertes')">✏️ Questions Ouvertes</button>
+      <button class="tab-btn-clean" data-tab="cas" onclick="showModuleTab('eval-bocc','cas')">📂 Cas Pratiques</button>
+      <button class="tab-btn-clean" data-tab="resultats" onclick="showModuleTab('eval-bocc','resultats')">📊 Résultats</button>
+    </div>
+
+    <div class="module-content-scroll">
+
+    <!-- ═══ INTRO ═══ -->
+    <div class="tab-section" id="tab-eval-bocc-intro" style="display:block">
+      <div class="module-hero">
+        <div class="module-hero-icon">📝</div>
+        <h1>Évaluation Back Office &amp; Call Center</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">Niveau Intermédiaire</span>
+          <span class="meta-chip chip-gold">⏱ 40 minutes</span>
+          <span class="meta-chip chip-grey">30 points au total</span>
+        </div>
+      </div>
+      <div class="info-card" style="border-left:4px solid #8D0C23;background:#F9E8EC">
+        <h3 style="color:#6A091A">📋 Instructions de l'évaluation</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0">
+          <div style="background:white;border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:#8D0C23">40 min</div>
+            <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.07em;margin-top:3px">Durée totale</div>
+          </div>
+          <div style="background:white;border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:#8D0C23">30 pts</div>
+            <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.07em;margin-top:3px">Score maximum</div>
+          </div>
+          <div style="background:white;border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:#584B26">21 pts</div>
+            <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.07em;margin-top:3px">Seuil de réussite</div>
+          </div>
+          <div style="background:white;border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:#8D0C23">3</div>
+            <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.07em;margin-top:3px">Parties</div>
+          </div>
+        </div>
+        <ul style="margin:8px 0 0;padding-left:18px;line-height:2;color:#374151;font-size:14px">
+          <li><strong>Partie 1 — QCM (10 pts) :</strong> 10 questions à choix multiples — correction automatique et immédiate.</li>
+          <li><strong>Partie 2 — Questions ouvertes (9 pts) :</strong> 3 questions de réflexion — rédigez vos réponses dans les zones de texte.</li>
+          <li><strong>Partie 3 — Cas pratiques (11 pts) :</strong> 2 scénarios réels à analyser et résoudre.</li>
+          <li>Cliquez sur <strong>« Soumettre l'évaluation »</strong> pour voir votre score et les réponses modèles.</li>
+          <li>Après soumission, tous les onglets restent accessibles pour <strong>consultation complète</strong>.</li>
+        </ul>
+      </div>
+      <div style="text-align:center;margin-top:28px">
+        <button onclick="demarrerEvalBoCC()" style="background:linear-gradient(135deg,#8D0C23,#B5112C);color:white;border:none;padding:16px 40px;border-radius:12px;font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(141,12,35,0.35)">
+          ▶ Démarrer l'évaluation — Minuteur 40 min
+        </button>
+        <p style="font-size:12px;color:#888;margin-top:10px">Le minuteur démarre dès que vous cliquez sur ce bouton.</p>
+      </div>
+    </div>
+
+    <!-- ═══ QCM ═══ -->
+    <div class="tab-section" id="tab-eval-bocc-qcm" style="display:none">
+      <div class="card" style="border-top:4px solid #8D0C23">
+        <div class="card-title">✅ Partie 1 — Questions à Choix Multiples <span style="float:right;font-size:12px;background:#F9E8EC;color:#8D0C23;padding:3px 10px;border-radius:20px;font-weight:700">10 pts · 1 pt / question</span></div>
+
+        <div class="quiz-question-block" id="eval-bocc-q1">
+          <div class="quiz-q-num">Question 01 / 10</div>
+          <div class="quiz-q-text">Dans le projet ID30, que signifie l'acronyme <strong>KYC</strong> et à quelle étape s'applique-t-il ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q1',false,'KYC ne signifie pas « Keep Your Customer ». La bonne réponse est Know Your Customer.')">Keep Your Customer — lors du suivi post-enrôlement</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q1',true,'Correct ! KYC = Know Your Customer. Il s\'applique lors de la collecte et vérification des données d\'identité de l\'entrepreneur.')">Know Your Customer — lors de la collecte et vérification des données d'identité</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q1',false,'KYC ne désigne pas « Know Your Company ». KYB (Know Your Business) concerne l\'entreprise.')">Know Your Company — lors de l'ouverture d'un compte Orange Money</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q1',false,'KYC n\'est pas un rapport qualité annuel.')">Key Yearly Control — lors de l'audit annuel des dossiers</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q1"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q2">
+          <div class="quiz-q-num">Question 02 / 10</div>
+          <div class="quiz-q-text">Quel est l'objectif quotidien minimum d'un agent <strong>Call Center</strong> en termes de dossiers validés ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q2',false,'10 dossiers est en dessous de l\'objectif fixé pour un agent Call Center.')">10 dossiers validés par jour</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q2',false,'20 dossiers correspond à un objectif très performant, pas le minimum requis.')">20 dossiers validés par jour</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q2',true,'Correct ! L\'objectif quotidien minimum est de 15 dossiers validés par agent Call Center.')">15 dossiers validés par jour</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q2',false,'25 dossiers est un objectif exceptionnel, pas le minimum standard.')">25 dossiers validés par jour</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q2"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q3">
+          <div class="quiz-q-num">Question 03 / 10</div>
+          <div class="quiz-q-text">En Back Office, lors de la réception d'un dossier, quel est le premier contrôle obligatoire ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q3',false,'La saisie dans Connectel intervient après la vérification de complétude, pas avant.')">Saisir immédiatement les données dans Connectel</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q3',false,'Le transfert au superviseur n\'est pas la première étape — il intervient si le dossier est bloqué.')">Transférer le dossier au superviseur pour validation</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q3',true,'Correct ! La première étape est la vérification de la complétude du dossier : tous les documents requis sont-ils présents et lisibles ?')">Vérifier la complétude et la lisibilité de tous les documents requis</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q3',false,'Contacter le terrain n\'est pas le premier réflexe. On vérifie d\'abord la complétude.')">Contacter l'agent terrain pour obtenir les pièces manquantes</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q3"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q4">
+          <div class="quiz-q-num">Question 04 / 10</div>
+          <div class="quiz-q-text">Un client dit : <em>« Je ne suis pas intéressé, ne me rappelez plus. »</em> Quelle est la réponse correcte de l'agent ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q4',false,'Insister après un refus clair est contraire aux bonnes pratiques.')">Insister en expliquant les avantages du programme pour convaincre</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q4',false,'Raccrocher sans rien dire manque de professionnalisme.')">Raccrocher immédiatement sans autre commentaire</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q4',true,'Correct ! L\'agent doit remercier poliment, noter le statut « Refus définitif » dans Connectel, et ne plus rappeler ce contact.')">Remercier le client, noter « Refus définitif » dans Connectel et ne plus le recontacter</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q4',false,'Proposer un rappel ultérieur ne respecte pas la demande explicite du client.')">Proposer de le rappeler dans un mois pour un meilleur moment</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q4"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q5">
+          <div class="quiz-q-num">Question 05 / 10</div>
+          <div class="quiz-q-text">Quel est le taux d'erreur maximum <strong>acceptable</strong> pour un agent Back Office ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q5',false,'10% est bien au-dessus du seuil acceptable.')">10 %</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q5',false,'5% reste trop élevé selon les standards qualité du projet ID30.')">5 %</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q5',true,'Correct ! Le taux d\'erreur maximum acceptable est de 3%. Au-delà, le superviseur doit être alerté et un plan d\'amélioration mis en place.')">3 %</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q5',false,'1% est un objectif d\'excellence, pas le seuil maximum acceptable standard.')">1 %</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q5"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q6">
+          <div class="quiz-q-num">Question 06 / 10</div>
+          <div class="quiz-q-text">Dans le processus Connectel à 3 niveaux, quel niveau correspond au rôle du <strong>Back Office</strong> ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q6',false,'Le niveau 1 correspond à la prise de contact et la collecte terrain par le Call Center ou l\'agent terrain.')">Niveau 1 — Collecte initiale des informations sur le terrain</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q6',true,'Correct ! Le Back Office intervient au Niveau 2 : vérification administrative, contrôle qualité des données et validation documentaire.')">Niveau 2 — Vérification administrative et contrôle qualité des données</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q6',false,'Le niveau 3 est la validation finale par le superviseur ou le référent qualité.')">Niveau 3 — Validation finale et transmission à Orange Money</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q6',false,'Il n\'existe pas de Niveau 4 dans le processus Connectel standard.')">Niveau 4 — Archivage et clôture des dossiers</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q6"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q7">
+          <div class="quiz-q-num">Question 07 / 10</div>
+          <div class="quiz-q-text">Un entrepreneur dit : <em>« Je suis déjà enrôlé, on m'a déjà contacté ! »</em>. Comment l'agent doit-il réagir ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q7',false,'S\'excuser et raccrocher sans vérifier peut causer des doublons dans la base.')">S'excuser et raccrocher immédiatement</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q7',false,'Proposer un ré-enrôlement sans vérification crée des doublons et est contraire à la procédure.')">Lui proposer de se ré-enrôler pour mettre ses informations à jour</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q7',true,'Correct ! L\'agent doit vérifier dans Connectel si le contact est déjà enregistré. Si oui, noter « Déjà enrôlé » et clore l\'appel poliment.')">Vérifier dans Connectel, noter « Déjà enrôlé » si confirmé et clore l'appel poliment</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q7',false,'Ignorer sa déclaration et continuer le script est contraire à la procédure.')">Ignorer sa déclaration et continuer le script normalement</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q7"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q8">
+          <div class="quiz-q-num">Question 08 / 10</div>
+          <div class="quiz-q-text">Quel est le score de qualité minimum requis pour un agent Call Center selon les KPI du projet ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q8',false,'70% est le seuil d\'alerte rouge — en dessous, l\'agent est en situation critique.')">70 %</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q8',false,'80% est en dessous du standard minimum exigé dans le projet ID30.')">80 %</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q8',true,'Correct ! Le score de qualité minimum requis est de 85%. Ce KPI mesure la conformité des appels, le respect du script et la qualité des données collectées.')">85 %</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q8',false,'95% est un objectif d\'excellence, pas le minimum requis.')">95 %</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q8"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q9">
+          <div class="quiz-q-num">Question 09 / 10</div>
+          <div class="quiz-q-text">En Back Office, quel statut Connectel attribuer à un dossier dont la photo d'identité est floue et illisible ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q9',false,'Un dossier avec photo illisible ne peut pas être validé — la valider serait une erreur.')">Validé — avec une remarque dans le champ commentaire</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q9',false,'Archiver définitivement un dossier incomplet est trop radical — il faut d\'abord demander une correction.')">Archivé — le dossier ne peut pas être traité</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q9',true,'Correct ! Le statut « Incomplet / À corriger » est attribué avec une note précisant le problème. Le dossier est renvoyé au terrain pour correction.')">Incomplet / À corriger — avec note explicative précisant la pièce concernée</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q9',false,'En suspens est un statut d\'attente passive — pour un problème identifié, il faut utiliser « Incomplet / À corriger ».')">En suspens — en attendant que le problème se résolve</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q9"></div>
+        </div>
+
+        <div class="quiz-question-block" id="eval-bocc-q10">
+          <div class="quiz-q-num">Question 10 / 10</div>
+          <div class="quiz-q-text">Quel est le rôle principal de l'outil <strong>Connectel</strong> dans le projet ID30 ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q10',false,'Connectel n\'est pas un outil de messagerie interne.')">Gérer les communications internes entre les agents</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q10',false,'Le traitement des paiements Orange Money n\'est pas le rôle de Connectel.')">Traiter les paiements et transactions Orange Money</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q10',true,'Correct ! Connectel est le CRM utilisé pour les appels sortants, la gestion des dossiers d\'enrôlement, le suivi des statuts et le reporting des performances.')">Gérer les dossiers d'enrôlement, les appels sortants et le suivi des statuts (CRM)</div>
+            <div class="quiz-option" onclick="answerEvalBoCC(this,'q10',false,'Connectel n\'est pas un outil RH — il est dédié à la gestion de la relation client et des dossiers du projet.')">Gérer les plannings et congés des agents</div>
+          </div>
+          <div class="quiz-feedback" id="fb-eval-bocc-q10"></div>
+        </div>
+
+        <div style="background:#F9E8EC;border-radius:10px;padding:14px 18px;margin-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div>
+            <span style="font-size:13px;color:#555">Score QCM en temps réel : </span>
+            <strong style="font-size:18px;color:#8D0C23" id="eval-bocc-qcm-score">0 / 10</strong>
+          </div>
+          <button onclick="showModuleTab('eval-bocc','ouvertes')" style="background:#8D0C23;color:white;border:none;padding:10px 20px;border-radius:8px;font-family:'Sora',sans-serif;font-weight:700;cursor:pointer">
+            Continuer → Questions Ouvertes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ QUESTIONS OUVERTES ═══ -->
+    <div class="tab-section" id="tab-eval-bocc-ouvertes" style="display:none">
+      <div class="card" style="border-top:4px solid #584B26">
+        <div class="card-title">✏️ Partie 2 — Questions Ouvertes <span style="float:right;font-size:12px;background:#F3EDD8;color:#584B26;padding:3px 10px;border-radius:20px;font-weight:700">9 pts · 3 pts / question</span></div>
+        <div class="info-card" style="border-left:4px solid #CF9E41;background:#FAF3E0;margin-bottom:20px">
+          <p style="margin:0;font-size:13px;color:#374151">Rédigez vos réponses dans les zones de texte. Les <strong>réponses modèles</strong> seront visibles après soumission dans l'onglet Résultats.</p>
+        </div>
+
+        <div style="margin-bottom:28px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#584B26;margin-bottom:8px">Question 01 / 03 — 3 points</div>
+          <div style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:12px;line-height:1.55">Décrivez les <strong>3 niveaux du processus de validation Connectel</strong>. Pour chaque niveau, précisez le rôle de l'acteur concerné et les actions attendues.</div>
+          <textarea id="oq-bocc-1" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px 14px;font-family:'Sora',sans-serif;font-size:13.5px;resize:vertical;min-height:90px;line-height:1.6" placeholder="Structurez votre réponse en 3 paragraphes, un par niveau..."></textarea>
+          <div id="ma-oq-bocc-1" style="display:none;background:#F3EDD8;border-left:4px solid #584B26;border-radius:0 10px 10px 10px;padding:14px 16px;margin-top:8px;font-size:13px;color:#2d3748;line-height:1.65">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#584B26;margin-bottom:8px">RÉPONSE MODÈLE</div>
+            <p><strong>Niveau 1 — Collecte terrain (Call Center / Agent terrain) :</strong> L'agent entre en contact avec l'entrepreneur (appel ou visite). Il présente le programme ID30, collecte les données d'identité (nom, prénom, photo, CNI, téléphone), obtient le consentement et crée le dossier dans Connectel.</p>
+            <p style="margin-top:8px"><strong>Niveau 2 — Vérification administrative (Back Office) :</strong> L'agent BO contrôle la complétude (tous documents présents), la lisibilité (photos nettes, documents valides), la cohérence des données et la conformité KYC. Il attribue le statut : Validé, Incomplet ou Rejeté.</p>
+            <p style="margin-top:8px"><strong>Niveau 3 — Validation finale (Superviseur) :</strong> Le superviseur effectue un contrôle par échantillonnage. Il valide définitivement les dossiers conformes, les transmet à Orange Money pour activation, gère les litiges et prend les décisions sur les cas complexes.</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:28px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#584B26;margin-bottom:8px">Question 02 / 03 — 3 points</div>
+          <div style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:12px;line-height:1.55">Un entrepreneur vous dit : <em>« Je ne comprends pas pourquoi vous avez mes coordonnées, c'est de l'espionnage ! »</em>. Rédigez votre script de réponse complet.</div>
+          <textarea id="oq-bocc-2" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px 14px;font-family:'Sora',sans-serif;font-size:13.5px;resize:vertical;min-height:100px;line-height:1.6" placeholder="Rédigez votre script comme si vous étiez l'agent en ligne..."></textarea>
+          <div id="ma-oq-bocc-2" style="display:none;background:#F3EDD8;border-left:4px solid #584B26;border-radius:0 10px 10px 10px;padding:14px 16px;margin-top:8px;font-size:13px;color:#2d3748;line-height:1.65">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#584B26;margin-bottom:8px">RÉPONSE MODÈLE</div>
+            <p><strong>Empathie :</strong> « Je comprends tout à fait votre inquiétude, M./Mme [Nom], et je vous remercie de me le signaler. »</p>
+            <p style="margin-top:6px"><strong>Explication :</strong> « Vos coordonnées nous ont été transmises dans le cadre du Programme ID30, une initiative officielle du Ministère du Commerce et de l'Industrie, en partenariat avec Orange Money. »</p>
+            <p style="margin-top:6px"><strong>Réassurance :</strong> « Vos données sont strictement confidentielles, sécurisées et utilisées uniquement dans ce cadre. »</p>
+            <p style="margin-top:6px"><strong>Reprise ou respect du refus :</strong> Si intéressé : « Puis-je vous expliquer comment ce programme peut vous aider ? ». Si refus : « Je comprends. Je note vos préférences. Bonne continuation. » → Statut « Refus / Méfiance » dans Connectel.</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#584B26;margin-bottom:8px">Question 03 / 03 — 3 points</div>
+          <div style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:12px;line-height:1.55">Quelles sont les <strong>5 règles d'or</strong> d'un agent Back Office pour garantir la qualité de traitement des dossiers ? Expliquez brièvement chacune.</div>
+          <textarea id="oq-bocc-3" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:12px 14px;font-family:'Sora',sans-serif;font-size:13.5px;resize:vertical;min-height:100px;line-height:1.6" placeholder="Listez et expliquez les 5 règles d'or..."></textarea>
+          <div id="ma-oq-bocc-3" style="display:none;background:#F3EDD8;border-left:4px solid #584B26;border-radius:0 10px 10px 10px;padding:14px 16px;margin-top:8px;font-size:13px;color:#2d3748;line-height:1.65">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#584B26;margin-bottom:8px">RÉPONSE MODÈLE</div>
+            <p><strong>Règle 1 — Vérifier avant de valider :</strong> Ne jamais valider un dossier sans contrôler l'intégralité des pièces. Un dossier validé à tort crée des erreurs en cascade.</p>
+            <p style="margin-top:6px"><strong>Règle 2 — Tout noter dans Connectel :</strong> Chaque action (statut, commentaire, demande de correction) doit être tracée dans l'outil pour assurer la traçabilité.</p>
+            <p style="margin-top:6px"><strong>Règle 3 — Respecter les délais :</strong> Un dossier reçu doit être traité dans les 24h ouvrables. Les dossiers en attente doivent être relancés selon la procédure.</p>
+            <p style="margin-top:6px"><strong>Règle 4 — Communiquer clairement les corrections :</strong> Toute demande de correction doit être précise (quelle pièce, quel problème, délai attendu).</p>
+            <p style="margin-top:6px"><strong>Règle 5 — Escalader les cas complexes :</strong> En cas de doute, escalader immédiatement au superviseur sans tenter de décider seul. Mieux vaut un délai qu'une erreur.</p>
+          </div>
+        </div>
+
+        <div style="text-align:right;margin-top:8px">
+          <button onclick="showModuleTab('eval-bocc','cas')" style="background:#584B26;color:white;border:none;padding:10px 20px;border-radius:8px;font-family:'Sora',sans-serif;font-weight:700;cursor:pointer">
+            Continuer → Cas Pratiques
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CAS PRATIQUES ═══ -->
+    <div class="tab-section" id="tab-eval-bocc-cas" style="display:none">
+      <div class="card" style="border-top:4px solid #1a2332;margin-bottom:20px">
+        <div class="card-title">📂 Cas Pratique 01 — Call Center <span style="float:right;font-size:12px;background:#ECEFF1;color:#455A64;padding:3px 10px;border-radius:20px;font-weight:700">5 pts</span></div>
+        <div style="background:#1a2332;border-radius:10px;padding:18px 22px;margin-bottom:16px;position:relative">
+          <div style="position:absolute;top:-10px;left:16px;background:#CF9E41;color:white;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em">📋 SCÉNARIO</div>
+          <p style="color:#e2e8f0;font-size:13.5px;line-height:1.7">Vous êtes agent Call Center. Vous appelez <strong>Mme Ahou Kouamé</strong>. Elle décroche et dit avec une voix irritée :</p>
+          <p style="margin-top:10px;font-style:italic;color:#F6E05E;font-size:13.5px">« Encore vous ! C'est la troisième fois cette semaine ! J'ai déjà dit non à vos collègues ! Je vais porter plainte ! »</p>
+          <div style="background:rgba(255,255,255,0.07);border-radius:8px;padding:10px 14px;margin-top:12px">
+            <div style="font-size:10px;font-weight:700;color:#DDB55A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Contexte Connectel</div>
+            <p style="color:#CBD5E0;font-size:12.5px">• 2 appels précédents : « Sans réponse » et « Intéressée, à rappeler »</p>
+            <p style="color:#CBD5E0;font-size:12.5px;margin-top:4px">• Aucune note de refus précédent — Statut actuel : « À contacter »</p>
+          </div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">1/3 — Quelle est la source du problème ? (1 pt)</div>
+          <textarea id="cp1-bocc-1" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:70px" placeholder="Analysez la situation..."></textarea>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">2/3 — Rédigez ce que vous dites à Mme Kouamé (2 pts)</div>
+          <textarea id="cp1-bocc-2" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:80px" placeholder="Rédigez votre script de gestion de l'appel..."></textarea>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">3/3 — Actions post-appel dans Connectel (2 pts)</div>
+          <textarea id="cp1-bocc-3" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:70px" placeholder="Statut attribué + notes + actions suivantes..."></textarea>
+        </div>
+        <div id="ma-cp1-bocc" style="display:none;background:#1a2332;border-radius:10px;padding:16px 18px;font-size:13px;color:#e2e8f0;line-height:1.65">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#DDB55A;margin-bottom:10px">CORRECTION MODÈLE — 5 points</div>
+          <p><strong style="color:#DDB55A">Analyse (1 pt) :</strong> Erreur de qualification par le collègue — le 2e appel noté « Intéressée, à rappeler » est faux (elle avait déjà refusé). Source : mauvaise saisie du statut qui génère un 3e appel non souhaité.</p>
+          <p style="margin-top:8px"><strong style="color:#DDB55A">Script (2 pts) :</strong> « Mme Kouamé, je vous présente toutes mes excuses pour ce dérangement répété. Il y a eu une erreur dans notre système de suivi. Je note immédiatement votre refus définitif et m'assure que vous ne serez plus contactée. Encore désolé. Bonne journée. » — Ton calme, bref, sans se défausser sur le collègue.</p>
+          <p style="margin-top:8px"><strong style="color:#DDB55A">Actions Connectel (2 pts) :</strong> (1) Statut → « Refus définitif — Ne pas rappeler » ; (2) Note : « Cliente très mécontente — 3 appels en une semaine, qualification précédente incorrecte. Bloquer tout rappel. » ; (3) Signaler au superviseur l'erreur du collègue pour sensibilisation qualité.</p>
+        </div>
+      </div>
+
+      <div class="card" style="border-top:4px solid #1a2332">
+        <div class="card-title">📂 Cas Pratique 02 — Back Office <span style="float:right;font-size:12px;background:#ECEFF1;color:#455A64;padding:3px 10px;border-radius:20px;font-weight:700">6 pts</span></div>
+        <div style="background:#1a2332;border-radius:10px;padding:18px 22px;margin-bottom:16px;position:relative">
+          <div style="position:absolute;top:-10px;left:16px;background:#CF9E41;color:white;font-size:10px;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em">📋 SCÉNARIO</div>
+          <p style="color:#e2e8f0;font-size:13.5px;line-height:1.7">Vous êtes agent Back Office. Vous recevez le dossier de <strong>M. Konan Yves</strong>, entrepreneur à Bouaké. Résultat de votre contrôle :</p>
+          <div style="background:rgba(255,255,255,0.07);border-radius:8px;padding:12px 14px;margin-top:12px">
+            <div style="font-size:10px;font-weight:700;color:#DDB55A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Éléments du dossier</div>
+            <p style="color:#68D391;font-size:12.5px">✓ Nom / Prénom — Lisible et cohérent</p>
+            <p style="color:#FC8181;font-size:12.5px;margin-top:3px">✗ Photo de profil — Floue, visage non identifiable</p>
+            <p style="color:#FC8181;font-size:12.5px;margin-top:3px">✗ Numéro de téléphone — Format incorrect (07 58 41 3X)</p>
+            <p style="color:#68D391;font-size:12.5px;margin-top:3px">✓ CNI recto — Lisible, valide jusqu'au 2027</p>
+            <p style="color:#F6E05E;font-size:12.5px;margin-top:3px">⚠ CNI verso — Absent du dossier</p>
+            <p style="color:#F6E05E;font-size:12.5px;margin-top:3px">⚠ Coordonnées GPS — Non renseignées</p>
+          </div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">1/4 — Diagnostic : classez les problèmes (bloquant / à corriger / mineur) (2 pts)</div>
+          <textarea id="cp2-bocc-1" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:80px" placeholder="Listez et classez chaque anomalie..."></textarea>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">2/4 — Quel statut dans Connectel ? Pourquoi ? (1 pt)</div>
+          <textarea id="cp2-bocc-2" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:60px" placeholder="Statut attribué et justification..."></textarea>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">3/4 — Rédigez le message de retour au terrain (2 pts)</div>
+          <textarea id="cp2-bocc-3" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:90px" placeholder="Message précis avec les corrections demandées..."></textarea>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:12px;font-weight:700;color:#8D0C23;margin-bottom:6px">4/4 — Délai attendu et que faire sans retour ? (1 pt)</div>
+          <textarea id="cp2-bocc-4" style="width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:13px;resize:vertical;min-height:60px" placeholder="Délai + procédure de suivi..."></textarea>
+        </div>
+        <div id="ma-cp2-bocc" style="display:none;background:#1a2332;border-radius:10px;padding:16px 18px;font-size:13px;color:#e2e8f0;line-height:1.65">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#DDB55A;margin-bottom:10px">CORRECTION MODÈLE — 6 points</div>
+          <p><strong style="color:#DDB55A">Diagnostic (2 pts) :</strong><br>Bloquants : Photo floue (KYC impossible) + Numéro de téléphone illisible (compte OM impossible). À corriger obligatoirement : CNI verso absent. Mineur : GPS non renseigné.</p>
+          <p style="margin-top:8px"><strong style="color:#DDB55A">Statut (1 pt) :</strong> « Incomplet — À corriger » (pas Rejeté — les données de base sont correctes et le dossier peut être complété).</p>
+          <p style="margin-top:8px"><strong style="color:#DDB55A">Message terrain (2 pts) :</strong> « Bonjour, le dossier de M. Konan Yves (Bouaké) présente 3 corrections : (1) Photo floue — refaire une photo nette, fond neutre ; (2) Numéro de téléphone illisible — confirmer le numéro complet (10 chiffres) ; (3) CNI verso absent — photographier le verso. Merci de corriger dans les 48h. Réf : [ID Connectel]. »</p>
+          <p style="margin-top:8px"><strong style="color:#DDB55A">Délai &amp; suivi (1 pt) :</strong> 48h ouvrables. Si pas de retour : relance message + appel. Si pas de retour à 72h : escalade superviseur. Le dossier reste en statut « Incomplet ».</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin:24px 0">
+        <button onclick="submitEvalBoCC()" id="btn-submit-eval-bocc" style="background:linear-gradient(135deg,#1B6B3A,#2E7D32);color:white;border:none;padding:16px 40px;border-radius:12px;font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(27,107,58,0.35)">
+          ✅ Soumettre l'évaluation &amp; voir les résultats
+        </button>
+        <p style="font-size:12px;color:#888;margin-top:8px">La soumission est définitive — les réponses modèles s'afficheront dans tous les onglets.</p>
+      </div>
+    </div>
+
+    <!-- ═══ RÉSULTATS ═══ -->
+    <div class="tab-section" id="tab-eval-bocc-resultats" style="display:none">
+      <div id="eval-bocc-results-pending" style="text-align:center;padding:60px 20px">
+        <div style="font-size:3rem;margin-bottom:16px">📊</div>
+        <h3 style="color:#8D0C23;margin-bottom:10px">Résultats non disponibles</h3>
+        <p style="color:#666;font-size:14px">Soumettez l'évaluation pour voir vos résultats et les réponses modèles.</p>
+        <button onclick="showModuleTab('eval-bocc','intro')" style="margin-top:16px;background:#8D0C23;color:white;border:none;padding:10px 24px;border-radius:8px;font-family:'Sora',sans-serif;font-weight:700;cursor:pointer">← Aller à l'introduction</button>
+      </div>
+      <div id="eval-bocc-results-content" style="display:none">
+        <!-- Rempli dynamiquement par submitEvalBoCC() -->
+      </div>
+    </div>
+
+    </div><!-- fin module-content-scroll -->
+  </div><!-- fin module-page -->
+  </div><!-- fin overlay-content -->
+</div><!-- fin overlay-eval-bocc -->
+
 <!-- ══ MODAL IDENTIFICATION CANDIDAT (obligatoire) ══ -->
 <div id="modal-candidat" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;justify-content:center;align-items:center">
   <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:440px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Sora,sans-serif">
@@ -10420,6 +10825,130 @@ function showModuleTab(moduleId, tabName) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModule();
 });
+
+// ══════════════════════════════════════════════
+// ÉVALUATION BACK OFFICE & CALL CENTER
+// ══════════════════════════════════════════════
+
+var _evalBoCCTimer = null;
+var _evalBoCCSecondsLeft = 0;
+var _evalBoCCSubmitted = false;
+
+var scoresEvalBoCC = { q1:null,q2:null,q3:null,q4:null,q5:null,q6:null,q7:null,q8:null,q9:null,q10:null };
+
+function demarrerEvalBoCC() {
+  if (_evalBoCCTimer) return; // déjà démarré
+  _evalBoCCSecondsLeft = 40 * 60;
+  _evalBoCCTimer = setInterval(function() {
+    _evalBoCCSecondsLeft--;
+    if (_evalBoCCSecondsLeft <= 0) {
+      clearInterval(_evalBoCCTimer);
+      _evalBoCCTimer = null;
+      if (!_evalBoCCSubmitted) submitEvalBoCC();
+      return;
+    }
+    var m = Math.floor(_evalBoCCSecondsLeft / 60);
+    var s = _evalBoCCSecondsLeft % 60;
+    var display = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    var el = document.getElementById('eval-timer-display');
+    if (el) {
+      el.textContent = display;
+      el.style.background = _evalBoCCSecondsLeft <= 300 ? 'rgba(220,38,38,0.4)' : _evalBoCCSecondsLeft <= 600 ? 'rgba(245,158,11,0.4)' : 'rgba(255,255,255,0.15)';
+    }
+  }, 1000);
+  showModuleTab('eval-bocc', 'qcm');
+}
+
+function answerEvalBoCC(el, qid, correct, feedback) {
+  if (_evalBoCCSubmitted) return;
+  var block = document.getElementById('eval-bocc-' + qid);
+  if (!block || block.querySelector('.correct') || block.querySelector('.incorrect')) return;
+  block.querySelectorAll('.quiz-option').forEach(function(o) { o.classList.add('disabled'); });
+  el.classList.add(correct ? 'correct' : 'incorrect');
+  var fb = document.getElementById('fb-eval-bocc-' + qid);
+  if (fb) { fb.textContent = (correct ? '✅ ' : '❌ ') + feedback; fb.className = 'quiz-feedback show ' + (correct ? 'fb-correct' : 'fb-incorrect'); }
+  scoresEvalBoCC[qid] = correct;
+  var total = Object.values(scoresEvalBoCC).filter(function(v){return v===true;}).length;
+  var sc = document.getElementById('eval-bocc-qcm-score');
+  if (sc) sc.textContent = total + ' / 10';
+}
+
+function submitEvalBoCC() {
+  if (_evalBoCCSubmitted) return;
+  _evalBoCCSubmitted = true;
+  if (_evalBoCCTimer) { clearInterval(_evalBoCCTimer); _evalBoCCTimer = null; }
+
+  // Verrouiller QCM restants
+  var overlay = document.getElementById('overlay-eval-bocc');
+  if (overlay) overlay.querySelectorAll('.quiz-option:not(.correct):not(.incorrect)').forEach(function(o){ o.classList.add('disabled'); });
+
+  // Verrouiller textareas
+  ['oq-bocc-1','oq-bocc-2','oq-bocc-3','cp1-bocc-1','cp1-bocc-2','cp1-bocc-3','cp2-bocc-1','cp2-bocc-2','cp2-bocc-3','cp2-bocc-4'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) { el.disabled = true; el.style.background = '#f8fafc'; }
+  });
+
+  // Afficher les réponses modèles
+  ['ma-oq-bocc-1','ma-oq-bocc-2','ma-oq-bocc-3','ma-cp1-bocc','ma-cp2-bocc'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.style.display = 'block';
+  });
+
+  // Désactiver le bouton
+  var btn = document.getElementById('btn-submit-eval-bocc');
+  if (btn) { btn.disabled = true; btn.style.opacity = '.5'; btn.textContent = '✅ Évaluation soumise'; }
+
+  // Calculer le score QCM
+  var qcmCorrect = Object.values(scoresEvalBoCC).filter(function(v){return v===true;}).length;
+  var pct = Math.round(qcmCorrect / 10 * 100);
+
+  // Niveau selon score QCM
+  var niveau, couleur, msg;
+  if (qcmCorrect >= 9)      { niveau = 'Excellent'; couleur = '#1B6B3A'; msg = 'Félicitations ! Excellente maîtrise des procédures. Consultez chaque onglet pour réviser vos réponses ouvertes avec les corrections modèles.'; }
+  else if (qcmCorrect >= 7) { niveau = 'Satisfaisant'; couleur = '#584B26'; msg = 'Bon niveau sur les QCM. Quelques points à consolider. Consultez les onglets « Questions Ouvertes » et « Cas Pratiques » pour les corrections modèles.'; }
+  else if (qcmCorrect >= 5) { niveau = 'À améliorer'; couleur = '#CF9E41'; msg = 'Des lacunes détectées sur les fondamentaux. Relisez les corrections ci-dessous et reprenez les modules de formation concernés.'; }
+  else                       { niveau = 'Insuffisant'; couleur = '#8D0C23'; msg = 'Score QCM insuffisant. Une révision approfondie des modules Back Office et Call Center est nécessaire. Planifiez une session de rattrapage avec votre superviseur.'; }
+
+  // Construire le contenu résultats
+  var html = '<div class="module-hero"><div class="module-hero-icon">📊</div><h1>Résultats de l\'évaluation</h1></div>'
+    + '<div class="card" style="text-align:center;border-top:5px solid '+couleur+'">'
+    + '<div style="width:120px;height:120px;border-radius:50%;border:6px solid '+couleur+';background:'+couleur+'22;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 18px">'
+    + '<div style="font-size:2.2rem;font-weight:800;color:'+couleur+'">'+qcmCorrect+'</div>'
+    + '<div style="font-size:13px;color:#666">/ 10 QCM</div></div>'
+    + '<div style="font-size:1.3rem;font-weight:800;color:'+couleur+';margin-bottom:6px">'+niveau+' — QCM</div>'
+    + '<div style="font-size:13px;color:#666;margin-bottom:20px">'+pct+'% de réussite sur les QCM · Score parties 2 &amp; 3 : correction formateur requise</div>'
+    + '<div style="background:'+couleur+'18;border-radius:10px;padding:14px 18px;font-size:13.5px;color:'+couleur+';text-align:left;margin-bottom:20px">'+msg+'</div>'
+    + '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">'
+    + '<div style="background:#ECEFF1;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:#8D0C23">'+qcmCorrect+'/10</div><div style="font-size:11px;color:#666;margin-top:3px">QCM</div></div>'
+    + '<div style="background:#ECEFF1;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.1rem;font-weight:800;color:#584B26">À évaluer</div><div style="font-size:11px;color:#666;margin-top:3px">Questions ouvertes /9</div></div>'
+    + '<div style="background:#ECEFF1;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.1rem;font-weight:800;color:#584B26">À évaluer</div><div style="font-size:11px;color:#666;margin-top:3px">Cas pratiques /11</div></div>'
+    + '</div>'
+    + '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'
+    + '<button onclick="showModuleTab(\'eval-bocc\',\'qcm\')" style="background:#8D0C23;color:white;border:none;padding:10px 20px;border-radius:8px;font-family:\'Sora\',sans-serif;font-weight:700;cursor:pointer">📋 Revoir QCM</button>'
+    + '<button onclick="showModuleTab(\'eval-bocc\',\'ouvertes\')" style="background:#584B26;color:white;border:none;padding:10px 20px;border-radius:8px;font-family:\'Sora\',sans-serif;font-weight:700;cursor:pointer">✏️ Revoir Ouvertes</button>'
+    + '<button onclick="showModuleTab(\'eval-bocc\',\'cas\')" style="background:#1a2332;color:white;border:none;padding:10px 20px;border-radius:8px;font-family:\'Sora\',sans-serif;font-weight:700;cursor:pointer">📂 Revoir Cas</button>'
+    + '<button onclick="window.print()" style="background:#455A64;color:white;border:none;padding:10px 20px;border-radius:8px;font-family:\'Sora\',sans-serif;font-weight:700;cursor:pointer">🖨️ Imprimer</button>'
+    + '</div></div>'
+    + '<div class="card"><div class="card-title">📈 Grille de notation globale</div>'
+    + '<table class="styled-table"><thead><tr><th>Score total /30</th><th>Niveau</th><th>Statut</th></tr></thead><tbody>'
+    + '<tr><td>27 – 30</td><td>Excellent</td><td style="color:#1B6B3A;font-weight:700">✅ Certifié</td></tr>'
+    + '<tr><td>21 – 26</td><td>Satisfaisant</td><td style="color:#584B26;font-weight:700">⚡ Validé</td></tr>'
+    + '<tr><td>15 – 20</td><td>À améliorer</td><td style="color:#CF9E41;font-weight:700">📚 À revoir</td></tr>'
+    + '<tr><td>&lt; 15</td><td>Insuffisant</td><td style="color:#8D0C23;font-weight:700">❌ Formation requise</td></tr>'
+    + '</tbody></table></div>';
+
+  var pending = document.getElementById('eval-bocc-results-pending');
+  var content = document.getElementById('eval-bocc-results-content');
+  if (pending) pending.style.display = 'none';
+  if (content) { content.innerHTML = html; content.style.display = 'block'; }
+
+  // Aller à l'onglet résultats
+  showModuleTab('eval-bocc', 'resultats');
+
+  // Mettre à jour le timer display
+  var timerEl = document.getElementById('eval-timer-display');
+  if (timerEl) { timerEl.textContent = 'Terminé'; timerEl.style.background = 'rgba(27,107,58,0.4)'; }
+}
 
 // ── Fonctions Quiz ──────────────────────────────────────
 
