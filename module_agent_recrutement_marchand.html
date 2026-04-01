@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Terrain — Recrutement Marchand OM Business — Formation MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<style>
+:root {
+  --blue:#8D0C23; --blue-light:#B5112C; --blue-pale:#F9E8EC;
+  --orange:#CF9E41; --orange-light:#DDB55A; --orange-pale:#FAF3E0;
+  --teal:#584B26; --teal-pale:#F3EDD8;
+  --red:#6A091A; --red-pale:#F2D6DC;
+  --grey:#455A64; --grey-light:#ECEFF1;
+  --om-brand:#FF6600; --om-pale:#FFF3E0;
+  --green:#1B6E38; --green-pale:#E8F5E9;
+  --bg:#FCFBF8; --sidebar-w:270px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; display:flex; flex-direction:column; min-height:100vh; }
+.topbar { background:linear-gradient(135deg,var(--blue),#5A0815); color:white; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; box-shadow:0 3px 16px rgba(141,12,35,.35); }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.back-btn { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:white; padding:7px 14px; border-radius:8px; font-size:.82rem; font-weight:600; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,.22); }
+.module-title-top { font-size:1rem; font-weight:700; }
+.module-subtitle-top { font-size:.75rem; color:rgba(255,255,255,.65); }
+.topbar-badge { background:var(--orange); color:var(--teal); padding:5px 12px; border-radius:20px; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+.layout { display:flex; flex:1; }
+.sidebar { width:var(--sidebar-w); background:white; border-right:1px solid #e8ddd0; padding:24px 0; position:sticky; top:51px; height:calc(100vh - 51px); overflow-y:auto; flex-shrink:0; }
+.sidebar-section { padding:0 18px; margin-bottom:8px; }
+.sidebar-section-title { font-size:.65rem; text-transform:uppercase; letter-spacing:.14em; color:var(--grey); font-weight:700; margin-bottom:8px; padding:0 6px; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:10px; cursor:pointer; font-size:.83rem; font-weight:500; color:var(--grey); transition:all .2s; margin-bottom:2px; border:none; background:none; width:100%; text-align:left; font-family:'Sora',sans-serif; }
+.nav-item:hover { background:var(--blue-pale); color:var(--blue); }
+.nav-item.active { background:var(--blue-pale); color:var(--blue); font-weight:700; }
+.nav-divider { height:1px; background:var(--grey-light); margin:12px 18px; }
+.progress-block { padding:14px 18px; }
+.progress-label { font-size:.72rem; color:var(--grey); margin-bottom:6px; display:flex; justify-content:space-between; }
+.progress-bar { height:6px; background:var(--grey-light); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--orange)); border-radius:3px; transition:width .5s ease; }
+.main-content { flex:1; padding:36px 40px; max-width:900px; }
+.page { display:none; }
+.page.active { display:block; }
+
+/* HERO */
+.module-hero { background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:20px; padding:36px; margin-bottom:32px; border:1px solid rgba(207,158,65,.2); }
+.module-hero-icon { font-size:3rem; margin-bottom:12px; }
+.module-hero h1 { font-size:1.85rem; font-weight:800; color:var(--blue); margin-bottom:8px; line-height:1.2; }
+.module-hero-meta { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+.meta-chip { font-size:.78rem; padding:5px 12px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+.chip-red { background:var(--blue-pale); color:var(--blue); }
+.chip-gold { background:var(--orange-pale); color:var(--teal); }
+.chip-grey { background:var(--grey-light); color:var(--grey); }
+.chip-om { background:var(--om-pale); color:var(--om-brand); }
+.chip-green { background:var(--green-pale); color:var(--green); }
+.objectives-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+.obj-item { display:flex; align-items:flex-start; gap:8px; font-size:.84rem; color:var(--grey); line-height:1.4; }
+.obj-bullet { color:var(--orange); font-size:1.1rem; flex-shrink:0; }
+
+/* SECTIONS */
+.section-heading { display:flex; align-items:center; gap:14px; margin-bottom:22px; margin-top:36px; }
+.section-heading:first-child { margin-top:0; }
+.section-num { background:var(--blue); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.section-heading h2 { font-size:1.25rem; font-weight:700; color:var(--blue); }
+
+/* CARDS */
+.info-card { background:white; border-radius:14px; padding:22px 24px; margin-bottom:16px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.info-card h3 { font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:10px; }
+.info-card p { font-size:.88rem; color:var(--grey); line-height:1.7; }
+
+/* ALERTS */
+.alert { border-radius:12px; padding:16px 20px; margin:14px 0; display:flex; gap:12px; font-size:.86rem; line-height:1.6; }
+.alert-icon { font-size:1.2rem; flex-shrink:0; }
+.alert-text { color:var(--grey); }
+.alert-text strong { color:#2C3E50; }
+.alert-info { background:var(--teal-pale); border-left:4px solid var(--teal); }
+.alert-warn { background:var(--orange-pale); border-left:4px solid var(--orange); }
+.alert-danger { background:var(--red-pale); border-left:4px solid var(--red); }
+.alert-success { background:var(--green-pale); border-left:4px solid var(--green); }
+.alert-om { background:var(--om-pale); border-left:4px solid var(--om-brand); }
+
+/* LISTS */
+.styled-list { list-style:none; padding:0; margin:12px 0; }
+.styled-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 0; font-size:.87rem; color:var(--grey); line-height:1.5; border-bottom:1px solid var(--grey-light); }
+.styled-list li:last-child { border-bottom:none; }
+.styled-list li::before { content:'▸'; color:var(--orange); font-size:.9rem; flex-shrink:0; margin-top:1px; }
+.steps-list { list-style:none; padding:0; }
+.steps-list li { display:flex; gap:16px; padding:14px 0; border-bottom:1px solid #f0e8e0; align-items:flex-start; }
+.steps-list li:last-child { border-bottom:none; }
+.step-badge { width:34px; height:34px; background:var(--blue); color:white; border-radius:50%; font-size:.8rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'JetBrains Mono',monospace; }
+.step-content h4 { font-size:.9rem; font-weight:700; color:#2C3E50; margin-bottom:4px; }
+.step-content p { font-size:.82rem; color:var(--grey); line-height:1.55; }
+.step-badge.green { background:var(--green); }
+.step-badge.orange { background:var(--om-brand); }
+
+/* TABLE */
+.styled-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.06); margin:16px 0 24px; font-size:.84rem; }
+.styled-table th { background:var(--blue); color:white; padding:12px 16px; text-align:left; font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+.styled-table td { padding:11px 16px; border-bottom:1px solid #f0e8e0; color:var(--grey); line-height:1.5; vertical-align:top; }
+.styled-table tr:nth-child(even) td { background:var(--bg); }
+.styled-table tr:last-child td { border-bottom:none; }
+.td-badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:.72rem; font-weight:700; font-family:'JetBrains Mono',monospace; }
+.td-essentiel { background:#F3E5F5; color:#7B1FA2; }
+.td-classique { background:#E3F2FD; color:#1565C0; }
+.td-premium { background:#E8F5E9; color:#2E7D32; }
+.td-ok { background:var(--green-pale); color:var(--green); }
+.td-warn { background:var(--orange-pale); color:var(--teal); }
+
+/* PROFILS CIBLES */
+.profils-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:16px 0 24px; }
+.profil-card { border-radius:16px; padding:20px; border:2px solid; }
+.profil-essentiel { background:#F3E5F5; border-color:#7B1FA2; }
+.profil-classique { background:#E3F2FD; border-color:#1565C0; }
+.profil-premium { background:#E8F5E9; border-color:#2E7D32; }
+.profil-badge { font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; padding:4px 10px; border-radius:20px; display:inline-block; margin-bottom:10px; }
+.profil-essentiel .profil-badge { background:#7B1FA2; color:white; }
+.profil-classique .profil-badge { background:#1565C0; color:white; }
+.profil-premium .profil-badge { background:#2E7D32; color:white; }
+.profil-card h4 { font-size:.95rem; font-weight:700; color:#2C3E50; margin-bottom:6px; }
+.profil-card .profil-cible { font-size:.78rem; color:var(--grey); font-style:italic; margin-bottom:10px; line-height:1.4; }
+.profil-card .profil-ca { font-family:'JetBrains Mono',monospace; font-size:.78rem; font-weight:700; margin-bottom:10px; padding:4px 8px; border-radius:6px; display:inline-block; }
+.profil-essentiel .profil-ca { background:rgba(123,31,162,.12); color:#7B1FA2; }
+.profil-classique .profil-ca { background:rgba(21,101,192,.12); color:#1565C0; }
+.profil-premium .profil-ca { background:rgba(46,125,50,.12); color:#2E7D32; }
+.profil-card ul { list-style:none; font-size:.78rem; color:var(--grey); }
+.profil-card ul li { padding:3px 0; display:flex; gap:8px; align-items:flex-start; line-height:1.4; }
+.profil-card ul li::before { content:'•'; font-size:1rem; flex-shrink:0; }
+
+/* PITCH BLOCK */
+.pitch-block { background:linear-gradient(135deg,#1a0a0f,#3a1a22); border-radius:16px; padding:28px; margin:16px 0 24px; color:white; }
+.pitch-block h3 { font-size:1rem; font-weight:700; color:var(--orange); margin-bottom:16px; }
+.pitch-text { font-size:.95rem; line-height:1.8; color:rgba(255,255,255,.9); font-style:italic; border-left:3px solid var(--orange); padding-left:18px; }
+.pitch-note { font-size:.78rem; color:rgba(255,255,255,.55); margin-top:12px; font-family:'JetBrains Mono',monospace; }
+
+/* OBJECTION CARDS */
+.objection-list { display:flex; flex-direction:column; gap:14px; margin:16px 0 24px; }
+.objection-card { background:white; border-radius:14px; border:1px solid #e8ddd0; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+.objection-header { background:var(--red-pale); border-left:4px solid var(--red); padding:14px 18px; display:flex; align-items:flex-start; gap:12px; }
+.objection-icon { font-size:1.2rem; flex-shrink:0; }
+.objection-text { font-size:.9rem; font-weight:700; color:var(--red); line-height:1.4; }
+.objection-body { padding:16px 18px; }
+.objection-reponse-label { font-size:.7rem; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:.1em; font-family:'JetBrains Mono',monospace; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.objection-reponse { font-size:.87rem; color:var(--grey); line-height:1.65; }
+.objection-tip { margin-top:10px; padding:8px 12px; background:var(--orange-pale); border-radius:8px; font-size:.78rem; color:var(--teal); font-style:italic; }
+
+/* ENROLMENT FLOW */
+.enrol-flow { display:flex; align-items:flex-start; gap:0; margin:16px 0 24px; overflow-x:auto; padding-bottom:8px; }
+.enrol-step { flex:1; min-width:120px; }
+.enrol-step-inner { background:white; border:2px solid #e8ddd0; border-radius:12px; padding:14px 12px; text-align:center; margin:0 4px; height:100%; transition:border-color .2s; }
+.enrol-step-inner:hover { border-color:var(--orange); }
+.enrol-step:first-child .enrol-step-inner { margin-left:0; }
+.enrol-step:last-child .enrol-step-inner { margin-right:0; }
+.enrol-step-num { width:30px; height:30px; background:var(--blue); color:white; border-radius:50%; font-size:.78rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-family:'JetBrains Mono',monospace; }
+.enrol-step-title { font-size:.75rem; font-weight:700; color:#2C3E50; margin-bottom:4px; line-height:1.3; }
+.enrol-step-desc { font-size:.68rem; color:var(--grey); line-height:1.4; }
+.enrol-arrow { display:flex; align-items:center; color:var(--orange); font-size:1.2rem; padding-top:22px; flex-shrink:0; }
+
+/* KIT AGENT */
+.kit-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0 24px; }
+.kit-card { background:white; border-radius:12px; padding:16px; border:1px solid #e8ddd0; display:flex; align-items:flex-start; gap:14px; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.kit-icon { font-size:1.6rem; flex-shrink:0; }
+.kit-info h4 { font-size:.87rem; font-weight:700; color:#2C3E50; margin-bottom:4px; }
+.kit-info p { font-size:.78rem; color:var(--grey); line-height:1.45; }
+
+/* KPI ROW */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:16px 0 24px; }
+.kpi-card { background:white; border-radius:12px; padding:16px; border:1px solid #e8ddd0; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.kpi-val { font-family:'JetBrains Mono',monospace; font-size:1.6rem; font-weight:800; color:var(--blue); }
+.kpi-label { font-size:.72rem; color:var(--grey); margin-top:4px; line-height:1.4; }
+.kpi-card.highlight { border-color:var(--orange); background:var(--orange-pale); }
+.kpi-card.highlight .kpi-val { color:var(--teal); }
+
+/* TOURNEE */
+.tournee-cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0 24px; }
+.tournee-card { background:white; border-radius:14px; padding:20px; border:2px solid #e8ddd0; }
+.tournee-card h4 { font-size:.9rem; font-weight:700; color:var(--blue); margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--orange-pale); display:flex; align-items:center; gap:8px; }
+.t-step { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--grey-light); align-items:flex-start; font-size:.82rem; color:var(--grey); line-height:1.4; }
+.t-step:last-child { border-bottom:none; }
+.t-num { width:22px; height:22px; background:var(--orange); color:white; border-radius:50%; font-size:.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'JetBrains Mono',monospace; }
+
+/* REPORTING */
+.report-block { background:white; border-radius:14px; border:1px solid #e8ddd0; overflow:hidden; margin:16px 0 24px; }
+.report-header { background:var(--blue); color:white; padding:14px 20px; }
+.report-header h3 { font-size:.9rem; font-weight:700; }
+.report-header p { font-size:.75rem; color:rgba(255,255,255,.7); margin-top:2px; }
+.report-body { padding:20px; }
+.report-row { display:grid; grid-template-columns:1fr 2fr; gap:12px; padding:10px 0; border-bottom:1px solid var(--grey-light); align-items:center; font-size:.84rem; }
+.report-row:last-child { border-bottom:none; }
+.report-field { font-weight:700; color:var(--blue); font-family:'JetBrains Mono',monospace; font-size:.78rem; }
+.report-desc { color:var(--grey); line-height:1.45; }
+
+/* QUIZ */
+.quiz-container { max-width:720px; }
+.quiz-question-block { background:white; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 14px rgba(0,0,0,.06); border:1px solid #e8ddd0; }
+.quiz-q-num { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--orange); font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+.quiz-q-text { font-size:.95rem; font-weight:600; color:#2C3E50; margin-bottom:18px; line-height:1.5; }
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-option { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; border:2px solid #e8ddd0; cursor:pointer; font-size:.87rem; color:var(--grey); transition:all .2s; background:var(--bg); }
+.quiz-option:hover { border-color:var(--blue); background:var(--blue-pale); color:var(--blue); }
+.quiz-option.correct { border-color:#2E7D32; background:#E8F5E9; color:#2E7D32; font-weight:700; }
+.quiz-option.incorrect { border-color:var(--red); background:var(--red-pale); color:var(--red); }
+.quiz-option.disabled { cursor:default; pointer-events:none; }
+.option-letter { width:28px; height:28px; border-radius:50%; background:white; border:2px solid #ccc; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+.quiz-option.correct .option-letter { background:#2E7D32; border-color:#2E7D32; color:white; }
+.quiz-option.incorrect .option-letter { background:var(--red); border-color:var(--red); color:white; }
+.quiz-feedback { margin-top:12px; padding:10px 14px; border-radius:8px; font-size:.82rem; display:none; }
+.quiz-feedback.show { display:block; }
+.quiz-feedback.fb-correct { background:#E8F5E9; color:#1B5E20; }
+.quiz-feedback.fb-incorrect { background:var(--red-pale); color:var(--red); }
+.quiz-score-bar { background:white; border-radius:16px; padding:24px; text-align:center; border:2px solid var(--orange); margin-bottom:24px; }
+.quiz-score-bar h3 { font-size:1.1rem; color:var(--blue); margin-bottom:8px; }
+.score-display { font-size:2.5rem; font-weight:800; color:var(--blue); }
+.score-display span { font-size:1.2rem; color:var(--grey); font-weight:400; }
+.btn-quiz { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:8px; font-family:'Sora',sans-serif; font-size:.87rem; font-weight:700; cursor:pointer; border:none; background:var(--blue); color:white; margin-top:16px; transition:background .2s; }
+.btn-quiz:hover { background:var(--blue-light); }
+
+/* EXERCISE */
+.exercise-card { background:white; border-radius:16px; padding:28px; margin-bottom:20px; border:1px solid #e8ddd0; box-shadow:0 2px 12px rgba(0,0,0,.05); }
+.exercise-header { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+.exercise-icon { width:48px; height:48px; background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale)); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+.exercise-header h3 { font-size:1.05rem; font-weight:700; color:var(--blue); }
+.exercise-header p { font-size:.78rem; color:var(--grey); margin-top:2px; }
+.exercise-step { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--grey-light); }
+.exercise-step:last-child { border-bottom:none; }
+.ex-num { width:26px; height:26px; background:var(--orange); color:white; border-radius:50%; font-size:.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'JetBrains Mono',monospace; }
+.ex-content { font-size:.85rem; color:var(--grey); line-height:1.55; }
+.ex-content strong { color:#2C3E50; }
+.scenario-block { background:var(--teal-pale); border-radius:10px; padding:14px 16px; margin-bottom:16px; font-size:.85rem; color:var(--teal); line-height:1.6; border-left:4px solid var(--teal); }
+.scenario-block strong { color:#2C3E50; }
+
+/* EXPORT BAR */
+.export-bar {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.btn-export {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px; border-radius:8px; font-size:.78rem; font-weight:700;
+  cursor:pointer; border:none; transition:all .18s; font-family:'Sora',sans-serif;
+  white-space:nowrap;
+}
+.btn-pdf { background:#ef4444; color:white; }
+.btn-pdf:hover { background:#dc2626; transform:translateY(-1px); }
+.btn-word { background:#1d6fb8; color:white; }
+.btn-word:hover { background:#1558a0; transform:translateY(-1px); }
+.btn-ppt { background:#c84c1c; color:white; }
+.btn-ppt:hover { background:#b04317; transform:translateY(-1px); }
+.btn-export:active { transform:translateY(0); }
+.btn-export svg { flex-shrink:0; }
+
+/* PRINT (PDF) */
+@media print {
+  .topbar, .sidebar, .export-bar, .btn-quiz, .nav-buttons { display:none !important; }
+  .layout { display:block !important; }
+  .main-content { padding:0 !important; max-width:100% !important; }
+  .page { display:block !important; page-break-after:avoid; }
+  body { background:white !important; }
+  .module-hero { background:#fff3e8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .info-card, .quiz-question-block, .exercise-card, .objection-card, .report-block { box-shadow:none !important; }
+  .profil-essentiel { background:#F3E5F5 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .profil-classique { background:#E3F2FD !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .profil-premium  { background:#E8F5E9 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .styled-table th { background:#8D0C23 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h2, h3, h4 { page-break-after:avoid; }
+}
+
+/* SLIDE IMAGES */
+.slide-img-wrap { margin:20px 0 28px; }
+.slide-img-wrap img { width:100%; border-radius:12px; border:1px solid #e0d4c8; box-shadow:0 4px 18px rgba(0,0,0,.10); display:block; }
+.slide-img-wrap .slide-caption { font-size:.72rem; color:var(--grey); text-align:center; margin-top:6px; font-style:italic; font-family:'JetBrains Mono',monospace; }
+.slide-img-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0 28px; }
+.slide-img-row .slide-img-wrap { margin:0; }
+@media (max-width:800px) {
+  .sidebar { display:none; }
+  .main-content { padding:20px 16px; }
+  .profils-grid, .kpi-row { grid-template-columns:1fr; }
+  .kit-grid, .tournee-cols { grid-template-columns:1fr; }
+  .objectives-grid { grid-template-columns:1fr; }
+  .enrol-flow { flex-direction:column; gap:10px; }
+  .enrol-arrow { transform:rotate(90deg); margin:0 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Accueil</a>
+    <div>
+      <div class="module-title-top">Recrutement Marchand Via MAFA</div>
+      <div class="module-subtitle-top">Formation Agent Terrain — Orange Money Business</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <div class="export-bar">
+      <button class="btn-export btn-pdf" onclick="exportPDF()" title="Exporter en PDF">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        PDF
+      </button>
+      <button class="btn-export btn-word" onclick="exportWord()" title="Exporter en Word">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Word
+      </button>
+      <button class="btn-export btn-ppt" onclick="exportPPT()" title="Exporter en PowerPoint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        PowerPoint
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="assets/slides/mafa_logo_clean.png" alt="MAFA" style="height:26px;filter:brightness(0) invert(1);opacity:.9;">
+      <div class="topbar-badge">AGENT TERRAIN</div>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Navigation</div>
+      <button class="nav-item active" onclick="showTab('garde',this)"><span>🏠</span> Page de Garde</button>
+      <button class="nav-item" onclick="showTab('cours',this)"><span>📖</span> Cours</button>
+      <button class="nav-item" onclick="showTab('exercices',this)"><span>✏️</span> Exercices Pratiques</button>
+      <button class="nav-item" onclick="showTab('quiz',this)"><span>🎯</span> Quiz de Validation</button>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Sections du cours</div>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s1')"><span>1</span> Mission de l'Agent</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s2')"><span>2</span> Profils marchands</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s3')"><span>3</span> Approche commerciale</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s4')"><span>4</span> Processus d'enrôlement</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s5')"><span>5</span> Gestion des objections</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s6')"><span>6</span> Kit & Reporting</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s7')"><span>7</span> Mise en situation</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s8')"><span>🏆</span> Évaluation & Certif.</button>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Modules liés</div>
+      <a href="module_om_business.html" class="nav-item" style="text-decoration:none;"><span>📱</span> OM Business (produit)</a>
+      <a href="module_agent_superviseur.html" class="nav-item" style="text-decoration:none;"><span>🤝</span> App Agent & Superviseur</a>
+    </div>
+
+    <div class="nav-divider"></div>
+    <div class="progress-block">
+      <div class="progress-label"><span>Progression</span><span id="prog-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- ==================== PAGE DE GARDE ==================== -->
+    <div class="page active" id="page-garde">
+
+      <!-- HERO COVER -->
+      <div style="background:linear-gradient(145deg,#6A091A 0%,#8D0C23 40%,#A01428 70%,#3a1a00 100%);border-radius:20px;overflow:hidden;margin-bottom:28px;position:relative;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;">
+
+        <!-- Cercles décoratifs -->
+        <div style="position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(255,102,0,.12);pointer-events:none;"></div>
+        <div style="position:absolute;top:30px;right:40px;width:160px;height:160px;border-radius:50%;background:rgba(255,102,0,.1);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-40px;left:-40px;width:220px;height:220px;border-radius:50%;background:rgba(207,158,65,.1);pointer-events:none;"></div>
+
+        <!-- Bande latérale or -->
+        <div style="position:absolute;left:0;top:0;width:6px;height:100%;background:linear-gradient(180deg,#CF9E41,#DDB55A,#CF9E41);"></div>
+
+        <!-- Illustration OM Business (SVG) -->
+        <div style="position:absolute;top:24px;right:32px;opacity:.92;">
+          <svg width="180" height="200" viewBox="0 0 180 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Téléphone -->
+            <rect x="50" y="10" width="80" height="140" rx="14" fill="#1a0a0f" stroke="#CF9E41" stroke-width="2"/>
+            <rect x="56" y="22" width="68" height="100" rx="6" fill="#FF6600" opacity=".15"/>
+            <rect x="56" y="22" width="68" height="100" rx="6" fill="none" stroke="#FF6600" stroke-width="1" opacity=".4"/>
+            <!-- Logo OM -->
+            <circle cx="90" cy="72" r="28" fill="#FF6600" opacity=".9"/>
+            <text x="90" y="68" text-anchor="middle" font-family="Arial" font-weight="800" font-size="11" fill="white">ORANGE</text>
+            <text x="90" y="81" text-anchor="middle" font-family="Arial" font-weight="800" font-size="9" fill="white">MONEY</text>
+            <text x="90" y="93" text-anchor="middle" font-family="Arial" font-weight="700" font-size="7.5" fill="#FFE0C0">BUSINESS</text>
+            <!-- Bouton home -->
+            <circle cx="90" cy="138" r="6" fill="#333" stroke="#CF9E41" stroke-width="1"/>
+            <!-- Encoche -->
+            <rect x="76" y="14" width="28" height="4" rx="2" fill="#333"/>
+            <!-- QR Code stylisé -->
+            <rect x="62" y="156" width="56" height="56" rx="8" fill="white" opacity=".95"/>
+            <rect x="66" y="160" width="20" height="20" rx="2" fill="#8D0C23"/>
+            <rect x="70" y="164" width="12" height="12" rx="1" fill="white"/>
+            <rect x="73" y="167" width="6" height="6" fill="#8D0C23"/>
+            <rect x="94" y="160" width="20" height="20" rx="2" fill="#8D0C23"/>
+            <rect x="98" y="164" width="12" height="12" rx="1" fill="white"/>
+            <rect x="101" y="167" width="6" height="6" fill="#8D0C23"/>
+            <rect x="66" y="184" width="20" height="20" rx="2" fill="#8D0C23"/>
+            <rect x="70" y="188" width="12" height="12" rx="1" fill="white"/>
+            <rect x="73" y="191" width="6" height="6" fill="#8D0C23"/>
+            <rect x="94" y="184" width="6" height="6" fill="#8D0C23"/>
+            <rect x="102" y="184" width="6" height="6" fill="#8D0C23"/>
+            <rect x="94" y="192" width="6" height="6" fill="#8D0C23"/>
+            <rect x="102" y="192" width="12" height="12" rx="1" fill="#8D0C23"/>
+            <!-- Étiquette PAYER ICI -->
+            <rect x="46" y="198" width="88" height="20" rx="10" fill="#FF6600"/>
+            <text x="90" y="212" text-anchor="middle" font-family="Arial" font-weight="800" font-size="8.5" fill="white" letter-spacing="1">PAYER ICI</text>
+          </svg>
+        </div>
+
+        <!-- Contenu texte -->
+        <div style="padding:32px 32px 32px 24px;position:relative;z-index:1;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:800;color:#CF9E41;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;">Crystal Solutions · Filiale MAFA Holding</div>
+          <div style="font-size:.85rem;font-weight:600;color:rgba(255,204,136,.8);font-family:'Sora',sans-serif;margin-bottom:6px;letter-spacing:.04em;">PROJET ORANGE MONEY MARCHAND</div>
+          <h1 style="font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;color:white;line-height:1.15;margin-bottom:6px;">Programme de Formation<br><span style="color:#FF9966;">Agents Terrain</span></h1>
+          <div style="font-size:1.05rem;font-weight:600;color:rgba(255,255,255,.75);font-family:'Sora',sans-serif;margin-bottom:18px;">Recrutement Marchand — Orange Money Business</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+            <span style="background:rgba(255,102,0,.25);border:1px solid rgba(255,102,0,.5);color:#FFB880;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;">Formation intensive · 2 jours</span>
+            <span style="background:rgba(207,158,65,.2);border:1px solid rgba(207,158,65,.4);color:#DDB55A;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;">10 chapitres · Évaluation certificative</span>
+            <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;">Crystal Solutions · 2026</span>
+          </div>
+          <button onclick="demarrerFormation()" style="background:#FF6600;color:white;border:none;padding:12px 28px;border-radius:10px;font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;" onmouseover="this.style.background='#e85d00';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#FF6600';this.style.transform='translateY(0)'">
+            Accéder à la formation &nbsp;→
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== CHRONOGRAMME 2 JOURS ===== -->
+      <div style="background:white;border-radius:16px;border:1px solid #e8ddd0;overflow:hidden;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);">
+        <div style="background:linear-gradient(135deg,#8D0C23,#6A091A);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:800;color:rgba(255,204,136,.8);letter-spacing:.14em;text-transform:uppercase;">Programme</div>
+            <div style="font-size:1.05rem;font-weight:700;color:white;margin-top:2px;">Vue d'ensemble — 2 Jours de Formation</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <span style="background:rgba(255,102,0,.3);border:1px solid rgba(255,102,0,.5);color:#FFB880;padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;font-family:'JetBrains Mono',monospace;">10 Chapitres</span>
+            <span style="background:rgba(207,158,65,.25);border:1px solid rgba(207,158,65,.4);color:#DDB55A;padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;font-family:'JetBrains Mono',monospace;">Cas pratiques inclus</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+
+          <!-- JOUR 1 -->
+          <div style="padding:22px 24px;border-right:1px solid #e8ddd0;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:2px solid #FF6600;">
+              <div style="background:#FF6600;color:white;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:800;flex-shrink:0;">J1</div>
+              <div>
+                <div style="font-size:.95rem;font-weight:700;color:#2C3E50;font-family:'Sora',sans-serif;">JOUR 1</div>
+                <div style="font-size:.75rem;color:#FF6600;font-weight:600;">Fondations &amp; Techniques de Vente</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">08h30</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;">Accueil &amp; présentation du programme</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">09h00</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#8D0C23;">1 —</strong> Orange Money CI : offre marchande</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;background:#FFF8F0;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#aaa;white-space:nowrap;padding-top:1px;">10h30</span>
+                <span style="font-size:.78rem;color:#aaa;font-style:italic;">☕ Pause</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">10h45</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#8D0C23;">2 —</strong> Métier d'agent terrain : rôle &amp; attentes</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;background:#FFF8F0;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#aaa;white-space:nowrap;padding-top:1px;">12h30</span>
+                <span style="font-size:.78rem;color:#aaa;font-style:italic;">🍽 Déjeuner</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">13h30</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#8D0C23;">3 —</strong> Techniques de prospection terrain (Méthode PACO)</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">15h00</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#8D0C23;">4 —</strong> Argumentation &amp; gestion des objections (Méthode CRAC)</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">16h30</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#8D0C23;">5 —</strong> Jeux de rôle : simulation terrain (3 scénarios)</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;align-items:flex-start;background:#FFF8F0;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#CF9E41;white-space:nowrap;padding-top:1px;">17h30</span>
+                <span style="font-size:.82rem;color:#455A64;font-style:italic;">Bilan Jour 1 &amp; Questions / Réponses</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- JOUR 2 -->
+          <div style="padding:22px 24px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:2px solid #1B6E38;">
+              <div style="background:#1B6E38;color:white;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:800;flex-shrink:0;">J2</div>
+              <div>
+                <div style="font-size:.95rem;font-weight:700;color:#2C3E50;font-family:'Sora',sans-serif;">JOUR 2</div>
+                <div style="font-size:.75rem;color:#1B6E38;font-weight:600;">Onboarding Marchand &amp; Outils Digitaux</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;background:#F0FFF4;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">08h30</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;">Récap Jour 1 &amp; quiz flash</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">09h00</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#1B6E38;">6 —</strong> Processus d'onboarding marchand (5 étapes clés)</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;background:#FFF8F0;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#aaa;white-space:nowrap;padding-top:1px;">10h30</span>
+                <span style="font-size:.78rem;color:#aaa;font-style:italic;">☕ Pause</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">10h45</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#1B6E38;">7 —</strong> Documentation &amp; conformité KYC</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;background:#FFF8F0;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#aaa;white-space:nowrap;padding-top:1px;">12h30</span>
+                <span style="font-size:.78rem;color:#aaa;font-style:italic;">🍽 Déjeuner</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">13h30</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#1B6E38;">8 —</strong> Outils digitaux : application agent &amp; reporting</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">15h00</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#1B6E38;">9 —</strong> Gestion du portefeuille marchand</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid #f0e8e0;align-items:flex-start;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">16h30</span>
+                <span style="font-size:.82rem;color:#455A64;line-height:1.4;"><strong style="color:#1B6E38;">10 —</strong> Mise en situation complète (cas terrain Cocody-Riviera)</span>
+              </div>
+              <div style="display:flex;gap:12px;padding:9px 0;align-items:flex-start;background:#F0FFF4;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:#1B6E38;white-space:nowrap;padding-top:1px;">17h30</span>
+                <span style="font-size:.82rem;color:#455A64;font-style:italic;">🏆 Évaluation finale &amp; remise d'attestation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== OBJECTIFS PEDAGOGIQUES ===== -->
+      <div style="background:white;border-radius:16px;border:1px solid #e8ddd0;overflow:hidden;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);">
+        <div style="background:linear-gradient(135deg,#1565C0,#0D47A1);padding:18px 24px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:800;color:rgba(144,202,249,.8);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;">Formation · 5 compétences</div>
+          <div style="font-size:1.05rem;font-weight:700;color:white;">Objectifs Pédagogiques</div>
+        </div>
+        <div style="padding:22px 24px;">
+          <p style="font-size:.87rem;color:#455A64;margin-bottom:18px;line-height:1.6;">À l'issue de la formation, <strong>chaque agent sera capable de :</strong></p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 16px;background:#F8F9FF;border-radius:10px;border:1px solid #E3F2FD;">
+              <div style="background:#1565C0;color:white;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:800;flex-shrink:0;">01</div>
+              <div><strong style="font-size:.88rem;color:#2C3E50;">Maîtriser l'offre</strong> <span style="font-size:.85rem;color:#455A64;">— Connaître dans le détail l'offre OM Business et ses 3 profils (Essentiel, Classique, Premium)</span></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 16px;background:#FFF8F0;border-radius:10px;border:1px solid #FFE0C0;">
+              <div style="background:#FF6600;color:white;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:800;flex-shrink:0;">02</div>
+              <div><strong style="font-size:.88rem;color:#2C3E50;">Prospecter efficacement</strong> <span style="font-size:.85rem;color:#455A64;">— Identifier, approcher et convaincre de nouveaux marchands via la méthode PACO</span></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 16px;background:#F0FFF4;border-radius:10px;border:1px solid #C8E6C9;">
+              <div style="background:#1B6E38;color:white;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:800;flex-shrink:0;">03</div>
+              <div><strong style="font-size:.88rem;color:#2C3E50;">Onboarder un marchand</strong> <span style="font-size:.85rem;color:#455A64;">— Conduire l'inscription de A à Z : collecte KYC, activation compte, premier test de transaction</span></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 16px;background:#F9E8EC;border-radius:10px;border:1px solid #F5C6D0;">
+              <div style="background:#8D0C23;color:white;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:800;flex-shrink:0;">04</div>
+              <div><strong style="font-size:.88rem;color:#2C3E50;">Utiliser les outils</strong> <span style="font-size:.85rem;color:#455A64;">— Naviguer dans l'application agent, saisir les visites, remonter les incidents et suivre son portefeuille</span></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:12px 16px;background:#FAF3E0;border-radius:10px;border:1px solid #F0E0B0;">
+              <div style="background:#CF9E41;color:white;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:800;flex-shrink:0;">05</div>
+              <div><strong style="font-size:.88rem;color:#2C3E50;">Rendre compte</strong> <span style="font-size:.85rem;color:#455A64;">— Produire un rapport de visite clair et respecter les procédures de remontée vers le superviseur</span></div>
+            </div>
+          </div>
+          <div style="margin-top:20px;text-align:center;">
+            <button onclick="demarrerFormation()" style="background:linear-gradient(135deg,#8D0C23,#6A091A);color:white;border:none;padding:13px 32px;border-radius:10px;font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(141,12,35,.3);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(141,12,35,.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(141,12,35,.3)'">
+              Commencer la Formation →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== PRESENTATION CRYSTAL SOLUTIONS / MAFA ===== -->
+      <div style="background:white;border-radius:16px;border:1px solid #e8ddd0;overflow:hidden;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.05);">
+        <div style="background:linear-gradient(135deg,#584B26,#3a3018);padding:18px 24px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:800;color:rgba(207,158,65,.8);letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;">Qui sommes-nous ?</div>
+          <div style="font-size:1.05rem;font-weight:700;color:white;">Crystal Solutions — Filiale de MAFA Holding</div>
+        </div>
+        <div style="padding:24px;">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;">
+            <div>
+              <p style="font-size:.9rem;color:#455A64;line-height:1.8;margin-bottom:16px;">Dans le cadre de son expansion commerciale, <strong style="color:#2C3E50;">Orange Côte d'Ivoire</strong> a mandaté <strong style="color:#8D0C23;">Crystal Solutions</strong> — filiale de MAFA Holding spécialisée en marketing et communication — pour l'accompagner dans son déploiement marchand à travers plusieurs villes du pays.</p>
+              <div style="background:linear-gradient(135deg,#FAF3E0,#F3EDD8);border-left:4px solid #CF9E41;border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:18px;">
+                <div style="font-size:.78rem;font-weight:700;color:#584B26;margin-bottom:6px;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;">💎 Crystal Solutions, filiale de MAFA Holding</div>
+                <p style="font-size:.87rem;color:#584B26;line-height:1.7;margin:0;">aura donc à procéder au recrutement des marchands à travers la solution <strong>Orange Money Business</strong>.</p>
+              </div>
+              <div style="font-size:.82rem;font-weight:700;color:#8D0C23;text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:10px;">Missions principales</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:#F9E8EC;border-radius:8px;border-left:3px solid #8D0C23;">
+                  <span style="font-size:1rem;flex-shrink:0;">🎓</span>
+                  <span style="font-size:.86rem;color:#2C3E50;line-height:1.5;"><strong>Formation et suivi</strong> des agents dédiés à cette mission</span>
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:#FFF3E0;border-radius:8px;border-left:3px solid #FF6600;">
+                  <span style="font-size:1rem;flex-shrink:0;">📍</span>
+                  <span style="font-size:.86rem;color:#2C3E50;line-height:1.5;"><strong>Enrôlement et activation</strong> des marchands Orange Money dans <strong>30 villes de la Côte d'Ivoire</strong></span>
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:#E8F5E9;border-radius:8px;border-left:3px solid #1B6E38;">
+                  <span style="font-size:1rem;flex-shrink:0;">📊</span>
+                  <span style="font-size:.86rem;color:#2C3E50;line-height:1.5;"><strong>Le suivi du taux d'actifs</strong> des marchands onboardés sur le projet</span>
+                </div>
+              </div>
+            </div>
+            <!-- Badge Crystal -->
+            <div style="background:linear-gradient(145deg,#8D0C23,#6A091A);border-radius:14px;padding:22px 18px;text-align:center;min-width:140px;box-shadow:0 4px 18px rgba(141,12,35,.3);">
+              <div style="font-size:2.2rem;margin-bottom:8px;">💎</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:800;color:#CF9E41;letter-spacing:.1em;margin-bottom:4px;">CRYSTAL</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:800;color:#CF9E41;letter-spacing:.1em;margin-bottom:12px;">SOLUTIONS</div>
+              <div style="height:1px;background:rgba(207,158,65,.3);margin-bottom:10px;"></div>
+              <div style="font-size:.72rem;color:rgba(255,255,255,.7);line-height:1.5;">Filiale</div>
+              <div style="font-size:.78rem;font-weight:700;color:white;margin-top:2px;">MAFA Holding</div>
+              <div style="height:1px;background:rgba(207,158,65,.3);margin:10px 0;"></div>
+              <div style="font-size:.7rem;color:rgba(255,204,136,.8);font-family:'JetBrains Mono',monospace;">Côte d'Ivoire</div>
+              <div style="font-size:.7rem;color:rgba(255,204,136,.8);font-family:'JetBrains Mono',monospace;">30 villes · 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div><!-- /page-garde -->
+
+    <!-- ==================== PAGE COURS ==================== -->
+    <div class="page" id="page-cours">
+
+      <!-- HERO -->
+      <div class="module-hero">
+        <div class="module-hero-icon">🎯</div>
+        <h1>Formation Agent Terrain<br>Recrutement Marchand Via MAFA</h1>
+        <div class="module-hero-meta">
+          <span class="meta-chip chip-red">Agents Terrain</span>
+          <span class="meta-chip chip-om">Orange Money Business</span>
+          <span class="meta-chip chip-gold">Exclusif OM Business</span>
+          <span class="meta-chip chip-grey">6 sections · ~2h de formation</span>
+        </div>
+        <div class="alert alert-om" style="margin-top:16px;">
+          <span class="alert-icon">🔒</span>
+          <div class="alert-text">Ce module est <strong>exclusivement réservé aux agents terrain</strong> déployés sur le projet Orange Money Business. Il couvre l'ensemble du processus de recrutement des marchands depuis l'approche jusqu'à l'enrôlement final.</div>
+        </div>
+        <div class="objectives-grid">
+          <div class="obj-item"><span class="obj-bullet">▸</span> Comprendre sa mission et ses objectifs quotidiens</div>
+          <div class="obj-item"><span class="obj-bullet">▸</span> Identifier et qualifier les profils marchands cibles</div>
+          <div class="obj-item"><span class="obj-bullet">▸</span> Maîtriser le pitch et l'approche commerciale terrain</div>
+          <div class="obj-item"><span class="obj-bullet">▸</span> Exécuter un enrôlement marchand de A à Z</div>
+          <div class="obj-item"><span class="obj-bullet">▸</span> Répondre efficacement aux objections courantes</div>
+          <div class="obj-item"><span class="obj-bullet">▸</span> Utiliser les outils et remonter les données au superviseur</div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION 1 : MISSION DE L'AGENT ===== -->
+      <div id="s1" class="section-heading">
+        <div class="section-num">1</div>
+        <h2>Mission de l'Agent Terrain</h2>
+      </div>
+
+      <div class="info-card" style="border-left:4px solid var(--om-brand);background:var(--om-pale);">
+        <h3 style="color:var(--om-brand);">🏢 Crystal Solutions — Votre employeur opérationnel</h3>
+        <p>Crystal Solutions est une <strong>filiale de MAFA Holding</strong> spécialisée en marketing et communication. Elle est mandatée par <strong>Orange Côte d'Ivoire</strong> pour le déploiement d'Orange Money Business sur le terrain.</p>
+        <ul class="styled-list" style="margin-top:10px;">
+          <li>Formation et suivi des agents terrain sur l'ensemble du territoire</li>
+          <li>Enrôlement et activation des marchands dans <strong>30 villes de Côte d'Ivoire</strong></li>
+          <li>Suivi du taux de marchands actifs et remontée des indicateurs à Orange CI</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>📍 Qui est l'Agent Terrain OM Business ?</h3>
+        <p>L'agent terrain est le maillon opérationnel du déploiement Orange Money Business. Il intervient directement sur le terrain pour <strong>prospecter, convaincre et enrôler des marchands</strong> dans le réseau OM Business. Il opère sous la supervision directe d'un Superviseur qui lui-même rend compte au Responsable de Zone (RV).</p>
+        <p style="margin-top:10px;font-size:.85rem;color:var(--grey);">La formation intensive est de <strong>2 jours</strong> (13 modules, cas pratiques, évaluation certificative). Score minimum pour obtenir l'attestation : <strong>≥ 75%</strong>.</p>
+      </div>
+
+      <!-- 5 OBJECTIFS PÉDAGOGIQUES -->
+      <div class="info-card" style="background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale));border:1px solid rgba(207,158,65,.3);">
+        <h3>🎯 5 Objectifs pédagogiques de la formation</h3>
+        <ul class="steps-list" style="margin-top:10px;">
+          <li>
+            <div class="step-badge" style="background:var(--om-brand);">1</div>
+            <div class="step-content"><h4>Maîtriser l'offre OM Business</h4><p>Comprendre les 3 profils, les fonctionnalités clés et les avantages comparatifs.</p></div>
+          </li>
+          <li>
+            <div class="step-badge" style="background:#1565C0;">2</div>
+            <div class="step-content"><h4>Prospecter efficacement</h4><p>Techniques de vente terrain adaptées au marché ivoirien — méthode PACO.</p></div>
+          </li>
+          <li>
+            <div class="step-badge green">3</div>
+            <div class="step-content"><h4>Onboarder un marchand de A à Z</h4><p>Collecte docs KYC, activation du compte, premier test de transaction réel.</p></div>
+          </li>
+          <li>
+            <div class="step-badge" style="background:var(--teal);">4</div>
+            <div class="step-content"><h4>Utiliser les outils numériques</h4><p>Application agent, saisie visites, signalement incidents, tableau de bord.</p></div>
+          </li>
+          <li>
+            <div class="step-badge" style="background:var(--red);">5</div>
+            <div class="step-content"><h4>Rendre compte efficacement</h4><p>Rapport de visite clair, procédures de remontée vers le superviseur.</p></div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 6 MISSIONS FONDAMENTALES -->
+      <div class="info-card">
+        <h3>⚡ 6 Missions fondamentales de l'Agent Terrain</h3>
+        <p style="font-size:.82rem;color:var(--grey);margin-bottom:16px;">Ces 6 missions définissent votre rôle complet sur le terrain. Chacune est évaluée par votre superviseur.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div style="background:var(--blue-pale);border-radius:12px;padding:16px;border-left:4px solid var(--blue);text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🔍</div>
+            <div style="font-weight:800;color:var(--blue);font-size:.9rem;margin-bottom:4px;">PROSPECTER</div>
+            <div style="font-size:.78rem;color:var(--grey);line-height:1.4;">Identifier et visiter les marchands potentiels dans la zone assignée</div>
+          </div>
+          <div style="background:var(--om-pale);border-radius:12px;padding:16px;border-left:4px solid var(--om-brand);text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🎯</div>
+            <div style="font-weight:800;color:var(--om-brand);font-size:.9rem;margin-bottom:4px;">CONVAINCRE</div>
+            <div style="font-size:.78rem;color:var(--grey);line-height:1.4;">Présenter l'offre OM Business et lever les freins à l'adhésion</div>
+          </div>
+          <div style="background:var(--green-pale);border-radius:12px;padding:16px;border-left:4px solid var(--green);text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">✅</div>
+            <div style="font-weight:800;color:var(--green);font-size:.9rem;margin-bottom:4px;">ENRÔLER</div>
+            <div style="font-size:.78rem;color:var(--grey);line-height:1.4;">Accompagner le marchand dans son inscription et son activation</div>
+          </div>
+          <div style="background:#E3F2FD;border-radius:12px;padding:16px;border-left:4px solid #1565C0;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🤝</div>
+            <div style="font-weight:800;color:#1565C0;font-size:.9rem;margin-bottom:4px;">FIDÉLISER</div>
+            <div style="font-size:.78rem;color:var(--grey);line-height:1.4;">Suivre le portefeuille actif, former le marchand à l'utilisation quotidienne</div>
+          </div>
+          <div style="background:var(--teal-pale);border-radius:12px;padding:16px;border-left:4px solid var(--teal);text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">📊</div>
+            <div style="font-weight:800;color:var(--teal);font-size:.9rem;margin-bottom:4px;">REMONTER</div>
+            <div style="font-size:.78rem;color:var(--grey);line-height:1.4;">Reporter les visites, obstacles terrain et besoins via l'appli agent</div>
+          </div>
+          <div style="background:var(--orange-pale);border-radius:12px;padding:16px;border-left:4px solid var(--orange);text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🏆</div>
+            <div style="font-weight:800;color:var(--teal);font-size:.9rem;margin-bottom:4px;">ATTEINDRE</div>
+            <div style="font-size:.78rem;color:var(--grey);line-height:1.4;">Respecter les objectifs mensuels de recrutement (nombre & qualité)</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="alert alert-info">
+        <span class="alert-icon">ℹ️</span>
+        <div class="alert-text"><strong>Chaîne hiérarchique :</strong> Agent Terrain → Superviseur (15–20 agents) → Inspecteur (15 agents, 40 visites/jour) → Responsable de Zone (RV, supervise 4 superviseurs) → Direction MAFA</div>
+      </div>
+
+      <div class="info-card">
+        <h3>📋 Chaîne hiérarchique & responsabilités</h3>
+        <ul class="styled-list">
+          <li>Prospecter une zone géographique définie et identifier les commerces éligibles</li>
+          <li>Présenter Orange Money Business de manière claire et convaincante</li>
+          <li>Collecter les pièces justificatives KYC nécessaires à l'enrôlement</li>
+          <li>Saisir les données marchands dans l'application mobile dédiée (Linkage + QR Code)</li>
+          <li>Accompagner le marchand lors de la première utilisation (prise en main + QR Code)</li>
+          <li>Remonter hebdomadairement ses résultats au Superviseur (chaque vendredi)</li>
+          <li>Signaler les difficultés ou blocages rencontrés en temps réel via l'appli</li>
+        </ul>
+      </div>
+
+      <div class="alert alert-warn">
+        <span class="alert-icon">⚠️</span>
+        <div class="alert-text"><strong>Important :</strong> L'agent ne doit jamais promettre des fonctionnalités ou avantages non confirmés par sa hiérarchie. En cas de doute sur une question du marchand, l'agent escalade vers son Superviseur plutôt que d'improviser une réponse.</div>
+      </div>
+
+
+      <!-- ===== SECTION 2 : PROFILS MARCHANDS ===== -->
+      <div id="s2" class="section-heading">
+        <div class="section-num">2</div>
+        <h2>Connaître les Profils Marchands Cibles</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>🔍 Pourquoi qualifier le profil avant de prospecter ?</h3>
+        <p>OM Business propose trois profils adaptés à la taille du commerce. Connaître le profil du marchand en amont permet à l'agent de <strong>choisir le bon argumentaire</strong>, d'anticiper les objections et de proposer une offre pertinente du premier coup. Un mauvais ciblage = perte de temps et crédibilité dégradée.</p>
+      </div>
+
+      <div class="profils-grid">
+        <div class="profil-card profil-essentiel">
+          <span class="profil-badge">Essentiel</span>
+          <h4>Petit Commerce</h4>
+          <p class="profil-cible">Épicier, vendeur ambulant, artisan, kiosque</p>
+          <span class="profil-ca">CA &lt; 150 000 XOF/an</span>
+          <ul>
+            <li>Besoin : recevoir des paiements clients</li>
+            <li>Sensible au coût → insister sur la gratuité des frais entrants</li>
+            <li>Peu habitué aux apps → rassurer sur la simplicité</li>
+            <li>Décision rapide (propriétaire sur place)</li>
+          </ul>
+        </div>
+        <div class="profil-card profil-classique">
+          <span class="profil-badge">Classique</span>
+          <h4>Commerce Moyen</h4>
+          <p class="profil-cible">Quincaillerie, boutique textile, pharmacie, restaurant</p>
+          <span class="profil-ca">CA 150 000 – 500 000 XOF/an</span>
+          <ul>
+            <li>Besoin : paiements + gestion multi-comptes</li>
+            <li>Sensible à la traçabilité et à l'historique</li>
+            <li>Peut déléguer → présenter la gestion d'équipe</li>
+            <li>Décision possible en 2e visite</li>
+          </ul>
+        </div>
+        <div class="profil-card profil-premium">
+          <span class="profil-badge">Premium</span>
+          <h4>Grande Structure</h4>
+          <p class="profil-cible">Grossiste, supermarché, PME, chaîne de magasins</p>
+          <span class="profil-ca">CA &gt; 500 000 XOF/an</span>
+          <ul>
+            <li>Besoin : solution complète (paie, fournisseurs, multi-sites)</li>
+            <li>Sensible à l'intégration avec la banque existante</li>
+            <li>Décision par le gérant ou DG → prendre RDV</li>
+            <li>Escalader vers Superviseur si nécessaire</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>👁️ Comment identifier le bon profil sur le terrain ?</h3>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Signal visuel / comportemental</th>
+              <th>Profil probable</th>
+              <th>Action recommandée</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Petit étal, stock limité, paiement cash uniquement</td>
+              <td><span class="td-badge td-essentiel">Essentiel</span></td>
+              <td>Approche directe, pitch court (30 sec)</td>
+            </tr>
+            <tr>
+              <td>Boutique avec employés, caisse enregistreuse visible</td>
+              <td><span class="td-badge td-classique">Classique</span></td>
+              <td>Demander à parler au propriétaire, présentation détaillée</td>
+            </tr>
+            <tr>
+              <td>Plusieurs employés, stock important, véhicules de livraison</td>
+              <td><span class="td-badge td-premium">Premium</span></td>
+              <td>Prendre RDV avec le gérant, impliquer le Superviseur</td>
+            </tr>
+            <tr>
+              <td>Utilise déjà Mobile Money basique</td>
+              <td><span class="td-badge td-classique">Classique</span></td>
+              <td>Insister sur la valeur ajoutée vs. MM simple</td>
+            </tr>
+            <tr>
+              <td>Nouvelle boutique ouverte récemment</td>
+              <td><span class="td-badge td-essentiel">Essentiel</span></td>
+              <td>Opportunité forte — besoin de digitalisation urgent</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== SECTION 3 : APPROCHE COMMERCIALE ===== -->
+      <div id="s3" class="section-heading">
+        <div class="section-num">3</div>
+        <h2>L'Approche Commerciale Terrain</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>🗺️ Préparer sa tournée quotidienne</h3>
+        <p>Une journée terrain efficace se prépare la veille. L'agent qui arrive sans plan perd 30 à 40% de son temps en déplacements inutiles. Le Superviseur valide le plan de zone chaque matin avant le départ.</p>
+      </div>
+
+      <div class="tournee-cols">
+        <div class="tournee-card">
+          <h4>🌙 Préparation (veille)</h4>
+          <div class="t-step"><div class="t-num">1</div>Identifier sa zone du lendemain avec le Superviseur</div>
+          <div class="t-step"><div class="t-num">2</div>Repérer les types de commerces présents dans la zone (marchés, axes commerçants)</div>
+          <div class="t-step"><div class="t-num">3</div>Vérifier l'état de charge de son téléphone et des supports marketing</div>
+          <div class="t-step"><div class="t-num">4</div>Réviser les objections les plus fréquentes pour la zone ciblée</div>
+        </div>
+        <div class="tournee-card">
+          <h4>🌅 Exécution (journée)</h4>
+          <div class="t-step"><div class="t-num">1</div>Point de départ à l'heure convenue — check-in via l'app</div>
+          <div class="t-step"><div class="t-num">2</div>Approche des premiers commerces dès 8h (commerçants disponibles le matin)</div>
+          <div class="t-step"><div class="t-num">3</div>Pause déjeuner courte — profiter pour saisir les enrôlements du matin</div>
+          <div class="t-step"><div class="t-num">4</div>Rapport de fin de journée transmis au Superviseur avant 18h</div>
+        </div>
+      </div>
+
+      <!-- MÉTHODE PACO -->
+      <div class="info-card">
+        <h3>🧭 Méthode PACO — 4 étapes pour recruter un marchand</h3>
+        <p style="font-size:.82rem;color:var(--grey);margin-bottom:16px;">La méthode officielle Crystal Solutions pour structurer chaque visite terrain. À suivre dans l'ordre, sans sauter d'étape.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border-radius:14px;overflow:hidden;margin-top:4px;">
+          <!-- P -->
+          <div style="background:#8D0C23;padding:20px 14px;color:white;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;margin-bottom:4px;">P</div>
+            <div style="font-weight:700;font-size:.88rem;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;">PRÉPARER</div>
+            <ul style="list-style:none;font-size:.77rem;line-height:1.6;opacity:.92;">
+              <li>▸ Définir la zone de prospection</li>
+              <li>▸ Identifier les cibles (GPS + terrain)</li>
+              <li>▸ Préparer son kit de démonstration</li>
+            </ul>
+          </div>
+          <!-- A -->
+          <div style="background:#FF6600;padding:20px 14px;color:white;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;margin-bottom:4px;">A</div>
+            <div style="font-weight:700;font-size:.88rem;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;">ABORDER</div>
+            <ul style="list-style:none;font-size:.77rem;line-height:1.6;opacity:.92;">
+              <li>▸ Accroche en &lt; 30 secondes</li>
+              <li>▸ Présentation OM + bénéfice clé</li>
+              <li>▸ Question ouverte pour le dialogue</li>
+            </ul>
+          </div>
+          <!-- C -->
+          <div style="background:#1B6E38;padding:20px 14px;color:white;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;margin-bottom:4px;">C</div>
+            <div style="font-weight:700;font-size:.88rem;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;">CONVAINCRE</div>
+            <ul style="list-style:none;font-size:.77rem;line-height:1.6;opacity:.92;">
+              <li>▸ Argumentaire → revenu additionnel</li>
+              <li>▸ Démonstration live sur le terrain</li>
+              <li>▸ Répondre aux objections (CRAC)</li>
+            </ul>
+          </div>
+          <!-- O -->
+          <div style="background:#1565C0;padding:20px 14px;color:white;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;margin-bottom:4px;">O</div>
+            <div style="font-weight:700;font-size:.88rem;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;">ONBOARDER</div>
+            <ul style="list-style:none;font-size:.77rem;line-height:1.6;opacity:.92;">
+              <li>▸ Collecter les documents sur place</li>
+              <li>▸ Activation du compte marchand</li>
+              <li>▸ Premier test de paiement réel</li>
+            </ul>
+          </div>
+        </div>
+        <div class="alert alert-warn" style="margin-top:14px;margin-bottom:0;">
+          <span class="alert-icon">💡</span>
+          <div class="alert-text"><strong>À retenir :</strong> Ne jamais sauter l'étape C (Convaincre) pour aller directement à O (Onboarder). Un marchand non convaincu = dossier incomplet ou inactif.</div>
+        </div>
+      </div>
+
+      <!-- PITCH -->
+      <div class="pitch-block">
+        <h3>🎙️ Le Pitch de 30 secondes — à mémoriser</h3>
+        <div class="pitch-text">
+          "Bonjour, je m'appelle [Prénom], je suis agent MAFA mandaté par Orange Money. Je viens vous parler d'Orange Money Business — une solution gratuite qui permet à votre commerce de recevoir des paiements par mobile, de gérer votre argent et de payer vos fournisseurs directement depuis votre téléphone. C'est déjà utilisé par des centaines de commerçants dans votre zone. Je peux vous montrer comment ça fonctionne en 5 minutes ?"
+        </div>
+        <div class="pitch-note">⏱️ Objectif : obtenir 5 minutes d'attention. Ne pas tout dire d'un coup. Poser une question pour engager la conversation.</div>
+      </div>
+
+      <div class="info-card">
+        <h3>💡 Arguments clés par profil</h3>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Profil</th>
+              <th>Argument N°1</th>
+              <th>Argument N°2</th>
+              <th>Argument N°3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="td-badge td-essentiel">Essentiel</span></td>
+              <td>Zéro frais pour recevoir de l'argent</td>
+              <td>Ouverture de compte en 10 min</td>
+              <td>Pas besoin d'aller à la banque</td>
+            </tr>
+            <tr>
+              <td><span class="td-badge td-classique">Classique</span></td>
+              <td>Historique de toutes les transactions</td>
+              <td>Paiement fournisseurs inclus</td>
+              <td>Multi-comptes pour séparer les flux</td>
+            </tr>
+            <tr>
+              <td><span class="td-badge td-premium">Premium</span></td>
+              <td>Gestion complète de la paie des employés</td>
+              <td>Rapports et tableau de bord intégrés</td>
+              <td>Intégration possible avec systèmes existants</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== SECTION 4 : PROCESSUS D'ENROLEMENT ===== -->
+      <div id="s4" class="section-heading">
+        <div class="section-num">4</div>
+        <h2>Processus d'Enrôlement Marchand — Étape par Étape</h2>
+      </div>
+
+      <div class="alert alert-success">
+        <span class="alert-icon">✅</span>
+        <div class="alert-text"><strong>Règle d'or :</strong> Un enrôlement ne compte que s'il est <strong>complet et validé</strong> dans le système. Un dossier incomplet n'est pas comptabilisé dans les objectifs quotidiens.</div>
+      </div>
+
+      <!-- 5 ÉTAPES OFFICIELLES MODULE 6 -->
+      <div class="enrol-flow">
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num" style="background:var(--blue);">1</div>
+            <div class="enrol-step-title">QUALIFICATION</div>
+            <div class="enrol-step-desc">Télécharger OM Business / Expliquer les avantages / Obtenir accord verbal</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">›</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num" style="background:var(--om-brand);">2</div>
+            <div class="enrol-step-title">COLLECTE DOCS</div>
+            <div class="enrol-step-desc">CNI/Passeport valide + Photos + Preuve activité commerciale</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">›</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num" style="background:var(--teal);">3</div>
+            <div class="enrol-step-title">SAISIE LINKAGE</div>
+            <div class="enrol-step-desc">Ouvrir l'appli Agent / Renseigner infos / Linker le QR Code Marchand</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">›</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num" style="background:#1565C0;">4</div>
+            <div class="enrol-step-title">VISIBILITÉ</div>
+            <div class="enrol-step-desc">Coller le QR Code + Sticker "PAYER ICI" de manière visible dans la boutique</div>
+          </div>
+        </div>
+        <div class="enrol-arrow">›</div>
+        <div class="enrol-step">
+          <div class="enrol-step-inner">
+            <div class="enrol-step-num" style="background:var(--green);">5</div>
+            <div class="enrol-step-title">FORMATION</div>
+            <div class="enrol-step-desc">Former au QR Code & USSD / Premier test de paiement réel avec le marchand</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DÉTAIL ÉTAPE VISIBILITÉ -->
+      <div class="info-card" style="border-left:4px solid #1565C0;background:#E3F2FD;">
+        <h3 style="color:#1565C0;">📍 Étape 4 — Visibilité : installer le matériel correctement</h3>
+        <p style="font-size:.85rem;color:var(--grey);margin-bottom:10px;">La visibilité du QR Code est un critère de validation de l'enrôlement. Un QR Code mal positionné = marchand non actif.</p>
+        <ul class="styled-list">
+          <li><strong>QR Code marchand</strong> : Coller à hauteur des yeux, face à l'entrée de la boutique, sur une surface plane et sèche (vitrine, comptoir, mur)</li>
+          <li><strong>Sticker "PAYER ICI"</strong> : Positionner juste au-dessus ou à côté du QR Code — signal visuel pour les clients</li>
+          <li><strong>Format recommandé</strong> : A6 pour les petits espaces, A5 pour les boutiques avec vitrine</li>
+          <li><strong>Photo de confirmation</strong> : Prendre une photo du QR Code installé dans l'application pour valider l'étape</li>
+        </ul>
+      </div>
+
+      <!-- KYC COMPLET MODULE 7 -->
+      <div class="info-card">
+        <h3>🔐 Conformité KYC — Documents obligatoires</h3>
+        <p style="font-size:.82rem;color:var(--grey);margin-bottom:14px;">Ces 5 documents sont requis pour tout enrôlement. Un dossier KYC incomplet ne peut pas être validé dans le système.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--green-pale);border-radius:10px;border-left:3px solid var(--green);">
+            <span style="font-size:1.2rem;flex-shrink:0;">🪪</span>
+            <div><strong style="color:var(--green);font-size:.87rem;">Pièce d'identité nationale</strong><br><span style="font-size:.8rem;color:var(--grey);">CNI, passeport ou titre de séjour valide (non expiré depuis plus de 6 mois)</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--green-pale);border-radius:10px;border-left:3px solid var(--green);">
+            <span style="font-size:1.2rem;flex-shrink:0;">📸</span>
+            <div><strong style="color:var(--green);font-size:.87rem;">Photo portrait récente</strong><br><span style="font-size:.8rem;color:var(--grey);">Prise via l'appli agent directement sur le terrain (pas depuis un document scanné)</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--green-pale);border-radius:10px;border-left:3px solid var(--green);">
+            <span style="font-size:1.2rem;flex-shrink:0;">📱</span>
+            <div><strong style="color:var(--green);font-size:.87rem;">Numéro de téléphone Orange actif</strong><br><span style="font-size:.8rem;color:var(--grey);">Actif depuis plus de 3 mois et appartenant au marchand (pas à un tiers)</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--green-pale);border-radius:10px;border-left:3px solid var(--green);">
+            <span style="font-size:1.2rem;flex-shrink:0;">📄</span>
+            <div><strong style="color:var(--green);font-size:.87rem;">Preuve d'activité commerciale</strong><br><span style="font-size:.8rem;color:var(--grey);">Licence commerciale, patente ou déclaration sur l'honneur (selon profil)</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;background:var(--green-pale);border-radius:10px;border-left:3px solid var(--green);">
+            <span style="font-size:1.2rem;flex-shrink:0;">📍</span>
+            <div><strong style="color:var(--green);font-size:.87rem;">Localisation GPS de la boutique</strong><br><span style="font-size:.8rem;color:var(--grey);">Auto-capturée par l'appli depuis l'intérieur du commerce (ne pas relever depuis la rue)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger">
+        <span class="alert-icon">🚫</span>
+        <div class="alert-text">
+          <strong>5 erreurs KYC à ne jamais commettre :</strong>
+          <ul style="margin-top:8px;padding-left:4px;list-style:none;">
+            <li style="margin-bottom:4px;">▸ <strong>Photo floue</strong> ou prise depuis un document scanné (dossier rejeté automatiquement)</li>
+            <li style="margin-bottom:4px;">▸ <strong>CNI expirée depuis plus de 6 mois</strong> (non acceptée, même si le marchand insiste)</li>
+            <li style="margin-bottom:4px;">▸ <strong>Numéro de téléphone appartenant à un tiers</strong> (mari, enfant, employé — non autorisé)</li>
+            <li style="margin-bottom:4px;">▸ <strong>Localisation GPS inexacte</strong> (relevée depuis la rue ou depuis l'application inactive)</li>
+            <li style="margin-bottom:4px;">▸ <strong>Dossier soumis sans consentement verbal explicite</strong> du marchand (exclusion immédiate)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ===== SECTION 5 : GESTION DES OBJECTIONS ===== -->
+      <div id="s5" class="section-heading">
+        <div class="section-num">5</div>
+        <h2>Gestion des Objections</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>🧠 Principe fondamental</h3>
+        <p>Une objection n'est pas un refus — c'est une <strong>demande d'information ou de réassurance</strong>. L'agent doit écouter l'objection sans l'interrompre, la reformuler pour montrer qu'il a compris, puis répondre avec calme et précision. Éviter d'argumenter de manière défensive.</p>
+      </div>
+
+      <!-- MÉTHODE CRAC -->
+      <div class="info-card" style="border:2px solid var(--blue);">
+        <h3>🔄 Méthode CRAC — La méthode officielle de gestion des objections</h3>
+        <p style="font-size:.82rem;color:var(--grey);margin-bottom:16px;">Appliquez systématiquement ces 4 étapes à chaque objection rencontrée sur le terrain.</p>
+        <div style="display:flex;gap:0;border-radius:12px;overflow:hidden;">
+          <div style="flex:1;background:var(--blue);padding:16px 12px;color:white;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:800;color:var(--orange);">C</div>
+            <div style="font-weight:700;font-size:.82rem;margin:4px 0 8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:6px;">CREUSER</div>
+            <div style="font-size:.74rem;line-height:1.5;opacity:.9;">Laisser le marchand exprimer son objection en entier sans l'interrompre</div>
+          </div>
+          <div style="width:2px;background:rgba(255,255,255,.3);"></div>
+          <div style="flex:1;background:var(--om-brand);padding:16px 12px;color:white;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:800;">R</div>
+            <div style="font-weight:700;font-size:.82rem;margin:4px 0 8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:6px;">REFORMULER</div>
+            <div style="font-size:.74rem;line-height:1.5;opacity:.9;">Reformuler l'objection pour montrer que vous avez bien compris</div>
+          </div>
+          <div style="width:2px;background:rgba(255,255,255,.3);"></div>
+          <div style="flex:1;background:var(--green);padding:16px 12px;color:white;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:800;">A</div>
+            <div style="font-weight:700;font-size:.82rem;margin:4px 0 8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:6px;">ARGUMENTER</div>
+            <div style="font-size:.74rem;line-height:1.5;opacity:.9;">Répondre avec un bénéfice concret et mesurable, pas une promesse vague</div>
+          </div>
+          <div style="width:2px;background:rgba(255,255,255,.3);"></div>
+          <div style="flex:1;background:#1565C0;padding:16px 12px;color:white;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:800;">C</div>
+            <div style="font-weight:700;font-size:.82rem;margin:4px 0 8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:6px;">CONCLURE</div>
+            <div style="font-size:.74rem;line-height:1.5;opacity:.9;">Proposer une action immédiate pour avancer (inscription, démo, RDV)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="objection-list">
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">🙅</div>
+            <div class="objection-text">"Je n'ai pas le temps, je suis occupé."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label">✅ Réponse recommandée</div>
+            <div class="objection-reponse">
+              "Je comprends parfaitement, votre commerce passe en priorité. Je n'ai besoin que de 5 minutes — pas plus. Si vous voulez, je repasse en fin de journée quand vous êtes moins chargé ? Je peux aussi vous laisser ce flyer pour que vous en preniez connaissance à votre rythme."
+            </div>
+            <div class="objection-tip">💡 Astuce : Proposer deux options concrètes (maintenant ou plus tard). Ne jamais repartir sans un engagement de revoir le marchand.</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">💸</div>
+            <div class="objection-text">"Ça coûte combien ? Je ne peux pas me permettre des frais supplémentaires."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label">✅ Réponse recommandée</div>
+            <div class="objection-reponse">
+              "C'est une excellente question. L'ouverture de compte est totalement gratuite. Et recevoir de l'argent de vos clients ne vous coûte rien — c'est l'acheteur qui paie s'il y a des frais. Vous ne sortez pas un centime de votre poche pour encaisser. Ce que vous gagnez, c'est du temps et de la sécurité."
+            </div>
+            <div class="objection-tip">💡 Astuce : Toujours reformuler en termes de gain plutôt que de coût zéro. "Vous gagnez" est plus percutant que "c'est gratuit".</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">📱</div>
+            <div class="objection-text">"J'ai déjà Mobile Money, ça me suffit."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label">✅ Réponse recommandée</div>
+            <div class="objection-reponse">
+              "Mobile Money classique c'est pour les particuliers — c'est très bien pour envoyer de l'argent à la famille. OM Business, c'est conçu spécialement pour les commerçants comme vous : vous avez un compte séparé pour votre commerce, vous pouvez voir toutes vos transactions, payer vos fournisseurs et même gérer votre personnel. Ce n'est pas la même chose."
+            </div>
+            <div class="objection-tip">💡 Astuce : Ne dénigrez pas le service MM classique. Montrez la complémentarité et la valeur ajoutée spécifiquement pour un commerçant.</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">🏦</div>
+            <div class="objection-text">"Je préfère ma banque, je lui fais confiance."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label">✅ Réponse recommandée</div>
+            <div class="objection-reponse">
+              "Vous avez bien raison de faire confiance à votre banque — c'est important. OM Business ne remplace pas votre banque, il la complète. Votre compte bancaire reste intact. Ici, on parle de vous permettre d'encaisser vos clients qui n'ont pas de carte, de payer vos fournisseurs qui n'ont pas de compte bancaire, et de tout faire depuis votre téléphone. C'est une couche supplémentaire, pas un remplacement."
+            </div>
+            <div class="objection-tip">💡 Astuce : Valider la confiance envers la banque avant de positionner OM Business comme complémentaire. Jamais en opposition.</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">😕</div>
+            <div class="objection-text">"Je ne sais pas utiliser ces applications, je ne suis pas à l'aise avec le numérique."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label">✅ Réponse recommandée</div>
+            <div class="objection-reponse">
+              "C'est exactement pourquoi je suis là ! Mon rôle c'est de vous accompagner dans la prise en main, pas seulement de créer le compte et de partir. On va faire ensemble votre première transaction test maintenant, et je vous laisse un numéro d'assistance si jamais vous avez des questions. La plupart des commerçants que j'ai aidés maîtrisaient l'application en moins de 15 minutes."
+            </div>
+            <div class="objection-tip">💡 Astuce : Proposer une démonstration immédiate. Transformer l'objection en opportunité de créer de la confiance par l'action.</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">🔒</div>
+            <div class="objection-text">"Ce n'est pas sécurisé, on peut me voler mon argent."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label">✅ Réponse CRAC recommandée</div>
+            <div class="objection-reponse">
+              <strong>Creuser :</strong> "Je comprends cette préoccupation — c'est légitime de protéger votre argent. Qu'est-ce qui vous inquiète exactement ?"<br><br>
+              <strong>Reformuler :</strong> "Vous voulez être sûr que personne ne peut accéder à votre argent sans votre accord."<br><br>
+              <strong>Argumenter :</strong> "La sécurité est la priorité absolue d'Orange. Votre compte est protégé par un code PIN personnel que vous seul connaissez. Toute transaction vous envoie immédiatement un SMS de confirmation. Et si vous perdez votre téléphone, votre compte reste intact — accessible depuis n'importe quel autre téléphone avec votre code."<br><br>
+              <strong>Conclure :</strong> "On fait un test maintenant pour que vous voyez vous-même que c'est sécurisé ?"
+            </div>
+            <div class="objection-tip">💡 Astuce : Comparer avec les risques du cash (vol physique, pas de traçabilité). Le numérique est souvent plus sûr que le liquide.</div>
+          </div>
+        </div>
+
+        <!-- NOUVELLES OBJECTIONS OFFICIELLES -->
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">😰</div>
+            <div class="objection-text">"C'est compliqué, je n'y comprendrai rien."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label" style="color:#1565C0;">🔄 Méthode CRAC</div>
+            <div class="objection-reponse">
+              <strong>Creuser :</strong> "Qu'est-ce qui vous semble compliqué à première vue ?"<br><br>
+              <strong>Reformuler :</strong> "Vous avez peur de ne pas maîtriser l'outil et de faire des erreurs."<br><br>
+              <strong>Argumenter :</strong> "Je vous forme sur place, ça prend 10 minutes. C'est aussi simple qu'envoyer un SMS. La plupart des commerçants que j'ai formés maîtrisaient le QR Code dès la première démonstration."<br><br>
+              <strong>Conclure :</strong> "On essaie maintenant, et si vous bloquez sur un point, je reste jusqu'à ce que ça soit clair ?"
+            </div>
+            <div class="objection-tip">💡 Inscription en moins de 10 min, je m'occupe de tout — votre seul rôle est de montrer le QR Code à vos clients.</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">👥</div>
+            <div class="objection-text">"Mes clients ne paient pas comme ça."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label" style="color:#1565C0;">🔄 Méthode CRAC</div>
+            <div class="objection-reponse">
+              <strong>Creuser :</strong> "La plupart de vos clients paient uniquement en cash en ce moment ?"<br><br>
+              <strong>Reformuler :</strong> "Vous pensez que vos clients ne sont pas encore habitués au mobile money."<br><br>
+              <strong>Argumenter :</strong> "30% des Ivoiriens préfèrent déjà le mobile money — c'est 1 client sur 3 que vous perdez peut-être parce qu'il n'a pas de cash sur lui. Et vos concurrents dans la rue ? Beaucoup ont déjà le QR Code affiché."<br><br>
+              <strong>Conclure :</strong> "Vous n'avez rien à perdre à l'afficher — si un client l'utilise, vous gagnez. Si non, c'est gratuit d'avoir essayé."
+            </div>
+            <div class="objection-tip">💡 Montrer que la tendance du marché va vers le mobile money et que l'agent a une opportunité de prendre de l'avance.</div>
+          </div>
+        </div>
+
+        <div class="objection-card">
+          <div class="objection-header">
+            <div class="objection-icon">💰</div>
+            <div class="objection-text">"Les frais sont trop élevés pour moi."</div>
+          </div>
+          <div class="objection-body">
+            <div class="objection-reponse-label" style="color:#1565C0;">🔄 Méthode CRAC</div>
+            <div class="objection-reponse">
+              <strong>Creuser :</strong> "Vous avez eu connaissance du barème de frais ? Qu'est-ce qui vous paraît élevé exactement ?"<br><br>
+              <strong>Reformuler :</strong> "Vous voulez vous assurer que les bénéfices dépassent les coûts."<br><br>
+              <strong>Argumenter :</strong> "En réalité, ce sont les <strong>commissions marchands</strong> qui jouent en votre faveur : vous gagnez sur chaque paiement reçu. Ce n'est pas une dépense — c'est un revenu additionnel à chaque transaction de vos clients."<br><br>
+              <strong>Conclure :</strong> "Je vous montre le calcul concret : si vous encaissez 5 000 XOF/jour en mobile money, voilà ce que vous gagnez par mois."
+            </div>
+            <div class="objection-tip">💡 Toujours raisonner en termes de gain marchand, pas de frais. Commissions marchands = revenus supplémentaires sur chaque paiement reçu.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== SECTION 6 : KIT & REPORTING ===== -->
+      <div id="s6" class="section-heading">
+        <div class="section-num">6</div>
+        <h2>Kit Terrain & Reporting Quotidien</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>🎒 Kit de l'Agent Terrain — ce qu'il faut avoir sur soi</h3>
+        <p style="font-size:.82rem;color:var(--grey);margin-top:4px;">Dotation officielle Projet Oxygène + équipements personnels indispensables.</p>
+      </div>
+
+      <div class="kit-grid">
+        <div class="kit-card" style="border:2px solid var(--om-brand);">
+          <div class="kit-icon">👕</div>
+          <div class="kit-info">
+            <h4>Tee-shirt MAFA officiel <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--om-brand);">FOURNI</span></h4>
+            <p>Tenue officielle Projet Oxygène. Obligatoire pendant toute activité terrain. 1 500 exemplaires distribués aux agents terrain.</p>
+          </div>
+        </div>
+        <div class="kit-card" style="border:2px solid var(--om-brand);">
+          <div class="kit-icon">🪪</div>
+          <div class="kit-info">
+            <h4>Badge d'identification officiel <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--om-brand);">FOURNI</span></h4>
+            <p>50 000 badges produits pour les agents. Porte le nom, la photo et le numéro agent. À porter visible en permanence. Sans badge = pas de prospection.</p>
+          </div>
+        </div>
+        <div class="kit-card">
+          <div class="kit-icon">📱</div>
+          <div class="kit-info">
+            <h4>Téléphone Android chargé</h4>
+            <p>Application MAFA installée (Phase 1 : parcours OM Business). Batterie &gt; 80% au départ. Connexion data active.</p>
+          </div>
+        </div>
+        <div class="kit-card">
+          <div class="kit-icon">📲</div>
+          <div class="kit-info">
+            <h4>QR Codes & Stickers <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--om-brand);">FOURNIS</span></h4>
+            <p>QR codes A6 (75 000 ex.) et A5 (25 000 ex.) + stickers A5/A6 (150 000 ex. au total) à apposer chez les marchands enrôlés.</p>
+          </div>
+        </div>
+        <div class="kit-card">
+          <div class="kit-icon">🔋</div>
+          <div class="kit-info">
+            <h4>Batterie externe (power bank)</h4>
+            <p>Indispensable pour les tournées de plus de 6h. Phase 1 = 4–5 saisies/jour, Phase 2 = 8 saisies/jour dans l'application.</p>
+          </div>
+        </div>
+        <div class="kit-card">
+          <div class="kit-icon">📞</div>
+          <div class="kit-info">
+            <h4>Numéro du Superviseur</h4>
+            <p>Enregistré en favoris. À contacter en cas de blocage, de question du marchand sans réponse, ou d'incident sur le terrain.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- APPLICATION AGENT — 5 FONCTIONNALITÉS MODULE 8 -->
+      <div class="info-card">
+        <h3>📱 Application Agent Orange Money — 5 Fonctionnalités clés</h3>
+        <ul class="steps-list" style="margin-top:10px;">
+          <li>
+            <div class="step-badge" style="background:var(--blue);">1</div>
+            <div class="step-content">
+              <h4>Tableau de bord</h4>
+              <p>Vue synthétique : objectif mensuel, marchands actifs, transactions du jour. Accessible dès l'ouverture de l'application.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-badge" style="background:var(--om-brand);">2</div>
+            <div class="step-content">
+              <h4>Inscription marchand</h4>
+              <p>Formulaire guidé, capture photo et GPS intégrée, soumission instantanée du dossier KYC au système.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-badge green">3</div>
+            <div class="step-content">
+              <h4>Suivi portefeuille</h4>
+              <p>Liste des marchands assignés avec statut en temps réel : actif / inactif / en attente de validation.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-badge" style="background:var(--teal);">4</div>
+            <div class="step-content">
+              <h4>Rapport de visite</h4>
+              <p>Saisie post-visite : compte-rendu, barrières identifiées, prochaine action planifiée. À renseigner immédiatement après chaque visite.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-badge" style="background:#1565C0;">5</div>
+            <div class="step-content">
+              <h4>Notifications</h4>
+              <p>Alertes de validation dossier, relances marchands inactifs, messages superviseur. À consulter minimum 2× par jour.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+
+      <!-- GESTION DE PORTEFEUILLE MODULE 9 -->
+      <div class="section-heading" style="margin-top:24px;">
+        <div class="section-num" style="background:var(--green);">📂</div>
+        <h2>Gestion de Portefeuille Marchand</h2>
+      </div>
+      <p style="font-size:.85rem;color:var(--grey);margin-bottom:14px;">Une fois les marchands enrôlés, votre mission ne s'arrête pas. Vous gérez un portefeuille classifié en 4 catégories — chacune avec une fréquence et une action spécifique.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+        <!-- ACTIFS -->
+        <div style="background:var(--green-pale);border-radius:14px;padding:18px;border:2px solid var(--green);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span style="font-size:1.3rem;">✅</span>
+            <div>
+              <div style="font-weight:800;color:var(--green);font-size:.88rem;">ACTIFS</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--grey);">&gt; 5 transactions/mois</div>
+            </div>
+          </div>
+          <ul style="list-style:none;font-size:.8rem;color:var(--grey);line-height:1.7;">
+            <li>▸ Visite mensuelle de suivi</li>
+            <li>▸ Upsell des services additionnels</li>
+            <li>▸ Demander un témoignage / recommandation</li>
+          </ul>
+        </div>
+        <!-- À DÉVELOPPER -->
+        <div style="background:#E3F2FD;border-radius:14px;padding:18px;border:2px solid #1565C0;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span style="font-size:1.3rem;">📈</span>
+            <div>
+              <div style="font-weight:800;color:#1565C0;font-size:.88rem;">À DÉVELOPPER</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--grey);">1–4 transactions/mois</div>
+            </div>
+          </div>
+          <ul style="list-style:none;font-size:.8rem;color:var(--grey);line-height:1.7;">
+            <li>▸ Visite bi-mensuelle (2×/mois)</li>
+            <li>▸ Formation approfondie sur place</li>
+            <li>▸ Objectif : passer en catégorie Actif</li>
+          </ul>
+        </div>
+        <!-- INACTIFS -->
+        <div style="background:var(--red-pale);border-radius:14px;padding:18px;border:2px solid var(--red);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span style="font-size:1.3rem;">⚠️</span>
+            <div>
+              <div style="font-weight:800;color:var(--red);font-size:.88rem;">INACTIFS</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--grey);">0 transaction depuis &gt; 30j</div>
+            </div>
+          </div>
+          <ul style="list-style:none;font-size:.8rem;color:var(--grey);line-height:1.7;">
+            <li>▸ Visite urgente sous <strong>48h</strong></li>
+            <li>▸ Identifier le frein (technique, usage)</li>
+            <li>▸ Escalader au superviseur si blocage tech</li>
+          </ul>
+        </div>
+        <!-- EN ATTENTE -->
+        <div style="background:#FAFAFA;border-radius:14px;padding:18px;border:2px solid #90A4AE;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span style="font-size:1.3rem;">⏳</span>
+            <div>
+              <div style="font-weight:800;color:#455A64;font-size:.88rem;">EN ATTENTE</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--grey);">Dossier soumis non activé</div>
+            </div>
+          </div>
+          <ul style="list-style:none;font-size:.8rem;color:var(--grey);line-height:1.7;">
+            <li>▸ Relancer la validation dossier</li>
+            <li>▸ Vérifier les documents manquants</li>
+            <li>▸ Suivi quotidien jusqu'à activation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <span class="alert-icon">📈</span>
+        <div class="alert-text"><strong>Suivi de performance :</strong> Le Superviseur consolide les rapports de ses 15–20 agents chaque vendredi et les remonte au Responsable de Zone. Les données alimentent le tableau de bord temps réel accessible à toute la hiérarchie. Un agent qui atteint ses objectifs 5 jours de suite peut prétendre à une prime de performance.</div>
+      </div>
+
+      <!-- ===== MODULE 10 : MISE EN SITUATION COMPLÈTE ===== -->
+      <div id="s7" class="section-heading">
+        <div class="section-num" style="background:#1565C0;">7</div>
+        <h2>Mise en Situation Complète</h2>
+      </div>
+      <div class="slide-img-row">
+        <div class="slide-img-wrap">
+          <img src="assets/slides/orange_doc_p4.png" alt="Parcours Bloc 1 — Recrutement Phase 1 (MAFA / Projet Oxygène)">
+          <div class="slide-caption">Projet Oxygène — Parcours Bloc 1 : Recrutement (Phase 1) — Objectif 4-5 marchands/jour/agent</div>
+        </div>
+        <div class="slide-img-wrap">
+          <img src="assets/slides/orange_doc_p5.png" alt="Parcours Bloc 1 — Animation Phase 1 : Logigramme complet">
+          <div class="slide-caption">Projet Oxygène — Parcours Bloc 1 : Animation (Phase 1) — Logigramme de suivi et activation</div>
+        </div>
+      </div>
+
+      <div class="info-card" style="border:2px solid #1565C0;background:#E3F2FD;">
+        <h3 style="color:#1565C0;">🎬 Simulation complète du cycle marchand : de la prospection à l'activation</h3>
+        <p style="font-size:.87rem;color:var(--grey);line-height:1.7;">Ce module constitue le <strong>cas terrain final du Jour 2</strong>. Il mobilise toutes les compétences acquises lors de la formation : méthode PACO, gestion des objections (CRAC), collecte KYC, saisie dans l'application agent et rédaction du rapport de visite.</p>
+      </div>
+
+      <!-- Contexte du cas -->
+      <div style="background:linear-gradient(135deg,#1565C0,#0D47A1);border-radius:14px;padding:24px;margin:16px 0 20px;color:white;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:800;color:rgba(144,202,249,.9);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Contexte du cas pratique — Jour 2</div>
+        <div style="font-size:.95rem;line-height:1.8;color:rgba(255,255,255,.92);">
+          Vous êtes agent terrain affecté au <strong style="color:#90CAF9;">marché de Cocody-Riviera</strong>. Votre superviseur vous confie une liste de <strong style="color:#90CAF9;">5 marchands à recruter</strong> cette semaine. Vous disposez de <strong style="color:#90CAF9;">2 heures</strong> pour visiter un maximum de cibles et soumettre <strong style="color:#90CAF9;">au moins 2 dossiers complets</strong>.
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;">
+          <span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;">⏱ Durée : 2 heures</span>
+          <span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:white;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;">👥 Groupes de 3 : Agent / Marchand / Observateur</span>
+          <span style="background:rgba(255,204,0,.25);border:1px solid rgba(255,204,0,.4);color:#FFE082;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;">🎯 Objectif : 2 dossiers complets minimum</span>
+        </div>
+      </div>
+
+      <!-- Ce que l'agent doit démontrer -->
+      <div class="info-card">
+        <h3>✅ Ce que l'agent doit démontrer lors de la mise en situation</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#F8F9FF;border-radius:8px;border-left:3px solid #1565C0;">
+            <span style="font-size:1rem;flex-shrink:0;">🎯</span>
+            <div><strong style="font-size:.85rem;color:#1565C0;">Identifier et approcher</strong><br><span style="font-size:.78rem;color:var(--grey);">Choisir les bons marchands dans la liste, prioriser selon le profil</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#FFF8F0;border-radius:8px;border-left:3px solid #FF6600;">
+            <span style="font-size:1rem;flex-shrink:0;">💬</span>
+            <div><strong style="font-size:.85rem;color:#FF6600;">Pitcher et convaincre</strong><br><span style="font-size:.78rem;color:var(--grey);">Appliquer PACO-A et PACO-C, gérer les objections via CRAC</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#F0FFF4;border-radius:8px;border-left:3px solid #1B6E38;">
+            <span style="font-size:1rem;flex-shrink:0;">📋</span>
+            <div><strong style="font-size:.85rem;color:#1B6E38;">Collecter le KYC complet</strong><br><span style="font-size:.78rem;color:var(--grey);">5 documents, photo, GPS — aucune erreur KYC tolérée</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#F9E8EC;border-radius:8px;border-left:3px solid #8D0C23;">
+            <span style="font-size:1rem;flex-shrink:0;">📱</span>
+            <div><strong style="font-size:.85rem;color:#8D0C23;">Saisir dans l'application</strong><br><span style="font-size:.78rem;color:var(--grey);">Linkage QR Code, installation "PAYER ICI", photo de confirmation</span></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#FAF3E0;border-radius:8px;border-left:3px solid #CF9E41;grid-column:span 2;">
+            <span style="font-size:1rem;flex-shrink:0;">📝</span>
+            <div><strong style="font-size:.85rem;color:#584B26;">Rédiger le rapport de visite</strong><br><span style="font-size:.78rem;color:var(--grey);">Compte-rendu structuré : résultat de chaque visite, obstacles rencontrés, prochaine action planifiée pour les marchands non convertis</span></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ===== SECTION EVALUATION & CERTIFICATION ===== -->
+      <div id="s8" class="section-heading">
+        <div class="section-num" style="background:#CF9E41;">🏆</div>
+        <h2>Évaluation Finale & Certification</h2>
+      </div>
+
+      <div class="info-card">
+        <h3>📋 3 Épreuves de certification</h3>
+        <p style="font-size:.85rem;color:var(--grey);margin-bottom:16px;">L'obtention de l'attestation Crystal Solutions / MAFA Holding repose sur trois épreuves complémentaires :</p>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <!-- Épreuve 1 -->
+          <div style="background:white;border-radius:12px;border:1px solid #e8ddd0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+            <div style="background:linear-gradient(135deg,#8D0C23,#6A091A);padding:12px 18px;display:flex;align-items:center;gap:12px;">
+              <div style="background:rgba(255,255,255,.2);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:800;color:white;font-size:.85rem;flex-shrink:0;">01</div>
+              <div>
+                <div style="font-size:.92rem;font-weight:700;color:white;">QCM de Connaissances</div>
+                <div style="font-size:.72rem;color:rgba(255,204,136,.8);">Produits OM Business · KYC · Réglementation</div>
+              </div>
+              <div style="margin-left:auto;text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;color:#FFE082;">20 questions</div>
+                <div style="font-size:.7rem;color:rgba(255,255,255,.6);">⏱ 30 minutes</div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;font-size:.84rem;color:var(--grey);line-height:1.6;">
+              Épreuve écrite portant sur les <strong>fondamentaux OM Business</strong>, les règles de conformité <strong>KYC</strong> et la réglementation Orange CI. Questions à choix multiples, correction automatique.
+            </div>
+          </div>
+
+          <!-- Épreuve 2 -->
+          <div style="background:white;border-radius:12px;border:1px solid #e8ddd0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+            <div style="background:linear-gradient(135deg,#FF6600,#e85d00);padding:12px 18px;display:flex;align-items:center;gap:12px;">
+              <div style="background:rgba(255,255,255,.2);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:800;color:white;font-size:.85rem;flex-shrink:0;">02</div>
+              <div>
+                <div style="font-size:.92rem;font-weight:700;color:white;">Mise en Situation Orale</div>
+                <div style="font-size:.72rem;color:rgba(255,230,200,.85);">Prospection terrain · Gestion des objections</div>
+              </div>
+              <div style="margin-left:auto;text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;color:white;">15 minutes</div>
+                <div style="font-size:.7rem;color:rgba(255,255,255,.6);">Avec évaluateur</div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;font-size:.84rem;color:var(--grey);line-height:1.6;">
+              Simulation en face-à-face avec un évaluateur qui joue le rôle d'un marchand. L'agent doit appliquer la <strong>méthode PACO</strong> complète et gérer au moins <strong>2 objections</strong> via la méthode CRAC.
+            </div>
+          </div>
+
+          <!-- Épreuve 3 -->
+          <div style="background:white;border-radius:12px;border:1px solid #e8ddd0;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04);">
+            <div style="background:linear-gradient(135deg,#1B6E38,#145228);padding:12px 18px;display:flex;align-items:center;gap:12px;">
+              <div style="background:rgba(255,255,255,.2);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:800;color:white;font-size:.85rem;flex-shrink:0;">03</div>
+              <div>
+                <div style="font-size:.92rem;font-weight:700;color:white;">Dossier Pratique</div>
+                <div style="font-size:.72rem;color:rgba(160,230,160,.85);">Onboarding marchand fictif complet</div>
+              </div>
+              <div style="margin-left:auto;text-align:right;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;color:white;">En live</div>
+                <div style="font-size:.7rem;color:rgba(255,255,255,.6);">Via appli agent</div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;font-size:.84rem;color:var(--grey);line-height:1.6;">
+              Soumission d'un dossier d'onboarding <strong>complet</strong> via l'application agent en conditions réelles : collecte KYC, saisie, linkage QR Code, installation "PAYER ICI", photo de confirmation et rapport de visite.
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Message de clôture -->
+      <div style="background:linear-gradient(135deg,#6A091A,#3a1a00);border-radius:16px;padding:28px;text-align:center;margin-bottom:8px;">
+        <div style="font-size:2rem;margin-bottom:10px;">💎</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:800;color:#CF9E41;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;">Crystal Solutions · MAFA Holding</div>
+        <div style="font-size:1.2rem;font-weight:700;color:white;margin-bottom:6px;">Bienvenue dans l'équipe.</div>
+        <div style="font-size:.88rem;color:rgba(255,204,136,.8);line-height:1.7;">Votre rôle est essentiel pour connecter chaque marchand ivoirien à l'économie numérique.</div>
+        <div style="margin-top:16px;font-size:.75rem;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;">MODERNISER L'AFRIQUE · FORMALISER L'AVENIR</div>
+      </div>
+
+    </div><!-- /page-cours -->
+
+    <!-- ==================== PAGE EXERCICES ==================== -->
+    <div class="page" id="page-exercices">
+
+      <div class="module-hero" style="padding:28px;">
+        <div class="module-hero-icon">✏️</div>
+        <h1 style="font-size:1.5rem;">Jeux de Rôle — Exercices Pratiques</h1>
+        <p style="font-size:.88rem;color:var(--grey);margin-top:8px;">3 scénarios officiels (Modules 5 & 10) à jouer en binôme. Score minimum pour valider le Jour 2 : <strong>18/25</strong>. À réaliser avec un évaluateur ou en auto-évaluation.</p>
+      </div>
+
+      <!-- SCÉNARIO A — LE SCEPTIQUE -->
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon" style="background:var(--blue-pale);">🏪</div>
+          <div>
+            <h3>Scénario A — Le Sceptique</h3>
+            <p>Épicier 45 ans, méfiant vis-à-vis de la technologie — Profil Essentiel</p>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <strong>Profil du marchand :</strong> M. Camara, épicier de quartier, 45 ans. Petit commerce bien achalandé, seul derrière le comptoir. Méfiant dès l'entrée de l'agent. Utilise un Nokia basique, n'a jamais entendu parler d'OM Business. Première réaction : <em>"J'ai pas le temps et je ne veux rien acheter."</em><br><br>
+          <strong>Compétences évaluées :</strong> Accroche terrain (méthode PACO-A), gestion de l'objection technologique (méthode CRAC), démonstration live du QR Code.
+        </div>
+
+        <div class="exercise-step">
+          <div class="ex-num">1</div>
+          <div class="ex-content"><strong>PACO — Aborder :</strong> Rédige mot pour mot ton accroche en moins de 30 secondes. Te présenter (nom, MAFA, mission), ne pas parler de vente, poser une question ouverte pour créer le dialogue.</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">2</div>
+          <div class="ex-content"><strong>CRAC — Objection technologie :</strong> M. Camara dit "Je n'y comprends rien, c'est trop compliqué pour moi." Appliquez CRAC : Creusez l'objection → Reformulez → Argumentez (simplicité + formation sur place) → Concluez avec une action immédiate.</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">3</div>
+          <div class="ex-content"><strong>Démonstration live :</strong> M. Camara accepte de voir. Simulez la démonstration du QR Code. Que dites-vous et que faites-vous ? Comment vous assurez-vous qu'il a compris ?</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">4</div>
+          <div class="ex-content"><strong>PACO — Onboarder :</strong> M. Camara dit "D'accord, je veux bien essayer." Listez les 5 étapes du processus d'onboarding officiel que vous enchaînez immédiatement. Que lui dites-vous à chaque étape ?</div>
+        </div>
+      </div>
+
+      <!-- SCÉNARIO B — L'INTÉRESSÉ PRESSÉ -->
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon" style="background:var(--om-pale);">📱</div>
+          <div>
+            <h3>Scénario B — L'Intéressé Pressé</h3>
+            <p>Vendeur de téléphones, client Orange actif, n'a pas le temps — Closing rapide</p>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <strong>Profil du marchand :</strong> M. Koné, vendeur de téléphones et accessoires, 32 ans. Boutique bien située, déjà client Orange, utilise Orange Money personnel. Intéressé mais pressé : <em>"Je n'ai que 5 minutes, j'attends un fournisseur."</em><br><br>
+          <strong>Compétences évaluées :</strong> Closing rapide, prise de RDV ferme, collecte documents partielle (avancement maximum en 5 minutes).
+        </div>
+
+        <div class="exercise-step">
+          <div class="ex-num">1</div>
+          <div class="ex-content"><strong>Closing rapide :</strong> Vous avez 5 minutes. Quelle est votre priorité absolue dans ce temps limité ? Rédigez votre pitch ultra-court (max 60 secondes) adapté à quelqu'un qui connaît déjà Orange Money.</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">2</div>
+          <div class="ex-content"><strong>Collecte partielle :</strong> En 5 minutes, vous ne pouvez pas finaliser l'onboarding. Quels éléments collectez-vous en priorité pour avancer au maximum ? (numéro, accord verbal, document…)</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">3</div>
+          <div class="ex-content"><strong>Prise de RDV ferme :</strong> Proposez un RDV concret pour le lendemain. Comment formulez-vous la proposition pour qu'il ne puisse pas décliner ? Que notez-vous dans votre appli ?</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">4</div>
+          <div class="ex-content"><strong>Rapport de visite :</strong> Renseignez dans l'appli le rapport de cette visite partielle. Quels champs remplissez-vous et quel statut attribuez-vous à M. Koné dans votre portefeuille ?</div>
+        </div>
+      </div>
+
+      <!-- SCÉNARIO C — LE CONCURRENT -->
+      <div class="exercise-card">
+        <div class="exercise-header">
+          <div class="exercise-icon" style="background:var(--green-pale);">🏆</div>
+          <div>
+            <h3>Scénario C — Le Concurrent</h3>
+            <p>Boutique mode déjà inscrite à Wave — Argumentaire différenciant OM vs Wave</p>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <strong>Profil du marchand :</strong> Mme Touré, boutique de prêt-à-porter, 38 ans. Commerce en zone Cocody-Riviera. Déjà inscrite à Wave et satisfaite du service. Elle affiche le QR Code Wave à l'entrée. Réaction : <em>"J'ai déjà Wave, ça me suffit, pourquoi changer ?"</em><br><br>
+          <strong>Compétences évaluées :</strong> Argumentaire différenciant OM Business vs Wave, focus sur les commissions marchands et le réseau Orange, engagement à l'essai sans abandonner Wave.
+        </div>
+
+        <div class="exercise-step">
+          <div class="ex-num">1</div>
+          <div class="ex-content"><strong>Positionnement :</strong> Vous ne dénigrez pas Wave. Comment positionnez-vous OM Business comme complémentaire ? Citez 3 avantages concrets d'OM Business que Wave ne propose pas (réseau, commissions, services…).</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">2</div>
+          <div class="ex-content"><strong>Commissions marchands :</strong> Expliquez à Mme Touré le mécanisme des commissions marchands OM Business en termes simples. Si elle reçoit 50 000 XOF/semaine via mobile money, quel est son gain potentiel ?</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">3</div>
+          <div class="ex-content"><strong>Réseau Orange :</strong> Quel argument lie Orange Money au réseau téléphonique Orange CI ? Pourquoi c'est un avantage face à Wave pour une boutique en zone Cocody-Riviera ?</div>
+        </div>
+        <div class="exercise-step">
+          <div class="ex-num">4</div>
+          <div class="ex-content"><strong>Engagement à l'essai :</strong> Mme Touré hésite encore. Comment proposez-vous un essai sans qu'elle abandonne Wave ? Formulez la proposition finale et obtenez son accord verbal pour commencer le processus KYC.</div>
+        </div>
+      </div>
+
+      <!-- GRILLE D'ÉVALUATION -->
+      <div class="exercise-card" style="border:2px solid var(--blue);background:var(--blue-pale);">
+        <div class="exercise-header">
+          <div class="exercise-icon" style="background:var(--blue);color:white;font-size:1.1rem;">📊</div>
+          <div>
+            <h3 style="color:var(--blue);">Grille d'Évaluation Officielle — Cas Pratique Jour 2 (Cocody-Riviera)</h3>
+            <p style="color:var(--grey);">Score minimum requis : <strong style="color:var(--blue);">18/25</strong> pour valider la certification</p>
+          </div>
+        </div>
+        <table class="styled-table" style="margin-top:10px;">
+          <thead>
+            <tr>
+              <th>Critère évalué</th>
+              <th style="text-align:center;">Points max</th>
+              <th style="text-align:center;">Score seuil</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Accroche & prise de contact</strong> — Présentation, ton, question ouverte (méthode PACO-A)</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--blue);">/5</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--grey);">≥ 3</td>
+            </tr>
+            <tr>
+              <td><strong>Maîtrise de l'argumentaire produit</strong> — Offre OM, bénéfices clés, profil adapté</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--blue);">/5</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--grey);">≥ 3</td>
+            </tr>
+            <tr>
+              <td><strong>Gestion des objections</strong> — Application correcte de la méthode CRAC</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--blue);">/5</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--grey);">≥ 3</td>
+            </tr>
+            <tr>
+              <td><strong>Collecte documents & saisie appli</strong> — KYC complet, 5 étapes PACO-O respectées</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--blue);">/5</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--grey);">≥ 3</td>
+            </tr>
+            <tr>
+              <td><strong>Qualité du rapport de visite</strong> — Compte-rendu, obstacles, prochaine action</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--blue);">/5</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--grey);">≥ 3</td>
+            </tr>
+            <tr style="background:var(--blue);color:white;">
+              <td><strong style="color:white;">TOTAL</strong></td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:800;color:white;font-size:1rem;">/25</td>
+              <td style="text-align:center;font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--orange);">18 minimum</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert alert-success" style="margin-top:14px;margin-bottom:0;">
+          <span class="alert-icon">🎓</span>
+          <div class="alert-text"><strong>Résultats de certification :</strong> ≥75% → Attestation délivrée + intégration immédiate | 60–74% → 1 session de rattrapage sous 1 semaine | &lt;60% → Reprendre le programme complet</div>
+        </div>
+      </div>
+
+    </div><!-- /page-exercices -->
+
+    <!-- ==================== PAGE QUIZ ==================== -->
+    <div class="page" id="page-quiz">
+
+      <div class="module-hero" style="padding:28px;">
+        <div class="module-hero-icon">🎯</div>
+        <h1 style="font-size:1.5rem;">Quiz de Validation</h1>
+        <p style="font-size:.88rem;color:var(--grey);margin-top:8px;">10 questions pour valider ta compréhension du module. Score minimum requis : <strong>7/10</strong> pour valider. Inclut les méthodes PACO et CRAC.</p>
+      </div>
+
+      <div class="quiz-container">
+        <div class="quiz-score-bar">
+          <h3>Votre score</h3>
+          <div class="score-display" id="quiz-score-display">0 <span>/ 10</span></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="quiz-question-block" data-correct="a">
+          <div class="quiz-q-num">Question 01 / 10</div>
+          <div class="quiz-q-text">Dans le cadre du Projet Oxygène Phase 1 (pilote), quel est l'objectif d'enrôlements par agent et par jour ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> 4 à 5 marchands par jour</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> 10 marchands par jour</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> 8 marchands par jour</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> 15 marchands par jour</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! En Phase 1 (pilote), l'objectif est de 4–5 marchands/jour/agent. En Phase 2, il passe à 8/jour.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. En Phase 1, l'objectif est de 4–5 marchands/jour. L'objectif de 8/jour correspond à la Phase 2.</div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-question-block" data-correct="c">
+          <div class="quiz-q-num">Question 02 / 10</div>
+          <div class="quiz-q-text">Un commerçant dont le chiffre d'affaires annuel est de 300 000 XOF correspond à quel profil OM Business ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> Profil Essentiel</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> Profil Premium</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> Profil Classique</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> Aucun profil ne correspond</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! Le Profil Classique couvre les CA entre 150 000 et 500 000 XOF/an.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. Un CA de 300 000 XOF correspond au Profil Classique (150 000 – 500 000 XOF/an).</div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-question-block" data-correct="a">
+          <div class="quiz-q-num">Question 03 / 10</div>
+          <div class="quiz-q-text">Combien y a-t-il d'étapes dans le processus officiel d'onboarding marchand OM Business ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> 5 étapes (Qualification → Collecte → Linkage → Visibilité → Formation)</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> 4 étapes</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> 8 étapes</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> 3 étapes</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! Les 5 étapes officielles sont : Qualification → Collecte docs → Saisie/Linkage → Visibilité (QR Code + sticker) → Formation.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. Le processus officiel comporte 5 étapes : Qualification → Collecte → Linkage → Visibilité (QR Code) → Formation.</div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="quiz-question-block" data-correct="b">
+          <div class="quiz-q-num">Question 04 / 10</div>
+          <div class="quiz-q-text">Un marchand dit : "J'ai déjà Mobile Money, ça me suffit." Quelle est la meilleure réponse ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> "Mobile Money c'est dépassé, OM Business est bien meilleur."</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> "MM classique c'est pour les particuliers. OM Business est conçu pour les commerçants : historique, multi-comptes, paiement fournisseurs — c'est complémentaire."</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> "Dans ce cas, je reviendrai une prochaine fois."</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> "Vous avez tort, OM Business est indispensable pour un commerce."</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Exact ! Il faut positionner OM Business comme complémentaire, jamais en opposition au MM classique.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. On ne dénigre pas MM classique. On montre la valeur ajoutée spécifique pour un commerçant.</div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="quiz-question-block" data-correct="d">
+          <div class="quiz-q-num">Question 05 / 10</div>
+          <div class="quiz-q-text">Pour un Profil Premium, quel document est obligatoire en plus de la CNI et du numéro Orange Money ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> Une photo du propriétaire en tenue de travail</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> Un relevé bancaire des 3 derniers mois</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> Une attestation de domicile</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> Le Registre de Commerce (RCCM) et les coordonnées GPS</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! Pour le Profil Premium, le RCCM est obligatoire et les coordonnées GPS du commerce sont requises.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. Pour le Profil Premium, le RCCM (Registre de Commerce) et les coordonnées GPS sont obligatoires.</div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="quiz-question-block" data-correct="b">
+          <div class="quiz-q-num">Question 06 / 10</div>
+          <div class="quiz-q-text">Quelle est la date officielle de démarrage terrain du Projet Oxygène (Bloc 1 – Abidjan) ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> 31 mars 2026</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> 09 avril 2026</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> 14 avril 2026</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> 1er mai 2026</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! Le démarrage officiel des activités terrain est fixé au 09 avril 2026 (J0 — Abidjan Bloc 1).</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. Le démarrage officiel est le 09 avril 2026 (J0 — Abidjan Bloc 1, Phase 1).</div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="quiz-question-block" data-correct="a">
+          <div class="quiz-q-num">Question 07 / 10</div>
+          <div class="quiz-q-text">Un agent réalise 6 enrôlements sur 20 visites. Quel est son taux de conversion et que se passe-t-il ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> 30% — en dessous du seuil, le Superviseur déclenche un coaching</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> 30% — c'est un excellent résultat, aucune action requise</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> 6% — l'agent est immédiatement exclu du programme</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> 30% — l'agent reçoit automatiquement une prime</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! 6/20 = 30%. Un taux inférieur à 30% déclenche un coaching par le Superviseur pour aider l'agent à progresser.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. 6/20 = 30%. Un taux &lt;30% déclenche un coaching du Superviseur, pas une exclusion immédiate.</div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="quiz-question-block" data-correct="b">
+          <div class="quiz-q-num">Question 08 / 10</div>
+          <div class="quiz-q-text">Qu'est-ce qui est formellement INTERDIT lors d'un enrôlement ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> Laisser un flyer au marchand qui hésite</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> Enrôler un marchand en son absence, ou saisir des informations incorrectes pour atteindre son quota</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> Proposer une démonstration avec une première transaction test</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> Escalader une question complexe vers le Superviseur</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! Enrôler sans présence du marchand ou falsifier des données entraîne une exclusion immédiate du programme.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. Ce qui est interdit c'est d'enrôler un marchand absent ou de saisir des informations incorrectes — les deux entraînent une exclusion.</div>
+        </div>
+
+        <!-- Q9 — MÉTHODE PACO -->
+        <div class="quiz-question-block" data-correct="c">
+          <div class="quiz-q-num">Question 09 / 10</div>
+          <div class="quiz-q-text">Dans la méthode PACO, que signifie la lettre "C" et quelle est son action principale ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> C = Collecter — Rassembler les documents KYC du marchand</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> C = Clôturer — Terminer la visite et partir rapidement</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> C = Convaincre — Argumentaire centré sur le revenu additionnel, démonstration live, réponse aux objections avec CRAC</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> C = Contacter — Appeler le superviseur pour obtenir validation</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Correct ! Dans PACO, C = Convaincre : argumentaire sur le revenu additionnel, démonstration live du produit, et gestion des objections avec la méthode CRAC.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. Dans la méthode PACO, C = Convaincre (pas Collecter ni Clôturer). L'étape inclut la démo live et l'application de CRAC pour gérer les objections.</div>
+        </div>
+
+        <!-- Q10 — MÉTHODE CRAC -->
+        <div class="quiz-question-block" data-correct="b">
+          <div class="quiz-q-num">Question 10 / 10</div>
+          <div class="quiz-q-text">Un marchand dit "Les frais sont trop élevés." Quelle est la première étape correcte de la méthode CRAC pour répondre à cette objection ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectAnswer(this,'a')"><div class="option-letter">A</div> Expliquer immédiatement le barème de frais officiel d'Orange Money</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'b')"><div class="option-letter">B</div> Creuser l'objection : "Vous avez eu connaissance du barème ? Qu'est-ce qui vous paraît élevé exactement ?"</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'c')"><div class="option-letter">C</div> Conclure en proposant immédiatement une inscription à l'essai gratuit</div>
+            <div class="quiz-option" onclick="selectAnswer(this,'d')"><div class="option-letter">D</div> Abandonner la visite et passer au commerce suivant</div>
+          </div>
+          <div class="quiz-feedback fb-correct">✅ Exact ! La première étape CRAC est toujours de Creuser : laisser le marchand s'exprimer et poser une question pour comprendre précisément ce qui le bloque.</div>
+          <div class="quiz-feedback fb-incorrect">❌ Incorrect. CRAC commence par Creuser — il faut d'abord comprendre précisément l'objection avant d'argumenter. Répondre sans creuser risque de passer à côté du vrai frein.</div>
+        </div>
+
+        <div style="text-align:center;margin-top:8px;">
+          <button class="btn-quiz" onclick="resetQuiz()">🔄 Recommencer le quiz</button>
+        </div>
+      </div>
+
+    </div><!-- /page-quiz -->
+
+  </main>
+</div><!-- /layout -->
+
+<script>
+// ---- NAVIGATION ----
+function demarrerFormation() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-cours').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  // Activer le bouton "Cours" dans la sidebar
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(n => { if (n.textContent.trim().includes('Cours')) n.classList.add('active'); });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showTab(tab, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+function goTo(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 60);
+}
+
+// ---- QUIZ ----
+let quizScore = 0;
+let answered = 0;
+const totalQ = 10;
+
+function selectAnswer(optionEl, chosen) {
+  const block = optionEl.closest('.quiz-question-block');
+  if (block.dataset.done) return;
+  block.dataset.done = '1';
+
+  const correct = block.dataset.correct;
+  const options = block.querySelectorAll('.quiz-option');
+  const feedbackCorrect = block.querySelector('.quiz-feedback.fb-correct');
+  const feedbackIncorrect = block.querySelector('.quiz-feedback.fb-incorrect');
+
+  options.forEach(o => o.classList.add('disabled'));
+
+  if (chosen === correct) {
+    optionEl.classList.add('correct');
+    feedbackCorrect.classList.add('show');
+    quizScore++;
+  } else {
+    optionEl.classList.add('incorrect');
+    feedbackIncorrect.classList.add('show');
+    // Highlight correct answer
+    options.forEach(o => {
+      const letter = o.querySelector('.option-letter').textContent.toLowerCase();
+      if (letter === correct) o.classList.add('correct');
+    });
+  }
+  answered++;
+  updateScore();
+  updateProgress();
+}
+
+function updateScore() {
+  document.getElementById('quiz-score-display').innerHTML = quizScore + ' <span>/ ' + totalQ + '</span>';
+}
+
+function resetQuiz() {
+  quizScore = 0;
+  answered = 0;
+  document.querySelectorAll('.quiz-question-block').forEach(block => {
+    delete block.dataset.done;
+    block.querySelectorAll('.quiz-option').forEach(o => {
+      o.classList.remove('correct','incorrect','disabled');
+    });
+    block.querySelectorAll('.quiz-feedback').forEach(f => f.classList.remove('show'));
+  });
+  updateScore();
+  updateProgress();
+}
+
+// ---- PROGRESS ----
+function updateProgress() {
+  const pct = Math.round((answered / totalQ) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+// ============================================================
+// EXPORT PDF
+// ============================================================
+function exportPDF() {
+  // Afficher toutes les pages avant impression
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'block');
+  window.print();
+  // Restaurer l'état
+  setTimeout(() => {
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    document.getElementById('page-cours').style.display = 'block';
+  }, 500);
+}
+
+// ============================================================
+// EXPORT WORD (.docx via HTML blob)
+// ============================================================
+function exportWord() {
+  const title = 'Formation Agent Terrain — Recrutement Marchand Via MAFA';
+  const date = new Date().toLocaleDateString('fr-FR', {year:'numeric',month:'long',day:'numeric'});
+
+  // Extraire le texte de chaque section
+  const sections = [
+    { h: '1. Mission de l\'Agent Terrain OM Business', el: 's1' },
+    { h: '2. Plan de Déploiement — Projet Oxygène', el: 's1b' },
+    { h: '3. Profils Marchands Cibles', el: 's2' },
+    { h: '4. Approche Commerciale Terrain', el: 's3' },
+    { h: '5. Processus d\'Enrôlement Marchand', el: 's4' },
+    { h: '6. Gestion des Objections', el: 's5' },
+    { h: '7. Kit Terrain & Reporting Quotidien', el: 's6' },
+  ];
+
+  // Construire le HTML simplifié pour Word
+  let body = `
+    <h1 style="color:#8D0C23;font-family:Arial;">${title}</h1>
+    <p style="color:#666;font-family:Arial;">Date d'export : ${date} &nbsp;|&nbsp; MAFA HOLDING — Projet Oxygène / Orange Money Business</p>
+    <hr style="border:2px solid #CF9E41;margin:16px 0;">
+  `;
+
+  // Tableau KPIs
+  body += `
+    <h2 style="color:#8D0C23;font-family:Arial;">Objectifs Clés — Projet Oxygène</h2>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%;border-collapse:collapse;font-family:Arial;font-size:12px;">
+      <tr style="background:#8D0C23;color:white;">
+        <th>Phase 1 (Pilote)</th><th>Phase 2</th><th>Total cible national</th><th>Démarrage terrain</th>
+      </tr>
+      <tr>
+        <td>4–5 marchands/jour/agent</td>
+        <td>8 marchands/jour/agent</td>
+        <td>550 000 marchands</td>
+        <td>09 Avril 2026 (Abidjan Bloc 1)</td>
+      </tr>
+    </table>
+  `;
+
+  // Blocs déploiement
+  body += `
+    <h2 style="color:#8D0C23;font-family:Arial;">Plan de Déploiement — 3 Blocs</h2>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%;border-collapse:collapse;font-family:Arial;font-size:12px;">
+      <tr style="background:#8D0C23;color:white;"><th>Bloc</th><th>Régions</th><th>Marchands ciblés</th><th>Objectif/jour</th><th>Phase</th></tr>
+      <tr><td><b>Bloc 1</b></td><td>Abidjan + Sud-Ouest</td><td>~162 866</td><td>4–5</td><td>Phase 1 — Démarrage 09/04/2026</td></tr>
+      <tr><td><b>Bloc 2</b></td><td>Nord · Centre · Est · Abidjan</td><td>~167 000</td><td>8</td><td>Phase 2</td></tr>
+      <tr><td><b>Bloc 3</b></td><td>Ouest · Sud · Abobo</td><td>~168 500</td><td>8</td><td>Phase 2</td></tr>
+    </table>
+  `;
+
+  // Profils marchands
+  body += `
+    <h2 style="color:#8D0C23;font-family:Arial;">Profils Marchands Cibles</h2>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%;border-collapse:collapse;font-family:Arial;font-size:12px;">
+      <tr style="background:#8D0C23;color:white;"><th>Profil</th><th>Type de commerce</th><th>CA annuel</th><th>Arguments clés</th></tr>
+      <tr style="background:#F3E5F5;"><td><b>Essentiel</b></td><td>Épicier, vendeur ambulant, artisan</td><td>&lt; 150 000 XOF</td><td>Zéro frais pour recevoir, ouverture 10 min</td></tr>
+      <tr style="background:#E3F2FD;"><td><b>Classique</b></td><td>Boutique, pharmacie, restaurant</td><td>150 000–500 000 XOF</td><td>Historique transactions, multi-comptes, paiement fournisseurs</td></tr>
+      <tr style="background:#E8F5E9;"><td><b>Premium</b></td><td>Grossiste, supermarché, PME</td><td>&gt; 500 000 XOF</td><td>Gestion paie employés, tableau de bord, multi-sites</td></tr>
+    </table>
+  `;
+
+  // Processus enrôlement
+  body += `
+    <h2 style="color:#8D0C23;font-family:Arial;">Processus d'Enrôlement — 6 Étapes</h2>
+    <ol style="font-family:Arial;font-size:12px;line-height:1.8;">
+      <li><b>Qualification</b> — Vérifier l'éligibilité : numéro Orange actif, CNI valide</li>
+      <li><b>Collecte des pièces</b> — CNI/Passeport + RCCM si Classique/Premium</li>
+      <li><b>Saisie application</b> — Nom, numéro, profil, commerce dans l'app MAFA</li>
+      <li><b>Photo & Validation</b> — Photo marchand + pièce d'identité + GPS (Classique/Premium)</li>
+      <li><b>Activation compte</b> — SMS de confirmation reçu par le marchand</li>
+      <li><b>Prise en main</b> — Démonstration 1ère transaction + remise QR code / sticker</li>
+    </ol>
+  `;
+
+  // Gestion objections
+  body += `
+    <h2 style="color:#8D0C23;font-family:Arial;">Gestion des Objections — Réponses Clés</h2>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%;border-collapse:collapse;font-family:Arial;font-size:12px;">
+      <tr style="background:#8D0C23;color:white;"><th>Objection</th><th>Réponse recommandée</th></tr>
+      <tr><td>"Je n'ai pas le temps"</td><td>Proposer 5 min ou revenir en fin de journée. Laisser un flyer. Obtenir un engagement.</td></tr>
+      <tr><td>"Ça coûte combien ?"</td><td>Ouverture gratuite. Recevoir de l'argent = zéro frais pour le commerçant.</td></tr>
+      <tr><td>"J'ai déjà Mobile Money"</td><td>MM classique = particuliers. OM Business = commerçants (multi-comptes, fournisseurs, historique).</td></tr>
+      <tr><td>"Je préfère ma banque"</td><td>OM Business est complémentaire à la banque, pas un remplacement.</td></tr>
+      <tr><td>"Je ne sais pas utiliser ça"</td><td>Accompagnement immédiat + numéro d'assistance. Démonstration sur place.</td></tr>
+      <tr><td>"Ce n'est pas sécurisé"</td><td>PIN personnel + SMS de confirmation + compte récupérable si téléphone perdu.</td></tr>
+    </table>
+  `;
+
+  // Rétroplanning
+  body += `
+    <h2 style="color:#8D0C23;font-family:Arial;">Rétroplanning Officiel — Projet Oxygène</h2>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%;border-collapse:collapse;font-family:Arial;font-size:12px;">
+      <tr style="background:#8D0C23;color:white;"><th>Étape</th><th>Début</th><th>Fin</th><th>Durée</th></tr>
+      <tr><td>Recrutement des ressources</td><td>24 mars 2026</td><td>26 mars 2026</td><td>3 jours</td></tr>
+      <tr><td>Formation formateurs & agents</td><td>27 mars 2026</td><td>12 avril 2026</td><td>7 jours</td></tr>
+      <tr><td>Déploiement logistique</td><td>27 mars 2026</td><td>31 mars 2026</td><td>3 jours</td></tr>
+      <tr><td>Communication & sensibilisation</td><td>02 avril 2026</td><td>06 avril 2026</td><td>3 jours</td></tr>
+      <tr style="background:#FFF3E0;"><td><b>🚀 DÉMARRAGE TERRAIN — Abidjan Bloc 1</b></td><td><b>09 avril 2026</b></td><td>—</td><td>J0</td></tr>
+    </table>
+    <br><p style="font-family:Arial;font-size:11px;color:#888;">Document généré le ${date} — MAFA HOLDING / Projet Oxygène / Orange Money Business. Confidentiel.</p>
+  `;
+
+  const html = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:w="urn:schemas-microsoft-com:office:word"
+          xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="ProgId" content="Word.Document">
+      <meta name="Generator" content="Microsoft Word 15">
+      <title>${title}</title>
+      <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>90</w:Zoom></w:WordDocument></xml><![endif]-->
+      <style>
+        body { font-family: Arial, sans-serif; font-size: 12pt; margin: 2cm; }
+        h1 { font-size: 18pt; color: #8D0C23; }
+        h2 { font-size: 14pt; color: #8D0C23; margin-top: 20pt; }
+        table { width: 100%; border-collapse: collapse; margin: 10pt 0; }
+        th, td { border: 1px solid #ccc; padding: 6pt; }
+        th { background: #8D0C23; color: white; }
+      </style>
+    </head>
+    <body>${body}</body>
+    </html>`;
+
+  const blob = new Blob([html], { type: 'application/msword;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Formation_Agent_Recrutement_Marchand_MAFA.doc';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// EXPORT POWERPOINT (PptxGenJS)
+// ============================================================
+function exportPPT() {
+  if (typeof PptxGenJS === 'undefined') {
+    alert('Chargement en cours… Réessayez dans quelques secondes (vérifiez votre connexion internet pour charger la librairie PptxGenJS).');
+    return;
+  }
+
+  const pptx = new PptxGenJS();
+  pptx.layout = 'LAYOUT_WIDE'; // 16:9
+
+  // Couleurs MAFA / Orange Money
+  const C_RED    = '8D0C23';
+  const C_GOLD   = 'CF9E41';
+  const C_ORANGE = 'FF6600';
+  const C_WHITE  = 'FFFFFF';
+  const C_GREY   = '455A64';
+  const C_DARK   = '2C3E50';
+  const C_BG     = 'FCFBF8';
+  const C_GREEN  = '1B6E38';
+  const C_BLUE   = '1565C0';
+
+  // -------------------------------------------------------
+  // DIAPO 1 : Titre
+  // -------------------------------------------------------
+  let slide = pptx.addSlide();
+  slide.background = { color: C_RED };
+  slide.addImage({ data: 'data:image/svg+xml;base64,', x:0, y:0, w:'100%', h:'100%' });
+  // Bande déco gauche
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:0.18, h:'100%', fill:{ color:C_GOLD } });
+  slide.addShape(pptx.ShapeType.rect, { x:0.18, y:0, w:0.06, h:'100%', fill:{ color:'A07830' } });
+
+  slide.addText('PROJET OXYGÈNE', {
+    x:0.5, y:0.8, w:12, h:0.5,
+    fontSize:13, bold:true, color:'FFCC88', fontFace:'Arial',
+    charSpacing:4
+  });
+  slide.addText('Formation Agent Terrain', {
+    x:0.5, y:1.4, w:12, h:1,
+    fontSize:34, bold:true, color:C_WHITE, fontFace:'Arial'
+  });
+  slide.addText('Recrutement Marchand Via MAFA', {
+    x:0.5, y:2.3, w:12, h:0.7,
+    fontSize:24, bold:false, color:'FFCCAA', fontFace:'Arial'
+  });
+  slide.addShape(pptx.ShapeType.rect, { x:0.5, y:3.15, w:3, h:0.05, fill:{ color:C_GOLD } });
+  slide.addText('Orange Money Business  |  MAFA HOLDING  |  Avril 2026', {
+    x:0.5, y:3.3, w:12, h:0.4,
+    fontSize:11, color:'FFDDCC', fontFace:'Arial'
+  });
+  slide.addText('EXCLUSIF AGENTS TERRAIN', {
+    x:9, y:4.8, w:3.5, h:0.4,
+    fontSize:9, bold:true, color:C_RED,
+    fill:{ color:C_GOLD }, align:'center',
+    fontFace:'Arial', valign:'middle'
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 2 : Sommaire
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('SOMMAIRE', { x:0.4, y:0.15, w:12, h:0.6, fontSize:20, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  const sommaire = [
+    ['01', 'Mission de l\'Agent Terrain'],
+    ['02', 'Plan de Déploiement — Projet Oxygène (3 Blocs)'],
+    ['03', 'Profils Marchands Cibles (Essentiel / Classique / Premium)'],
+    ['04', 'Approche Commerciale & Pitch Terrain'],
+    ['05', 'Processus d\'Enrôlement — 6 Étapes'],
+    ['06', 'Gestion des Objections'],
+    ['07', 'Kit Terrain, Matériels Officiels & Reporting'],
+  ];
+  sommaire.forEach(([num, txt], i) => {
+    const y = 1.2 + i * 0.52;
+    slide.addShape(pptx.ShapeType.rect, { x:0.4, y, w:0.45, h:0.38, fill:{ color: i===0 ? C_ORANGE : C_RED }, radius:4 });
+    slide.addText(num, { x:0.4, y, w:0.45, h:0.38, fontSize:11, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+    slide.addText(txt, { x:1.05, y:y+0.03, w:11.5, h:0.35, fontSize:13, color:C_DARK, fontFace:'Arial' });
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 3 : Mission & KPIs
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('01 — MISSION DE L\'AGENT TERRAIN', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  // KPI boxes
+  const kpis = [
+    { val:'4–5', label:'Marchands/jour\nPhase 1 (pilote)', color:C_ORANGE },
+    { val:'8',   label:'Marchands/jour\nPhase 2', color:C_GREEN },
+    { val:'550K',label:'Marchands\nciblés (national)', color:C_RED },
+    { val:'09 Avr',label:'Démarrage terrain\nAbidjan Bloc 1', color:C_BLUE },
+  ];
+  kpis.forEach((k,i) => {
+    const x = 0.3 + i * 3.2;
+    slide.addShape(pptx.ShapeType.rect, { x, y:1.1, w:2.9, h:1.5, fill:{ color:k.color }, radius:6 });
+    slide.addText(k.val, { x, y:1.15, w:2.9, h:0.9, fontSize:28, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+    slide.addText(k.label, { x, y:2.0, w:2.9, h:0.55, fontSize:9, color:C_WHITE, align:'center', fontFace:'Arial' });
+  });
+
+  // Responsabilités
+  slide.addText('Responsabilités clés de l\'Agent', { x:0.4, y:2.8, w:12, h:0.35, fontSize:13, bold:true, color:C_RED, fontFace:'Arial' });
+  const resps = [
+    'Prospecter la zone assignée et identifier les commerces éligibles',
+    'Présenter OM Business et convaincre le marchand de s\'enrôler',
+    'Collecter les pièces justificatives et saisir dans l\'application MAFA',
+    'Accompagner le marchand sur la prise en main (1ère transaction)',
+    'Transmettre le rapport quotidien au Superviseur avant 18h00',
+  ];
+  resps.forEach((r,i) => {
+    slide.addText('▸  ' + r, { x:0.5, y:3.2+i*0.33, w:12.5, h:0.3, fontSize:10, color:C_GREY, fontFace:'Arial' });
+  });
+
+  // Hiérarchie
+  slide.addShape(pptx.ShapeType.rect, { x:0.3, y:4.85, w:12.7, h:0.4, fill:{ color:'FFF3E0' } });
+  slide.addText('Chaîne hiérarchique : Agent → Superviseur (15–20 agents) → Inspecteur → Responsable de Zone (RV) → Direction MAFA', {
+    x:0.4, y:4.87, w:12.5, h:0.36, fontSize:9, color:C_GREY, fontFace:'Arial', italic:true
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 4 : Plan de déploiement
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('02 — PLAN DE DÉPLOIEMENT — PROJET OXYGÈNE', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  const blocs = [
+    { num:'BLOC 1', phase:'Phase 1 — Pilote', regions:'Abidjan + Sud-Ouest', cible:'~162 866', objectif:'4–5/jour', demarrage:'09 Avr. 2026', color:C_ORANGE, communes:'Adjamé, Cocody, Port-Bouët, Soubré, Divo, Gagnoa…' },
+    { num:'BLOC 2', phase:'Phase 2', regions:'Nord · Centre · Est · Abidjan', cible:'~167 000', objectif:'8/jour', demarrage:'Phase 2', color:C_BLUE, communes:'Yopougon, Bouaké, Korhogo, Odienné, Attécoubé…' },
+    { num:'BLOC 3', phase:'Phase 2', regions:'Ouest · Sud · Abobo', cible:'~168 500', objectif:'8/jour', demarrage:'Phase 2', color:C_GREEN, communes:'Abobo, Daloa, Man, Vavoua, Danané, Grand-Bassam…' },
+  ];
+  blocs.forEach((b,i) => {
+    const x = 0.25 + i * 4.35;
+    slide.addShape(pptx.ShapeType.rect, { x, y:1.1, w:4.05, h:0.4, fill:{ color:b.color }, radius:4 });
+    slide.addText(b.num + ' — ' + b.phase, { x, y:1.1, w:4.05, h:0.4, fontSize:10, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+    const rows = [
+      ['Régions', b.regions],
+      ['Marchands ciblés', b.cible],
+      ['Objectif/jour/agent', b.objectif],
+      ['Communes clés', b.communes],
+      ['Démarrage', b.demarrage],
+    ];
+    rows.forEach(([k,v],j) => {
+      const ry = 1.6 + j * 0.5;
+      slide.addShape(pptx.ShapeType.rect, { x, y:ry, w:4.05, h:0.45, fill:{ color: j%2===0 ? 'F8F4EE' : C_WHITE } });
+      slide.addText(k+':', { x:x+0.08, y:ry+0.06, w:1.5, h:0.35, fontSize:8, bold:true, color:b.color, fontFace:'Arial' });
+      slide.addText(v, { x:x+1.55, y:ry+0.06, w:2.42, h:0.35, fontSize:8, color:C_DARK, fontFace:'Arial' });
+    });
+  });
+
+  slide.addShape(pptx.ShapeType.rect, { x:0.25, y:4.15, w:12.8, h:0.45, fill:{ color:C_RED } });
+  slide.addText('TOTAL CIBLE NATIONALE : 550 000 MARCHANDS', {
+    x:0.25, y:4.15, w:12.8, h:0.45, fontSize:13, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial'
+  });
+
+  // Rétroplanning
+  slide.addText('Rétroplanning :', { x:0.3, y:4.72, w:3, h:0.28, fontSize:10, bold:true, color:C_RED, fontFace:'Arial' });
+  slide.addText('Recrutement (24–26 mars)  →  Formation (27 mars–12 avr.)  →  Logistique (27–31 mars)  →  Communication (2–6 avr.)  →  🚀 DÉMARRAGE 09 AVRIL 2026', {
+    x:0.3, y:5.0, w:13, h:0.3, fontSize:9, color:C_GREY, fontFace:'Arial', italic:true
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 5 : Profils marchands
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('03 — PROFILS MARCHANDS CIBLES', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  const profils = [
+    {
+      label:'ESSENTIEL', color:'7B1FA2', bg:'F3E5F5',
+      type:'Épicier, vendeur ambulant, artisan, kiosque',
+      ca:'CA < 150 000 XOF/an',
+      args:['Zéro frais pour recevoir', 'Ouverture compte en 10 min', 'Pas besoin d\'aller à la banque'],
+      signaux:['Petit étal, stock limité', 'Paiement cash uniquement', 'Décision rapide sur place']
+    },
+    {
+      label:'CLASSIQUE', color:'1565C0', bg:'E3F2FD',
+      type:'Boutique, quincaillerie, pharmacie, restaurant',
+      ca:'CA 150 000–500 000 XOF/an',
+      args:['Historique de toutes transactions', 'Paiement fournisseurs inclus', 'Multi-comptes disponibles'],
+      signaux:['Boutique avec employés', 'Caisse enregistreuse visible', 'Décision possible en 2e visite']
+    },
+    {
+      label:'PREMIUM', color:'1B6E38', bg:'E8F5E9',
+      type:'Grossiste, supermarché, PME, chaîne',
+      ca:'CA > 500 000 XOF/an',
+      args:['Gestion paie des employés', 'Tableau de bord intégré', 'Intégration multi-sites'],
+      signaux:['Plusieurs employés', 'Véhicules de livraison', 'Prendre RDV avec le gérant']
+    },
+  ];
+  profils.forEach((p,i) => {
+    const x = 0.25 + i * 4.35;
+    slide.addShape(pptx.ShapeType.rect, { x, y:1.05, w:4.05, h:'83%', fill:{ color:p.bg } });
+    slide.addShape(pptx.ShapeType.rect, { x, y:1.05, w:4.05, h:0.42, fill:{ color:p.color } });
+    slide.addText(p.label, { x, y:1.05, w:4.05, h:0.42, fontSize:12, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+    slide.addText(p.type, { x:x+0.1, y:1.55, w:3.85, h:0.4, fontSize:9, color:'555555', fontFace:'Arial', italic:true });
+    slide.addText(p.ca, { x:x+0.1, y:2.0, w:3.85, h:0.3, fontSize:9, bold:true, color:p.color, fontFace:'Arial' });
+    slide.addText('Arguments clés :', { x:x+0.1, y:2.38, w:3.85, h:0.25, fontSize:9, bold:true, color:p.color, fontFace:'Arial' });
+    p.args.forEach((a,j) => {
+      slide.addText('✓  '+a, { x:x+0.15, y:2.67+j*0.32, w:3.75, h:0.28, fontSize:8.5, color:C_DARK, fontFace:'Arial' });
+    });
+    slide.addText('Signaux terrain :', { x:x+0.1, y:3.65, w:3.85, h:0.25, fontSize:9, bold:true, color:p.color, fontFace:'Arial' });
+    p.signaux.forEach((s,j) => {
+      slide.addText('▸  '+s, { x:x+0.15, y:3.93+j*0.3, w:3.75, h:0.26, fontSize:8.5, color:C_GREY, fontFace:'Arial' });
+    });
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 6 : Approche commerciale & Pitch
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('04 — APPROCHE COMMERCIALE & PITCH TERRAIN', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  // 3 temps
+  const temps = [
+    { num:'1', t:'ACCROCHE', desc:'Se présenter (nom, MAFA, mission Orange Money Business). Observer le commerce avant d\'entrer. Ton détendu, sourire. Poser une question pour engager.', dur:'30 sec' },
+    { num:'2', t:'PRÉSENTATION', desc:'Partir des besoins du commerçant, pas des fonctionnalités. Montrer l\'app. Mettre en avant : recevoir paiements, gérer argent, payer fournisseurs.', dur:'2–5 min' },
+    { num:'3', t:'CONCLUSION', desc:'Demander directement : "On configure votre compte maintenant ?" Ne pas partir sans réponse claire. Si refus → laisser flyer + RDV lendemain.', dur:'1–2 min' },
+  ];
+  temps.forEach((t,i) => {
+    const x = 0.3 + i * 4.3;
+    slide.addShape(pptx.ShapeType.rect, { x, y:1.1, w:3.95, h:0.42, fill:{ color:C_ORANGE }, radius:4 });
+    slide.addText(t.num+' — '+t.t, { x, y:1.1, w:3.95, h:0.42, fontSize:11, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+    slide.addShape(pptx.ShapeType.rect, { x, y:1.55, w:3.95, h:2.05, fill:{ color:C_WHITE } });
+    slide.addText(t.desc, { x:x+0.1, y:1.62, w:3.75, h:1.8, fontSize:9.5, color:C_DARK, fontFace:'Arial', valign:'top' });
+    slide.addShape(pptx.ShapeType.rect, { x, y:3.63, w:3.95, h:0.3, fill:{ color:'FFF3E0' } });
+    slide.addText('⏱  '+t.dur, { x, y:3.63, w:3.95, h:0.3, fontSize:9, color:C_ORANGE, align:'center', valign:'middle', fontFace:'Arial', bold:true });
+  });
+
+  // Pitch
+  slide.addShape(pptx.ShapeType.rect, { x:0.3, y:4.05, w:12.7, h:1.2, fill:{ color:'1a0a0f' }, radius:6 });
+  slide.addText('🎙  PITCH DE 30 SECONDES — À MÉMORISER', { x:0.5, y:4.1, w:12.3, h:0.3, fontSize:10, bold:true, color:C_GOLD, fontFace:'Arial' });
+  slide.addText('"Bonjour, je m\'appelle [Prénom], je suis agent MAFA mandaté par Orange Money. Je viens vous parler d\'Orange Money Business — une solution gratuite qui permet à votre commerce de recevoir des paiements par mobile, gérer votre argent et payer vos fournisseurs. C\'est déjà utilisé par des centaines de commerçants dans votre zone. Je peux vous montrer comment ça fonctionne en 5 minutes ?"', {
+    x:0.5, y:4.42, w:12.3, h:0.75, fontSize:9, color:'FFDDCC', fontFace:'Arial', italic:true
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 7 : Processus d'enrôlement
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('05 — PROCESSUS D\'ENRÔLEMENT — 6 ÉTAPES', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  const etapes = [
+    { n:'1', t:'Qualification', d:'Vérifier numéro Orange actif + CNI valide' },
+    { n:'2', t:'Collecte pièces', d:'CNI/Passeport + RCCM (Classique/Premium)' },
+    { n:'3', t:'Saisie app', d:'Nom, numéro, profil, commerce dans l\'app MAFA' },
+    { n:'4', t:'Photo & Validation', d:'Photo marchand + pièce + GPS (Classique/Premium)' },
+    { n:'5', t:'Activation', d:'SMS de confirmation reçu par le marchand' },
+    { n:'6', t:'Prise en main', d:'Démo 1ère transaction + remise QR code / sticker' },
+  ];
+  etapes.forEach((e,i) => {
+    const x = 0.2 + (i % 3) * 4.35;
+    const y = 1.15 + Math.floor(i/3) * 2.1;
+    slide.addShape(pptx.ShapeType.rect, { x, y, w:4.05, h:1.85, fill:{ color:C_WHITE }, line:{ color:'E8DDD0', pt:1 }, radius:6 });
+    slide.addShape(pptx.ShapeType.ellipse, { x:x+1.6, y:y+0.18, w:0.8, h:0.8, fill:{ color:C_RED } });
+    slide.addText(e.n, { x:x+1.6, y:y+0.18, w:0.8, h:0.8, fontSize:16, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+    slide.addText(e.t, { x:x+0.1, y:y+1.05, w:3.85, h:0.3, fontSize:11, bold:true, color:C_RED, align:'center', fontFace:'Arial' });
+    slide.addText(e.d, { x:x+0.1, y:y+1.38, w:3.85, h:0.38, fontSize:8.5, color:C_GREY, align:'center', fontFace:'Arial' });
+  });
+
+  slide.addShape(pptx.ShapeType.rect, { x:0.2, y:5.35, w:12.8, h:0.4, fill:{ color:'FEF2F2' }, line:{ color:'FECACA', pt:1 } });
+  slide.addText('🚫  INTERDIT : Enrôler sans la présence du marchand ou saisir des informations incorrectes → exclusion immédiate du programme.', {
+    x:0.35, y:5.37, w:12.5, h:0.35, fontSize:9, color:'B91C1C', fontFace:'Arial', bold:true
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 8 : Gestion des objections
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('06 — GESTION DES OBJECTIONS', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  const objections = [
+    { obj:'"Je n\'ai pas le temps"', rep:'Proposer 5 min ou revenir en fin de journée. Laisser un flyer. Obtenir un engagement concret.' },
+    { obj:'"Ça coûte combien ?"', rep:'Ouverture gratuite. Recevoir de l\'argent = 0 frais pour le commerçant. Raisonner en gain.' },
+    { obj:'"J\'ai déjà Mobile Money"', rep:'MM = particuliers. OM Business = commerçants (multi-comptes, fournisseurs, historique). Complémentaire.' },
+    { obj:'"Je préfère ma banque"', rep:'OM Business complète la banque, ne la remplace pas. Encaisser clients sans carte = nouveau flux.' },
+    { obj:'"Je ne sais pas utiliser ça"', rep:'Accompagnement sur place + numéro assistance. Démo immédiate = convertir l\'objection en confiance.' },
+    { obj:'"Ce n\'est pas sécurisé"', rep:'PIN personnel + SMS confirmation + compte récupérable si perte téléphone. Plus sûr que le cash.' },
+  ];
+  objections.forEach((o,i) => {
+    const y = 1.08 + i * 0.68;
+    slide.addShape(pptx.ShapeType.rect, { x:0.25, y, w:5.5, h:0.58, fill:{ color:'FEF2F2' }, line:{ color:'FECACA', pt:1 } });
+    slide.addText('🙅  '+o.obj, { x:0.32, y:y+0.08, w:5.38, h:0.42, fontSize:9.5, bold:true, color:'B91C1C', fontFace:'Arial', valign:'middle' });
+    slide.addShape(pptx.ShapeType.rect, { x:6.0, y, w:7.25, h:0.58, fill:{ color:'F0FFF4' }, line:{ color:'A7F3D0', pt:1 } });
+    slide.addText('✅  '+o.rep, { x:6.08, y:y+0.06, w:7.1, h:0.46, fontSize:9, color:'14532D', fontFace:'Arial', valign:'top' });
+    slide.addShape(pptx.ShapeType.rect, { x:5.7, y:y+0.18, w:0.28, h:0.22, fill:{ color:C_GOLD } });
+    slide.addText('→', { x:5.7, y:y+0.18, w:0.28, h:0.22, fontSize:9, bold:true, color:C_WHITE, align:'center', valign:'middle', fontFace:'Arial' });
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 9 : Kit & Matériels officiels
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_BG };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1, fill:{ color:C_RED } });
+  slide.addText('07 — KIT TERRAIN & MATÉRIELS OFFICIELS', { x:0.4, y:0.15, w:12, h:0.6, fontSize:18, bold:true, color:C_WHITE, fontFace:'Arial' });
+
+  // Matériels
+  slide.addText('Dotation officielle Projet Oxygène', { x:0.4, y:1.1, w:6, h:0.3, fontSize:11, bold:true, color:C_RED, fontFace:'Arial' });
+  const materiel = [
+    ['QR Code (A6)', '75 000 exemplaires'],
+    ['QR Code (A5)', '25 000 exemplaires'],
+    ['Badges agents', '50 000 exemplaires'],
+    ['Stickers (A5)', '100 000 exemplaires'],
+    ['Stickers (A6)', '50 000 exemplaires'],
+    ['Tee-shirts agents', '1 500 unités'],
+    ['Chasubles RV/Insp/Sup', '100 unités'],
+    ['Casquettes RV/Insp/Sup', '100 unités'],
+  ];
+  materiel.forEach(([k,v],i) => {
+    const y = 1.5 + i * 0.38;
+    slide.addShape(pptx.ShapeType.rect, { x:0.3, y, w:6.5, h:0.32, fill:{ color: i%2===0 ? 'FCFBF8' : C_WHITE }, line:{ color:'E8DDD0', pt:0.5 } });
+    slide.addText(k, { x:0.4, y:y+0.04, w:3.8, h:0.24, fontSize:9, color:C_DARK, fontFace:'Arial' });
+    slide.addText(v, { x:4.2, y:y+0.04, w:2.5, h:0.24, fontSize:9, bold:true, color:C_RED, fontFace:'Arial', align:'right' });
+  });
+
+  // Reporting
+  slide.addText('Rapport Quotidien — Avant 18h00', { x:7.3, y:1.1, w:5.7, h:0.3, fontSize:11, bold:true, color:C_RED, fontFace:'Arial' });
+  const rapport = [
+    ['Date / Zone', 'Zone géographique prospectée'],
+    ['Commerces visités', 'Nombre total d\'approches'],
+    ['Enrôlements validés', 'Dossiers complets dans l\'app'],
+    ['Dossiers en attente', 'À relancer sous 24h'],
+    ['Refus & motifs', 'Pour améliorer la formation'],
+    ['Incidents terrain', 'Blocages, problèmes réseau…'],
+    ['Taux de conversion', 'Validés / Visités × 100 → seuil : 30%'],
+  ];
+  rapport.forEach(([k,v],i) => {
+    const y = 1.5 + i * 0.42;
+    slide.addShape(pptx.ShapeType.rect, { x:7.2, y, w:6.0, h:0.36, fill:{ color: i%2===0 ? 'F0FFF4' : C_WHITE }, line:{ color:'D1FAE5', pt:0.5 } });
+    slide.addText(k+':', { x:7.3, y:y+0.06, w:2.2, h:0.26, fontSize:8.5, bold:true, color:C_GREEN, fontFace:'Arial' });
+    slide.addText(v, { x:9.5, y:y+0.06, w:3.6, h:0.26, fontSize:8.5, color:C_GREY, fontFace:'Arial' });
+  });
+
+  // -------------------------------------------------------
+  // DIAPO 10 : Slide de clôture
+  // -------------------------------------------------------
+  slide = pptx.addSlide();
+  slide.background = { color: C_RED };
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:0.18, h:'100%', fill:{ color:C_GOLD } });
+  slide.addShape(pptx.ShapeType.rect, { x:0.18, y:0, w:0.06, h:'100%', fill:{ color:'A07830' } });
+  slide.addText('MODERNISER L\'AFRIQUE,', {
+    x:0.5, y:1.4, w:12.5, h:0.9, fontSize:32, bold:true, color:C_WHITE, fontFace:'Arial'
+  });
+  slide.addText('FORMALISER L\'AVENIR.', {
+    x:0.5, y:2.2, w:12.5, h:0.9, fontSize:32, bold:true, color:C_GOLD, fontFace:'Arial'
+  });
+  slide.addShape(pptx.ShapeType.rect, { x:0.5, y:3.25, w:4, h:0.05, fill:{ color:C_GOLD } });
+  slide.addText('Orange Money Business  ·  MAFA HOLDING  ·  Projet Oxygène  ·  Avril 2026', {
+    x:0.5, y:3.45, w:12.5, h:0.35, fontSize:11, color:'FFCCAA', fontFace:'Arial'
+  });
+  slide.addText('Ce module est exclusivement réservé aux agents terrain du Projet Oxygène.', {
+    x:0.5, y:4.8, w:12.5, h:0.3, fontSize:9, color:'FFDDCC', fontFace:'Arial', italic:true
+  });
+
+  // ---- Génération du fichier ----
+  pptx.writeFile({ fileName: 'Formation_Agent_Recrutement_Marchand_MAFA.pptx' })
+    .then(() => console.log('PPT exporté avec succès'))
+    .catch(err => { alert('Erreur export PPT : ' + err); console.error(err); });
+}
+</script>
+</body>
+</html>

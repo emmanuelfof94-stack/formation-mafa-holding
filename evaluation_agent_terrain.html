@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation Agent Terrain — OM Business MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#8D0C23; --accent2:#B5112C; --gold:#CF9E41;
+  --om:#FF6600; --om-pale:#FFF3E0;
+  --surface:#ffffff; --surface2:#f8fafc;
+  --border:#e2e8f0; --text:#0f172a; --text-muted:#64748b;
+  --success:#10b981; --danger:#ef4444;
+  --radius:10px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow:0 4px 16px rgba(0,0,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#f1f5fb;color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8D0C23,#CF9E41,#FF6600,#CF9E41,#8D0C23);z-index:9999;pointer-events:none;}
+
+.wrapper{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:2.5rem;}
+.header .logo-band{display:inline-flex;align-items:center;gap:.75rem;background:var(--primary);color:#fff;padding:.55rem 1.4rem;border-radius:50px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem;}
+.header h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--text);line-height:1.2;}
+.header h1 span{color:var(--primary);}
+.header p{margin-top:.5rem;color:var(--text-muted);font-size:.95rem;}
+
+/* SCREENS */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* INTRO */
+.intro-card{background:var(--surface);border-radius:16px;padding:2.5rem;box-shadow:var(--shadow);max-width:540px;margin:0 auto;}
+.intro-card h2{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:700;margin-bottom:1.5rem;color:var(--text);}
+.form-group{margin-bottom:1.2rem;}
+.form-group label{display:block;font-size:.85rem;font-weight:500;color:var(--text-muted);margin-bottom:.4rem;}
+.form-group input,.form-group select{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.form-group input:focus,.form-group select:focus{border-color:var(--primary);}
+.info-box{background:#fff8e1;border:1px solid #ffe082;border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1.5rem;}
+.info-box p{font-size:.85rem;font-weight:600;color:#92400e;margin-bottom:.4rem;}
+.info-box ul{padding-left:1.2rem;}
+.info-box ul li{font-size:.84rem;color:#5d4037;margin-bottom:.25rem;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 2rem;border:none;border-radius:50px;cursor:pointer;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(141,12,35,.25);}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);}
+.btn-secondary{background:var(--surface2);color:var(--text-muted);border:1.5px solid var(--border);}
+.btn-secondary:hover{background:var(--border);}
+.btn-gold{background:var(--gold);color:#fff;box-shadow:0 4px 14px rgba(207,158,65,.25);}
+.btn-gold:hover{background:#b8892f;}
+.btn-om{background:var(--om);color:#fff;box-shadow:0 4px 14px rgba(255,102,0,.25);}
+.btn-om:hover{background:#e85d00;}
+.btn-full{width:100%;}
+
+/* TIMER BAR */
+.timer-bar{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);padding:.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-sm);}
+.timer-bar .t-label{font-size:.8rem;color:var(--text-muted);}
+.timer-bar .t-val{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--primary);}
+.timer-bar .t-score{font-size:.9rem;font-weight:500;}
+.timer-bar.warn .t-val{color:#f59e0b;}
+.timer-bar.danger .t-val{color:#ef4444;animation:pulse .8s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* SECTION TITLE */
+.section-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--primary);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:.6rem;}
+.section-title .badge{background:var(--primary);color:#fff;font-size:.7rem;padding:.2rem .6rem;border-radius:50px;}
+.section-title .badge-om{background:var(--om);color:#fff;font-size:.7rem;padding:.2rem .6rem;border-radius:50px;}
+
+/* QCM CARDS */
+.q-card{background:var(--surface);border-radius:12px;padding:1.4rem 1.6rem;margin-bottom:1rem;box-shadow:var(--shadow-sm);border:1.5px solid var(--border);transition:border-color .2s;}
+.q-card.answered{border-color:#cbd5e1;}
+.q-num{font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;}
+.q-text{font-size:.97rem;font-weight:500;color:var(--text);margin-bottom:1rem;line-height:1.5;}
+.options{display:flex;flex-direction:column;gap:.5rem;}
+.opt{display:flex;align-items:center;gap:.75rem;padding:.6rem .9rem;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:.9rem;transition:all .15s;}
+.opt:hover:not(.locked){border-color:var(--primary);background:#fdf2f4;}
+.opt.selected{border-color:var(--primary);background:#fdf2f4;}
+.opt.correct{border-color:var(--success);background:#f0fdf4;color:#065f46;}
+.opt.incorrect{border-color:var(--danger);background:#fef2f2;color:#7f1d1d;}
+.opt.locked{cursor:default;}
+.opt-icon{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;}
+.opt.correct .opt-icon{background:var(--success);border-color:var(--success);}
+.opt.incorrect .opt-icon{background:var(--danger);border-color:var(--danger);}
+.opt.selected:not(.correct):not(.incorrect) .opt-icon{background:var(--primary);border-color:var(--primary);}
+.feedback{margin-top:.75rem;padding:.6rem .9rem;border-radius:8px;font-size:.83rem;line-height:1.5;display:none;}
+.feedback.show{display:block;}
+.feedback.ok{background:#f0fdf4;color:#065f46;border-left:3px solid var(--success);}
+.feedback.ko{background:#fef2f2;color:#7f1d1d;border-left:3px solid var(--danger);}
+
+/* CAS PRATIQUE */
+.cas-card{background:var(--surface);border-radius:14px;padding:1.8rem;margin-bottom:1.5rem;box-shadow:var(--shadow);border:1.5px solid var(--border);}
+.cas-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:.3rem;}
+.cas-pts{display:inline-block;background:#fff8e1;border:1px solid #ffe082;color:#92400e;font-size:.75rem;font-weight:600;padding:.15rem .6rem;border-radius:50px;margin-bottom:1rem;}
+.cas-scenario{background:var(--surface2);border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.88rem;line-height:1.7;color:#334155;border-left:3px solid var(--om);}
+.cas-scenario strong{color:var(--om);}
+.cas-objections{display:flex;flex-direction:column;gap:.5rem;margin:1rem 0;}
+.cas-obj{display:flex;align-items:flex-start;gap:.7rem;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:.7rem 1rem;font-size:.87rem;color:#5d4037;}
+.cas-obj-num{font-family:'Syne',sans-serif;font-weight:700;color:var(--om);flex-shrink:0;}
+.cas-question{font-size:.9rem;font-weight:500;margin-bottom:.5rem;color:var(--text);}
+.cas-question span{display:inline-block;background:var(--primary);color:#fff;font-size:.7rem;padding:.15rem .5rem;border-radius:50px;margin-right:.4rem;}
+.cas-textarea{width:100%;min-height:95px;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:.88rem;resize:vertical;outline:none;transition:border-color .2s;margin-bottom:.8rem;}
+.cas-textarea:focus{border-color:var(--primary);}
+
+.submit-section{text-align:center;margin-top:2.5rem;padding-top:2rem;border-top:1.5px solid var(--border);}
+.submit-section p{font-size:.85rem;color:var(--text-muted);margin-bottom:1rem;}
+
+/* PROGRESS */
+.progress-wrap{margin-bottom:1.5rem;}
+.progress-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--om));border-radius:3px;transition:width .4s;}
+.progress-label{font-size:.75rem;color:var(--text-muted);margin-top:.4rem;text-align:right;}
+
+/* RESULTS */
+.results-card{background:var(--surface);border-radius:16px;padding:2.5rem;box-shadow:var(--shadow);max-width:700px;margin:0 auto;}
+.score-ring-wrap{text-align:center;margin-bottom:2rem;}
+.score-ring{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:140px;height:140px;border-radius:50%;border:6px solid var(--border);position:relative;background:conic-gradient(var(--primary) 0deg,var(--border) 0deg);transition:background 1s;}
+.score-ring .s-pct{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text);z-index:2;position:relative;}
+.score-ring .s-label{font-size:.72rem;color:var(--text-muted);z-index:2;position:relative;}
+.score-ring::after{content:'';position:absolute;inset:8px;background:var(--surface);border-radius:50%;}
+.result-meta{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:2rem;}
+.meta-item{text-align:center;background:var(--surface2);border-radius:10px;padding:.8rem 1.2rem;border:1px solid var(--border);min-width:120px;}
+.meta-item .m-val{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--primary);}
+.meta-item .m-lbl{font-size:.75rem;color:var(--text-muted);}
+.result-badge{text-align:center;margin-bottom:1.5rem;}
+.badge-pill{display:inline-block;padding:.5rem 1.5rem;border-radius:50px;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.05em;}
+.badge-pill.pass{background:#dcfce7;color:#166534;}
+.badge-pill.fail{background:#fee2e2;color:#991b1b;}
+.badge-pill.retry{background:#fff8e1;color:#92400e;}
+.code-section{background:var(--surface2);border-radius:10px;padding:1.2rem;text-align:center;margin-bottom:1.5rem;border:1.5px dashed var(--border);}
+.code-section p{font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem;}
+.code-section .code-val{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--primary);letter-spacing:.2em;}
+.detail-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);}
+.detail-row{display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;}
+.detail-row .dr-num{color:var(--text-muted);width:24px;flex-shrink:0;font-size:.78rem;}
+.detail-row .dr-q{flex:1;color:var(--text);}
+.detail-row .dr-s{font-weight:600;flex-shrink:0;}
+.dr-s.ok{color:var(--success);}
+.dr-s.ko{color:var(--danger);}
+.cas-model{background:var(--surface2);border-radius:10px;padding:1rem 1.2rem;margin-bottom:.8rem;border-left:3px solid var(--gold);}
+.cas-model h4{font-size:.88rem;font-weight:600;color:#92400e;margin-bottom:.4rem;}
+.cas-model p{font-size:.83rem;color:#334155;line-height:1.6;}
+.actions-row{display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-band">🏪 MAFA HOLDING &nbsp;·&nbsp; Projet Oxygène</div>
+    <h1>Évaluation <span>Agent Terrain</span></h1>
+    <p>OM Business — Recrutement Marchand &nbsp;|&nbsp; Niveau intermédiaire</p>
+  </div>
+
+  <!-- ===== ÉCRAN INTRO ===== -->
+  <div class="screen active" id="screen-intro">
+    <div class="intro-card">
+      <h2>📋 Informations du candidat</h2>
+      <div class="form-group">
+        <label>Nom complet *</label>
+        <input type="text" id="inp-nom" placeholder="Ex : Koné Amadou" />
+      </div>
+      <div class="form-group">
+        <label>Numéro de téléphone *</label>
+        <input type="tel" id="inp-tel" placeholder="Ex : 07 00 00 00 00" />
+      </div>
+      <div class="form-group">
+        <label>Zone *</label>
+        <select id="inp-zone">
+          <option value="">— Sélectionner une zone —</option>
+          <option value="Cocody">Cocody</option>
+          <option value="Adjamé">Adjamé</option>
+          <option value="Plateau">Plateau</option>
+          <option value="Treichville">Treichville</option>
+          <option value="Port-Bouët">Port-Bouët</option>
+          <option value="Yopougon">Yopougon</option>
+          <option value="Abobo">Abobo</option>
+          <option value="Attécoubé">Attécoubé</option>
+          <option value="Soubré">Soubré</option>
+          <option value="Divo">Divo</option>
+          <option value="Gagnoa">Gagnoa</option>
+          <option value="San-Pédro">San-Pédro</option>
+          <option value="Bouaké">Bouaké</option>
+          <option value="Korhogo">Korhogo</option>
+          <option value="Yamoussoukro">Yamoussoukro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date d'évaluation *</label>
+        <input type="date" id="inp-date" />
+      </div>
+
+      <div class="info-box">
+        <p>📌 Consignes de l'évaluation</p>
+        <ul>
+          <li>29 questions à choix multiples (QCM)</li>
+          <li>1 cas pratique avec 4 sous-questions</li>
+          <li>Durée totale : <strong>30 minutes</strong></li>
+          <li>Score minimum pour valider : <strong>75 %</strong></li>
+          <li>Chaque QCM a une seule bonne réponse</li>
+          <li>Lecture attentive recommandée avant de répondre</li>
+        </ul>
+      </div>
+
+      <button class="btn btn-primary btn-full" onclick="startExam()">Commencer l'évaluation →</button>
+    </div>
+  </div>
+
+  <!-- ===== ÉCRAN EXAMEN ===== -->
+  <div class="screen" id="screen-exam">
+
+    <!-- Timer bar -->
+    <div class="timer-bar" id="timer-bar">
+      <div>
+        <div class="t-label">Temps restant</div>
+        <div class="t-val" id="t-display">30:00</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="progress-wrap" style="margin:0;min-width:180px;">
+          <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+          <div class="progress-label" id="prog-label">0 / 29 QCM répondus</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="t-label">Score QCM</div>
+        <div class="t-score" id="live-score">0 / 29</div>
+      </div>
+    </div>
+
+    <div style="height:1.5rem;"></div>
+
+    <!-- SECTION 1 — MISSION & ORGANISATION -->
+    <div class="section-title">
+      <span class="badge">1</span> Mission & Organisation terrain
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" id="qc1">
+      <div class="q-num">Question 1 / 29</div>
+      <div class="q-text">Quel est l'objectif quotidien d'enrôlement d'un agent terrain en Phase 1 du Projet Oxygène ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(1,0,this)"><div class="opt-icon"></div>2 à 3 marchands par jour</div>
+        <div class="opt" onclick="answer(1,1,this)"><div class="opt-icon"></div>4 à 5 marchands par jour</div>
+        <div class="opt" onclick="answer(1,2,this)"><div class="opt-icon"></div>8 marchands par jour</div>
+        <div class="opt" onclick="answer(1,3,this)"><div class="opt-icon"></div>10 marchands par jour</div>
+      </div>
+      <div class="feedback" id="fb1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" id="qc2">
+      <div class="q-num">Question 2 / 29</div>
+      <div class="q-text">Combien d'agents terrain supervise un Superviseur dans la chaîne hiérarchique MAFA ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(2,0,this)"><div class="opt-icon"></div>5 à 10 agents</div>
+        <div class="opt" onclick="answer(2,1,this)"><div class="opt-icon"></div>10 à 15 agents</div>
+        <div class="opt" onclick="answer(2,2,this)"><div class="opt-icon"></div>15 à 20 agents</div>
+        <div class="opt" onclick="answer(2,3,this)"><div class="opt-icon"></div>20 à 30 agents</div>
+      </div>
+      <div class="feedback" id="fb2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" id="qc3">
+      <div class="q-num">Question 3 / 29</div>
+      <div class="q-text">Quelle est la mission principale de l'Inspecteur dans la chaîne hiérarchique MAFA ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(3,0,this)"><div class="opt-icon"></div>Former les agents terrain en salle de classe</div>
+        <div class="opt" onclick="answer(3,1,this)"><div class="opt-icon"></div>Superviser 15 agents et effectuer 40 visites terrain par jour</div>
+        <div class="opt" onclick="answer(3,2,this)"><div class="opt-icon"></div>Signer les contrats marchands avec Orange CI</div>
+        <div class="opt" onclick="answer(3,3,this)"><div class="opt-icon"></div>Gérer la plateforme informatique OM Business</div>
+      </div>
+      <div class="feedback" id="fb3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="qc4">
+      <div class="q-num">Question 4 / 29</div>
+      <div class="q-text">Sous quel délai un agent terrain doit-il signaler un blocage technique rencontré sur le terrain ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(4,0,this)"><div class="opt-icon"></div>Dans les 24 heures qui suivent</div>
+        <div class="opt" onclick="answer(4,1,this)"><div class="opt-icon"></div>Dans les 48 heures</div>
+        <div class="opt" onclick="answer(4,2,this)"><div class="opt-icon"></div>En temps réel via l'application mobile dédiée</div>
+        <div class="opt" onclick="answer(4,3,this)"><div class="opt-icon"></div>Lors du rapport hebdomadaire du vendredi</div>
+      </div>
+      <div class="feedback" id="fb4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="qc5">
+      <div class="q-num">Question 5 / 29</div>
+      <div class="q-text">Quel(s) élément(s) vestimentaires sont OBLIGATOIRES pendant toute activité terrain selon les règles MAFA ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(5,0,this)"><div class="opt-icon"></div>Casquette orange uniquement</div>
+        <div class="opt" onclick="answer(5,1,this)"><div class="opt-icon"></div>Badge officiel MAFA + tee-shirt MAFA</div>
+        <div class="opt" onclick="answer(5,2,this)"><div class="opt-icon"></div>Gilet réfléchissant</div>
+        <div class="opt" onclick="answer(5,3,this)"><div class="opt-icon"></div>Cravate orange et badge</div>
+      </div>
+      <div class="feedback" id="fb5"></div>
+    </div>
+
+    <!-- SECTION 2 — PROFILS MARCHANDS -->
+    <div class="section-title">
+      <span class="badge">2</span> Profils Marchands Cibles
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" id="qc6">
+      <div class="q-num">Question 6 / 29</div>
+      <div class="q-text">Le profil marchand "Essentiel" correspond à quel type de commerce ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(6,0,this)"><div class="opt-icon"></div>Grande surface avec un CA mensuel supérieur à 5M XOF</div>
+        <div class="opt" onclick="answer(6,1,this)"><div class="opt-icon"></div>Restaurant ou hôtel classé 3 étoiles minimum</div>
+        <div class="opt" onclick="answer(6,2,this)"><div class="opt-icon"></div>Petit commerce (épicier, artisan, kiosque) avec CA annuel inférieur à 150 000 XOF</div>
+        <div class="opt" onclick="answer(6,3,this)"><div class="opt-icon"></div>Commerce avec 1 à 4 transactions OM Business par mois</div>
+      </div>
+      <div class="feedback" id="fb6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" id="qc7">
+      <div class="q-num">Question 7 / 29</div>
+      <div class="q-text">Qu'est-ce qui distingue principalement un marchand "Premium" d'un marchand "Classique" dans OM Business ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(7,0,this)"><div class="opt-icon"></div>La localisation géographique du commerce (centre-ville vs périphérie)</div>
+        <div class="opt" onclick="answer(7,1,this)"><div class="opt-icon"></div>Un chiffre d'affaires supérieur à 5M XOF/mois et l'accès à des fonctionnalités avancées</div>
+        <div class="opt" onclick="answer(7,2,this)"><div class="opt-icon"></div>L'ancienneté du commerce (plus de 5 ans d'activité)</div>
+        <div class="opt" onclick="answer(7,3,this)"><div class="opt-icon"></div>Le nombre d'employés (plus de 10 employés)</div>
+      </div>
+      <div class="feedback" id="fb7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" id="qc8">
+      <div class="q-num">Question 8 / 29</div>
+      <div class="q-text">Pourquoi est-il essentiel de qualifier le profil du marchand AVANT de commencer la prospection ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(8,0,this)"><div class="opt-icon"></div>Pour calculer la commission que l'agent va percevoir</div>
+        <div class="opt" onclick="answer(8,1,this)"><div class="opt-icon"></div>Pour choisir le bon argumentaire et anticiper les objections dès le départ</div>
+        <div class="opt" onclick="answer(8,2,this)"><div class="opt-icon"></div>Pour déterminer la zone géographique d'intervention de l'agent</div>
+        <div class="opt" onclick="answer(8,3,this)"><div class="opt-icon"></div>Pour fixer le rendez-vous au moment le plus propice</div>
+      </div>
+      <div class="feedback" id="fb8"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="qc9">
+      <div class="q-num">Question 9 / 29</div>
+      <div class="q-text">Un marchand gérant un maquis de quartier effectue en moyenne 3 transactions OM Business par mois. Quel profil lui attribuez-vous ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(9,0,this)"><div class="opt-icon"></div>Essentiel</div>
+        <div class="opt" onclick="answer(9,1,this)"><div class="opt-icon"></div>Classique</div>
+        <div class="opt" onclick="answer(9,2,this)"><div class="opt-icon"></div>Premium</div>
+        <div class="opt" onclick="answer(9,3,this)"><div class="opt-icon"></div>Aucun profil défini — il n'est pas éligible</div>
+      </div>
+      <div class="feedback" id="fb9"></div>
+    </div>
+
+    <!-- SECTION 3 — APPROCHE TERRAIN -->
+    <div class="section-title">
+      <span class="badge">3</span> Approche Commerciale & Argumentaire
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="qc10">
+      <div class="q-num">Question 10 / 29</div>
+      <div class="q-text">La méthode PACO-A recommande d'utiliser une question ouverte lors de la prise de contact. Quel est l'objectif principal de cette question ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(10,0,this)"><div class="opt-icon"></div>Obtenir immédiatement la signature du marchand</div>
+        <div class="opt" onclick="answer(10,1,this)"><div class="opt-icon"></div>Présenter directement les tarifs OM Business pour aller à l'essentiel</div>
+        <div class="opt" onclick="answer(10,2,this)"><div class="opt-icon"></div>Créer le dialogue et identifier les besoins réels du marchand</div>
+        <div class="opt" onclick="answer(10,3,this)"><div class="opt-icon"></div>Expliquer les étapes KYC dès le début</div>
+      </div>
+      <div class="feedback" id="fb10"></div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-card" id="qc11">
+      <div class="q-num">Question 11 / 29</div>
+      <div class="q-text">Dans l'argumentaire commercial, la méthode CAB signifie :</div>
+      <div class="options">
+        <div class="opt" onclick="answer(11,0,this)"><div class="opt-icon"></div>Coût, Avantage, Bénéfice</div>
+        <div class="opt" onclick="answer(11,1,this)"><div class="opt-icon"></div>Caractéristique, Avantage, Bénéfice</div>
+        <div class="opt" onclick="answer(11,2,this)"><div class="opt-icon"></div>Client, Argumentaire, Bilan</div>
+        <div class="opt" onclick="answer(11,3,this)"><div class="opt-icon"></div>Comprendre, Adapter, Bénéfice</div>
+      </div>
+      <div class="feedback" id="fb11"></div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" id="qc12">
+      <div class="q-num">Question 12 / 29</div>
+      <div class="q-text">Quelle durée approximative est recommandée pour une visite de prospection auprès d'un petit commerce (profil Essentiel) ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(12,0,this)"><div class="opt-icon"></div>Moins de 5 minutes (aller à l'essentiel)</div>
+        <div class="opt" onclick="answer(12,1,this)"><div class="opt-icon"></div>Entre 15 et 30 minutes</div>
+        <div class="opt" onclick="answer(12,2,this)"><div class="opt-icon"></div>1 heure minimum pour être complet</div>
+        <div class="opt" onclick="answer(12,3,this)"><div class="opt-icon"></div>2 heures avec démonstration intégrale</div>
+      </div>
+      <div class="feedback" id="fb12"></div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" id="qc13">
+      <div class="q-num">Question 13 / 29</div>
+      <div class="q-text">Que doit faire un agent terrain s'il ne connaît pas la réponse à une question technique posée par un marchand ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(13,0,this)"><div class="opt-icon"></div>Inventer une réponse plausible pour ne pas perdre le client</div>
+        <div class="opt" onclick="answer(13,1,this)"><div class="opt-icon"></div>Promettre de revenir plus tard sans donner de délai précis</div>
+        <div class="opt" onclick="answer(13,2,this)"><div class="opt-icon"></div>Escalader la question vers son Superviseur plutôt que d'improviser</div>
+        <div class="opt" onclick="answer(13,3,this)"><div class="opt-icon"></div>Orienter le marchand directement vers le site web d'Orange CI</div>
+      </div>
+      <div class="feedback" id="fb13"></div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" id="qc14">
+      <div class="q-num">Question 14 / 29</div>
+      <div class="q-text">Quel outil matériel aide l'agent terrain à structurer son argumentaire et à suivre ses visites de prospection ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(14,0,this)"><div class="opt-icon"></div>Le cahier de bord du Superviseur</div>
+        <div class="opt" onclick="answer(14,1,this)"><div class="opt-icon"></div>La fiche de visite papier transmise par Orange CI</div>
+        <div class="opt" onclick="answer(14,2,this)"><div class="opt-icon"></div>L'application mobile dédiée à l'agent</div>
+        <div class="opt" onclick="answer(14,3,this)"><div class="opt-icon"></div>Un document Word fourni par Crystal Solutions</div>
+      </div>
+      <div class="feedback" id="fb14"></div>
+    </div>
+
+    <!-- SECTION 4 — ENRÔLEMENT & KYC -->
+    <div class="section-title">
+      <span class="badge">4</span> Processus d'Enrôlement & KYC
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" id="qc15">
+      <div class="q-num">Question 15 / 29</div>
+      <div class="q-text">Que signifie l'acronyme KYC dans le cadre de l'enrôlement OM Business ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(15,0,this)"><div class="opt-icon"></div>Keep Your Commerce</div>
+        <div class="opt" onclick="answer(15,1,this)"><div class="opt-icon"></div>Know Your Customer</div>
+        <div class="opt" onclick="answer(15,2,this)"><div class="opt-icon"></div>Key Your Code</div>
+        <div class="opt" onclick="answer(15,3,this)"><div class="opt-icon"></div>Know Your Contract</div>
+      </div>
+      <div class="feedback" id="fb15"></div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card" id="qc16">
+      <div class="q-num">Question 16 / 29</div>
+      <div class="q-text">Combien d'étapes comporte le processus d'enrôlement PACO-O (côté opération) ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(16,0,this)"><div class="opt-icon"></div>3 étapes</div>
+        <div class="opt" onclick="answer(16,1,this)"><div class="opt-icon"></div>4 étapes</div>
+        <div class="opt" onclick="answer(16,2,this)"><div class="opt-icon"></div>5 étapes</div>
+        <div class="opt" onclick="answer(16,3,this)"><div class="opt-icon"></div>6 étapes</div>
+      </div>
+      <div class="feedback" id="fb16"></div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card" id="qc17">
+      <div class="q-num">Question 17 / 29</div>
+      <div class="q-text">Quel document est indispensable pour démarrer l'enrôlement KYC d'un marchand ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(17,0,this)"><div class="opt-icon"></div>Carte d'étudiant ou carte de scolarité</div>
+        <div class="opt" onclick="answer(17,1,this)"><div class="opt-icon"></div>CNI ou passeport valide + justificatif de l'activité commerciale</div>
+        <div class="opt" onclick="answer(17,2,this)"><div class="opt-icon"></div>Permis de conduire uniquement</div>
+        <div class="opt" onclick="answer(17,3,this)"><div class="opt-icon"></div>Carte d'électeur seule</div>
+      </div>
+      <div class="feedback" id="fb17"></div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="q-card" id="qc18">
+      <div class="q-num">Question 18 / 29</div>
+      <div class="q-text">Que permet concrètement le "linkage QR Code" lors de l'enrôlement d'un marchand ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(18,0,this)"><div class="opt-icon"></div>Télécharger automatiquement l'application OM Business sur le téléphone du marchand</div>
+        <div class="opt" onclick="answer(18,1,this)"><div class="opt-icon"></div>Associer le compte OM Business du marchand à son QR Code d'encaissement ✓</div>
+        <div class="opt" onclick="answer(18,2,this)"><div class="opt-icon"></div>Envoyer le rapport de visite directement au Superviseur</div>
+        <div class="opt" onclick="answer(18,3,this)"><div class="opt-icon"></div>Générer un code de sécurité temporaire pour le marchand</div>
+      </div>
+      <div class="feedback" id="fb18"></div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="q-card" id="qc19">
+      <div class="q-num">Question 19 / 29</div>
+      <div class="q-text">Que doit faire un agent terrain si un dossier KYC est rejeté par la plateforme après soumission ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(19,0,this)"><div class="opt-icon"></div>Abandonner définitivement l'enrôlement de ce marchand</div>
+        <div class="opt" onclick="answer(19,1,this)"><div class="opt-icon"></div>Attendre 30 jours avant de tenter une nouvelle soumission</div>
+        <div class="opt" onclick="answer(19,2,this)"><div class="opt-icon"></div>Identifier le motif du rejet, corriger avec le marchand et resoumettre le dossier</div>
+        <div class="opt" onclick="answer(19,3,this)"><div class="opt-icon"></div>Transférer immédiatement le dossier directement à Orange CI</div>
+      </div>
+      <div class="feedback" id="fb19"></div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="q-card" id="qc20">
+      <div class="q-num">Question 20 / 29</div>
+      <div class="q-text">Quel élément matériel est remis au marchand après l'enrôlement pour matérialiser son point de paiement OM Business ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(20,0,this)"><div class="opt-icon"></div>Un contrat papier signé avec Orange CI</div>
+        <div class="opt" onclick="answer(20,1,this)"><div class="opt-icon"></div>Une carte bancaire prépayée orange</div>
+        <div class="opt" onclick="answer(20,2,this)"><div class="opt-icon"></div>Le sticker "PAYER ICI" et le QR Code imprimé</div>
+        <div class="opt" onclick="answer(20,3,this)"><div class="opt-icon"></div>Une carte de fidélité MAFA</div>
+      </div>
+      <div class="feedback" id="fb20"></div>
+    </div>
+
+    <!-- SECTION 5 — GESTION DES OBJECTIONS -->
+    <div class="section-title">
+      <span class="badge">5</span> Gestion des Objections — Méthode CRAC
+    </div>
+
+    <!-- Q21 -->
+    <div class="q-card" id="qc21">
+      <div class="q-num">Question 21 / 29</div>
+      <div class="q-text">Que signifie chaque lettre de l'acronyme CRAC dans la gestion des objections ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(21,0,this)"><div class="opt-icon"></div>Comprendre, Reformuler, Analyser, Conclure</div>
+        <div class="opt" onclick="answer(21,1,this)"><div class="opt-icon"></div>Creuser, Reformuler, Argumenter, Conclure</div>
+        <div class="opt" onclick="answer(21,2,this)"><div class="opt-icon"></div>Créer, Répondre, Adapter, Confirmer</div>
+        <div class="opt" onclick="answer(21,3,this)"><div class="opt-icon"></div>Calculer, Résoudre, Ajuster, Convaincre</div>
+      </div>
+      <div class="feedback" id="fb21"></div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="q-card" id="qc22">
+      <div class="q-num">Question 22 / 29</div>
+      <div class="q-text">Face à l'objection "Je n'ai pas le temps maintenant", quelle est la PREMIÈRE étape de la méthode CRAC ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(22,0,this)"><div class="opt-icon"></div>Argumenter immédiatement sur la rapidité de l'enrôlement (moins de 10 min)</div>
+        <div class="opt" onclick="answer(22,1,this)"><div class="opt-icon"></div>Conclure et laisser une plaquette sans insister</div>
+        <div class="opt" onclick="answer(22,2,this)"><div class="opt-icon"></div>Creuser l'objection pour comprendre la vraie raison du refus</div>
+        <div class="opt" onclick="answer(22,3,this)"><div class="opt-icon"></div>Reformuler directement et proposer un autre rendez-vous</div>
+      </div>
+      <div class="feedback" id="fb22"></div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="q-card" id="qc23">
+      <div class="q-num">Question 23 / 29</div>
+      <div class="q-text">Quel signal indique généralement qu'un marchand est en réalité intéressé par OM Business malgré une objection apparente ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(23,0,this)"><div class="opt-icon"></div>Un refus catégorique sans poser de questions</div>
+        <div class="opt" onclick="answer(23,1,this)"><div class="opt-icon"></div>Une absence totale de réaction et de regard</div>
+        <div class="opt" onclick="answer(23,2,this)"><div class="opt-icon"></div>Des objections précises portant sur les tarifs ou les fonctionnalités</div>
+        <div class="opt" onclick="answer(23,3,this)"><div class="opt-icon"></div>Une demande de documentation écrite à envoyer plus tard</div>
+      </div>
+      <div class="feedback" id="fb23"></div>
+    </div>
+
+    <!-- SECTION 6 — FONCTIONNALITÉS OM BUSINESS -->
+    <div class="section-title">
+      <span class="badge-om">6</span> Fonctionnalités & Tarification OM Business
+    </div>
+
+    <!-- Q24 -->
+    <div class="q-card" id="qc24">
+      <div class="q-num">Question 24 / 29</div>
+      <div class="q-text">Comment un client effectue-t-il un paiement chez un marchand OM Business équipé d'un QR Code ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(24,0,this)"><div class="opt-icon"></div>En appelant le service client Orange au 777</div>
+        <div class="opt" onclick="answer(24,1,this)"><div class="opt-icon"></div>En scannant le QR Code du marchand avec son application Orange Money</div>
+        <div class="opt" onclick="answer(24,2,this)"><div class="opt-icon"></div>En remettant du cash au marchand qui effectue la saisie lui-même</div>
+        <div class="opt" onclick="answer(24,3,this)"><div class="opt-icon"></div>En envoyant un SMS au numéro OM du marchand</div>
+      </div>
+      <div class="feedback" id="fb24"></div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="q-card" id="qc25">
+      <div class="q-num">Question 25 / 29</div>
+      <div class="q-text">Quel est le taux de commission applicable aux encaissements OM Business jusqu'à 50 000 XOF par jour ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(25,0,this)"><div class="opt-icon"></div>0,5 % sur chaque transaction</div>
+        <div class="opt" onclick="answer(25,1,this)"><div class="opt-icon"></div>1 % sur chaque transaction</div>
+        <div class="opt" onclick="answer(25,2,this)"><div class="opt-icon"></div>2 % sur chaque transaction</div>
+        <div class="opt" onclick="answer(25,3,this)"><div class="opt-icon"></div>0 % — les encaissements sont gratuits jusqu'à ce seuil journalier</div>
+      </div>
+      <div class="feedback" id="fb25"></div>
+    </div>
+
+    <!-- Q26 -->
+    <div class="q-card" id="qc26">
+      <div class="q-num">Question 26 / 29</div>
+      <div class="q-text">Quel est le plafond mensuel de transaction par défaut pour un compte OM Business standard ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(26,0,this)"><div class="opt-icon"></div>200 000 XOF par mois</div>
+        <div class="opt" onclick="answer(26,1,this)"><div class="opt-icon"></div>300 000 XOF par mois</div>
+        <div class="opt" onclick="answer(26,2,this)"><div class="opt-icon"></div>500 000 XOF par mois</div>
+        <div class="opt" onclick="answer(26,3,this)"><div class="opt-icon"></div>1 000 000 XOF par mois</div>
+      </div>
+      <div class="feedback" id="fb26"></div>
+    </div>
+
+    <!-- Q27 -->
+    <div class="q-card" id="qc27">
+      <div class="q-num">Question 27 / 29</div>
+      <div class="q-text">Qu'est-ce que le "déplafonnement" d'un compte OM Business et comment est-il obtenu ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(27,0,this)"><div class="opt-icon"></div>La fermeture définitive du compte à la fin du mois</div>
+        <div class="opt" onclick="answer(27,1,this)"><div class="opt-icon"></div>Le passage automatique d'un profil Essentiel à Classique</div>
+        <div class="opt" onclick="answer(27,2,this)"><div class="opt-icon"></div>L'augmentation du plafond mensuel de transactions sur demande justifiée auprès d'Orange CI</div>
+        <div class="opt" onclick="answer(27,3,this)"><div class="opt-icon"></div>La suppression de tous les frais de transaction pendant 30 jours</div>
+      </div>
+      <div class="feedback" id="fb27"></div>
+    </div>
+
+    <!-- SECTION 7 — PORTEFEUILLE & SUIVI -->
+    <div class="section-title">
+      <span class="badge">7</span> Suivi du Portefeuille Marchand
+    </div>
+
+    <!-- Q28 -->
+    <div class="q-card" id="qc28">
+      <div class="q-num">Question 28 / 29</div>
+      <div class="q-text">Un marchand enrôlé il y a 38 jours n'a effectué aucune transaction OM Business depuis son enrôlement. Dans quelle catégorie de portefeuille se classe-t-il ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(28,0,this)"><div class="opt-icon"></div>Actif</div>
+        <div class="opt" onclick="answer(28,1,this)"><div class="opt-icon"></div>À développer</div>
+        <div class="opt" onclick="answer(28,2,this)"><div class="opt-icon"></div>Inactif (0 transaction depuis plus de 30 jours)</div>
+        <div class="opt" onclick="answer(28,3,this)"><div class="opt-icon"></div>En attente de validation KYC</div>
+      </div>
+      <div class="feedback" id="fb28"></div>
+    </div>
+
+    <!-- Q29 -->
+    <div class="q-card" id="qc29">
+      <div class="q-num">Question 29 / 29</div>
+      <div class="q-text">Quel est le délai d'intervention recommandé auprès d'un marchand classé "Inactif" (0 transaction depuis plus de 30 jours) ?</div>
+      <div class="options">
+        <div class="opt" onclick="answer(29,0,this)"><div class="opt-icon"></div>À la prochaine visite mensuelle planifiée</div>
+        <div class="opt" onclick="answer(29,1,this)"><div class="opt-icon"></div>Sous 48 heures, visite urgente de réactivation</div>
+        <div class="opt" onclick="answer(29,2,this)"><div class="opt-icon"></div>Lors du rapport hebdomadaire du vendredi</div>
+        <div class="opt" onclick="answer(29,3,this)"><div class="opt-icon"></div>Dans les 7 jours suivant le signalement</div>
+      </div>
+      <div class="feedback" id="fb29"></div>
+    </div>
+
+    <!-- ===== CAS PRATIQUE ===== -->
+    <div class="section-title" style="margin-top:2.5rem;">
+      <span class="badge-om">📋</span> Cas Pratique — Mise en Situation Terrain
+    </div>
+
+    <div class="cas-card">
+      <h3>Visite chez M. Traoré — Épicerie, Quartier Dokui (Cocody)</h3>
+      <span class="cas-pts">Réponses libres — Corrigé fourni à la fin</span>
+      <div class="cas-scenario">
+        <strong>Situation :</strong> Vous êtes agent terrain MAFA. Vous visitez M. Traoré, épicier installé depuis 3 ans dans le quartier Dokui à Cocody. Son commerce génère un chiffre d'affaires mensuel estimé à <strong>80 000 XOF</strong>. Il n'a jamais utilisé Orange Money en tant que marchand et reçoit tous ses paiements en cash. En vous voyant arriver avec votre badge MAFA et votre tee-shirt officiel, il vous accueille mais soulève plusieurs objections.
+      </div>
+
+      <div class="cas-objections">
+        <div class="cas-obj"><div class="cas-obj-num">Objection 1 :</div><div>"Je n'ai pas de smartphone. Comment je vais utiliser ça ?"</div></div>
+        <div class="cas-obj"><div class="cas-obj-num">Objection 2 :</div><div>"J'ai peur des frais cachés. Ça va me coûter combien exactement ?"</div></div>
+        <div class="cas-obj"><div class="cas-obj-num">Objection 3 :</div><div>"Mes clients ici sont des personnes âgées, ils ne connaissent pas Orange Money."</div></div>
+      </div>
+
+      <!-- Sous-question A -->
+      <div style="margin-top:1.5rem;">
+        <div class="cas-question"><span>A</span> Quel profil marchand OM Business attribuez-vous à M. Traoré ? Justifiez brièvement votre réponse.</div>
+        <textarea class="cas-textarea" id="cas-a" placeholder="Identifiez le profil et expliquez pourquoi…"></textarea>
+      </div>
+
+      <!-- Sous-question B -->
+      <div>
+        <div class="cas-question"><span>B</span> Appliquez la méthode CRAC pour répondre à l'Objection 2 (frais cachés). Détaillez chacune des 4 étapes.</div>
+        <textarea class="cas-textarea" id="cas-b" placeholder="C — Creuser : …&#10;R — Reformuler : …&#10;A — Argumenter : …&#10;C — Conclure : …" style="min-height:130px;"></textarea>
+      </div>
+
+      <!-- Sous-question C -->
+      <div>
+        <div class="cas-question"><span>C</span> Quels sont les 3 types de documents KYC que vous devez collecter pour enrôler M. Traoré ?</div>
+        <textarea class="cas-textarea" id="cas-c" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
+      </div>
+
+      <!-- Sous-question D -->
+      <div>
+        <div class="cas-question"><span>D</span> Après l'enrôlement, quels éléments matériels et actions numériques réalisez-vous pour finaliser le point de paiement de M. Traoré ?</div>
+        <textarea class="cas-textarea" id="cas-d" placeholder="Listez les étapes finales de l'enrôlement et le matériel remis…"></textarea>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-section">
+      <p>Vérifiez que vous avez répondu à toutes les questions QCM avant de soumettre.</p>
+      <button class="btn btn-primary" onclick="submitExam()" style="padding:.85rem 3rem;font-size:1rem;">
+        Soumettre l'évaluation
+      </button>
+    </div>
+  </div><!-- /screen-exam -->
+
+  <!-- ===== ÉCRAN RÉSULTATS ===== -->
+  <div class="screen" id="screen-results">
+    <div class="results-card">
+      <div class="score-ring-wrap">
+        <div class="score-ring" id="score-ring">
+          <div class="s-pct" id="r-pct">0%</div>
+          <div class="s-label">Score QCM</div>
+        </div>
+        <div style="margin-top:1rem;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;" id="r-name"></div>
+        <div style="color:var(--text-muted);font-size:.82rem;margin-top:.3rem;" id="r-zone"></div>
+        <div style="color:var(--text-muted);font-size:.82rem;margin-top:.15rem;" id="r-meta"></div>
+      </div>
+
+      <div class="result-meta">
+        <div class="meta-item">
+          <div class="m-val" id="r-correct">0</div>
+          <div class="m-lbl">Bonnes réponses / 29</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-val" id="r-wrong">0</div>
+          <div class="m-lbl">Erreurs</div>
+        </div>
+        <div class="meta-item">
+          <div class="m-val" id="r-time">—</div>
+          <div class="m-lbl">Temps utilisé</div>
+        </div>
+      </div>
+
+      <div class="result-badge">
+        <div class="badge-pill" id="r-badge">—</div>
+      </div>
+
+      <div class="code-section">
+        <p>Code de résultat à transmettre au Superviseur</p>
+        <div class="code-val" id="r-code">———</div>
+      </div>
+
+      <!-- Corrigé cas pratique -->
+      <div class="detail-title">📋 Corrigé — Cas Pratique</div>
+      <div class="cas-model">
+        <h4>A — Profil Marchand</h4>
+        <p><strong>Profil : Essentiel.</strong> M. Traoré est un petit commerçant (épicerie de quartier) avec un chiffre d'affaires mensuel estimé à 80 000 XOF, soit un CA annuel d'environ 960 000 XOF. Ce profil correspond à un marchand de proximité dont le besoin principal est de recevoir des paiements clients simplement et gratuitement.</p>
+      </div>
+      <div class="cas-model">
+        <h4>B — Méthode CRAC sur l'Objection "Frais cachés"</h4>
+        <p><strong>C — Creuser :</strong> "Quels types de frais vous préoccupent exactement : les frais d'ouverture de compte, les frais sur chaque encaissement, ou autre chose ?" — Identifier précisément la crainte.<br>
+        <strong>R — Reformuler :</strong> "Si je comprends bien, votre inquiétude principale est de ne pas payer des frais sur chaque vente que vous réalisez. C'est bien ça ?"<br>
+        <strong>A — Argumenter :</strong> "OM Business est totalement GRATUIT à l'ouverture. Les encaissements clients sont à 0 % de frais jusqu'à 50 000 XOF par jour. Au-delà, un taux de seulement 1 % s'applique. Il n'y a aucun frais mensuel fixe."<br>
+        <strong>C — Conclure :</strong> "Est-ce que ça répond à votre préoccupation ? Puis-je vous montrer en pratique comment ça fonctionne sur mon téléphone ?"</p>
+      </div>
+      <div class="cas-model">
+        <h4>C — Documents KYC à collecter</h4>
+        <p>1. <strong>CNI ou passeport valide</strong> (pièce d'identité du gérant)<br>
+        2. <strong>Justificatif de l'activité commerciale</strong> (registre de commerce, autorisation d'exercer ou patente)<br>
+        3. <strong>Photo de l'espace commercial</strong> (prise via l'application au moment de la visite)</p>
+      </div>
+      <div class="cas-model">
+        <h4>D — Finalisation du Point de Paiement</h4>
+        <p>1. Saisir les données KYC dans l'application mobile de l'agent.<br>
+        2. Effectuer le <strong>linkage QR Code</strong> pour associer le compte OM Business de M. Traoré à son QR Code personnalisé.<br>
+        3. Installer le <strong>sticker "PAYER ICI"</strong> à un endroit visible dans le commerce.<br>
+        4. Remettre le <strong>QR Code imprimé</strong> au marchand.<br>
+        5. Réaliser une <strong>transaction test</strong> (1 XOF) pour valider le bon fonctionnement.<br>
+        6. Prendre une <strong>photo de confirmation</strong> via l'application.</p>
+      </div>
+
+      <!-- Détail QCM -->
+      <div class="detail-title">Détail des réponses QCM</div>
+      <div id="detail-list"></div>
+
+      <div class="actions-row">
+        <button class="btn btn-secondary" onclick="location.reload()">Nouvelle évaluation</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimer</button>
+      </div>
+    </div>
+  </div><!-- /screen-results -->
+
+</div><!-- /wrapper -->
+
+<script>
+// ——————————————————————————————
+// DATA
+// ——————————————————————————————
+const QUESTIONS = [
+  // [correct_index, short_text, feedback_ok, feedback_ko]
+  [1, "Objectif quotidien Phase 1",
+    "Correct. En Phase 1 (pilote), l'objectif est de 4 à 5 enrôlements par jour. La Phase 2 vise 8 marchands/jour une fois le SDK PDV intégré.",
+    "Non. L'objectif Phase 1 est de 4 à 5 marchands/jour. L'objectif de 8/jour correspond à la Phase 2."],
+  [2, "Agents par Superviseur",
+    "Correct. Un Superviseur encadre entre 15 et 20 agents terrain.",
+    "Non. Un Superviseur encadre 15 à 20 agents terrain dans la structure MAFA."],
+  [1, "Mission de l'Inspecteur",
+    "Correct. L'Inspecteur supervise 15 agents et assure 40 visites terrain par jour.",
+    "Non. L'Inspecteur supervise 15 agents avec 40 visites/jour — il n'est pas formateur en salle."],
+  [2, "Délai signalement blocage",
+    "Correct. Les blocages techniques doivent être signalés en temps réel via l'application mobile dédiée.",
+    "Non. Le signalement se fait en temps réel via l'application — pas lors du rapport hebdomadaire."],
+  [1, "Équipement obligatoire",
+    "Correct. Le badge officiel MAFA et le tee-shirt MAFA sont OBLIGATOIRES pendant toute activité terrain.",
+    "Non. Le badge officiel ET le tee-shirt MAFA sont tous deux obligatoires pendant l'activité terrain."],
+  [2, "Profil Essentiel",
+    "Correct. Le profil Essentiel correspond aux petits commerces (épicier, artisan, kiosque) avec un CA annuel inférieur à 150 000 XOF.",
+    "Non. Le profil Essentiel désigne les petits commerces avec CA < 150 000 XOF/an — épiciers, artisans, kiosques."],
+  [1, "Profil Premium vs Classique",
+    "Correct. Le profil Premium est réservé aux marchands avec un CA > 5M XOF/mois et donne accès à des fonctionnalités avancées.",
+    "Non. La distinction Premium repose sur un CA supérieur à 5M XOF/mois avec des fonctionnalités additionnelles."],
+  [1, "Pourquoi qualifier le profil",
+    "Correct. Qualifier le profil permet de choisir le bon argumentaire et d'anticiper les objections spécifiques à ce type de marchand.",
+    "Non. Qualifier le profil sert avant tout à adapter l'argumentaire et anticiper les objections, pas à calculer une commission."],
+  [1, "Profil maquis 3 transactions/mois",
+    "Correct. 3 transactions par mois correspond au profil Classique (1 à 4 transactions/mois).",
+    "Non. 3 transactions/mois correspond au profil Classique — ni Essentiel (< 1) ni Premium (> 5M XOF CA)."],
+  [2, "Objectif question ouverte PACO-A",
+    "Correct. La question ouverte crée le dialogue et permet de découvrir les besoins réels du marchand avant de proposer une solution.",
+    "Non. La question ouverte sert à créer le dialogue et identifier les besoins — pas à conclure ou présenter les tarifs immédiatement."],
+  [1, "Méthode CAB",
+    "Correct. CAB signifie Caractéristique — Avantage — Bénéfice, pour construire un argumentaire orienté client.",
+    "Non. CAB = Caractéristique, Avantage, Bénéfice — c'est la structure d'un argumentaire commercial efficace."],
+  [1, "Durée visite petite prospection",
+    "Correct. Une visite de prospection efficace auprès d'un petit commerce dure entre 15 et 30 minutes.",
+    "Non. La durée recommandée est de 15 à 30 minutes — ni trop court (crédibilité), ni trop long (efficacité)."],
+  [2, "Que faire si question technique inconnue",
+    "Correct. L'agent escalade vers son Superviseur. Improviser une réponse incorrecte nuit à la crédibilité et peut créer des litiges.",
+    "Non. L'agent doit escalader vers son Superviseur. Improviser une réponse incorrecte est contre-productif et nuisible."],
+  [2, "Outil de structuration agent",
+    "Correct. L'application mobile dédiée à l'agent est l'outil central pour les visites, l'argumentaire et le suivi du portefeuille.",
+    "Non. C'est l'application mobile de l'agent qui centralise argumentaire, KYC, suivi et reporting."],
+  [1, "Signification KYC",
+    "Correct. KYC signifie Know Your Customer — c'est le processus de vérification d'identité du client/marchand.",
+    "Non. KYC = Know Your Customer — connaître et vérifier l'identité de son client est une obligation réglementaire."],
+  [2, "Étapes PACO-O",
+    "Correct. Le processus PACO-O comporte 5 étapes structurées pour l'enrôlement d'un marchand.",
+    "Non. PACO-O comporte 5 étapes — pas 3, 4 ou 6."],
+  [1, "Document obligatoire KYC",
+    "Correct. La CNI ou passeport valide + un justificatif de l'activité commerciale sont les documents de base indispensables.",
+    "Non. La pièce d'identité officielle (CNI/passeport) + justificatif commercial sont obligatoires. Le permis ou la carte d'électeur seuls ne suffisent pas."],
+  [1, "Rôle du linkage QR Code",
+    "Correct. Le linkage QR Code associe le compte OM Business du marchand à son QR Code d'encaissement personnalisé.",
+    "Non. Le linkage QR Code associe le compte OM Business au QR Code d'encaissement du marchand — pas un téléchargement d'app."],
+  [2, "Dossier KYC rejeté — que faire",
+    "Correct. Identifier le motif, corriger avec le marchand et resoumettre est la démarche correcte pour un dossier rejeté.",
+    "Non. Un rejet n'est pas définitif. Il faut identifier le motif, corriger les informations avec le marchand et resoumettre."],
+  [2, "Matériel remis après enrôlement",
+    "Correct. Le sticker 'PAYER ICI' et le QR Code imprimé sont les éléments matériels qui matérialisent le point de paiement du marchand.",
+    "Non. Les éléments remis sont le sticker 'PAYER ICI' et le QR Code imprimé — pas un contrat papier ou une carte bancaire."],
+  [1, "Acronyme CRAC",
+    "Correct. CRAC = Creuser → Reformuler → Argumenter → Conclure. C'est la méthode de gestion des objections.",
+    "Non. CRAC = Creuser, Reformuler, Argumenter, Conclure — dans cet ordre précis."],
+  [2, "Première étape CRAC sur 'pas le temps'",
+    "Correct. La première étape est toujours de Creuser : comprendre la vraie raison derrière l'objection avant d'argumenter.",
+    "Non. La première étape CRAC est Creuser l'objection — il faut comprendre avant de répondre ou reformuler."],
+  [2, "Signal d'intérêt caché",
+    "Correct. Des objections précises sur les tarifs ou les fonctionnalités montrent que le marchand analyse l'offre sérieusement — c'est un signal d'intérêt.",
+    "Non. Des objections précises sur les tarifs ou fonctionnalités signalent un intérêt réel. Un refus sec sans questions signifie le contraire."],
+  [1, "Paiement client par QR Code",
+    "Correct. Le client scanne le QR Code du marchand avec son application Orange Money pour effectuer un paiement.",
+    "Non. Le paiement s'effectue en scannant le QR Code du marchand avec l'application Orange Money du client."],
+  [3, "Taux commission < 50 000 XOF/jour",
+    "Correct. Les encaissements OM Business sont à 0 % jusqu'à 50 000 XOF par jour — c'est un argument fort à mettre en avant.",
+    "Non. Jusqu'à 50 000 XOF/jour, l'encaissement est GRATUIT (0 %). Au-delà, le taux est de 1 %. Il n'y a pas de frais à 0,5 % ou 2 %."],
+  [2, "Plafond mensuel par défaut",
+    "Correct. Le plafond mensuel de transaction par défaut est de 500 000 XOF. Au-delà, une demande de déplafonnement est nécessaire.",
+    "Non. Le plafond standard est de 500 000 XOF par mois. Une procédure de déplafonnement existe pour les marchands à fort volume."],
+  [2, "Déplafonnement OM Business",
+    "Correct. Le déplafonnement permet d'augmenter le plafond mensuel sur demande justifiée — utile pour les marchands à fort volume.",
+    "Non. Le déplafonnement augmente le plafond mensuel de transactions sur demande justifiée. Ce n'est pas la fermeture du compte."],
+  [2, "Classement marchand 38 jours sans transaction",
+    "Correct. 0 transaction depuis plus de 30 jours → catégorie 'Inactif'. Intervention urgente requise sous 48 heures.",
+    "Non. Sans transaction depuis plus de 30 jours, le marchand est classé 'Inactif' — pas 'À développer' ni 'En attente'."],
+  [1, "Délai intervention marchand inactif",
+    "Correct. Un marchand inactif (0 transaction > 30j) nécessite une visite urgente sous 48 heures pour identifier le frein.",
+    "Non. L'intervention doit être urgente — sous 48 heures — pour réactiver un marchand inactif avant qu'il ne désengage."],
+];
+
+const TOTAL_QCM = 29;
+const DURATION = 30 * 60; // 30 minutes in seconds
+
+let answers = new Array(TOTAL_QCM).fill(null);
+let score = 0;
+let timerInterval = null;
+let secondsLeft = DURATION;
+let startTime = null;
+let candidateName = '';
+let candidateTel = '';
+let candidateZone = '';
+let candidateDate = '';
+
+function startExam() {
+  const nom = document.getElementById('inp-nom').value.trim();
+  const tel = document.getElementById('inp-tel').value.trim();
+  const zone = document.getElementById('inp-zone').value;
+  const date = document.getElementById('inp-date').value;
+  if (!nom) { alert('Veuillez entrer votre nom complet.'); return; }
+  if (!tel) { alert('Veuillez entrer votre numéro de téléphone.'); return; }
+  if (!zone) { alert('Veuillez sélectionner votre zone.'); return; }
+  if (!date) { alert('Veuillez sélectionner la date d\'évaluation.'); return; }
+  candidateName = nom;
+  candidateTel = tel;
+  candidateZone = zone;
+  candidateDate = new Date(date).toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'});
+  showScreen('screen-exam');
+  startTime = Date.now();
+  timerInterval = setInterval(tick, 1000);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function tick() {
+  secondsLeft--;
+  if (secondsLeft <= 0) {
+    clearInterval(timerInterval);
+    secondsLeft = 0;
+    submitExam();
+    return;
+  }
+  updateTimer();
+}
+
+function updateTimer() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  document.getElementById('t-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  const bar = document.getElementById('timer-bar');
+  bar.classList.remove('warn','danger');
+  if (secondsLeft < 300) bar.classList.add('danger');
+  else if (secondsLeft < 600) bar.classList.add('warn');
+}
+
+function updateProgress() {
+  const answered = answers.filter(a => a !== null).length;
+  const pct = Math.round((answered / TOTAL_QCM) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${answered} / ${TOTAL_QCM} QCM répondus`;
+  document.getElementById('live-score').textContent = `${score} / ${TOTAL_QCM}`;
+}
+
+function answer(qNum, chosenIdx, el) {
+  const qIdx = qNum - 1;
+  if (answers[qIdx] !== null) return; // already answered
+
+  const [correctIdx, , feedOk, feedKo] = QUESTIONS[qIdx];
+  answers[qIdx] = chosenIdx;
+
+  const card = document.getElementById('qc' + qNum);
+  const opts = card.querySelectorAll('.opt');
+  opts.forEach(o => o.classList.add('locked'));
+
+  const fb = document.getElementById('fb' + qNum);
+
+  if (chosenIdx === correctIdx) {
+    el.classList.add('correct');
+    score++;
+    fb.textContent = '✓ ' + feedOk;
+    fb.className = 'feedback show ok';
+  } else {
+    el.classList.add('incorrect');
+    opts[correctIdx].classList.add('correct');
+    fb.textContent = '✗ ' + feedKo;
+    fb.className = 'feedback show ko';
+  }
+  card.classList.add('answered');
+  updateProgress();
+}
+
+function submitExam() {
+  clearInterval(timerInterval);
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const em = Math.floor(elapsed / 60);
+  const es = elapsed % 60;
+  const timeStr = `${em}m ${es.toString().padStart(2,'0')}s`;
+
+  const pct = Math.round((score / TOTAL_QCM) * 100);
+
+  // Code de résultat
+  const dateStr = new Date().toLocaleDateString('fr-FR').replace(/\//g,'-');
+  const code = `AT-${score}-${TOTAL_QCM}-${pct}`;
+
+  // Afficher résultats
+  document.getElementById('r-name').textContent = candidateName;
+  document.getElementById('r-zone').textContent = `Zone : ${candidateZone}  ·  📞 ${candidateTel}`;
+  document.getElementById('r-meta').textContent = `Évaluation du ${candidateDate}`;
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-correct').textContent = score;
+  document.getElementById('r-wrong').textContent = TOTAL_QCM - score;
+  document.getElementById('r-time').textContent = timeStr;
+  document.getElementById('r-code').textContent = code;
+
+  // Badge résultat
+  const badge = document.getElementById('r-badge');
+  if (pct >= 75) {
+    badge.textContent = '🏆 REÇU — Attestation validée';
+    badge.className = 'badge-pill pass';
+  } else if (pct >= 60) {
+    badge.textContent = '📚 RATTRAPAGE — 1 session de rattrapage requise';
+    badge.className = 'badge-pill retry';
+  } else {
+    badge.textContent = '🔄 INSUFFISANT — Programme à reprendre';
+    badge.className = 'badge-pill fail';
+  }
+
+  // Score ring animation
+  const ring = document.getElementById('score-ring');
+  const deg = Math.round((pct / 100) * 360);
+  const color = pct >= 75 ? '#10b981' : (pct >= 60 ? '#CF9E41' : '#ef4444');
+  setTimeout(() => {
+    ring.style.background = `conic-gradient(${color} ${deg}deg, #e2e8f0 ${deg}deg)`;
+    ring.querySelector('.s-pct').style.color = color;
+  }, 200);
+
+  // Détail QCM
+  const list = document.getElementById('detail-list');
+  list.innerHTML = '';
+  QUESTIONS.forEach(([correctIdx, qText], i) => {
+    const qNum = i + 1;
+    const userAns = answers[i];
+    const ok = userAns === correctIdx;
+    const row = document.createElement('div');
+    row.className = 'detail-row';
+    row.innerHTML = `
+      <div class="dr-num">Q${qNum}</div>
+      <div class="dr-q">${qText}</div>
+      <div class="dr-s ${ok ? 'ok' : 'ko'}">${ok ? '✓' : '✗'}</div>
+    `;
+    list.appendChild(row);
+  });
+
+  showScreen('screen-results');
+}
+</script>
+</body>
+</html>

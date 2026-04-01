@@ -164,6 +164,12 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
 .pf-title { font-size:.9rem; font-weight:700; color:var(--blue); margin-bottom:6px; }
 .pf-desc { font-size:.78rem; color:var(--grey); line-height:1.5; }
 
+/* SLIDE IMAGES */
+.slide-img-wrap { margin:20px 0 28px; }
+.slide-img-wrap img { width:100%; border-radius:12px; border:1px solid #e0d4c8; box-shadow:0 4px 18px rgba(0,0,0,.10); display:block; }
+.slide-img-wrap .slide-caption { font-size:.72rem; color:var(--grey); text-align:center; margin-top:6px; font-style:italic; font-family:'JetBrains Mono',monospace; }
+.slide-img-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0 28px; }
+.slide-img-row .slide-img-wrap { margin:0; }
 @media (max-width:768px) {
   .sidebar { display:none; }
   .main-content { padding:20px; }
@@ -181,12 +187,16 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
 <div class="topbar">
   <div class="topbar-left">
     <a href="index.html" class="back-btn">← Retour aux modules</a>
+    <a href="javascript:history.back()" class="back-btn" style="background:rgba(207,158,65,.25); border-color:rgba(207,158,65,.5);">↩ Retour agent</a>
     <div>
       <div class="module-title-top">Orange Business — Plateforme Marchande</div>
       <div class="module-subtitle-top">Module 04 — Formation MAFA Holding</div>
     </div>
   </div>
-  <div class="topbar-badge">🏪 OM BUSINESS</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="assets/slides/mafa_logo_clean.png" alt="MAFA" style="height:28px;filter:brightness(0) invert(1);opacity:.9;">
+    <div class="topbar-badge">🏪 OM BUSINESS</div>
+  </div>
 </div>
 
 <div class="layout">
@@ -206,10 +216,15 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
       <button class="nav-item" onclick="showTab('cours',this); goTo('s3')"><span class="nav-icon">3</span> Fonctionnalités</button>
       <button class="nav-item" onclick="showTab('cours',this); goTo('s4')"><span class="nav-icon">4</span> Création de compte</button>
       <button class="nav-item" onclick="showTab('cours',this); goTo('s5')"><span class="nav-icon">5</span> Tarification</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s6')"><span class="nav-icon">6</span> Encaissement</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s7')"><span class="nav-icon">7</span> Transfert &amp; Retrait</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s8')"><span class="nav-icon">8</span> Historique &amp; Assistance</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s9')"><span class="nav-icon">9</span> Déplafonnement</button>
+      <button class="nav-item" onclick="showTab('cours',this); goTo('s10')"><span class="nav-icon">📎</span> Annexes documents</button>
     </div>
     <div class="nav-divider"></div>
     <div class="progress-block">
-      <div class="progress-label"><span>Progression quiz</span><span id="prog-label">0 / 5</span></div>
+      <div class="progress-label"><span>Progression quiz</span><span id="prog-label">0 / 10</span></div>
       <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
   </nav>
@@ -239,6 +254,10 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
       <div id="s1" class="section-heading">
         <div class="section-num">1</div>
         <h2>Vision OM Business</h2>
+      </div>
+      <div class="slide-img-wrap">
+        <img src="assets/slides/brief_om_p3.png" alt="Synthèse de la vision App et Web OM Business">
+        <div class="slide-caption">Brief OM Business — Synthèse de la vision</div>
       </div>
       <div class="vision-quote">
         <p>"Je recherche une solution de paiement offrant toutes les fonctionnalités nécessaires pour soutenir mon activité commerciale — accessible partout, sans SIM obligatoire, sécurisée et traçable."</p>
@@ -313,6 +332,10 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
         <div class="section-num">2</div>
         <h2>Les 3 profils cibles OM Business</h2>
       </div>
+      <div class="slide-img-wrap">
+        <img src="assets/slides/brief_om_p4.png" alt="OM Business, quelle est la cible ?">
+        <div class="slide-caption">Brief OM Business — Les 3 profils marchands</div>
+      </div>
       <div class="profils-grid">
         <div class="profil-card profil-essentiel">
           <div class="profil-badge">Essentiel</div>
@@ -364,6 +387,10 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
         <div class="section-num">3</div>
         <h2>Fonctionnalités principales</h2>
       </div>
+      <div class="slide-img-wrap">
+        <img src="assets/slides/brief_om_p5.png" alt="OM Business — Fonctionnalités actuelles">
+        <div class="slide-caption">Brief OM Business — Toutes les fonctionnalités de l'application</div>
+      </div>
       <div class="features-grid">
         <div class="feature-chip"><div class="feature-icon">👤</div><div class="feature-name">Création de compte</div><div class="feature-note">OM & Non-OM</div></div>
         <div class="feature-chip"><div class="feature-icon">📷</div><div class="feature-name">Encaissement QR</div><div class="feature-note">Paiement sans contact</div></div>
@@ -385,29 +412,73 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
         <div class="section-num">4</div>
         <h2>Parcours de création de compte</h2>
       </div>
-      <div class="parcours-cols">
+      <div class="slide-img-wrap">
+        <img src="assets/slides/brief_om_p8.png" alt="Parcours création de compte — 4 profils clients">
+        <div class="slide-caption">Brief OM Business — Les 4 parcours de création de compte (OM / Non-OM)</div>
+      </div>
+      <div class="alert alert-info" style="margin-bottom:18px;">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-text"><strong>4 profils de départ :</strong> Le parcours varie selon que le marchand est <strong>déjà client OM</strong> ou non, et selon son réseau téléphonique (Orange ou autre opérateur).</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
         <div class="parcours-card">
-          <h4>📱 Clients Orange Money (OM)</h4>
-          <div class="parcours-step"><div class="p-num">1</div> Saisir le numéro Orange Money ou accéder à l'application OM Business</div>
-          <div class="parcours-step"><div class="p-num">2</div> Sélectionner "Demande de création de compte marchand"</div>
-          <div class="parcours-step"><div class="p-num">3</div> Compléter les informations : nom, prénom, date de naissance, numéro de pièce d'identité</div>
-          <div class="parcours-step"><div class="p-num">4</div> Prendre en photo la pièce d'identité (recto + verso)</div>
-          <div class="parcours-step"><div class="p-num">5</div> Valider et soumettre la demande</div>
-          <div class="parcours-step"><div class="p-num">6</div> Validation Back Office → Notification "Compte activé" reçue</div>
+          <h4>📱 Client OM — Déjà marchand</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Saisie du numéro OM</div>
+          <div class="parcours-step"><div class="p-num">2</div> Parcours de catégorisation du commerce (nom, secteur)</div>
+          <div class="parcours-step"><div class="p-num">3</div> Accès à la localisation</div>
+          <div class="parcours-step"><div class="p-num">4</div> Validation des CGU</div>
+          <div class="parcours-step"><div class="p-num">5</div> Récupération du QR code marchand</div>
+          <div class="parcours-step"><div class="p-num">6</div> Activation des notifications → Accès à l'interface</div>
         </div>
         <div class="parcours-card">
-          <h4>🆕 Clients Non-Orange Money (Non-OM)</h4>
-          <div class="parcours-step"><div class="p-num">1</div> Accéder à l'application OM Business sans numéro Orange préexistant</div>
-          <div class="parcours-step"><div class="p-num">2</div> Choisir "Je n'ai pas de compte Orange Money"</div>
-          <div class="parcours-step"><div class="p-num">3</div> Même parcours d'informations que les clients OM (identité + photo CNI)</div>
-          <div class="parcours-step"><div class="p-num">4</div> Enrôlement SIM optionnel — le marchand peut aussi utiliser l'app sans SIM Orange</div>
-          <div class="parcours-step"><div class="p-num">5</div> Validation Back Office → Activation du compte marchand</div>
-          <div class="parcours-step"><div class="p-num">6</div> Tutoriel guidé de prise en main de l'application</div>
+          <h4>📱 Client OM — Non marchand</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Saisie du numéro OM</div>
+          <div class="parcours-step"><div class="p-num">2</div> Parcours de catégorisation du commerce (nom, secteur)</div>
+          <div class="parcours-step"><div class="p-num">3</div> Accès à la localisation</div>
+          <div class="parcours-step"><div class="p-num">4</div> Validation des CGU</div>
+          <div class="parcours-step"><div class="p-num">5</div> Génération du QR code marchand</div>
+          <div class="parcours-step"><div class="p-num">6</div> Activation des notifications → Accès à l'interface</div>
+        </div>
+        <div class="parcours-card">
+          <h4>🆕 Client Non-OM — Orange telco</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Saisie du numéro</div>
+          <div class="parcours-step"><div class="p-num">2</div> Demande de création de compte marchand</div>
+          <div class="parcours-step"><div class="p-num">3</div> Remplir : nom, prénom, date de naissance, N° pièce + photo pièce</div>
+          <div class="parcours-step"><div class="p-num">4</div> Corbeille de validation Back Office</div>
+          <div class="parcours-step"><div class="p-num">5</div> Notification "Compte activé"</div>
+          <div class="parcours-step"><div class="p-num">6</div> Création compte clients OM</div>
+        </div>
+        <div class="parcours-card">
+          <h4>🆕 Client Non-OM — Non Orange telco (OTT)</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Saisie du numéro</div>
+          <div class="parcours-step"><div class="p-num">2</div> Demande de création de compte marchand</div>
+          <div class="parcours-step"><div class="p-num">3</div> Remplir : nom, prénom, date de naissance, N° pièce + photo pièce</div>
+          <div class="parcours-step"><div class="p-num">4</div> Corbeille de validation Back Office</div>
+          <div class="parcours-step"><div class="p-num">5</div> Notification "Compte activé"</div>
+          <div class="parcours-step"><div class="p-num">6</div> Création compte clients OM</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <h3>🔄 Migration des profils existants</h3>
+        <p style="margin-bottom:12px;">Les anciens marchands migrent automatiquement vers le nouveau système selon leur profil actuel :</p>
+        <table class="styled-table" style="margin:0;">
+          <thead><tr><th>Profil actuel</th><th>Nouveau profil OM Business</th><th>Grade</th></tr></thead>
+          <tbody>
+            <tr><td>O'calm</td><td><strong>Essentiel Full</strong></td><td>OMBLevel1 Full</td></tr>
+            <tr><td>SMB (Small Business)</td><td><strong>Classique</strong></td><td>OMBLevel2</td></tr>
+            <tr><td>Classique</td><td><strong>Premium</strong></td><td>OMBLevel3</td></tr>
+            <tr><td>Suscriber Lite</td><td><strong>Essentiel Lite</strong></td><td>OMBLevel1 Lite</td></tr>
+            <tr><td>Suscriber Full</td><td><strong>Essentiel Full</strong></td><td>OMBLevel1 Full</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-warn" style="margin-top:12px; margin-bottom:0;">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-text"><strong>Important :</strong> La migration en masse des SMB ne modifie pas le parcours de qualification avant accès à l'interface.</div>
         </div>
       </div>
       <div class="alert alert-success">
         <div class="alert-icon">✅</div>
-        <div class="alert-text"><strong>Avantage clé :</strong> Le parcours Non-OM est une différenciation majeure d'OM Business — un marchand n'a pas besoin d'avoir une SIM Orange pour bénéficier de la plateforme. Cela élargit considérablement la base de clientèle potentielle.</div>
+        <div class="alert-text"><strong>Avantage clé :</strong> Grâce au mode OTT, un marchand n'a <strong>pas besoin d'avoir une SIM Orange</strong> pour utiliser OM Business. Cela élargit considérablement la base de clientèle potentielle.</div>
       </div>
 
       <!-- S5 -->
@@ -415,40 +486,259 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
         <div class="section-num">5</div>
         <h2>Tarification OM Business</h2>
       </div>
+      <div class="slide-img-wrap">
+        <img src="assets/slides/brief_om_p6.png" alt="Tarification appliquée OM Business">
+        <div class="slide-caption">Brief OM Business — Grille tarifaire officielle et plafonds par profil</div>
+      </div>
       <div class="info-card">
         <h3>💰 Une grille tarifaire repensée pour les commerçants</h3>
-        <p>OM Business propose une grille tarifaire avantageuse conçue pour <strong>alléger les charges des commerçants</strong> et <strong>encourager l'usage quotidien</strong> du paiement mobile. L'objectif : rendre OM Business plus compétitif que les solutions concurrentes.</p>
-      </div>
-      <div class="tarif-grid">
-        <div class="tarif-card">
-          <div class="tarif-action">Transfert à soi-même</div>
-          <div class="tarif-val gratuit">GRATUIT</div>
-          <div class="tarif-note">Entre ses propres comptes OM Business</div>
-        </div>
-        <div class="tarif-card">
-          <div class="tarif-action">Transfert à un tiers</div>
-          <div class="tarif-val">Tarif applicable</div>
-          <div class="tarif-note">Selon le barème Orange Money en vigueur</div>
-        </div>
-        <div class="tarif-card">
-          <div class="tarif-action">Encaissement QR Code</div>
-          <div class="tarif-val gratuit">GRATUIT</div>
-          <div class="tarif-note">Réception de paiement sans frais</div>
-        </div>
-        <div class="tarif-card">
-          <div class="tarif-action">Retrait (App &amp; USSD)</div>
-          <div class="tarif-val">Tarif applicable</div>
-          <div class="tarif-note">Selon le montant et le canal de retrait</div>
-        </div>
+        <p>OM Business propose une tarification avantageuse conçue pour <strong>alléger les charges des commerçants</strong> et <strong>encourager l'usage quotidien</strong>. Objectif : rendre OM Business plus compétitif que les solutions concurrentes.</p>
       </div>
       <table class="styled-table">
-        <thead><tr><th>Profil</th><th>Documents requis</th><th>Plafond de transaction</th><th>Avantages spécifiques</th></tr></thead>
+        <thead><tr><th>Opération</th><th>Tarif</th><th>Profil(s) concerné(s)</th></tr></thead>
         <tbody>
-          <tr><td><strong>Essentiel</strong></td><td>Pièce d'identité valide</td><td>Standard OM</td><td>QR mobile, lien de paiement</td></tr>
-          <tr><td><strong>Classique</strong></td><td>CNI + Registre de commerce ou Carte commerçant</td><td>Étendu</td><td>Plusieurs QR imprimés, traçabilité</td></tr>
-          <tr><td><strong>Premium</strong></td><td>CNI + RC + Documents financiers</td><td>Déplafonné</td><td>Gestion d'équipe, analyses, support dédié</td></tr>
+          <tr>
+            <td><strong>Encaissement QR code</strong></td>
+            <td><span style="color:#2E7D32; font-weight:700;">0%</span> jusqu'à 50 000 FCFA/jour<br><span style="font-size:.78rem;">1% au-delà — capé à 500 000 FCFA cumul/mois</span></td>
+            <td>Essentiel</td>
+          </tr>
+          <tr>
+            <td><strong>Encaissement QR code</strong></td>
+            <td><span style="font-weight:700;">1%</span> par encaissement</td>
+            <td>Classique &amp; Premium</td>
+          </tr>
+          <tr>
+            <td><strong>Retrait en PDV</strong></td>
+            <td><span style="color:#2E7D32; font-weight:700;">0 FCFA</span></td>
+            <td>Essentiel &amp; Classique</td>
+          </tr>
+          <tr>
+            <td><strong>Transfert à soi-même</strong></td>
+            <td><span style="color:#2E7D32; font-weight:700;">0 FCFA</span></td>
+            <td>Essentiel, Classique &amp; Premium</td>
+          </tr>
+          <tr>
+            <td><strong>Transfert à un tiers</strong></td>
+            <td><span style="color:#2E7D32; font-weight:700;">0 FCFA</span></td>
+            <td>Essentiel, Classique &amp; Premium</td>
+          </tr>
         </tbody>
       </table>
+
+      <div class="info-card">
+        <h3>📊 Plafonds de transactions par profil</h3>
+        <div style="overflow-x:auto;">
+          <table class="styled-table" style="margin:12px 0 0;">
+            <thead>
+              <tr>
+                <th>Profil</th>
+                <th>Seuil / Transaction (XOF)</th>
+                <th>Seuil / Jour</th>
+                <th>Seuil / Semaine</th>
+                <th>Seuil / Mois</th>
+                <th>Solde max</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Essentiel Lite</strong></td><td>200 000</td><td>200 000</td><td>200 000</td><td>200 000</td><td>200 000</td></tr>
+              <tr><td><strong>Essentiel Full</strong></td><td>2 000 000</td><td>7 500 000</td><td>10 000 000</td><td>10 000 000</td><td>10 000 000</td></tr>
+              <tr><td><strong>Classique</strong></td><td>15 000 000</td><td>15 000 000</td><td>N/A</td><td>30 000 000</td><td>30 000 000</td></tr>
+              <tr><td><strong>Premium</strong></td><td>Illimité</td><td>Illimité</td><td>Illimité</td><td>Illimité</td><td>Illimité</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- S6 -->
+      <div id="s6" class="section-heading">
+        <div class="section-num">6</div>
+        <h2>Encaissement — QR Code &amp; Lien de paiement</h2>
+      </div>
+      <div class="slide-img-row">
+        <div class="slide-img-wrap">
+          <img src="assets/slides/brief_om_p10.png" alt="Encaissement par QR Code — 3 étapes">
+          <div class="slide-caption">Encaissement QR Code — 3 étapes</div>
+        </div>
+        <div class="slide-img-wrap">
+          <img src="assets/slides/brief_om_p11.png" alt="Envoi de lien d'encaissement — 4 étapes">
+          <div class="slide-caption">Envoi de lien de paiement — 4 étapes</div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="parcours-card">
+          <h4>📷 Encaissement par QR Code</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Le marchand expose son QR code au client (à l'écran ou version imprimée)</div>
+          <div class="parcours-step"><div class="p-num">2</div> Le client scanne le QR code, saisit le montant et confirme son paiement</div>
+          <div class="parcours-step"><div class="p-num">3</div> Le marchand reçoit la confirmation de paiement (notification push + historique)</div>
+        </div>
+        <div class="parcours-card">
+          <h4>🔗 Envoi de lien d'encaissement</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Cliquer sur le bouton <strong>« Envoi de lien »</strong> dans l'application</div>
+          <div class="parcours-step"><div class="p-num">2</div> Saisir ou non le montant à encaisser (optionnel)</div>
+          <div class="parcours-step"><div class="p-num">3</div> Choisir le canal de communication (WhatsApp, SMS, email…)</div>
+          <div class="parcours-step"><div class="p-num">4</div> Valider le partage du lien de paiement à distance</div>
+        </div>
+      </div>
+      <div class="alert alert-om">
+        <div class="alert-icon">💡</div>
+        <div class="alert-text"><strong>Avantage du lien de paiement :</strong> Le marchand peut encaisser ses clients à distance — parfait pour les livraisons, commandes en ligne ou paiements différés sans que le client soit physiquement présent.</div>
+      </div>
+
+      <!-- S7 -->
+      <div id="s7" class="section-heading">
+        <div class="section-num">7</div>
+        <h2>Transfert &amp; Retrait</h2>
+      </div>
+      <div class="slide-img-row">
+        <div class="slide-img-wrap">
+          <img src="assets/slides/brief_om_p12.png" alt="Transfert à soi-même et à tiers">
+          <div class="slide-caption">Parcours Transfert — à soi-même &amp; à tiers (gratuit)</div>
+        </div>
+        <div class="slide-img-wrap">
+          <img src="assets/slides/brief_om_p13.png" alt="Retrait App PDV et USSD #145*2#">
+          <div class="slide-caption">Parcours Retrait — App (PDV) &amp; USSD #145*2#</div>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="parcours-card">
+          <h4>💸 Transfert à soi-même <span style="background:#E8F5E9; color:#2E7D32; font-size:.7rem; padding:2px 8px; border-radius:10px; margin-left:6px;">GRATUIT</span></h4>
+          <div class="parcours-step"><div class="p-num">1</div> Cliquer sur le bouton <strong>« Transfert »</strong></div>
+          <div class="parcours-step"><div class="p-num">2</div> Choisir l'option <strong>« Transfert à moi-même »</strong></div>
+          <div class="parcours-step"><div class="p-num">3</div> Saisir le montant à se transférer</div>
+          <div class="parcours-step"><div class="p-num">4</div> Confirmer le transfert avec son code secret</div>
+        </div>
+        <div class="parcours-card">
+          <h4>💸 Transfert à un tiers <span style="background:#E8F5E9; color:#2E7D32; font-size:.7rem; padding:2px 8px; border-radius:10px; margin-left:6px;">GRATUIT</span></h4>
+          <div class="parcours-step"><div class="p-num">1</div> Cliquer sur le bouton <strong>« Transfert »</strong></div>
+          <div class="parcours-step"><div class="p-num">2</div> Choisir <strong>« Autre transfert »</strong></div>
+          <div class="parcours-step"><div class="p-num">3</div> Sélectionner ou saisir le contact du destinataire et saisir le montant</div>
+          <div class="parcours-step"><div class="p-num">4</div> Confirmer le transfert avec son code secret</div>
+        </div>
+        <div class="parcours-card">
+          <h4>🏧 Retrait via l'application (en PDV)</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Cliquer sur le bouton <strong>« Retrait »</strong></div>
+          <div class="parcours-step"><div class="p-num">2</div> Exposer son QR code au PDV et lui indiquer oralement le montant souhaité</div>
+          <div class="parcours-step"><div class="p-num">3</div> Confirmer le retrait sur la liste d'attente dans le menu « Retrait »</div>
+          <div class="parcours-step"><div class="p-num">4</div> Observer la transaction de retrait dans son historique</div>
+        </div>
+        <div class="parcours-card">
+          <h4>📞 Retrait via USSD</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Composer le code <strong>#145*2#</strong> sur le téléphone</div>
+          <div class="parcours-step"><div class="p-num">2</div> Saisir le numéro du PDV</div>
+          <div class="parcours-step"><div class="p-num">3</div> Saisir le montant du retrait et confirmer</div>
+          <div class="parcours-step"><div class="p-num">4</div> Le PDV remet le cash au marchand</div>
+        </div>
+      </div>
+      <div class="alert alert-success">
+        <div class="alert-icon">✅</div>
+        <div class="alert-text"><strong>Retrait en PDV :</strong> <strong>Gratuit</strong> pour les profils Essentiel et Classique. Le marchand peut retirer ses fonds facilement en utilisant son QR code dans tout Point De Vente Orange Money.</div>
+      </div>
+
+      <!-- S8 -->
+      <div id="s8" class="section-heading">
+        <div class="section-num">8</div>
+        <h2>Historique, Remboursement &amp; Assistance</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>📊 Historique de transactions</h3>
+          <ul class="styled-list">
+            <li>Affichage en <strong>temps réel</strong> de toutes les transactions</li>
+            <li>Vue <strong>miniature</strong> de chaque transaction (résumé rapide)</li>
+            <li>Vue <strong>détaillée</strong> : montant, date, heure, contrepartie</li>
+            <li>Permet le suivi comptable quotidien du marchand</li>
+          </ul>
+        </div>
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>↩️ Remboursement</h3>
+          <ul class="styled-list">
+            <li>Accessible depuis l'historique de transactions</li>
+            <li>Le marchand peut initier un <strong>remboursement</strong> d'une transaction passée</li>
+            <li>Option disponible avec confirmation par code secret</li>
+            <li>Traçabilité complète du remboursement dans l'historique</li>
+          </ul>
+        </div>
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>🎧 Assistance client</h3>
+          <ul class="styled-list">
+            <li>Numéro dédié : <strong>0808</strong> (appel facturé)</li>
+            <li>Accès depuis le menu <strong>Paramètres</strong> de l'application</li>
+            <li>Tutoriels disponibles dans les paramètres de l'app</li>
+            <li>Support terrain assuré par les agents lors de l'onboarding</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S9 -->
+      <div id="s9" class="section-heading">
+        <div class="section-num">9</div>
+        <h2>Déplafonnement</h2>
+      </div>
+      <div class="slide-img-wrap">
+        <img src="assets/slides/brief_om_p16.png" alt="Déplafonnement — vers Classique et Premium">
+        <div class="slide-caption">Brief OM Business — Processus de déplafonnement et plafonds officiels</div>
+      </div>
+      <div class="info-card">
+        <h3>📈 Pourquoi déplafonner ?</h3>
+        <p>Un marchand dont l'activité grandit peut demander un <strong>déplafonnement</strong> pour passer de Essentiel à Classique, ou de Classique à Premium. Cela lui permet d'accéder à des limites de transactions plus élevées et à des fonctionnalités avancées.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="parcours-card">
+          <h4>📋 Vers le profil Classique</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Aller dans le <strong>menu d'option</strong> (en haut à gauche)</div>
+          <div class="parcours-step"><div class="p-num">2</div> Cliquer sur <strong>« Demander déplafonnement »</strong></div>
+          <div class="parcours-step"><div class="p-num">3</div> Sélectionner le profil souhaité : <strong>Profil Classique</strong></div>
+          <div class="parcours-step"><div class="p-num">4</div> Fournir les pièces justificatives (voir Annexe 1 ci-dessous)</div>
+          <div class="parcours-step"><div class="p-num">5</div> <strong>Retour client sous 24H</strong></div>
+        </div>
+        <div class="parcours-card">
+          <h4>🏆 Vers le profil Premium</h4>
+          <div class="parcours-step"><div class="p-num">1</div> Aller dans le <strong>menu d'option</strong> (en haut à gauche)</div>
+          <div class="parcours-step"><div class="p-num">2</div> Cliquer sur <strong>« Demander déplafonnement »</strong></div>
+          <div class="parcours-step"><div class="p-num">3</div> Sélectionner le profil souhaité : <strong>Profil Premium</strong></div>
+          <div class="parcours-step"><div class="p-num">4</div> Sélectionner la <strong>forme juridique</strong> correspondante</div>
+          <div class="parcours-step"><div class="p-num">5</div> Fournir la documentation selon sa forme juridique (voir Annexe 2)</div>
+          <div class="parcours-step"><div class="p-num">6</div> <strong>Retour client sous 24H</strong></div>
+        </div>
+      </div>
+
+      <!-- S10 — Annexes -->
+      <div id="s10" class="section-heading">
+        <div class="section-num">📎</div>
+        <h2>Annexes — Documents requis pour déplafonnement</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>Annexe 1 — Profil Classique</h3>
+          <p style="font-size:.78rem; color:var(--grey); margin-bottom:12px; font-style:italic;">Documents à fournir selon la forme juridique :</p>
+          <ul class="styled-list">
+            <li>Pièce d'identité en cours de validité (copie <strong>recto verso</strong>) des dirigeants</li>
+            <li>Procuration légalisée si une personne autre que le propriétaire signe (+ pièce d'identité du signataire)</li>
+            <li>Registre de commerce et crédit mobilier actualisé <strong>OU</strong> Carte du commerçant <strong>OU</strong> Autorisation d'exercice (Agrément, publication JO, récépissé déclaration)</li>
+            <li>Taxe forfaitaire / patente de l'année en cours <strong>OU</strong> Déclaration fiscale d'existence (DFE) <strong>OU</strong> Carte d'entreprenant en cours de validité</li>
+            <li>Coordonnées GPS de l'établissement</li>
+          </ul>
+          <div style="margin-top:10px; padding:8px 12px; background:var(--orange-pale); border-radius:8px; font-size:.78rem; color:var(--teal); font-weight:700;">⏱ Retour Back Office sous 24H</div>
+        </div>
+        <div class="info-card" style="margin-bottom:0;">
+          <h3>Annexe 2 — Profil Premium</h3>
+          <p style="font-size:.78rem; color:var(--grey); margin-bottom:12px; font-style:italic;">Documentation équivalente à la forme juridique de l'entreprise :</p>
+          <ul class="styled-list">
+            <li>Documentation adaptée à la <strong>forme juridique</strong> (SA, SARL, SAS, GIE, organisme public…)</li>
+            <li>Pièce d'identité des dirigeants et représentants légaux</li>
+            <li>Registre de commerce actualisé</li>
+            <li>Documents financiers et fiscaux de l'entreprise</li>
+            <li>Statuts de l'entreprise (pour les sociétés commerciales)</li>
+            <li>Procuration légalisée si signataire différent du représentant légal</li>
+          </ul>
+          <div style="margin-top:10px; padding:8px 12px; background:var(--orange-pale); border-radius:8px; font-size:.78rem; color:var(--teal); font-weight:700;">⏱ Retour Back Office sous 24H</div>
+        </div>
+      </div>
+      <div class="alert alert-warn">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-text"><strong>Rôle de l'agent :</strong> Lors du déplafonnement, votre rôle est d'<strong>accompagner</strong> le marchand dans la constitution du dossier, de <strong>vérifier</strong> que tous les documents requis sont présents avant soumission, et d'assurer le <strong>suivi</strong> jusqu'à la confirmation d'activation du nouveau profil.</div>
+      </div>
+
     </div>
 
     <!-- EXERCICES -->
@@ -561,29 +851,29 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
         <div class="module-hero-icon">🎯</div>
         <h1>Quiz — Orange Business</h1>
         <div class="module-hero-meta">
-          <span class="meta-chip chip-red">5 questions</span>
+          <span class="meta-chip chip-red">10 questions</span>
           <span class="meta-chip chip-gold">Feedback immédiat</span>
         </div>
       </div>
       <div class="quiz-score-bar">
         <h3>Votre score</h3>
-        <div class="score-display" id="score-display">0 <span>/ 5</span></div>
+        <div class="score-display" id="score-display">0 <span>/ 10</span></div>
         <p style="font-size:.82rem; color:var(--grey); margin-top:4px">Répondez à toutes les questions pour valider le module</p>
       </div>
       <div class="quiz-container">
         <div class="quiz-question-block" id="q1">
-          <div class="quiz-q-num">Question 01 / 05</div>
+          <div class="quiz-q-num">Question 01 / 10</div>
           <div class="quiz-q-text">Quel profil OM Business convient à un épicier dont le CA annuel est inférieur à 150 000 XOF ?</div>
           <div class="quiz-options">
             <div class="quiz-option" onclick="answer(this,'q1',false,'Le profil Premium est pour les grands commerces avec CA >400m XOF/an.')"><span class="option-letter">A</span> OM Business Premium</div>
             <div class="quiz-option" onclick="answer(this,'q1',false,'Le profil Classique est pour les commerces avec CA entre 150k et 400m XOF.')"><span class="option-letter">B</span> OM Business Classique</div>
             <div class="quiz-option" onclick="answer(this,'q1',true,'Correct ! OM Business Essentiel cible les micro-commerces et auto-entrepreneurs avec CA &lt;150k XOF/an.')"><span class="option-letter">C</span> OM Business Essentiel</div>
-            <div class="quiz-option" onclick="answer(this,'q1',false,'"Standard" n\'est pas un profil OM Business — les profils sont Essentiel, Classique et Premium.')"><span class="option-letter">D</span> OM Business Standard</div>
+            <div class="quiz-option" onclick="answer(this,'q1',false,'&quot;Standard&quot; n\'est pas un profil OM Business — les profils sont Essentiel, Classique et Premium.')"><span class="option-letter">D</span> OM Business Standard</div>
           </div>
           <div class="quiz-feedback" id="fb-q1"></div>
         </div>
         <div class="quiz-question-block" id="q2">
-          <div class="quiz-q-num">Question 02 / 05</div>
+          <div class="quiz-q-num">Question 02 / 10</div>
           <div class="quiz-q-text">Dans OM Business, quel est le coût d'un transfert à soi-même (entre ses propres comptes) ?</div>
           <div class="quiz-options">
             <div class="quiz-option" onclick="answer(this,'q2',false,'Le transfert à soi-même est entièrement gratuit dans OM Business.')"><span class="option-letter">A</span> Payant selon le montant</div>
@@ -594,37 +884,92 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
           <div class="quiz-feedback" id="fb-q2"></div>
         </div>
         <div class="quiz-question-block" id="q3">
-          <div class="quiz-q-num">Question 03 / 05</div>
-          <div class="quiz-q-text">Combien de fonctionnalités principales comporte l'application OM Business ?</div>
+          <div class="quiz-q-num">Question 03 / 10</div>
+          <div class="quiz-q-text">Pour le profil Essentiel, à partir de quel seuil d'encaissement journalier le taux passe-t-il de 0% à 1% ?</div>
           <div class="quiz-options">
-            <div class="quiz-option" onclick="answer(this,'q3',false,'OM Business dispose de plus de 5 fonctionnalités.')"><span class="option-letter">A</span> 5 fonctionnalités</div>
-            <div class="quiz-option" onclick="answer(this,'q3',false,'7 n\'est pas le bon nombre — comptez les fonctionnalités listées dans le cours.')"><span class="option-letter">B</span> 7 fonctionnalités</div>
-            <div class="quiz-option" onclick="answer(this,'q3',true,'Correct ! OM Business comporte 9 fonctionnalités : Création compte, Encaissement, Lien paiement, Transfert, Retrait, Historique, Remboursement, Déplafonnement, Assistance.')"><span class="option-letter">C</span> 9 fonctionnalités</div>
-            <div class="quiz-option" onclick="answer(this,'q3',false,'12 est un nombre trop élevé. OM Business dispose de 9 fonctionnalités actuellement.')"><span class="option-letter">D</span> 12 fonctionnalités</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'Le seuil de 10 000 FCFA est trop bas. La gratuité s\'applique jusqu\'à 50 000 FCFA/jour.')"><span class="option-letter">A</span> 10 000 FCFA/jour</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'Le seuil de 25 000 FCFA est incorrect. Pour l\'Essentiel, c\'est 50 000 FCFA/jour.')"><span class="option-letter">B</span> 25 000 FCFA/jour</div>
+            <div class="quiz-option" onclick="answer(this,'q3',true,'Correct ! Pour l\'Essentiel, l\'encaissement est à 0% jusqu\'à 50 000 FCFA/jour. Au-delà, le taux est de 1%, capé à 500 000 FCFA cumul/mois.')"><span class="option-letter">C</span> 50 000 FCFA/jour</div>
+            <div class="quiz-option" onclick="answer(this,'q3',false,'Le seuil de 100 000 FCFA est incorrect. Pour l\'Essentiel, c\'est 50 000 FCFA/jour.')"><span class="option-letter">D</span> 100 000 FCFA/jour</div>
           </div>
           <div class="quiz-feedback" id="fb-q3"></div>
         </div>
         <div class="quiz-question-block" id="q4">
-          <div class="quiz-q-num">Question 04 / 05</div>
-          <div class="quiz-q-text">Que signifie "Onboarding 100% digital" dans le contexte d'OM Business ?</div>
+          <div class="quiz-q-num">Question 04 / 10</div>
+          <div class="quiz-q-text">Combien d'étapes comporte le parcours d'encaissement par QR code dans OM Business ?</div>
           <div class="quiz-options">
-            <div class="quiz-option" onclick="answer(this,'q4',false,'L\'onboarding 100% digital ne se fait pas par SMS mais via l\'application mobile.')"><span class="option-letter">A</span> Tout le processus se fait par SMS</div>
-            <div class="quiz-option" onclick="answer(this,'q4',true,'Correct ! "Onboarding 100% digital" signifie que la création de compte se fait entièrement via l\'application mobile, sans aller en agence.')"><span class="option-letter">B</span> La création de compte se fait entièrement via l'application mobile</div>
-            <div class="quiz-option" onclick="answer(this,'q4',false,'L\'onboarding ne nécessite pas d\'ordinateur — il se fait via smartphone.')"><span class="option-letter">C</span> Il faut obligatoirement un ordinateur</div>
-            <div class="quiz-option" onclick="answer(this,'q4',false,'"Onboarding 100% digital" désigne la création de compte, pas les formations.')"><span class="option-letter">D</span> La formation est dispensée en ligne uniquement</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'2 étapes n\'est pas correct. Le parcours encaissement QR code comporte 3 étapes.')"><span class="option-letter">A</span> 2 étapes</div>
+            <div class="quiz-option" onclick="answer(this,'q4',true,'Correct ! 1) Exposer son QR code, 2) Le client scanne et confirme, 3) Réception de la confirmation de paiement.')"><span class="option-letter">B</span> 3 étapes</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'4 étapes est trop élevé. Le QR code encaissement se fait en 3 étapes simples.')"><span class="option-letter">C</span> 4 étapes</div>
+            <div class="quiz-option" onclick="answer(this,'q4',false,'5 étapes est trop élevé. Le parcours QR code est simple : 3 étapes.')"><span class="option-letter">D</span> 5 étapes</div>
           </div>
           <div class="quiz-feedback" id="fb-q4"></div>
         </div>
         <div class="quiz-question-block" id="q5">
-          <div class="quiz-q-num">Question 05 / 05</div>
-          <div class="quiz-q-text">Quelle est la prochaine fonctionnalité annoncée pour OM Business ?</div>
+          <div class="quiz-q-num">Question 05 / 10</div>
+          <div class="quiz-q-text">Quel code USSD permet d'effectuer un retrait dans OM Business ?</div>
           <div class="quiz-options">
-            <div class="quiz-option" onclick="answer(this,'q5',false,'L\'assurance mobile n\'est pas la prochaine fonctionnalité annoncée pour OM Business.')"><span class="option-letter">A</span> Un service d'assurance mobile</div>
-            <div class="quiz-option" onclick="answer(this,'q5',true,'Correct ! Tik Tak Pro est le service de crédit et d\'épargne à venir — une évolution majeure pour soutenir le financement des commerçants.')"><span class="option-letter">B</span> Tik Tak Pro — Service de crédit et d'épargne</div>
-            <div class="quiz-option" onclick="answer(this,'q5',false,'Le paiement international n\'est pas la prochaine fonctionnalité annoncée.')"><span class="option-letter">C</span> Un service de paiement international</div>
-            <div class="quiz-option" onclick="answer(this,'q5',false,'La carte prépayée physique n\'est pas la fonctionnalité à venir annoncée.')"><span class="option-letter">D</span> Une carte prépayée physique</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'#144# est le code USSD Orange Money standard, pas le code de retrait OM Business.')"><span class="option-letter">A</span> #144#</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'#100# n\'est pas le bon code. Pour le retrait OM Business via USSD, composez #145*2#.')"><span class="option-letter">B</span> #100#</div>
+            <div class="quiz-option" onclick="answer(this,'q5',true,'Correct ! Pour retirer via USSD dans OM Business, le marchand compose #145*2# puis saisit le numéro PDV et le montant.')"><span class="option-letter">C</span> #145*2#</div>
+            <div class="quiz-option" onclick="answer(this,'q5',false,'#150*1# n\'est pas le bon code. Le retrait USSD OM Business utilise #145*2#.')"><span class="option-letter">D</span> #150*1#</div>
           </div>
           <div class="quiz-feedback" id="fb-q5"></div>
+        </div>
+        <div class="quiz-question-block" id="q6">
+          <div class="quiz-q-num">Question 06 / 10</div>
+          <div class="quiz-q-text">Un marchand O'calm qui migre vers OM Business obtient quel nouveau profil ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q6',false,'L\'Essentiel Lite correspond aux anciens suscribers Lite, pas aux O\'calm.')"><span class="option-letter">A</span> Essentiel Lite</div>
+            <div class="quiz-option" onclick="answer(this,'q6',true,'Correct ! Les marchands O\'calm migrent vers le profil Essentiel Full (grade OMBLevel1 Full).')"><span class="option-letter">B</span> Essentiel Full</div>
+            <div class="quiz-option" onclick="answer(this,'q6',false,'Le profil Classique correspond aux anciens SMB (Small Business), pas aux O\'calm.')"><span class="option-letter">C</span> Classique</div>
+            <div class="quiz-option" onclick="answer(this,'q6',false,'Le profil Premium correspond aux anciens Classiques, pas aux O\'calm.')"><span class="option-letter">D</span> Premium</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q6"></div>
+        </div>
+        <div class="quiz-question-block" id="q7">
+          <div class="quiz-q-num">Question 07 / 10</div>
+          <div class="quiz-q-text">Pour demander un déplafonnement vers le profil Classique, quel est le délai de retour du Back Office ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q7',false,'48H est trop long. Le Back Office s\'engage à un retour sous 24H pour le déplafonnement.')"><span class="option-letter">A</span> 48H</div>
+            <div class="quiz-option" onclick="answer(this,'q7',true,'Correct ! Après soumission du dossier de déplafonnement, le retour du Back Office est garanti sous 24H.')"><span class="option-letter">B</span> 24H</div>
+            <div class="quiz-option" onclick="answer(this,'q7',false,'72H est trop long. Le délai officiel est 24H.')"><span class="option-letter">C</span> 72H</div>
+            <div class="quiz-option" onclick="answer(this,'q7',false,'5 jours ouvrables est bien trop long. Le délai est de 24H.')"><span class="option-letter">D</span> 5 jours ouvrables</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q7"></div>
+        </div>
+        <div class="quiz-question-block" id="q8">
+          <div class="quiz-q-num">Question 08 / 10</div>
+          <div class="quiz-q-text">Quel est le plafond de transaction journalier pour le profil Essentiel Full ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q8',false,'200 000 XOF correspond au plafond du profil Essentiel Lite, pas Full.')"><span class="option-letter">A</span> 200 000 XOF</div>
+            <div class="quiz-option" onclick="answer(this,'q8',false,'500 000 XOF est le plafond mensuel d\'encaissement à 0%, pas le plafond journalier de l\'Essentiel Full.')"><span class="option-letter">B</span> 500 000 XOF</div>
+            <div class="quiz-option" onclick="answer(this,'q8',true,'Correct ! L\'Essentiel Full a un plafond de 2 000 000 XOF par transaction et 7 500 000 XOF par semaine.')"><span class="option-letter">C</span> 2 000 000 XOF</div>
+            <div class="quiz-option" onclick="answer(this,'q8',false,'15 000 000 XOF est le plafond du profil Classique, pas de l\'Essentiel Full.')"><span class="option-letter">D</span> 15 000 000 XOF</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q8"></div>
+        </div>
+        <div class="quiz-question-block" id="q9">
+          <div class="quiz-q-num">Question 09 / 10</div>
+          <div class="quiz-q-text">Pour l'encaissement via lien de paiement, combien d'étapes comporte le parcours ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q9',false,'2 étapes est insuffisant. L\'envoi de lien se fait en 4 étapes.')"><span class="option-letter">A</span> 2 étapes</div>
+            <div class="quiz-option" onclick="answer(this,'q9',false,'3 étapes est incorrect. Il faut 4 étapes pour envoyer un lien de paiement.')"><span class="option-letter">B</span> 3 étapes</div>
+            <div class="quiz-option" onclick="answer(this,'q9',true,'Correct ! 1) Cliquer "Envoi de lien", 2) Saisir le montant (optionnel), 3) Choisir le canal, 4) Valider le partage.')"><span class="option-letter">C</span> 4 étapes</div>
+            <div class="quiz-option" onclick="answer(this,'q9',false,'6 étapes est trop élevé. Le lien de paiement se fait en seulement 4 étapes.')"><span class="option-letter">D</span> 6 étapes</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q9"></div>
+        </div>
+        <div class="quiz-question-block" id="q10">
+          <div class="quiz-q-num">Question 10 / 10</div>
+          <div class="quiz-q-text">Quelle est la prochaine fonctionnalité annoncée pour OM Business ?</div>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="answer(this,'q10',false,'L\'assurance mobile n\'est pas la prochaine fonctionnalité annoncée pour OM Business.')"><span class="option-letter">A</span> Un service d'assurance mobile</div>
+            <div class="quiz-option" onclick="answer(this,'q10',true,'Correct ! Tik Tak Pro est le service de crédit et d\'épargne à venir — une évolution majeure pour soutenir le financement des commerçants.')"><span class="option-letter">B</span> Tik Tak Pro — Service de crédit et d'épargne</div>
+            <div class="quiz-option" onclick="answer(this,'q10',false,'Le paiement international n\'est pas la prochaine fonctionnalité annoncée.')"><span class="option-letter">C</span> Un service de paiement international</div>
+            <div class="quiz-option" onclick="answer(this,'q10',false,'La carte prépayée physique n\'est pas la fonctionnalité à venir annoncée.')"><span class="option-letter">D</span> Une carte prépayée physique</div>
+          </div>
+          <div class="quiz-feedback" id="fb-q10"></div>
         </div>
       </div>
     </div>
@@ -633,7 +978,7 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:#2C3E50; displ
 </div>
 
 <script>
-let scores = { q1:null, q2:null, q3:null, q4:null, q5:null };
+let scores = { q1:null, q2:null, q3:null, q4:null, q5:null, q6:null, q7:null, q8:null, q9:null, q10:null };
 function showTab(tab, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + tab).classList.add('active');
@@ -654,9 +999,9 @@ function answer(el, qid, correct, feedback) {
   scores[qid] = correct;
   const total = Object.values(scores).filter(v => v === true).length;
   const answered = Object.values(scores).filter(v => v !== null).length;
-  document.getElementById('score-display').innerHTML = total + ' <span>/ 5</span>';
-  document.getElementById('prog-label').textContent = answered + ' / 5';
-  document.getElementById('prog-fill').style.width = (answered / 5 * 100) + '%';
+  document.getElementById('score-display').innerHTML = total + ' <span>/ 10</span>';
+  document.getElementById('prog-label').textContent = answered + ' / 10';
+  document.getElementById('prog-fill').style.width = (answered / 10 * 100) + '%';
 }
 </script>
 </body>
