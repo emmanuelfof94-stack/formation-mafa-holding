@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Évaluation Agent Terrain — OM Business MAFA</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- Firebase SDK (Realtime Database) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
 :root {
   --primary:#8D0C23; --accent2:#B5112C; --gold:#CF9E41;
@@ -734,6 +737,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
       <div class="code-section">
         <p>Code de résultat à transmettre au Superviseur</p>
         <div class="code-val" id="r-code">———</div>
+        <div id="sync-status" style="margin-top:.6rem;font-size:.8rem;font-weight:600;min-height:1.1rem;"></div>
       </div>
 
       <!-- Corrigé cas pratique -->
@@ -779,6 +783,42 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 </div><!-- /wrapper -->
 
 <script>
+// ══════════════════════════════════════════════════════════════
+//  CONFIGURATION FIREBASE — REMPLACER PAR VOS CLÉS DU PROJET
+//  → console.firebase.google.com > votre projet > Paramètres
+// ══════════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey:            "VOTRE_API_KEY",
+  authDomain:        "VOTRE_PROJET.firebaseapp.com",
+  databaseURL:       "https://VOTRE_PROJET-default-rtdb.firebaseio.com",
+  projectId:         "VOTRE_PROJET",
+  storageBucket:     "VOTRE_PROJET.appspot.com",
+  messagingSenderId: "VOTRE_SENDER_ID",
+  appId:             "VOTRE_APP_ID"
+};
+let _db = null;
+try {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  _db = firebase.database();
+} catch(e) { console.warn('Firebase non configuré:', e.message); }
+
+function saveToFirebase(payload) {
+  const el = document.getElementById('sync-status');
+  if (!_db) {
+    if (el) { el.textContent = '⚠ Firebase non configuré'; el.style.color = '#ef4444'; }
+    return;
+  }
+  if (el) { el.textContent = '⏳ Synchronisation en cours...'; el.style.color = '#f59e0b'; }
+  _db.ref('agent_terrain').push(payload)
+    .then(() => {
+      if (el) { el.textContent = '✅ Résultats envoyés à l\'administrateur'; el.style.color = '#10b981'; }
+    })
+    .catch(err => {
+      if (el) { el.textContent = '⚠ Échec sync — code ' + err.code; el.style.color = '#ef4444'; }
+      console.error('Firebase save error:', err);
+    });
+}
+
 // ——————————————————————————————
 // DATA
 // ——————————————————————————————
@@ -1030,6 +1070,37 @@ function submitExam() {
   });
 
   showScreen('screen-results');
+
+  // ── Sauvegarde Firebase ──────────────────────────────────
+  const qLabels = QUESTIONS.map(q => q[1]);
+  const detailAnswers = answers.map((chosen, i) => ({
+    q:       qLabels[i],
+    chosen:  chosen,
+    correct: QUESTIONS[i][0],
+    ok:      chosen === QUESTIONS[i][0]
+  }));
+  saveToFirebase({
+    nom:         candidateName,
+    tel:         candidateTel,
+    zone:        candidateZone,
+    dateEval:    candidateDate,
+    score:       score,
+    total:       TOTAL_QCM,
+    pct:         pct,
+    pass:        pct >= 75,
+    verdict:     pct >= 75 ? 'REÇU' : (pct >= 60 ? 'RATTRAPAGE' : 'INSUFFISANT'),
+    timeUsed:    timeStr,
+    answers:     answers,
+    detail:      detailAnswers,
+    cas: {
+      a: document.getElementById('cas-a').value.trim(),
+      b: document.getElementById('cas-b').value.trim(),
+      c: document.getElementById('cas-c').value.trim(),
+      d: document.getElementById('cas-d').value.trim()
+    },
+    timestamp:   Date.now(),
+    submittedAt: new Date().toISOString()
+  });
 }
 </script>
 </body>

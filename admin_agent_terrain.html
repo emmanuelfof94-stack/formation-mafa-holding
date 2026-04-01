@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Évaluation Agent Terrain MAFA</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#8D0C23; --gold:#CF9E41; --om:#FF6600;
+  --success:#10b981; --danger:#ef4444; --warn:#f59e0b;
+  --surface:#fff; --surface2:#f8fafc; --border:#e2e8f0;
+  --text:#0f172a; --muted:#64748b;
+  --radius:10px; --shadow:0 4px 16px rgba(0,0,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#f1f5fb;color:var(--text);min-height:100vh;}
+body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#8D0C23,#CF9E41,#FF6600,#CF9E41,#8D0C23);z-index:9999;pointer-events:none;}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
+.login-card{background:var(--surface);border-radius:18px;padding:2.8rem 2.5rem;box-shadow:var(--shadow);width:100%;max-width:380px;text-align:center;}
+.login-card .logo{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--primary);color:#fff;display:inline-block;padding:.4rem 1.2rem;border-radius:50px;margin-bottom:1.2rem;}
+.login-card h1{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.3rem;}
+.login-card p{font-size:.88rem;color:var(--muted);margin-bottom:1.8rem;}
+.login-card input{width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:.8rem;transition:border-color .2s;text-align:center;letter-spacing:.15em;}
+.login-card input:focus{border-color:var(--primary);}
+.login-err{font-size:.83rem;color:var(--danger);min-height:1.1rem;margin-bottom:.8rem;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.72rem 1.8rem;border:none;border-radius:50px;cursor:pointer;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(141,12,35,.25);}
+.btn-primary:hover{background:#6a091a;transform:translateY(-1px);}
+.btn-secondary{background:var(--surface2);color:var(--muted);border:1.5px solid var(--border);}
+.btn-secondary:hover{background:var(--border);}
+.btn-sm{padding:.45rem 1rem;font-size:.78rem;}
+.btn-full{width:100%;}
+
+/* LAYOUT ADMIN */
+.admin-wrap{display:none;flex-direction:column;min-height:100vh;}
+.topbar{background:linear-gradient(135deg,var(--primary),#5a0815);color:#fff;padding:.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(141,12,35,.3);}
+.topbar-left{display:flex;align-items:center;gap:1rem;}
+.topbar .logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;}
+.topbar .logo-sub{font-size:.75rem;color:rgba(255,255,255,.65);}
+.topbar-badge{background:var(--gold);color:#3a2800;padding:.3rem .9rem;border-radius:20px;font-size:.72rem;font-weight:700;font-family:'Syne',monospace;}
+.live-dot{width:9px;height:9px;background:#4ade80;border-radius:50%;animation:blink 1.4s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.content{flex:1;padding:2rem 1.8rem;max-width:1200px;margin:0 auto;width:100%;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--surface);border-radius:14px;padding:1.2rem 1.4rem;box-shadow:var(--shadow-sm,0 1px 6px rgba(0,0,0,.05));border:1.5px solid var(--border);text-align:center;}
+.stat-val{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--primary);}
+.stat-lbl{font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+.stat-card.green .stat-val{color:var(--success);}
+.stat-card.red .stat-val{color:var(--danger);}
+.stat-card.gold .stat-val{color:var(--gold);}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem;}
+.toolbar input,.toolbar select{padding:.55rem .9rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:.88rem;font-family:'DM Sans',sans-serif;outline:none;background:var(--surface);transition:border-color .2s;}
+.toolbar input:focus,.toolbar select:focus{border-color:var(--primary);}
+.toolbar input{min-width:200px;}
+.count-badge{font-size:.82rem;color:var(--muted);margin-left:auto;}
+
+/* TABLE */
+.table-wrap{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border:1.5px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:.86rem;}
+thead{background:var(--primary);color:#fff;}
+thead th{padding:.8rem 1rem;text-align:left;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+tbody tr{border-bottom:1px solid #f1f5f9;cursor:pointer;transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:#fdf2f4;}
+tbody td{padding:.72rem 1rem;color:var(--text);vertical-align:middle;}
+.score-pill{display:inline-block;padding:.2rem .7rem;border-radius:50px;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;}
+.pill-pass{background:#dcfce7;color:#166534;}
+.pill-fail{background:#fee2e2;color:#991b1b;}
+.pill-retry{background:#fff8e1;color:#92400e;}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--muted);}
+.empty-state .ei{font-size:2.5rem;margin-bottom:.6rem;}
+
+/* DETAIL VIEW */
+.detail-wrap{display:none;}
+.detail-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.detail-back{background:var(--surface2);border:1.5px solid var(--border);padding:.5rem 1.1rem;border-radius:50px;cursor:pointer;font-size:.84rem;font-family:'Syne',sans-serif;font-weight:700;color:var(--muted);transition:all .2s;}
+.detail-back:hover{background:var(--border);}
+.detail-hero{background:var(--surface);border-radius:14px;padding:1.5rem 1.8rem;box-shadow:var(--shadow);margin-bottom:1.5rem;border:1.5px solid var(--border);display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;}
+.detail-info{flex:1;min-width:200px;}
+.detail-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;color:var(--text);}
+.detail-meta{font-size:.83rem;color:var(--muted);margin-top:.25rem;line-height:1.6;}
+.detail-score-block{text-align:center;min-width:110px;}
+.detail-pct{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;}
+.detail-pct.pass{color:var(--success);}
+.detail-pct.fail{color:var(--danger);}
+.detail-pct.retry{color:var(--warn);}
+
+.section-label{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--primary);margin:1.5rem 0 .7rem;padding-bottom:.4rem;border-bottom:2px solid var(--border);}
+.answer-row{display:flex;align-items:flex-start;gap:.75rem;padding:.55rem 0;border-bottom:1px solid #f1f5f9;font-size:.84rem;}
+.answer-row:last-child{border-bottom:none;}
+.ans-num{color:var(--muted);width:26px;flex-shrink:0;font-size:.75rem;padding-top:.1rem;}
+.ans-q{flex:1;color:var(--text);}
+.ans-icon{font-size:.9rem;flex-shrink:0;}
+.ans-chosen{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
+.cas-block{background:var(--surface2);border-radius:10px;padding:1rem 1.2rem;margin-bottom:.8rem;border-left:3px solid var(--gold);}
+.cas-block h4{font-size:.85rem;font-weight:600;color:#92400e;margin-bottom:.4rem;font-family:'Syne',sans-serif;}
+.cas-block p{font-size:.83rem;color:#334155;line-height:1.65;white-space:pre-wrap;}
+.cas-block.empty p{color:var(--muted);font-style:italic;}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#0f172a;color:#fff;padding:.7rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:9000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+
+@media(max-width:700px){
+  .topbar{padding:.7rem 1rem;}
+  .content{padding:1.2rem 1rem;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  thead th:nth-child(n+5){display:none;}
+  tbody td:nth-child(n+5){display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ ÉCRAN LOGIN ═══ -->
+<div class="login-wrap" id="login-screen">
+  <div class="login-card">
+    <div class="logo">MAFA HOLDING</div>
+    <h1>Panel Administrateur</h1>
+    <p>Évaluation Agent Terrain — OM Business</p>
+    <input type="password" id="pwd-input" placeholder="Mot de passe admin"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-err" id="login-err"></div>
+    <button class="btn btn-primary btn-full" onclick="doLogin()">Connexion →</button>
+  </div>
+</div>
+
+<!-- ═══ PANEL ADMIN ═══ -->
+<div class="admin-wrap" id="admin-wrap">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="live-dot" title="Connexion en temps réel"></div>
+      <div>
+        <div class="logo-text">MAFA — Panel Admin</div>
+        <div class="logo-sub">Évaluation Agent Terrain</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.8rem;">
+      <div class="topbar-badge" id="topbar-count">0 candidat(s)</div>
+      <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📥 CSV</button>
+      <button class="btn btn-secondary btn-sm" onclick="logout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <!-- LISTE CANDIDATS -->
+  <div class="content" id="list-view">
+    <!-- Stats -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card"><div class="stat-val" id="s-total">0</div><div class="stat-lbl">Candidats</div></div>
+      <div class="stat-card green"><div class="stat-val" id="s-pass">0</div><div class="stat-lbl">Reçus ≥ 75 %</div></div>
+      <div class="stat-card red"><div class="stat-val" id="s-fail">0</div><div class="stat-lbl">Insuffisants</div></div>
+      <div class="stat-card gold"><div class="stat-val" id="s-avg">—</div><div class="stat-lbl">Score moyen</div></div>
+      <div class="stat-card"><div class="stat-val" id="s-zones">—</div><div class="stat-lbl">Zones représentées</div></div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="toolbar">
+      <input type="text" id="f-search" placeholder="🔍  Rechercher un candidat…" oninput="renderTable()">
+      <select id="f-zone" onchange="renderTable()">
+        <option value="">Toutes les zones</option>
+        <option>Cocody</option><option>Adjamé</option><option>Plateau</option>
+        <option>Treichville</option><option>Port-Bouët</option><option>Yopougon</option>
+        <option>Abobo</option><option>Attécoubé</option><option>Soubré</option>
+        <option>Divo</option><option>Gagnoa</option><option>San-Pédro</option>
+        <option>Bouaké</option><option>Korhogo</option><option>Yamoussoukro</option>
+      </select>
+      <select id="f-verdict" onchange="renderTable()">
+        <option value="">Tous les résultats</option>
+        <option value="REÇU">Reçu</option>
+        <option value="RATTRAPAGE">Rattrapage</option>
+        <option value="INSUFFISANT">Insuffisant</option>
+      </select>
+      <span class="count-badge" id="count-shown">0 affiché(s)</span>
+    </div>
+
+    <!-- Tableau -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Candidat</th>
+            <th>Téléphone</th>
+            <th>Zone</th>
+            <th>Score</th>
+            <th>Résultat</th>
+            <th>Temps</th>
+            <th>Date éval.</th>
+            <th>Soumis le</th>
+          </tr>
+        </thead>
+        <tbody id="candidates-tbody">
+          <tr><td colspan="9"><div class="empty-state"><div class="ei">⏳</div>En attente de connexion Firebase…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DETAIL CANDIDAT -->
+  <div class="content detail-wrap" id="detail-view">
+    <div class="detail-header">
+      <button class="detail-back" onclick="showList()">← Retour à la liste</button>
+      <div style="font-family:'Syne',sans-serif;font-size:.85rem;color:var(--muted);">Détail des réponses</div>
+    </div>
+
+    <div class="detail-hero">
+      <div class="detail-info">
+        <div class="detail-name" id="d-name">—</div>
+        <div class="detail-meta" id="d-meta">—</div>
+      </div>
+      <div class="detail-score-block">
+        <div class="detail-pct" id="d-pct">—</div>
+        <div style="font-size:.78rem;color:var(--muted);">Score QCM</div>
+        <div style="margin-top:.4rem;" id="d-verdict-pill">—</div>
+      </div>
+    </div>
+
+    <!-- QCM -->
+    <div class="section-label">📝 Réponses QCM — 29 questions</div>
+    <div class="table-wrap" style="padding:.5rem 1rem;">
+      <div id="d-answers"></div>
+    </div>
+
+    <!-- Cas pratique -->
+    <div class="section-label">📋 Cas Pratique — réponses libres</div>
+    <div id="d-cas"></div>
+  </div>
+
+</div><!-- /admin-wrap -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  CONFIGURATION FIREBASE — MÊME CONFIG QUE evaluation_agent_terrain.html
+//  Remplacer ci-dessous par vos clés de projet Firebase
+// ══════════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey:            "VOTRE_API_KEY",
+  authDomain:        "VOTRE_PROJET.firebaseapp.com",
+  databaseURL:       "https://VOTRE_PROJET-default-rtdb.firebaseio.com",
+  projectId:         "VOTRE_PROJET",
+  storageBucket:     "VOTRE_PROJET.appspot.com",
+  messagingSenderId: "VOTRE_SENDER_ID",
+  appId:             "VOTRE_APP_ID"
+};
+
+// Mot de passe admin — modifier ici si nécessaire
+const ADMIN_PWD_HASH = btoa('MAFA@Admin2026');
+
+// ──────────────────────────────────────────────
+const QUESTION_LABELS = [
+  "Objectif quotidien agent terrain",
+  "Agents par Superviseur",
+  "Rôle du Responsable de Zone",
+  "Fréquence consultation application",
+  "Nombre d'étapes PACO",
+  "Profil Essentiel",
+  "Profil Premium vs Classique",
+  "Pourquoi qualifier le profil",
+  "Seuil marchand Actif portefeuille",
+  "Objectif question ouverte PACO-A",
+  "Action finale enrôlement photo",
+  "Durée visite petite prospection",
+  "Que faire si question technique inconnue",
+  "Outil de structuration agent",
+  "Signification KYC",
+  "Étapes PACO dans l'ordre",
+  "Document obligatoire KYC",
+  "Rôle du linkage QR Code",
+  "Dossier KYC rejeté — que faire",
+  "Matériel remis après enrôlement",
+  "Acronyme CRAC",
+  "Première étape CRAC sur 'pas le temps'",
+  "Signal d'intérêt caché",
+  "Paiement client par QR Code",
+  "Taux commission < 50 000 XOF/jour",
+  "Fonctionnalité Cash Out OM Business",
+  "Déplafonnement OM Business",
+  "Classement marchand 38 jours sans transaction",
+  "Fréquence visite marchand À développer"
+];
+
+const CAS_LABELS = {
+  a: 'A — Profil marchand de M. Traoré',
+  b: 'B — Méthode CRAC sur objection "frais cachés"',
+  c: 'C — Documents KYC à collecter',
+  d: 'D — Finalisation du point de paiement'
+};
+
+let _db = null;
+let allData = {};   // { firebaseKey: {...candidatData} }
+let currentKey = null;
+
+// ── Authentification ─────────────────────────────────────────
+function doLogin() {
+  const val = document.getElementById('pwd-input').value;
+  const err = document.getElementById('login-err');
+  if (btoa(val) !== ADMIN_PWD_HASH) {
+    err.textContent = 'Mot de passe incorrect.';
+    document.getElementById('pwd-input').value = '';
+    return;
+  }
+  err.textContent = '';
+  initFirebase();
+}
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-wrap').style.display = 'none';
+  document.getElementById('pwd-input').value = '';
+}
+
+// ── Firebase ──────────────────────────────────────────────────
+function initFirebase() {
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+    _db = firebase.database();
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-wrap').style.display = 'flex';
+    listenData();
+  } catch(e) {
+    document.getElementById('login-err').textContent = 'Erreur Firebase : ' + e.message;
+  }
+}
+
+function listenData() {
+  _db.ref('agent_terrain').on('value', snap => {
+    allData = snap.val() || {};
+    updateStats();
+    renderTable();
+    const n = Object.keys(allData).length;
+    document.getElementById('topbar-count').textContent = n + ' candidat(s)';
+    if (n > 0) showToast('Données mises à jour — ' + n + ' candidat(s)');
+  }, err => {
+    showToast('⚠ Erreur lecture Firebase : ' + err.message);
+  });
+}
+
+// ── Stats ─────────────────────────────────────────────────────
+function updateStats() {
+  const rows = Object.values(allData);
+  const total = rows.length;
+  const passed = rows.filter(r => r.pass).length;
+  const failed = rows.filter(r => r.verdict === 'INSUFFISANT').length;
+  const avg = total ? Math.round(rows.reduce((s,r) => s + (r.pct||0), 0) / total) : null;
+  const zones = [...new Set(rows.map(r => r.zone).filter(Boolean))].length;
+
+  document.getElementById('s-total').textContent = total;
+  document.getElementById('s-pass').textContent  = passed;
+  document.getElementById('s-fail').textContent  = failed;
+  document.getElementById('s-avg').textContent   = avg !== null ? avg + '%' : '—';
+  document.getElementById('s-zones').textContent = zones || '—';
+}
+
+// ── Table ─────────────────────────────────────────────────────
+function renderTable() {
+  const search  = (document.getElementById('f-search').value || '').toLowerCase();
+  const zone    = document.getElementById('f-zone').value;
+  const verdict = document.getElementById('f-verdict').value;
+
+  const rows = Object.entries(allData).filter(([k, r]) => {
+    const matchName = !search || (r.nom||'').toLowerCase().includes(search) || (r.tel||'').includes(search);
+    const matchZone = !zone    || r.zone === zone;
+    const matchVerdict = !verdict || r.verdict === verdict;
+    return matchName && matchZone && matchVerdict;
+  });
+
+  // Sort newest first
+  rows.sort((a,b) => (b[1].timestamp||0) - (a[1].timestamp||0));
+
+  document.getElementById('count-shown').textContent = rows.length + ' affiché(s)';
+  const tbody = document.getElementById('candidates-tbody');
+
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><div class="ei">🔍</div>Aucun résultat trouvé.</div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(([key, r], idx) => {
+    const pillClass = r.pass ? 'pill-pass' : (r.verdict === 'RATTRAPAGE' ? 'pill-retry' : 'pill-fail');
+    const when = r.submittedAt ? new Date(r.submittedAt).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+    return `<tr onclick="showDetail('${key}')">
+      <td style="color:var(--muted);font-size:.78rem;">${idx+1}</td>
+      <td style="font-weight:600;">${esc(r.nom||'—')}</td>
+      <td style="font-family:monospace;">${esc(r.tel||'—')}</td>
+      <td>${esc(r.zone||'—')}</td>
+      <td style="font-family:monospace;font-weight:700;">${r.score??'?'}/${r.total??29} <span style="color:var(--muted);font-size:.8rem;">(${r.pct??'?'}%)</span></td>
+      <td><span class="score-pill ${pillClass}">${r.verdict||'—'}</span></td>
+      <td style="font-size:.82rem;color:var(--muted);">${esc(r.timeUsed||'—')}</td>
+      <td style="font-size:.82rem;color:var(--muted);">${esc(r.dateEval||'—')}</td>
+      <td style="font-size:.78rem;color:var(--muted);">${when}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Detail ────────────────────────────────────────────────────
+function showDetail(key) {
+  currentKey = key;
+  const r = allData[key];
+  if (!r) return;
+
+  document.getElementById('d-name').textContent = r.nom || '—';
+  document.getElementById('d-meta').innerHTML =
+    `📞 ${r.tel||'—'} &nbsp;·&nbsp; 🗺 Zone : ${r.zone||'—'} &nbsp;·&nbsp; 📅 ${r.dateEval||'—'}<br>` +
+    `Temps : ${r.timeUsed||'—'} &nbsp;·&nbsp; Soumis : ${r.submittedAt ? new Date(r.submittedAt).toLocaleString('fr-FR') : '—'}`;
+
+  const pctEl = document.getElementById('d-pct');
+  pctEl.textContent = (r.pct??'?') + '%';
+  pctEl.className = 'detail-pct ' + (r.pass ? 'pass' : (r.verdict==='RATTRAPAGE' ? 'retry' : 'fail'));
+
+  const pillClass = r.pass ? 'pill-pass' : (r.verdict==='RATTRAPAGE' ? 'pill-retry' : 'pill-fail');
+  document.getElementById('d-verdict-pill').innerHTML = `<span class="score-pill ${pillClass}">${r.verdict||'—'}</span>`;
+
+  // QCM answers
+  const answersEl = document.getElementById('d-answers');
+  const detail = r.detail || [];
+  if (detail.length) {
+    answersEl.innerHTML = detail.map((ans, i) => {
+      const icon = ans.ok ? '✅' : '❌';
+      const label = QUESTION_LABELS[i] || ('Q' + (i+1));
+      return `<div class="answer-row">
+        <div class="ans-num">Q${i+1}</div>
+        <div class="ans-q">
+          <div>${esc(label)}</div>
+          ${!ans.ok ? `<div class="ans-chosen">Réponse choisie : option ${(ans.chosen??'?')+1} &nbsp;|&nbsp; Correcte : option ${(ans.correct??'?')+1}</div>` : ''}
+        </div>
+        <div class="ans-icon">${icon}</div>
+      </div>`;
+    }).join('');
+  } else if (r.answers) {
+    answersEl.innerHTML = r.answers.map((chosen, i) => {
+      const label = QUESTION_LABELS[i] || ('Q' + (i+1));
+      return `<div class="answer-row">
+        <div class="ans-num">Q${i+1}</div>
+        <div class="ans-q">${esc(label)}</div>
+        <div class="ans-icon" style="color:var(--muted);font-size:.8rem;">opt.${(chosen??'?')+1}</div>
+      </div>`;
+    }).join('');
+  } else {
+    answersEl.innerHTML = '<div style="padding:.5rem;color:var(--muted);font-size:.85rem;">Détail non disponible</div>';
+  }
+
+  // Cas pratique
+  const casEl = document.getElementById('d-cas');
+  const cas = r.cas || {};
+  casEl.innerHTML = Object.entries(CAS_LABELS).map(([k, lbl]) => {
+    const val = (cas[k] || '').trim();
+    return `<div class="cas-block ${val ? '' : 'empty'}">
+      <h4>${lbl}</h4>
+      <p>${val || '(pas de réponse saisie)'}</p>
+    </div>`;
+  }).join('');
+
+  document.getElementById('list-view').style.display = 'none';
+  document.getElementById('detail-view').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function showList() {
+  document.getElementById('detail-view').style.display = 'none';
+  document.getElementById('list-view').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+// ── Export CSV ────────────────────────────────────────────────
+function exportCSV() {
+  const rows = Object.values(allData);
+  if (!rows.length) { showToast('Aucune donnée à exporter'); return; }
+  const cols = ['Nom','Téléphone','Zone','Date éval.','Score','Total','%','Résultat','Temps','Soumis le'];
+  const lines = [cols.join(';')];
+  rows.forEach(r => {
+    const when = r.submittedAt ? new Date(r.submittedAt).toLocaleString('fr-FR') : '';
+    lines.push([
+      r.nom||'', r.tel||'', r.zone||'', r.dateEval||'',
+      r.score??'', r.total??'', r.pct??'', r.verdict||'', r.timeUsed||'', when
+    ].map(v => '"'+String(v).replace(/"/g,'""')+'"').join(';'));
+  });
+  const blob = new Blob(['\uFEFF'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'evaluation_agent_terrain_' + new Date().toLocaleDateString('fr-FR').replace(/\//g,'-') + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Export CSV téléchargé ✓');
+}
+
+// ── Helpers ───────────────────────────────────────────────────
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
