@@ -243,7 +243,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q1 -->
     <div class="q-card" id="qc1">
       <div class="q-num">Question 1 / 29</div>
-      <div class="q-text">Quel est l'objectif quotidien d'enrôlement d'un agent terrain en Phase 1 du Projet Oxygène ?</div>
+      <div class="q-text">Quel est l'objectif quotidien d'enrôlement d'un agent terrain ?</div>
       <div class="options">
         <div class="opt" onclick="answer(1,0,this)"><div class="opt-icon"></div>2 à 3 marchands par jour</div>
         <div class="opt" onclick="answer(1,1,this)"><div class="opt-icon"></div>4 à 5 marchands par jour</div>
@@ -269,12 +269,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q3 -->
     <div class="q-card" id="qc3">
       <div class="q-num">Question 3 / 29</div>
-      <div class="q-text">Quelle est la mission principale de l'Inspecteur dans la chaîne hiérarchique MAFA ?</div>
+      <div class="q-text">Quel est le rôle du Responsable de Zone (RV) dans la structure hiérarchique MAFA ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(3,0,this)"><div class="opt-icon"></div>Former les agents terrain en salle de classe</div>
-        <div class="opt" onclick="answer(3,1,this)"><div class="opt-icon"></div>Superviser 15 agents et effectuer 40 visites terrain par jour</div>
+        <div class="opt" onclick="answer(3,0,this)"><div class="opt-icon"></div>Former directement les agents terrain en salle</div>
+        <div class="opt" onclick="answer(3,1,this)"><div class="opt-icon"></div>Superviser 4 Superviseurs et coordonner leurs équipes d'agents</div>
         <div class="opt" onclick="answer(3,2,this)"><div class="opt-icon"></div>Signer les contrats marchands avec Orange CI</div>
-        <div class="opt" onclick="answer(3,3,this)"><div class="opt-icon"></div>Gérer la plateforme informatique OM Business</div>
+        <div class="opt" onclick="answer(3,3,this)"><div class="opt-icon"></div>Gérer les réclamations des marchands directement sur le terrain</div>
       </div>
       <div class="feedback" id="fb3"></div>
     </div>
@@ -282,12 +282,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q4 -->
     <div class="q-card" id="qc4">
       <div class="q-num">Question 4 / 29</div>
-      <div class="q-text">Sous quel délai un agent terrain doit-il signaler un blocage technique rencontré sur le terrain ?</div>
+      <div class="q-text">À quelle fréquence minimale l'agent terrain doit-il consulter les notifications de son application mobile (validations dossiers, relances, messages superviseur) ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(4,0,this)"><div class="opt-icon"></div>Dans les 24 heures qui suivent</div>
-        <div class="opt" onclick="answer(4,1,this)"><div class="opt-icon"></div>Dans les 48 heures</div>
-        <div class="opt" onclick="answer(4,2,this)"><div class="opt-icon"></div>En temps réel via l'application mobile dédiée</div>
-        <div class="opt" onclick="answer(4,3,this)"><div class="opt-icon"></div>Lors du rapport hebdomadaire du vendredi</div>
+        <div class="opt" onclick="answer(4,0,this)"><div class="opt-icon"></div>Une fois par semaine, lors de la préparation du rapport</div>
+        <div class="opt" onclick="answer(4,1,this)"><div class="opt-icon"></div>Une fois par jour le matin</div>
+        <div class="opt" onclick="answer(4,2,this)"><div class="opt-icon"></div>Minimum 2 fois par jour</div>
+        <div class="opt" onclick="answer(4,3,this)"><div class="opt-icon"></div>Uniquement le vendredi lors de l'envoi du rapport</div>
       </div>
       <div class="feedback" id="fb4"></div>
     </div>
@@ -295,12 +295,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q5 -->
     <div class="q-card" id="qc5">
       <div class="q-num">Question 5 / 29</div>
-      <div class="q-text">Quel(s) élément(s) vestimentaires sont OBLIGATOIRES pendant toute activité terrain selon les règles MAFA ?</div>
+      <div class="q-text">La méthode PACO utilisée par l'agent terrain lors d'une visite de prospection comporte combien d'étapes ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(5,0,this)"><div class="opt-icon"></div>Casquette orange uniquement</div>
-        <div class="opt" onclick="answer(5,1,this)"><div class="opt-icon"></div>Badge officiel MAFA + tee-shirt MAFA</div>
-        <div class="opt" onclick="answer(5,2,this)"><div class="opt-icon"></div>Gilet réfléchissant</div>
-        <div class="opt" onclick="answer(5,3,this)"><div class="opt-icon"></div>Cravate orange et badge</div>
+        <div class="opt" onclick="answer(5,0,this)"><div class="opt-icon"></div>2 étapes</div>
+        <div class="opt" onclick="answer(5,1,this)"><div class="opt-icon"></div>3 étapes</div>
+        <div class="opt" onclick="answer(5,2,this)"><div class="opt-icon"></div>4 étapes</div>
+        <div class="opt" onclick="answer(5,3,this)"><div class="opt-icon"></div>6 étapes</div>
       </div>
       <div class="feedback" id="fb5"></div>
     </div>
@@ -352,12 +352,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q9 -->
     <div class="q-card" id="qc9">
       <div class="q-num">Question 9 / 29</div>
-      <div class="q-text">Un marchand gérant un maquis de quartier effectue en moyenne 3 transactions OM Business par mois. Quel profil lui attribuez-vous ?</div>
+      <div class="q-text">Dans la gestion du portefeuille marchand, à partir de combien de transactions par mois un marchand est-il classé "Actif" ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(9,0,this)"><div class="opt-icon"></div>Essentiel</div>
-        <div class="opt" onclick="answer(9,1,this)"><div class="opt-icon"></div>Classique</div>
-        <div class="opt" onclick="answer(9,2,this)"><div class="opt-icon"></div>Premium</div>
-        <div class="opt" onclick="answer(9,3,this)"><div class="opt-icon"></div>Aucun profil défini — il n'est pas éligible</div>
+        <div class="opt" onclick="answer(9,0,this)"><div class="opt-icon"></div>Au moins 1 transaction par mois</div>
+        <div class="opt" onclick="answer(9,1,this)"><div class="opt-icon"></div>Plus de 5 transactions par mois</div>
+        <div class="opt" onclick="answer(9,2,this)"><div class="opt-icon"></div>Au moins 10 transactions par mois</div>
+        <div class="opt" onclick="answer(9,3,this)"><div class="opt-icon"></div>1 transaction par semaine minimum</div>
       </div>
       <div class="feedback" id="fb9"></div>
     </div>
@@ -383,12 +383,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q11 -->
     <div class="q-card" id="qc11">
       <div class="q-num">Question 11 / 29</div>
-      <div class="q-text">Dans l'argumentaire commercial, la méthode CAB signifie :</div>
+      <div class="q-text">Lors de l'enrôlement d'un marchand, quelle est l'action finale qui confirme la bonne installation du point de paiement dans l'application ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(11,0,this)"><div class="opt-icon"></div>Coût, Avantage, Bénéfice</div>
-        <div class="opt" onclick="answer(11,1,this)"><div class="opt-icon"></div>Caractéristique, Avantage, Bénéfice</div>
-        <div class="opt" onclick="answer(11,2,this)"><div class="opt-icon"></div>Client, Argumentaire, Bilan</div>
-        <div class="opt" onclick="answer(11,3,this)"><div class="opt-icon"></div>Comprendre, Adapter, Bénéfice</div>
+        <div class="opt" onclick="answer(11,0,this)"><div class="opt-icon"></div>Remettre physiquement le sticker "PAYER ICI" au marchand</div>
+        <div class="opt" onclick="answer(11,1,this)"><div class="opt-icon"></div>Appeler le Superviseur pour signaler la fin de la visite</div>
+        <div class="opt" onclick="answer(11,2,this)"><div class="opt-icon"></div>Prendre une photo de confirmation du point de paiement installé</div>
+        <div class="opt" onclick="answer(11,3,this)"><div class="opt-icon"></div>Envoyer un SMS de bienvenue au marchand depuis l'application</div>
       </div>
       <div class="feedback" id="fb11"></div>
     </div>
@@ -453,12 +453,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q16 -->
     <div class="q-card" id="qc16">
       <div class="q-num">Question 16 / 29</div>
-      <div class="q-text">Combien d'étapes comporte le processus d'enrôlement PACO-O (côté opération) ?</div>
+      <div class="q-text">La méthode PACO guide l'agent tout au long de sa visite terrain. Quelles sont ses 4 étapes dans l'ordre correct ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(16,0,this)"><div class="opt-icon"></div>3 étapes</div>
-        <div class="opt" onclick="answer(16,1,this)"><div class="opt-icon"></div>4 étapes</div>
-        <div class="opt" onclick="answer(16,2,this)"><div class="opt-icon"></div>5 étapes</div>
-        <div class="opt" onclick="answer(16,3,this)"><div class="opt-icon"></div>6 étapes</div>
+        <div class="opt" onclick="answer(16,0,this)"><div class="opt-icon"></div>Présenter → Argumenter → Conclure → Opérer</div>
+        <div class="opt" onclick="answer(16,1,this)"><div class="opt-icon"></div>Prospecter → Approcher → Convaincre → Opérer (enrôler)</div>
+        <div class="opt" onclick="answer(16,2,this)"><div class="opt-icon"></div>Préparer → Analyser → Calculer → Optimiser</div>
+        <div class="opt" onclick="answer(16,3,this)"><div class="opt-icon"></div>Planifier → Argumenter → Clore → Observer</div>
       </div>
       <div class="feedback" id="fb16"></div>
     </div>
@@ -593,12 +593,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q26 -->
     <div class="q-card" id="qc26">
       <div class="q-num">Question 26 / 29</div>
-      <div class="q-text">Quel est le plafond mensuel de transaction par défaut pour un compte OM Business standard ?</div>
+      <div class="q-text">Quelle fonctionnalité OM Business permet à un client de récupérer de l'argent liquide directement chez un marchand enrôlé ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(26,0,this)"><div class="opt-icon"></div>200 000 XOF par mois</div>
-        <div class="opt" onclick="answer(26,1,this)"><div class="opt-icon"></div>300 000 XOF par mois</div>
-        <div class="opt" onclick="answer(26,2,this)"><div class="opt-icon"></div>500 000 XOF par mois</div>
-        <div class="opt" onclick="answer(26,3,this)"><div class="opt-icon"></div>1 000 000 XOF par mois</div>
+        <div class="opt" onclick="answer(26,0,this)"><div class="opt-icon"></div>L'encaissement par QR Code</div>
+        <div class="opt" onclick="answer(26,1,this)"><div class="opt-icon"></div>Le transfert d'argent entre comptes</div>
+        <div class="opt" onclick="answer(26,2,this)"><div class="opt-icon"></div>Le retrait cash (Cash Out) chez le marchand</div>
+        <div class="opt" onclick="answer(26,3,this)"><div class="opt-icon"></div>La consultation de l'historique des transactions</div>
       </div>
       <div class="feedback" id="fb26"></div>
     </div>
@@ -637,12 +637,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q29 -->
     <div class="q-card" id="qc29">
       <div class="q-num">Question 29 / 29</div>
-      <div class="q-text">Quel est le délai d'intervention recommandé auprès d'un marchand classé "Inactif" (0 transaction depuis plus de 30 jours) ?</div>
+      <div class="q-text">Quelle est la fréquence de visite recommandée pour un marchand classé "À développer" (1 à 4 transactions par mois) ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(29,0,this)"><div class="opt-icon"></div>À la prochaine visite mensuelle planifiée</div>
-        <div class="opt" onclick="answer(29,1,this)"><div class="opt-icon"></div>Sous 48 heures, visite urgente de réactivation</div>
-        <div class="opt" onclick="answer(29,2,this)"><div class="opt-icon"></div>Lors du rapport hebdomadaire du vendredi</div>
-        <div class="opt" onclick="answer(29,3,this)"><div class="opt-icon"></div>Dans les 7 jours suivant le signalement</div>
+        <div class="opt" onclick="answer(29,0,this)"><div class="opt-icon"></div>Une visite par mois comme pour les marchands actifs</div>
+        <div class="opt" onclick="answer(29,1,this)"><div class="opt-icon"></div>Deux visites par mois (bimensuelle) avec formation approfondie sur place</div>
+        <div class="opt" onclick="answer(29,2,this)"><div class="opt-icon"></div>Une visite par semaine jusqu'à activation complète</div>
+        <div class="opt" onclick="answer(29,3,this)"><div class="opt-icon"></div>Aucune visite — attendre qu'il devienne actif naturellement</div>
       </div>
       <div class="feedback" id="fb29"></div>
     </div>
@@ -784,21 +784,21 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 // ——————————————————————————————
 const QUESTIONS = [
   // [correct_index, short_text, feedback_ok, feedback_ko]
-  [1, "Objectif quotidien Phase 1",
-    "Correct. En Phase 1 (pilote), l'objectif est de 4 à 5 enrôlements par jour. La Phase 2 vise 8 marchands/jour une fois le SDK PDV intégré.",
-    "Non. L'objectif Phase 1 est de 4 à 5 marchands/jour. L'objectif de 8/jour correspond à la Phase 2."],
+  [3, "Objectif quotidien agent terrain",
+    "Correct. L'objectif quotidien d'enrôlement d'un agent terrain est de 10 marchands par jour.",
+    "Non. L'objectif quotidien est de 10 enrôlements par jour par agent terrain."],
   [2, "Agents par Superviseur",
     "Correct. Un Superviseur encadre entre 15 et 20 agents terrain.",
     "Non. Un Superviseur encadre 15 à 20 agents terrain dans la structure MAFA."],
-  [1, "Mission de l'Inspecteur",
-    "Correct. L'Inspecteur supervise 15 agents et assure 40 visites terrain par jour.",
-    "Non. L'Inspecteur supervise 15 agents avec 40 visites/jour — il n'est pas formateur en salle."],
-  [2, "Délai signalement blocage",
-    "Correct. Les blocages techniques doivent être signalés en temps réel via l'application mobile dédiée.",
-    "Non. Le signalement se fait en temps réel via l'application — pas lors du rapport hebdomadaire."],
-  [1, "Équipement obligatoire",
-    "Correct. Le badge officiel MAFA et le tee-shirt MAFA sont OBLIGATOIRES pendant toute activité terrain.",
-    "Non. Le badge officiel ET le tee-shirt MAFA sont tous deux obligatoires pendant l'activité terrain."],
+  [1, "Rôle du Responsable de Zone",
+    "Correct. Le Responsable de Zone (RV) supervise 4 Superviseurs, chacun gérant une équipe de 15 à 20 agents terrain.",
+    "Non. Le RV supervise 4 Superviseurs — il ne forme pas directement les agents ni ne gère les réclamations marchands."],
+  [2, "Fréquence consultation application",
+    "Correct. L'agent doit consulter les notifications de son application minimum 2 fois par jour pour ne manquer aucune validation ou message superviseur.",
+    "Non. La fréquence recommandée est minimum 2 fois par jour — pas une fois par semaine ou uniquement le vendredi."],
+  [2, "Nombre d'étapes PACO",
+    "Correct. La méthode PACO comporte 4 étapes : P (Prospecter), A (Approcher/Argumenter), C (Convaincre/Conclure), O (Opérer/Enrôler).",
+    "Non. PACO comporte exactement 4 étapes — pas 2, 3 ou 6."],
   [2, "Profil Essentiel",
     "Correct. Le profil Essentiel correspond aux petits commerces (épicier, artisan, kiosque) avec un CA annuel inférieur à 150 000 XOF.",
     "Non. Le profil Essentiel désigne les petits commerces avec CA < 150 000 XOF/an — épiciers, artisans, kiosques."],
@@ -808,15 +808,15 @@ const QUESTIONS = [
   [1, "Pourquoi qualifier le profil",
     "Correct. Qualifier le profil permet de choisir le bon argumentaire et d'anticiper les objections spécifiques à ce type de marchand.",
     "Non. Qualifier le profil sert avant tout à adapter l'argumentaire et anticiper les objections, pas à calculer une commission."],
-  [1, "Profil maquis 3 transactions/mois",
-    "Correct. 3 transactions par mois correspond au profil Classique (1 à 4 transactions/mois).",
-    "Non. 3 transactions/mois correspond au profil Classique — ni Essentiel (< 1) ni Premium (> 5M XOF CA)."],
+  [1, "Seuil marchand Actif portefeuille",
+    "Correct. Un marchand est classé 'Actif' s'il effectue plus de 5 transactions OM Business par mois.",
+    "Non. Le seuil de la catégorie 'Actif' est de plus de 5 transactions par mois — pas 1 ni 10."],
   [2, "Objectif question ouverte PACO-A",
     "Correct. La question ouverte crée le dialogue et permet de découvrir les besoins réels du marchand avant de proposer une solution.",
     "Non. La question ouverte sert à créer le dialogue et identifier les besoins — pas à conclure ou présenter les tarifs immédiatement."],
-  [1, "Méthode CAB",
-    "Correct. CAB signifie Caractéristique — Avantage — Bénéfice, pour construire un argumentaire orienté client.",
-    "Non. CAB = Caractéristique, Avantage, Bénéfice — c'est la structure d'un argumentaire commercial efficace."],
+  [2, "Action finale enrôlement photo",
+    "Correct. La photo de confirmation prise dans l'application est l'action finale qui valide l'installation complète du point de paiement.",
+    "Non. L'action finale est la prise de photo de confirmation via l'application — elle atteste de l'installation effective du point de paiement."],
   [1, "Durée visite petite prospection",
     "Correct. Une visite de prospection efficace auprès d'un petit commerce dure entre 15 et 30 minutes.",
     "Non. La durée recommandée est de 15 à 30 minutes — ni trop court (crédibilité), ni trop long (efficacité)."],
@@ -829,9 +829,9 @@ const QUESTIONS = [
   [1, "Signification KYC",
     "Correct. KYC signifie Know Your Customer — c'est le processus de vérification d'identité du client/marchand.",
     "Non. KYC = Know Your Customer — connaître et vérifier l'identité de son client est une obligation réglementaire."],
-  [2, "Étapes PACO-O",
-    "Correct. Le processus PACO-O comporte 5 étapes structurées pour l'enrôlement d'un marchand.",
-    "Non. PACO-O comporte 5 étapes — pas 3, 4 ou 6."],
+  [1, "Étapes PACO dans l'ordre",
+    "Correct. PACO = Prospecter → Approcher/Argumenter → Convaincre/Conclure → Opérer (enrôler). Ces 4 étapes guident la visite terrain de bout en bout.",
+    "Non. Les 4 étapes de PACO sont : Prospecter, Approcher, Convaincre, Opérer — dans cet ordre précis."],
   [1, "Document obligatoire KYC",
     "Correct. La CNI ou passeport valide + un justificatif de l'activité commerciale sont les documents de base indispensables.",
     "Non. La pièce d'identité officielle (CNI/passeport) + justificatif commercial sont obligatoires. Le permis ou la carte d'électeur seuls ne suffisent pas."],
@@ -859,18 +859,18 @@ const QUESTIONS = [
   [3, "Taux commission < 50 000 XOF/jour",
     "Correct. Les encaissements OM Business sont à 0 % jusqu'à 50 000 XOF par jour — c'est un argument fort à mettre en avant.",
     "Non. Jusqu'à 50 000 XOF/jour, l'encaissement est GRATUIT (0 %). Au-delà, le taux est de 1 %. Il n'y a pas de frais à 0,5 % ou 2 %."],
-  [2, "Plafond mensuel par défaut",
-    "Correct. Le plafond mensuel de transaction par défaut est de 500 000 XOF. Au-delà, une demande de déplafonnement est nécessaire.",
-    "Non. Le plafond standard est de 500 000 XOF par mois. Une procédure de déplafonnement existe pour les marchands à fort volume."],
+  [2, "Fonctionnalité Cash Out OM Business",
+    "Correct. Le retrait cash (Cash Out) permet à un client de récupérer de l'argent liquide directement chez un marchand OM Business enrôlé.",
+    "Non. C'est le retrait cash (Cash Out) qui permet au client de récupérer des espèces chez le marchand — pas l'encaissement ni le transfert."],
   [2, "Déplafonnement OM Business",
     "Correct. Le déplafonnement permet d'augmenter le plafond mensuel sur demande justifiée — utile pour les marchands à fort volume.",
     "Non. Le déplafonnement augmente le plafond mensuel de transactions sur demande justifiée. Ce n'est pas la fermeture du compte."],
   [2, "Classement marchand 38 jours sans transaction",
     "Correct. 0 transaction depuis plus de 30 jours → catégorie 'Inactif'. Intervention urgente requise sous 48 heures.",
     "Non. Sans transaction depuis plus de 30 jours, le marchand est classé 'Inactif' — pas 'À développer' ni 'En attente'."],
-  [1, "Délai intervention marchand inactif",
-    "Correct. Un marchand inactif (0 transaction > 30j) nécessite une visite urgente sous 48 heures pour identifier le frein.",
-    "Non. L'intervention doit être urgente — sous 48 heures — pour réactiver un marchand inactif avant qu'il ne désengage."],
+  [1, "Fréquence visite marchand À développer",
+    "Correct. Un marchand 'À développer' (1–4 transactions/mois) doit être visité 2 fois par mois avec une formation approfondie sur place pour l'aider à progresser vers le statut Actif.",
+    "Non. La fréquence recommandée pour un marchand 'À développer' est bimensuelle (2 fois/mois) avec formation — pas mensuelle ni hebdomadaire."],
 ];
 
 const TOTAL_QCM = 29;
