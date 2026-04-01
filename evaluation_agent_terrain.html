@@ -138,12 +138,16 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .code-section p{font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem;}
 .code-section .code-val{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--primary);letter-spacing:.2em;}
 .detail-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);}
-.detail-row{display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;}
-.detail-row .dr-num{color:var(--text-muted);width:24px;flex-shrink:0;font-size:.78rem;}
-.detail-row .dr-q{flex:1;color:var(--text);}
-.detail-row .dr-s{font-weight:600;flex-shrink:0;}
+.detail-row{display:flex;align-items:flex-start;gap:.75rem;padding:.55rem 0;border-bottom:1px solid #f1f5f9;font-size:.85rem;}
+.detail-row .dr-num{color:var(--text-muted);width:24px;flex-shrink:0;font-size:.78rem;padding-top:.1rem;}
+.detail-row .dr-q{flex:1;color:var(--text);line-height:1.45;}
+.detail-row .dr-s{font-weight:700;flex-shrink:0;font-size:1rem;}
 .dr-s.ok{color:var(--success);}
 .dr-s.ko{color:var(--danger);}
+.dr-chosen{font-size:.76rem;color:var(--danger);margin-top:.18rem;}
+.dr-correct{font-size:.76rem;color:var(--success);font-weight:600;margin-top:.1rem;}
+.sync-retry{background:none;border:1.5px solid var(--border);border-radius:20px;padding:.3rem .8rem;font-size:.78rem;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--text-muted);transition:all .2s;margin-left:.5rem;}
+.sync-retry:hover{border-color:var(--primary);color:var(--primary);}
 .cas-model{background:var(--surface2);border-radius:10px;padding:1rem 1.2rem;margin-bottom:.8rem;border-left:3px solid var(--gold);}
 .cas-model h4{font-size:.88rem;font-weight:600;color:#92400e;margin-bottom:.4rem;}
 .cas-model p{font-size:.83rem;color:#334155;line-height:1.6;}
@@ -737,7 +741,10 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
       <div class="code-section">
         <p>Code de résultat à transmettre au Superviseur</p>
         <div class="code-val" id="r-code">———</div>
-        <div id="sync-status" style="margin-top:.6rem;font-size:.8rem;font-weight:600;min-height:1.1rem;"></div>
+        <div style="margin-top:.6rem;display:flex;align-items:center;justify-content:center;gap:.4rem;min-height:1.4rem;">
+          <span id="sync-status" style="font-size:.8rem;font-weight:600;"></span>
+          <button class="sync-retry" id="btn-retry" style="display:none;" onclick="retrySave()">↻ Réessayer</button>
+        </div>
       </div>
 
       <!-- Corrigé cas pratique -->
@@ -797,26 +804,37 @@ const FIREBASE_CONFIG = {
   appId:             "VOTRE_APP_ID"
 };
 let _db = null;
+let _lastPayload = null;
 try {
   firebase.initializeApp(FIREBASE_CONFIG);
   _db = firebase.database();
 } catch(e) { console.warn('Firebase non configuré:', e.message); }
 
 function saveToFirebase(payload) {
-  const el = document.getElementById('sync-status');
+  _lastPayload = payload;
+  const el  = document.getElementById('sync-status');
+  const btn = document.getElementById('btn-retry');
   if (!_db) {
-    if (el) { el.textContent = '⚠ Firebase non configuré'; el.style.color = '#ef4444'; }
+    if (el)  { el.textContent = '⚠ Firebase non configuré'; el.style.color = '#ef4444'; }
+    if (btn) btn.style.display = 'inline-block';
     return;
   }
-  if (el) { el.textContent = '⏳ Synchronisation en cours...'; el.style.color = '#f59e0b'; }
+  if (el)  { el.textContent = '⏳ Synchronisation en cours…'; el.style.color = '#f59e0b'; }
+  if (btn) btn.style.display = 'none';
   _db.ref('agent_terrain').push(payload)
     .then(() => {
-      if (el) { el.textContent = '✅ Résultats envoyés à l\'administrateur'; el.style.color = '#10b981'; }
+      if (el)  { el.textContent = '✅ Résultats envoyés à l\'administrateur'; el.style.color = '#10b981'; }
+      if (btn) btn.style.display = 'none';
     })
     .catch(err => {
-      if (el) { el.textContent = '⚠ Échec sync — code ' + err.code; el.style.color = '#ef4444'; }
+      if (el)  { el.textContent = '⚠ Échec — ' + (err.code || err.message); el.style.color = '#ef4444'; }
+      if (btn) btn.style.display = 'inline-block';
       console.error('Firebase save error:', err);
     });
+}
+
+function retrySave() {
+  if (_lastPayload) saveToFirebase(_lastPayload);
 }
 
 // ——————————————————————————————
@@ -1052,18 +1070,33 @@ function submitExam() {
     ring.querySelector('.s-pct').style.color = color;
   }, 200);
 
-  // Détail QCM
+  // Capturer les textes des options depuis le DOM
+  const optionTexts = [];
+  for (let i = 1; i <= TOTAL_QCM; i++) {
+    const card = document.getElementById('qc' + i);
+    const opts = card ? card.querySelectorAll('.opt') : [];
+    optionTexts.push(Array.from(opts).map(o => o.textContent.trim()));
+  }
+
+  // Détail QCM enrichi pour le candidat
   const list = document.getElementById('detail-list');
   list.innerHTML = '';
   QUESTIONS.forEach(([correctIdx, qText], i) => {
-    const qNum = i + 1;
-    const userAns = answers[i];
-    const ok = userAns === correctIdx;
+    const qNum   = i + 1;
+    const chosen = answers[i];
+    const ok     = chosen === correctIdx;
+    const opts   = optionTexts[i] || [];
+    const chosenTxt  = opts[chosen]      !== undefined ? opts[chosen]      : `Option ${(chosen??0)+1}`;
+    const correctTxt = opts[correctIdx]  !== undefined ? opts[correctIdx]  : `Option ${correctIdx+1}`;
     const row = document.createElement('div');
     row.className = 'detail-row';
     row.innerHTML = `
       <div class="dr-num">Q${qNum}</div>
-      <div class="dr-q">${qText}</div>
+      <div class="dr-q">
+        <div>${qText}</div>
+        ${!ok && chosen !== null ? `<div class="dr-chosen">✗ Votre réponse : ${chosenTxt}</div><div class="dr-correct">✓ Bonne réponse : ${correctTxt}</div>` : ''}
+        ${chosen === null ? '<div class="dr-chosen">— Sans réponse</div>' : ''}
+      </div>
       <div class="dr-s ${ok ? 'ok' : 'ko'}">${ok ? '✓' : '✗'}</div>
     `;
     list.appendChild(row);
@@ -1074,10 +1107,12 @@ function submitExam() {
   // ── Sauvegarde Firebase ──────────────────────────────────
   const qLabels = QUESTIONS.map(q => q[1]);
   const detailAnswers = answers.map((chosen, i) => ({
-    q:       qLabels[i],
-    chosen:  chosen,
-    correct: QUESTIONS[i][0],
-    ok:      chosen === QUESTIONS[i][0]
+    q:          qLabels[i],
+    chosen:     chosen,
+    chosenText: (optionTexts[i] || [])[chosen] || null,
+    correct:    QUESTIONS[i][0],
+    correctText:(optionTexts[i] || [])[QUESTIONS[i][0]] || null,
+    ok:         chosen === QUESTIONS[i][0]
   }));
   saveToFirebase({
     nom:         candidateName,

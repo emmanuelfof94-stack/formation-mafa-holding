@@ -184,6 +184,7 @@ tbody td{padding:.72rem 1rem;color:var(--text);vertical-align:middle;}
         <option value="INSUFFISANT">Insuffisant</option>
       </select>
       <span class="count-badge" id="count-shown">0 affiché(s)</span>
+      <button class="btn btn-secondary btn-sm" onclick="refreshData()" title="Recharger les données depuis Firebase">↻ Actualiser</button>
     </div>
 
     <!-- Tableau -->
@@ -214,6 +215,7 @@ tbody td{padding:.72rem 1rem;color:var(--text);vertical-align:middle;}
     <div class="detail-header">
       <button class="detail-back" onclick="showList()">← Retour à la liste</button>
       <div style="font-family:'Syne',sans-serif;font-size:.85rem;color:var(--muted);">Détail des réponses</div>
+      <button class="btn btn-secondary btn-sm" onclick="refreshData()" title="Recharger les données depuis Firebase" style="margin-left:auto;">↻ Rafraîchir</button>
     </div>
 
     <div class="detail-hero">
@@ -337,6 +339,23 @@ function initFirebase() {
   }
 }
 
+function refreshData() {
+  if (!_db) { showToast('Firebase non connecté'); return; }
+  showToast('Actualisation en cours…');
+  _db.ref('agent_terrain').once('value', snap => {
+    allData = snap.val() || {};
+    const n = Object.keys(allData).length;
+    document.getElementById('topbar-count').textContent = n + ' candidat(s)';
+    updateStats();
+    renderTable();
+    // Si on est en vue détail, rafraîchir aussi le candidat courant
+    if (currentKey && allData[currentKey]) showDetail(currentKey);
+    showToast('Données actualisées — ' + n + ' candidat(s)');
+  }, err => {
+    showToast('⚠ Erreur : ' + err.message);
+  });
+}
+
 function listenData() {
   _db.ref('agent_terrain').on('value', snap => {
     allData = snap.val() || {};
@@ -432,11 +451,14 @@ function showDetail(key) {
     answersEl.innerHTML = detail.map((ans, i) => {
       const icon = ans.ok ? '✅' : '❌';
       const label = QUESTION_LABELS[i] || ('Q' + (i+1));
+      const chosenTxt  = ans.chosenText  || (ans.chosen  !== null && ans.chosen  !== undefined ? `Option ${(ans.chosen )+1}` : '—');
+      const correctTxt = ans.correctText || (ans.correct !== undefined ? `Option ${(ans.correct)+1}` : '—');
       return `<div class="answer-row">
         <div class="ans-num">Q${i+1}</div>
         <div class="ans-q">
           <div>${esc(label)}</div>
-          ${!ans.ok ? `<div class="ans-chosen">Réponse choisie : option ${(ans.chosen??'?')+1} &nbsp;|&nbsp; Correcte : option ${(ans.correct??'?')+1}</div>` : ''}
+          ${!ans.ok && ans.chosen !== null && ans.chosen !== undefined ? `<div class="ans-chosen" style="color:#ef4444;">✗ Choisie : ${esc(chosenTxt)}</div><div class="ans-chosen" style="color:#10b981;">✓ Correcte : ${esc(correctTxt)}</div>` : ''}
+          ${ans.chosen === null || ans.chosen === undefined ? `<div class="ans-chosen" style="color:#94a3b8;">— Sans réponse &nbsp;|&nbsp; Correcte : ${esc(correctTxt)}</div>` : ''}
         </div>
         <div class="ans-icon">${icon}</div>
       </div>`;
