@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>Évaluation Agent Terrain — OM Business MAFA</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <!-- Firebase SDK (Realtime Database) -->
@@ -19,8 +19,8 @@
   --shadow-sm:0 1px 3px rgba(0,0,0,.06);
   --shadow:0 4px 16px rgba(0,0,0,.07);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:#f1f5fb;color:var(--text);min-height:100vh;overflow-x:hidden;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'DM Sans',sans-serif;background:#f1f5fb;color:var(--text);min-height:100vh;min-height:-webkit-fill-available;overflow-x:hidden;}
 body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8D0C23,#CF9E41,#FF6600,#CF9E41,#8D0C23);z-index:9999;pointer-events:none;}
 
 .wrapper{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
@@ -41,7 +41,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .intro-card h2{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:700;margin-bottom:1.5rem;color:var(--text);}
 .form-group{margin-bottom:1.2rem;}
 .form-group label{display:block;font-size:.85rem;font-weight:500;color:var(--text-muted);margin-bottom:.4rem;}
-.form-group input,.form-group select{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.form-group input,.form-group select{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:16px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;background:#fff;}
 .form-group input:focus,.form-group select:focus{border-color:var(--primary);}
 .info-box{background:#fff8e1;border:1px solid #ffe082;border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1.5rem;}
 .info-box p{font-size:.85rem;font-weight:600;color:#92400e;margin-bottom:.4rem;}
@@ -49,7 +49,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .info-box ul li{font-size:.84rem;color:#5d4037;margin-bottom:.25rem;}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 2rem;border:none;border-radius:50px;cursor:pointer;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 2rem;border:none;border-radius:50px;cursor:pointer;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:all .2s;touch-action:manipulation;-webkit-appearance:none;}
 .btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(141,12,35,.25);}
 .btn-primary:hover{background:var(--accent2);transform:translateY(-1px);}
 .btn-secondary{background:var(--surface2);color:var(--text-muted);border:1.5px solid var(--border);}
@@ -61,7 +61,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .btn-full{width:100%;}
 
 /* TIMER BAR */
-.timer-bar{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);padding:.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-sm);}
+.timer-bar{position:-webkit-sticky;position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);padding:.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-sm);}
 .timer-bar .t-label{font-size:.8rem;color:var(--text-muted);}
 .timer-bar .t-val{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;color:var(--primary);}
 .timer-bar .t-score{font-size:.9rem;font-weight:500;}
@@ -80,12 +80,13 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .q-num{font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;}
 .q-text{font-size:.97rem;font-weight:500;color:var(--text);margin-bottom:1rem;line-height:1.5;}
 .options{display:flex;flex-direction:column;gap:.5rem;}
-.opt{display:flex;align-items:center;gap:.75rem;padding:.6rem .9rem;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:.9rem;transition:all .15s;}
+.opt{display:flex;align-items:center;gap:.75rem;padding:.75rem .9rem;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:.9rem;transition:all .15s;touch-action:manipulation;-webkit-user-select:none;user-select:none;min-height:44px;}
 .opt:hover:not(.locked){border-color:var(--primary);background:#fdf2f4;}
+.opt:active:not(.locked){border-color:var(--primary);background:#fdf2f4;}
 .opt.selected{border-color:var(--primary);background:#fdf2f4;}
 .opt.correct{border-color:var(--success);background:#f0fdf4;color:#065f46;}
 .opt.incorrect{border-color:var(--danger);background:#fef2f2;color:#7f1d1d;}
-.opt.locked{cursor:default;}
+.opt.locked{cursor:default;pointer-events:none;}
 .opt-icon{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;}
 .opt.correct .opt-icon{background:var(--success);border-color:var(--success);}
 .opt.incorrect .opt-icon{background:var(--danger);border-color:var(--danger);}
@@ -121,7 +122,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .cas-obj-num{font-family:'Syne',sans-serif;font-weight:700;color:var(--om);flex-shrink:0;}
 .cas-question{font-size:.9rem;font-weight:500;margin-bottom:.5rem;color:var(--text);}
 .cas-question span{display:inline-block;background:var(--primary);color:#fff;font-size:.7rem;padding:.15rem .5rem;border-radius:50px;margin-right:.4rem;}
-.cas-textarea{width:100%;min-height:95px;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:.88rem;resize:vertical;outline:none;transition:border-color .2s;margin-bottom:.8rem;}
+.cas-textarea{width:100%;min-height:95px;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:16px;resize:vertical;outline:none;transition:border-color .2s;margin-bottom:.8rem;-webkit-appearance:none;}
 .cas-textarea:focus{border-color:var(--primary);}
 
 .submit-section{text-align:center;margin-top:2.5rem;padding-top:2rem;border-top:1.5px solid var(--border);}
@@ -1226,6 +1227,16 @@ function startExam() {
   startTime = Date.now();
   timerInterval = setInterval(tick, 1000);
 }
+
+// Fix iOS tap events — délégation sur les options QCM
+document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('touchend', function(e) {
+    const opt = e.target.closest('.opt:not(.locked)');
+    if (!opt) return;
+    e.preventDefault();
+    opt.click();
+  }, {passive: false});
+});
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
