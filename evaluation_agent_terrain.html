@@ -432,9 +432,9 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q11 -->
     <div class="q-card" id="qc11">
       <div class="q-num">Question 11 / 29</div>
-      <div class="q-text">Lors de l'enrôlement d'un marchand, quelle est l'action finale qui confirme la bonne installation du point de paiement dans l'application ?</div>
+      <div class="q-text">Lors de l'enrôlement d'un marchand, quelle est la toute dernière action physique réalisée par l'agent sur le terrain ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(11,0,this)"><div class="opt-icon"></div>Remettre physiquement le sticker "PAYER ICI" au marchand</div>
+        <div class="opt" onclick="answer(11,0,this)"><div class="opt-icon"></div>Coller le sticker "PAYER ICI" de façon visible dans le commerce du marchand</div>
         <div class="opt" onclick="answer(11,1,this)"><div class="opt-icon"></div>Appeler le Superviseur pour signaler la fin de la visite</div>
         <div class="opt" onclick="answer(11,2,this)"><div class="opt-icon"></div>Prendre une photo de confirmation du point de paiement installé</div>
         <div class="opt" onclick="answer(11,3,this)"><div class="opt-icon"></div>Envoyer un SMS de bienvenue au marchand depuis l'application</div>
@@ -505,7 +505,7 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
       <div class="q-text">La méthode PACO guide l'agent tout au long de sa visite terrain. Quelles sont ses 4 étapes dans l'ordre correct ?</div>
       <div class="options">
         <div class="opt" onclick="answer(16,0,this)"><div class="opt-icon"></div>Présenter → Argumenter → Conclure → Opérer</div>
-        <div class="opt" onclick="answer(16,1,this)"><div class="opt-icon"></div>Prospecter → Approcher → Convaincre → Opérer (enrôler)</div>
+        <div class="opt" onclick="answer(16,1,this)"><div class="opt-icon"></div>Prospecter → Aborder → Convaincre → Opérer (enrôler)</div>
         <div class="opt" onclick="answer(16,2,this)"><div class="opt-icon"></div>Préparer → Analyser → Calculer → Optimiser</div>
         <div class="opt" onclick="answer(16,3,this)"><div class="opt-icon"></div>Planifier → Argumenter → Clore → Observer</div>
       </div>
@@ -642,12 +642,12 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
     <!-- Q26 -->
     <div class="q-card" id="qc26">
       <div class="q-num">Question 26 / 29</div>
-      <div class="q-text">Quelle fonctionnalité OM Business permet à un client de récupérer de l'argent liquide directement chez un marchand enrôlé ?</div>
+      <div class="q-text">Un client a effectué par erreur un paiement OM Business chez un marchand enrôlé. Que peut faire le marchand pour corriger cette situation ?</div>
       <div class="options">
-        <div class="opt" onclick="answer(26,0,this)"><div class="opt-icon"></div>L'encaissement par QR Code</div>
-        <div class="opt" onclick="answer(26,1,this)"><div class="opt-icon"></div>Le transfert d'argent entre comptes</div>
-        <div class="opt" onclick="answer(26,2,this)"><div class="opt-icon"></div>Le retrait cash (Cash Out) chez le marchand</div>
-        <div class="opt" onclick="answer(26,3,this)"><div class="opt-icon"></div>La consultation de l'historique des transactions</div>
+        <div class="opt" onclick="answer(26,0,this)"><div class="opt-icon"></div>Garder le montant reçu — toute transaction est définitive et irréversible</div>
+        <div class="opt" onclick="answer(26,1,this)"><div class="opt-icon"></div>Rembourser le client en espèces de sa propre caisse</div>
+        <div class="opt" onclick="answer(26,2,this)"><div class="opt-icon"></div>Annuler la transaction depuis l'application — le montant retourne automatiquement au client</div>
+        <div class="opt" onclick="answer(26,3,this)"><div class="opt-icon"></div>Contacter Orange CI pour demander un remboursement manuel sous 72h</div>
       </div>
       <div class="feedback" id="fb26"></div>
     </div>
@@ -915,7 +915,7 @@ const QUESTIONS = [
     "Correct. L'agent doit consulter les notifications de son application minimum 2 fois par jour pour ne manquer aucune validation ou message superviseur.",
     "Non. La fréquence recommandée est minimum 2 fois par jour — pas une fois par semaine ou uniquement le vendredi."],
   [2, "Nombre d'étapes PACO",
-    "Correct. La méthode PACO comporte 4 étapes : P (Prospecter), A (Approcher/Argumenter), C (Convaincre/Conclure), O (Opérer/Enrôler).",
+    "Correct. La méthode PACO comporte 4 étapes : P (Prospecter), A (Aborder), C (Convaincre/Conclure), O (Opérer/Enrôler).",
     "Non. PACO comporte exactement 4 étapes — pas 2, 3 ou 6."],
   [2, "Profil Essentiel",
     "Correct. Le profil Essentiel correspond aux petits commerces (épicier, artisan, kiosque) avec un CA annuel inférieur à 150 000 XOF.",
@@ -932,9 +932,9 @@ const QUESTIONS = [
   [2, "Objectif question ouverte PACO-A",
     "Correct. La question ouverte crée le dialogue et permet de découvrir les besoins réels du marchand avant de proposer une solution.",
     "Non. La question ouverte sert à créer le dialogue et identifier les besoins — pas à conclure ou présenter les tarifs immédiatement."],
-  [2, "Action finale enrôlement photo",
-    "Correct. La photo de confirmation prise dans l'application est l'action finale qui valide l'installation complète du point de paiement.",
-    "Non. L'action finale est la prise de photo de confirmation via l'application — elle atteste de l'installation effective du point de paiement."],
+  [0, "Action finale terrain — collage sticker",
+    "Correct. La toute dernière action physique de l'agent est de coller le sticker \"PAYER ICI\" de manière visible dans le commerce du marchand.",
+    "Non. La dernière action physique sur le terrain est le collage du sticker \"PAYER ICI\" dans le commerce — c'est le signal visible pour les clients."],
   [1, "Durée visite petite prospection",
     "Correct. Une visite de prospection efficace auprès d'un petit commerce dure entre 15 et 30 minutes.",
     "Non. La durée recommandée est de 15 à 30 minutes — ni trop court (crédibilité), ni trop long (efficacité)."],
@@ -948,8 +948,8 @@ const QUESTIONS = [
     "Correct. KYC signifie Know Your Customer — c'est le processus de vérification d'identité du client/marchand.",
     "Non. KYC = Know Your Customer — connaître et vérifier l'identité de son client est une obligation réglementaire."],
   [1, "Étapes PACO dans l'ordre",
-    "Correct. PACO = Prospecter → Approcher/Argumenter → Convaincre/Conclure → Opérer (enrôler). Ces 4 étapes guident la visite terrain de bout en bout.",
-    "Non. Les 4 étapes de PACO sont : Prospecter, Approcher, Convaincre, Opérer — dans cet ordre précis."],
+    "Correct. PACO = Prospecter → Aborder → Convaincre → Opérer (enrôler). Ces 4 étapes guident la visite terrain de bout en bout.",
+    "Non. Les 4 étapes de PACO sont : Prospecter, Aborder, Convaincre, Opérer — dans cet ordre précis."],
   [1, "Document obligatoire KYC",
     "Correct. La CNI ou passeport valide + un justificatif de l'activité commerciale sont les documents de base indispensables.",
     "Non. La pièce d'identité officielle (CNI/passeport) + justificatif commercial sont obligatoires. Le permis ou la carte d'électeur seuls ne suffisent pas."],
@@ -977,9 +977,9 @@ const QUESTIONS = [
   [3, "Taux commission < 50 000 XOF/jour",
     "Correct. Les encaissements OM Business sont à 0 % jusqu'à 50 000 XOF par jour — c'est un argument fort à mettre en avant.",
     "Non. Jusqu'à 50 000 XOF/jour, l'encaissement est GRATUIT (0 %). Au-delà, le taux est de 1 %. Il n'y a pas de frais à 0,5 % ou 2 %."],
-  [2, "Fonctionnalité Cash Out OM Business",
-    "Correct. Le retrait cash (Cash Out) permet à un client de récupérer de l'argent liquide directement chez un marchand OM Business enrôlé.",
-    "Non. C'est le retrait cash (Cash Out) qui permet au client de récupérer des espèces chez le marchand — pas l'encaissement ni le transfert."],
+  [2, "Annulation transaction OM Business",
+    "Correct. En cas de paiement erroné, le marchand peut annuler la transaction depuis l'application — le montant retourne automatiquement sur le compte du client.",
+    "Non. Le marchand peut annuler la transaction depuis l'application OM Business. Le montant est remboursé automatiquement au client sans intervention manuelle."],
   [2, "Déplafonnement OM Business",
     "Correct. Le déplafonnement permet d'augmenter le plafond mensuel sur demande justifiée — utile pour les marchands à fort volume.",
     "Non. Le déplafonnement augmente le plafond mensuel de transactions sur demande justifiée. Ce n'est pas la fermeture du compte."],
