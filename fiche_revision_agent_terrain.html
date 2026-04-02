@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche de Révision — Agent Terrain OM Business MAFA</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#8D0C23; --gold:#CF9E41; --om:#FF6600;
+  --success:#10b981; --info:#3b82f6; --warn:#f59e0b; --danger:#ef4444;
+  --surface:#fff; --surface2:#f8fafc; --border:#e2e8f0;
+  --text:#0f172a; --muted:#64748b;
+  --radius:10px; --shadow:0 4px 16px rgba(0,0,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#f1f5fb;color:var(--text);font-size:15px;line-height:1.65;}
+body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#8D0C23,#CF9E41,#FF6600,#CF9E41,#8D0C23);z-index:9999;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#8D0C23 0%,#5a0815 60%,#3a050e 100%);color:#fff;padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:#f1f5fb;clip-path:ellipse(55% 100% at 50% 100%);}
+.hero .label{display:inline-block;background:rgba(207,158,65,.25);border:1px solid rgba(207,158,65,.5);color:#fde68a;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px;margin-bottom:1rem;}
+.hero h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1.15;margin-bottom:.5rem;}
+.hero h1 span{color:var(--gold);}
+.hero .sub{color:rgba(255,255,255,.7);font-size:.92rem;margin-bottom:1.5rem;}
+.hero-meta{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;font-size:.82rem;color:rgba(255,255,255,.65);}
+.hero-meta strong{color:#fff;}
+
+/* LAYOUT */
+.container{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+
+/* SECTION */
+.section{margin-bottom:2.5rem;}
+.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;}
+.section-head .num{width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.section-head h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--primary);}
+.section-head .tag{background:#fdf2f4;color:var(--primary);border:1px solid #fecaca;font-size:.72rem;font-weight:700;padding:.2rem .6rem;border-radius:50px;font-family:'Syne',sans-serif;}
+
+/* CARD */
+.card{background:var(--surface);border-radius:14px;padding:1.4rem 1.6rem;box-shadow:var(--shadow);border:1.5px solid var(--border);margin-bottom:1rem;}
+.card h3{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.7rem;}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+
+/* AVANTAGE CARDS — section vedette */
+.avantage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+.av-card{border-radius:14px;padding:1.3rem 1.2rem;border:2px solid transparent;position:relative;overflow:hidden;}
+.av-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;}
+.av-card.green{background:#f0fdf4;border-color:#bbf7d0;}
+.av-card.green::before{background:var(--success);}
+.av-card.blue{background:#eff6ff;border-color:#bfdbfe;}
+.av-card.blue::before{background:var(--info);}
+.av-card.orange{background:#fff7ed;border-color:#fed7aa;}
+.av-card.orange::before{background:var(--om);}
+.av-card.gold{background:#fffbeb;border-color:#fde68a;}
+.av-card.gold::before{background:var(--gold);}
+.av-card.red{background:#fdf2f4;border-color:#fecaca;}
+.av-card.red::before{background:var(--primary);}
+.av-card .av-icon{font-size:1.6rem;margin-bottom:.6rem;}
+.av-card .av-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.35rem;}
+.av-card .av-val{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;line-height:1.1;margin-bottom:.3rem;}
+.av-card.green .av-val{color:var(--success);}
+.av-card.blue .av-val{color:var(--info);}
+.av-card.orange .av-val{color:var(--om);}
+.av-card.gold .av-val{color:#92400e;}
+.av-card.red .av-val{color:var(--primary);}
+.av-card .av-sub{font-size:.78rem;color:var(--muted);line-height:1.4;}
+
+/* KEYWORD PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;}
+.pill{padding:.25rem .8rem;border-radius:50px;font-size:.78rem;font-weight:600;font-family:'Syne',sans-serif;}
+.pill-green{background:#dcfce7;color:#166534;}
+.pill-red{background:#fee2e2;color:#991b1b;}
+.pill-blue{background:#dbeafe;color:#1e40af;}
+.pill-gold{background:#fff8e1;color:#92400e;}
+.pill-orange{background:#ffedd5;color:#9a3412;}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:.6rem;}
+.step{display:flex;align-items:flex-start;gap:.9rem;}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;font-family:'Syne',sans-serif;font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;}
+.step-body{flex:1;}
+.step-body strong{display:block;font-size:.9rem;font-weight:600;color:var(--text);}
+.step-body span{font-size:.82rem;color:var(--muted);}
+
+/* METHODE BOX */
+.methode-box{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;}
+.m-item{border-radius:10px;padding:.9rem .8rem;text-align:center;}
+.m-item .m-letter{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;display:block;margin-bottom:.3rem;}
+.m-item .m-word{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;margin-bottom:.3rem;}
+.m-item .m-desc{font-size:.72rem;color:var(--muted);line-height:1.35;}
+.m-item.p{background:#e0f2fe;} .m-item.p .m-letter{color:#0369a1;}
+.m-item.a{background:#fef3c7;} .m-item.a .m-letter{color:#92400e;}
+.m-item.c{background:#dcfce7;} .m-item.c .m-letter{color:#166534;}
+.m-item.o{background:#fdf2f4;} .m-item.o .m-letter{color:var(--primary);}
+
+.methode-crac{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;}
+.c-item{border-radius:10px;padding:.9rem .8rem;text-align:center;}
+.c-item .c-letter{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;display:block;margin-bottom:.3rem;}
+.c-item .c-word{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;margin-bottom:.3rem;}
+.c-item .c-desc{font-size:.72rem;color:var(--muted);line-height:1.35;}
+.c-item.c1{background:#eff6ff;} .c-item.c1 .c-letter{color:#1d4ed8;}
+.c-item.r{background:#fdf4ff;} .c-item.r .c-letter{color:#7e22ce;}
+.c-item.a{background:#fff7ed;} .c-item.a .c-letter{color:#9a3412;}
+.c-item.c2{background:#f0fdf4;} .c-item.c2 .c-letter{color:#15803d;}
+
+/* PROFILS TABLE */
+.profil-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.profil-table thead{background:var(--primary);color:#fff;}
+.profil-table thead th{padding:.7rem 1rem;text-align:left;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.profil-table tbody tr{border-bottom:1px solid var(--border);}
+.profil-table tbody tr:last-child{border-bottom:none;}
+.profil-table tbody td{padding:.65rem 1rem;vertical-align:middle;}
+.profil-badge{display:inline-block;padding:.2rem .7rem;border-radius:50px;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;}
+.pb-essentiel{background:#f3e5f5;color:#6b21a8;}
+.pb-classique{background:#e0f2fe;color:#0369a1;}
+.pb-premium{background:#fff8e1;color:#92400e;}
+
+/* COMPARATIF CONCURRENTS */
+.comp-table{width:100%;border-collapse:collapse;font-size:.82rem;overflow:hidden;border-radius:12px;}
+.comp-table thead th{padding:.8rem .9rem;text-align:center;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.comp-table thead th:first-child{text-align:left;background:var(--surface2);color:var(--muted);width:160px;}
+.comp-table thead th.om-col{background:var(--primary);color:#fff;}
+.comp-table thead th.wave-col{background:#0f4c99;color:#fff;}
+.comp-table thead th.mtn-col{background:#ffc107;color:#1a1a00;}
+.comp-table thead th.moov-col{background:#0066cc;color:#fff;}
+.comp-table tbody tr{border-bottom:1px solid var(--border);}
+.comp-table tbody tr:last-child{border-bottom:none;}
+.comp-table tbody td{padding:.7rem .9rem;vertical-align:middle;text-align:center;}
+.comp-table tbody td:first-child{text-align:left;font-weight:600;font-size:.8rem;color:var(--text);background:var(--surface2);}
+.comp-table tbody tr:hover{background:#fdf8ff;}
+.check{color:var(--success);font-weight:700;}
+.cross{color:var(--muted);}
+.star{color:var(--gold);}
+.comp-winner{background:#fff8e1;font-weight:700;color:#92400e;}
+
+/* OBJECTIONS */
+.objection-row{background:var(--surface);border-radius:10px;border:1.5px solid var(--border);padding:1rem 1.2rem;margin-bottom:.8rem;}
+.obj-q{font-size:.88rem;font-weight:600;color:var(--danger);margin-bottom:.5rem;display:flex;align-items:flex-start;gap:.5rem;}
+.obj-r{font-size:.84rem;color:var(--text);line-height:1.6;border-left:3px solid var(--success);padding-left:.8rem;margin-top:.5rem;}
+.obj-tip{font-size:.78rem;color:#059669;margin-top:.4rem;font-style:italic;}
+
+/* KYC STEPS */
+.kyc-box{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;}
+.kyc-item{border-radius:10px;padding:.9rem 1rem;background:var(--surface2);border:1.5px solid var(--border);text-align:center;}
+.kyc-item .ki-icon{font-size:1.5rem;margin-bottom:.4rem;}
+.kyc-item .ki-title{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+.kyc-item .ki-desc{font-size:.76rem;color:var(--muted);}
+
+/* PORTEFEUILLE */
+.portef-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;}
+.portef-item{border-radius:12px;padding:1rem 1.1rem;text-align:center;}
+.portef-item .pf-label{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;margin-bottom:.3rem;}
+.portef-item .pf-crit{font-size:.75rem;margin-bottom:.5rem;}
+.portef-item .pf-action{font-size:.75rem;font-weight:600;}
+.pf-actif{background:#f0fdf4;border:2px solid #bbf7d0;} .pf-actif .pf-label{color:var(--success);}
+.pf-dev{background:#fff8e1;border:2px solid #fde68a;} .pf-dev .pf-label{color:#92400e;}
+.pf-inactif{background:#fef2f2;border:2px solid #fecaca;} .pf-inactif .pf-label{color:var(--danger);}
+
+/* ACCROCHE */
+.accroche-box{background:linear-gradient(135deg,#1e3a5f,#0f2848);color:#fff;border-radius:14px;padding:1.5rem 1.8rem;position:relative;}
+.accroche-box::before{content:'"';position:absolute;top:.5rem;left:1.2rem;font-size:4rem;color:rgba(255,255,255,.12);font-family:Georgia,serif;line-height:1;}
+.accroche-box p{font-size:.9rem;line-height:1.75;position:relative;z-index:1;}
+.accroche-box .ac-label{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.6rem;}
+
+/* HIGHLIGHT BOX */
+.highlight{border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:.75rem;}
+.highlight.green{background:#f0fdf4;border-left:4px solid var(--success);}
+.highlight.orange{background:#fff7ed;border-left:4px solid var(--om);}
+.highlight.red{background:#fdf2f4;border-left:4px solid var(--primary);}
+.highlight.blue{background:#eff6ff;border-left:4px solid var(--info);}
+.highlight .hi-icon{font-size:1.2rem;flex-shrink:0;margin-top:.05rem;}
+.highlight .hi-body{flex:1;}
+.highlight .hi-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:.25rem;}
+.highlight .hi-text{font-size:.83rem;color:var(--text);line-height:1.55;}
+
+/* FOOTER */
+.footer{background:var(--primary);color:rgba(255,255,255,.6);text-align:center;padding:1.5rem;font-size:.8rem;margin-top:3rem;}
+.footer strong{color:#fff;}
+
+/* PRINT */
+@media print{
+  body::before{display:none;}
+  .hero{print-color-adjust:exact;}
+  .card,.av-card,.comp-table{break-inside:avoid;}
+  .section{break-inside:avoid;}
+}
+
+@media(max-width:640px){
+  .grid2,.grid3,.methode-box,.methode-crac,.kyc-box,.portef-grid{grid-template-columns:1fr 1fr;}
+  .avantage-grid{grid-template-columns:1fr 1fr;}
+  .comp-table{font-size:.72rem;}
+  .comp-table thead th, .comp-table tbody td{padding:.5rem .5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="label">MAFA HOLDING · Séance de révision</div>
+  <h1>Agent Terrain <span>OM Business</span><br>Fiche de Révision</h1>
+  <p class="sub">Résumé complet des 2 modules de formation · Accent sur les avantages · Comparatif concurrents 2025</p>
+  <div class="hero-meta">
+    <span>📅 <strong>Révision du 2 avril 2026</strong></span>
+    <span>📋 <strong>7 thèmes clés</strong></span>
+    <span>⚡ <strong>4 concurrents comparés</strong></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════
+     SECTION 1 — STRUCTURE ORGANISATIONNELLE
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num">1</div>
+    <h2>Structure Organisationnelle MAFA</h2>
+    <span class="tag">MODULE 1</span>
+  </div>
+
+  <div class="card">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;text-align:center;">
+      <div style="background:#fdf2f4;border-radius:12px;padding:1rem;border:2px solid #fecaca;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">🏢</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--primary);font-size:.95rem;">Responsable de Zone</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Supervise <strong>4 Superviseurs</strong></div>
+      </div>
+      <div style="background:#fff8e1;border-radius:12px;padding:1rem;border:2px solid #fde68a;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">👔</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;color:#92400e;font-size:.95rem;">Superviseur</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Gère <strong>15 à 20 agents</strong></div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:12px;padding:1rem;border:2px solid #bbf7d0;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">🚶</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;color:#166534;font-size:.95rem;">Agent Terrain</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;"><strong>10 enrôlements/jour</strong><br>App consultée 2×/jour</div>
+      </div>
+      <div style="background:#eff6ff;border-radius:12px;padding:1rem;border:2px solid #bfdbfe;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">🔍</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;color:#1e40af;font-size:.95rem;">Inspecteur</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:.3rem;">Contrôle <strong>15 agents</strong><br><strong>40 visites/jour</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 2 — AVANTAGES OM BUSINESS (VEDETTE)
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num" style="background:var(--om);">2</div>
+    <h2 style="color:var(--om);">Les Avantages OM Business — À MAÎTRISER ABSOLUMENT</h2>
+    <span class="tag" style="background:#fff7ed;color:#9a3412;border-color:#fed7aa;">PRIORITÉ SÉANCE</span>
+  </div>
+
+  <div class="highlight orange" style="margin-bottom:1.2rem;">
+    <div class="hi-icon">⚡</div>
+    <div class="hi-body">
+      <div class="hi-title">Rappel formateur — Pourquoi insister sur les avantages ?</div>
+      <div class="hi-text">Les agents ont du mal à convaincre les marchands parce qu'ils énumèrent les fonctionnalités au lieu de parler de <strong>gains concrets</strong>. La règle d'or : <strong>chaque avantage = un bénéfice chiffré pour le marchand.</strong> "Gratuit" est moins fort que "Vous gagnez du temps et de l'argent".</div>
+    </div>
+  </div>
+
+  <div class="avantage-grid">
+    <div class="av-card green">
+      <div class="av-icon">💸</div>
+      <div class="av-title">Encaissement 100 % gratuit</div>
+      <div class="av-val">0 %</div>
+      <div class="av-sub">Aucun frais pour recevoir les paiements clients jusqu'à <strong>50 000 XOF/jour</strong>. Le marchand ne paie rien.</div>
+    </div>
+    <div class="av-card blue">
+      <div class="av-icon">⏱️</div>
+      <div class="av-title">Ouverture ultra-rapide</div>
+      <div class="av-val">10 min</div>
+      <div class="av-sub">Compte marchand ouvert en moins de 10 minutes sur place. Pas besoin d'aller en agence bancaire.</div>
+    </div>
+    <div class="av-card orange">
+      <div class="av-icon">📡</div>
+      <div class="av-title">Plus grand réseau CI</div>
+      <div class="av-val">21 M+</div>
+      <div class="av-sub">21 millions de comptes Orange Money en Côte d'Ivoire. Le marchand touche le maximum de clients potentiels.</div>
+    </div>
+    <div class="av-card gold">
+      <div class="av-icon">💰</div>
+      <div class="av-title">Commissions marchands</div>
+      <div class="av-val">Revenus +</div>
+      <div class="av-sub">Le marchand génère des revenus supplémentaires à chaque transaction. C'est un gain, pas une dépense.</div>
+    </div>
+    <div class="av-card green">
+      <div class="av-icon">🏧</div>
+      <div class="av-title">Cash Out inclus</div>
+      <div class="av-val">Oui</div>
+      <div class="av-sub">Le marchand peut servir de point de retrait cash pour ses clients, attirant plus de trafic dans son commerce.</div>
+    </div>
+    <div class="av-card red">
+      <div class="av-icon">📈</div>
+      <div class="av-title">Déplafonnement possible</div>
+      <div class="av-val">4,5 M XOF/j</div>
+      <div class="av-sub">Compte FULL : jusqu'à 4,5M XOF/jour. Compte PREMIUM : jusqu'à 7,5M XOF/jour. Adapté aux gros volumes.</div>
+    </div>
+    <div class="av-card blue">
+      <div class="av-icon">📱</div>
+      <div class="av-title">Application dédiée</div>
+      <div class="av-val">Max it</div>
+      <div class="av-sub">Application Orange Money intégrée, suivi en temps réel des transactions, tableaux de bord marchand.</div>
+    </div>
+    <div class="av-card gold">
+      <div class="av-icon">🎯</div>
+      <div class="av-title">Matériel fourni GRATUIT</div>
+      <div class="av-val">100 %</div>
+      <div class="av-sub">QR Code A5/A6 + sticker "PAYER ICI" fournis et installés par l'agent. Zéro investissement pour le marchand.</div>
+    </div>
+    <div class="av-card orange">
+      <div class="av-icon">🔓</div>
+      <div class="av-title">Paiement fournisseurs</div>
+      <div class="av-val">Direct</div>
+      <div class="av-sub">Le marchand peut régler ses fournisseurs directement via OM Business, sans manipulation de cash.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;background:linear-gradient(135deg,#fff7ed,#fffbeb);border-color:#fed7aa;">
+    <h3 style="color:var(--om);">🎙️ Script "Avantages" — Ce que l'agent doit dire</h3>
+    <div class="accroche-box" style="margin-top:.8rem;">
+      <div class="ac-label">Argument clé à mémoriser</div>
+      <p>"Avec OM Business, vous ne dépensez pas un centime pour recevoir vos paiements. L'ouverture est gratuite, je l'installe moi-même en 10 minutes. Et le bonus ? Chaque paiement reçu vous rapporte une commission. C'est littéralement de l'argent en plus sur chaque vente."</p>
+    </div>
+    <div class="pills" style="margin-top:.8rem;">
+      <span class="pill pill-green">Gratuit à l'ouverture</span>
+      <span class="pill pill-green">0% frais encaissement</span>
+      <span class="pill pill-orange">Commission = revenu</span>
+      <span class="pill pill-blue">21M clients potentiels</span>
+      <span class="pill pill-gold">Matériel fourni</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 3 — PROFILS MARCHANDS
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num">3</div>
+    <h2>Profils Marchands Cibles</h2>
+    <span class="tag">MODULE 1 & 2</span>
+  </div>
+
+  <div class="card">
+    <table class="profil-table">
+      <thead>
+        <tr>
+          <th>Profil</th>
+          <th>Type de commerce</th>
+          <th>CA mensuel estimé</th>
+          <th>Argument clé</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="profil-badge pb-essentiel">Essentiel</span></td>
+          <td>Épicier, vendeur ambulant, artisan, petite boutique</td>
+          <td style="font-weight:700;">< 150 000 XOF</td>
+          <td style="color:var(--success);font-size:.82rem;">Zéro frais — reçoit sans dépenser</td>
+        </tr>
+        <tr>
+          <td><span class="profil-badge pb-classique">Classique</span></td>
+          <td>Commerce établi, restaurant, pharmacie, salon</td>
+          <td style="font-weight:700;">150 000 – 500 000 XOF</td>
+          <td style="color:var(--info);font-size:.82rem;">Fluidité des paiements + commissions</td>
+        </tr>
+        <tr>
+          <td><span class="profil-badge pb-premium">Premium</span></td>
+          <td>Grande boutique, hôtel, superette, grossiste</td>
+          <td style="font-weight:700;">> 500 000 XOF</td>
+          <td style="color:#92400e;font-size:.82rem;">Déplafonnement + API + gros volumes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight green" style="margin-top:1rem;">
+      <div class="hi-icon">💡</div>
+      <div class="hi-body">
+        <div class="hi-title">Règle de qualification terrain</div>
+        <div class="hi-text">Toujours qualifier le profil <strong>avant</strong> de commencer le pitch. Regarder la taille du commerce, poser une question sur le CA estimé. Le bon profil = le bon argument = la bonne conclusion.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 4 — MÉTHODES PACO & CRAC
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num">4</div>
+    <h2>Méthodes PACO et CRAC</h2>
+    <span class="tag">MODULE 2</span>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Méthode PACO — La visite terrain (4 étapes)</h3>
+      <div class="methode-box" style="margin-top:.8rem;">
+        <div class="m-item p">
+          <span class="m-letter">P</span>
+          <div class="m-word">Prospecter</div>
+          <div class="m-desc">Identifier & cibler les marchands à fort potentiel</div>
+        </div>
+        <div class="m-item a">
+          <span class="m-letter">A</span>
+          <div class="m-word">Approcher</div>
+          <div class="m-desc">Accroche terrain + question ouverte pour créer le dialogue</div>
+        </div>
+        <div class="m-item c">
+          <span class="m-letter">C</span>
+          <div class="m-word">Convaincre</div>
+          <div class="m-desc">Démontrer les avantages + lever les objections (CRAC)</div>
+        </div>
+        <div class="m-item o">
+          <span class="m-letter">O</span>
+          <div class="m-word">Opérer</div>
+          <div class="m-desc">Enrôler, linker le QR Code, installer & prendre photo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Méthode CRAC — Gestion des objections (4 étapes)</h3>
+      <div class="methode-crac" style="margin-top:.8rem;">
+        <div class="c-item c1">
+          <span class="c-letter">C</span>
+          <div class="c-word">Creuser</div>
+          <div class="c-desc">Poser une question pour comprendre la vraie objection</div>
+        </div>
+        <div class="c-item r">
+          <span class="c-letter">R</span>
+          <div class="c-word">Reformuler</div>
+          <div class="c-desc">Répéter l'objection pour valider la compréhension</div>
+        </div>
+        <div class="c-item a">
+          <span class="c-letter">A</span>
+          <div class="c-word">Argumenter</div>
+          <div class="c-desc">Répondre avec un avantage concret, chiffré</div>
+        </div>
+        <div class="c-item c2">
+          <span class="c-letter">C</span>
+          <div class="c-word">Conclure</div>
+          <div class="c-desc">Proposer une action immédiate pour avancer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objections courantes -->
+  <div class="card">
+    <h3>🗣️ Objections courantes & réponses CRAC</h3>
+    <div style="margin-top:.8rem;">
+
+      <div class="objection-row">
+        <div class="obj-q">💬 "Ça coûte combien ? J'ai peur des frais cachés."</div>
+        <div class="obj-r">
+          <strong>C :</strong> "Quels frais vous inquiètent exactement : l'inscription, les encaissements ?"<br>
+          <strong>R :</strong> "Si je comprends bien, vous ne voulez pas payer des frais sur chaque vente. C'est ça ?"<br>
+          <strong>A :</strong> "L'ouverture est <strong>totalement gratuite</strong>. Recevoir de l'argent vous coûte <strong>0 XOF</strong> jusqu'à 50 000 XOF/jour. Et en prime, vous touchez une commission sur chaque transaction."<br>
+          <strong>C :</strong> "Est-ce que ça répond à votre question ? Je peux vous montrer concrètement en 5 minutes ?"
+        </div>
+        <div class="obj-tip">💡 Raisonner en gain ("vous touchez une commission") plutôt qu'en absence de perte ("c'est gratuit").</div>
+      </div>
+
+      <div class="objection-row">
+        <div class="obj-q">💬 "Je n'ai pas le temps maintenant."</div>
+        <div class="obj-r">
+          <strong>C :</strong> "Vous avez combien de minutes ? 5 minutes suffisent pour voir comment ça fonctionne."<br>
+          <strong>R :</strong> "Donc votre problème c'est le temps, pas le principe d'OM Business en lui-même ?"<br>
+          <strong>A :</strong> "L'inscription complète prend <strong>moins de 10 minutes</strong>. Je m'occupe de tout — vous n'avez qu'à me donner votre CNI."<br>
+          <strong>C :</strong> "Je peux revenir à quelle heure vous convient le mieux ? Ce soir ou demain matin ?"
+        </div>
+        <div class="obj-tip">💡 Toujours proposer un rendez-vous alternatif — ne jamais repartir sans une date confirmée.</div>
+      </div>
+
+      <div class="objection-row">
+        <div class="obj-q">💬 "Mes clients ne paient pas par téléphone, ils ont du cash."</div>
+        <div class="obj-r">
+          <strong>C :</strong> "Vous avez des clients qui parfois n'ont pas assez de cash sur eux ?"<br>
+          <strong>R :</strong> "Donc si un client veut acheter mais n'a pas de monnaie, vous perdez la vente ?"<br>
+          <strong>A :</strong> "<strong>30% des Ivoiriens</strong> préfèrent déjà le mobile money. C'est 1 client sur 3 potentiellement perdu. Et afficher le QR Code est <strong>gratuit et sans risque</strong>."<br>
+          <strong>C :</strong> "Vous n'avez rien à perdre à l'afficher. Si un client l'utilise, vous gagnez. Je l'installe maintenant ?"
+        </div>
+        <div class="obj-tip">💡 "1 client sur 3 perdu" est beaucoup plus percutant que "le mobile money est populaire".</div>
+      </div>
+
+      <div class="objection-row">
+        <div class="obj-q">💬 "J'ai déjà Wave, ça me suffit."</div>
+        <div class="obj-r">
+          <strong>C :</strong> "Vous utilisez Wave pour recevoir ou aussi pour d'autres services ?"<br>
+          <strong>R :</strong> "Donc Wave vous satisfait pour l'instant, mais vous n'avez pas encore accès aux <strong>21 millions</strong> de clients Orange Money ?"<br>
+          <strong>A :</strong> "OM Business n'est pas un remplacement — c'est un <strong>complément</strong>. Les clients Orange Money ne peuvent pas vous payer via Wave. Vous doublez votre réseau d'encaissement, toujours à 0 frais."<br>
+          <strong>C :</strong> "On garde Wave, on ajoute OM Business. Je vous montre — les deux QR Codes côte à côte en 10 minutes ?"
+        </div>
+        <div class="obj-tip">💡 Ne jamais dénigrer Wave. Positionner OM Business comme complémentaire — "double réseau = plus de clients".</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 5 — ENRÔLEMENT & KYC
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num">5</div>
+    <h2>Processus d'Enrôlement & KYC</h2>
+    <span class="tag">MODULE 1 & 2</span>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Documents KYC obligatoires (3)</h3>
+      <div class="kyc-box" style="margin-top:.8rem;">
+        <div class="kyc-item">
+          <div class="ki-icon">🪪</div>
+          <div class="ki-title">Pièce d'identité</div>
+          <div class="ki-desc">CNI ou passeport valide du gérant</div>
+        </div>
+        <div class="kyc-item">
+          <div class="ki-icon">📜</div>
+          <div class="ki-title">Justificatif activité</div>
+          <div class="ki-desc">Registre de commerce, patente ou autorisation</div>
+        </div>
+        <div class="kyc-item">
+          <div class="ki-icon">📸</div>
+          <div class="ki-title">Photo du commerce</div>
+          <div class="ki-desc">Prise via l'application au moment de la visite</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>5 étapes de l'enrôlement</h3>
+      <div class="steps" style="margin-top:.8rem;">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Qualification</strong><span>Identifier le profil marchand (Essentiel / Classique / Premium)</span></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Collecte KYC</strong><span>CNI + justificatif activité + photo commerce</span></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Saisie & Linkage</strong><span>Ouvrir l'app agent → renseigner infos → linker QR Code</span></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Visibilité</strong><span>Coller QR Code (hauteur yeux) + sticker "PAYER ICI"</span></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Formation & Photo</strong><span>1ère transaction test + prendre photo de confirmation</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight red">
+    <div class="hi-icon">⚠️</div>
+    <div class="hi-body">
+      <div class="hi-title">KYC rejeté — que faire ?</div>
+      <div class="hi-text">Ne pas abandonner. Identifier le motif du rejet → corriger le document avec le marchand → resoumettre. En cas de doute : escalader au Superviseur. Ne jamais improviser une réponse technique.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 6 — SUIVI DU PORTEFEUILLE
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num">6</div>
+    <h2>Suivi du Portefeuille Marchand</h2>
+    <span class="tag">MODULE 1</span>
+  </div>
+
+  <div class="card">
+    <div class="portef-grid">
+      <div class="portef-item pf-actif">
+        <div class="pf-label">✅ Actif</div>
+        <div class="pf-crit">≥ 5 transactions / mois</div>
+        <div class="pf-action" style="color:var(--success);">Maintenir : 1 visite/mois</div>
+      </div>
+      <div class="portef-item pf-dev">
+        <div class="pf-label">⚡ À développer</div>
+        <div class="pf-crit">1 à 4 transactions / mois</div>
+        <div class="pf-action" style="color:#92400e;">Intensifier : 2 visites/mois</div>
+      </div>
+      <div class="portef-item pf-inactif">
+        <div class="pf-label">❌ Inactif</div>
+        <div class="pf-crit">0 transaction depuis > 30 jours</div>
+        <div class="pf-action" style="color:var(--danger);">Urgence : relance immédiate</div>
+      </div>
+    </div>
+    <div class="highlight blue" style="margin-top:1rem;">
+      <div class="hi-icon">📱</div>
+      <div class="hi-body">
+        <div class="hi-title">Application mobile — 2 consultations par jour</div>
+        <div class="hi-text">L'agent consulte l'application <strong>matin et soir</strong> pour suivre ses KPIs : nombre d'enrôlements, statut du portefeuille, alertes marchands inactifs. C'est non-négociable.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 7 — COMPARATIF CONCURRENTS 2025
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num" style="background:var(--info);">7</div>
+    <h2 style="color:var(--info);">Comparatif OM Business vs Concurrents — Données 2025</h2>
+    <span class="tag" style="background:#eff6ff;color:#1e40af;border-color:#bfdbfe;">WEB · ACTUALISÉ</span>
+  </div>
+
+  <div class="card">
+    <div style="overflow-x:auto;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Critère</th>
+            <th class="om-col">🟠 OM Business</th>
+            <th class="wave-col">🔵 Wave CI</th>
+            <th class="mtn-col">🟡 MTN MoMo</th>
+            <th class="moov-col">🔵 Moov Money</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Inscription marchand</td>
+            <td class="comp-winner">✅ Gratuite</td>
+            <td><span class="check">✅ Gratuite</span></td>
+            <td><span class="check">✅ Gratuite</span></td>
+            <td><span class="check">✅ Gratuite</span></td>
+          </tr>
+          <tr>
+            <td>Frais encaissement QR</td>
+            <td class="comp-winner">0% jusqu'à 50 000 XOF/j</td>
+            <td>0% (cœur du service)</td>
+            <td>Variable (négocié)</td>
+            <td>Non publié (~1%)</td>
+          </tr>
+          <tr>
+            <td>Plafond journalier max</td>
+            <td class="comp-winner">7,5 M XOF (PREMIUM)</td>
+            <td>2 M XOF (solde max)</td>
+            <td>2 M XOF (solde max)</td>
+            <td>Non publié</td>
+          </tr>
+          <tr>
+            <td>Base clients CI</td>
+            <td class="comp-winner"><strong>21 M+ comptes</strong> 🏆</td>
+            <td>21 M comptes (croissance)</td>
+            <td>21 M comptes (< 5M actifs)</td>
+            <td>3e opérateur CI</td>
+          </tr>
+          <tr>
+            <td>QR Code marchand</td>
+            <td class="comp-winner">✅ Fourni & installé par agent</td>
+            <td>✅ (cœur du service)</td>
+            <td>✅ En déploiement</td>
+            <td>✅ + NFC (bague/bracelet)</td>
+          </tr>
+          <tr>
+            <td>Cash Out marchand</td>
+            <td class="comp-winner">✅ Disponible</td>
+            <td>✅ (1% frais retrait agent)</td>
+            <td>✅ Disponible</td>
+            <td>✅ Disponible</td>
+          </tr>
+          <tr>
+            <td>Déplafonnement</td>
+            <td class="comp-winner">✅ FULL / PREMIUM</td>
+            <td>Compte identifié requis</td>
+            <td>À négocier</td>
+            <td>Non publié</td>
+          </tr>
+          <tr>
+            <td>Paiement fournisseurs</td>
+            <td class="comp-winner">✅ Intégré</td>
+            <td>✅ (B2B 1%)</td>
+            <td>Limité</td>
+            <td>✅ (facturiers nationaux)</td>
+          </tr>
+          <tr>
+            <td>App dédiée marchands</td>
+            <td class="comp-winner">Max it + portail web</td>
+            <td>Wave Business App</td>
+            <td>MoMo Agent App</td>
+            <td>Moov Money CI</td>
+          </tr>
+          <tr>
+            <td>Couverture réseau</td>
+            <td class="comp-winner">🏆 1er opérateur CI</td>
+            <td>En forte croissance</td>
+            <td>2e opérateur CI</td>
+            <td>3e opérateur CI</td>
+          </tr>
+          <tr>
+            <td>Commissions marchands</td>
+            <td class="comp-winner">✅ Revenus additionnels</td>
+            <td>❌ Modèle 0% (pas de comm.)</td>
+            <td>✅ Sur dépôts/retraits</td>
+            <td>Non publié</td>
+          </tr>
+          <tr>
+            <td>Délai reversement fonds</td>
+            <td class="comp-winner">Temps réel</td>
+            <td>Temps réel / 72h virement banque</td>
+            <td>Temps réel</td>
+            <td>Non publié</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight green" style="margin-top:1.2rem;">
+      <div class="hi-icon">🏆</div>
+      <div class="hi-body">
+        <div class="hi-title">3 avantages décisifs d'OM Business face à Wave (l'objection la plus fréquente)</div>
+        <div class="hi-text">
+          <strong>1. Commissions marchands :</strong> Wave est à 0% partout — pas de commission pour le marchand. OM Business génère des revenus supplémentaires à chaque transaction.<br>
+          <strong>2. Plafond supérieur :</strong> OM PREMIUM = 7,5M XOF/jour vs 2M max pour Wave. Avantage décisif pour les commerces à fort volume.<br>
+          <strong>3. Réseau Orange :</strong> Le réseau téléphonique Orange CI couvre mieux les zones périurbaines et rurales que Wave.
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight orange" style="margin-top:.8rem;">
+      <div class="hi-icon">📌</div>
+      <div class="hi-body">
+        <div class="hi-title">Note sur Wave en 2025</div>
+        <div class="hi-text">Wave a créé <strong>Wave Bank Africa</strong> (banque commerciale, capital 20 Mds XOF, oct. 2025) et déploie massivement les QR Codes (+300 000 marchands fin 2024). La concurrence s'intensifie — l'argument "commissions marchands + plafond supérieur + réseau Orange" est votre meilleure réponse.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACCROCHE TERRAIN À MÉMORISER
+══════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <div class="num" style="background:var(--gold);">★</div>
+    <h2 style="color:#92400e;">Accroche Terrain — À réciter par cœur</h2>
+  </div>
+  <div class="accroche-box">
+    <div class="ac-label">Script d'ouverture officiel MAFA</div>
+    <p>"Bonjour, je m'appelle <strong>[Prénom]</strong>, je suis agent MAFA mandaté par Orange Money. Je viens vous parler d'<strong>Orange Money Business</strong> — une solution <strong>gratuite</strong> qui permet à votre commerce de recevoir des paiements par mobile, gérer votre argent et payer vos fournisseurs directement depuis votre téléphone. C'est déjà utilisé par des centaines de commerçants dans votre zone. Je peux vous montrer comment ça fonctionne en <strong>5 minutes</strong> ?"</p>
+  </div>
+  <div style="margin-top:.8rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+    <span class="pill pill-green">Identité claire</span>
+    <span class="pill pill-green">Gratuit dès l'accroche</span>
+    <span class="pill pill-blue">Preuve sociale ("centaines de commerçants")</span>
+    <span class="pill pill-orange">Question fermée pour engagement</span>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <strong>MAFA HOLDING</strong> · Fiche de révision Agent Terrain OM Business · Séance du 2 avril 2026<br>
+  Sources comparatif : Orange CI, Wave CI, MTN CI, Moov Africa CI — données 2025 vérifiées
+</div>
+
+</body>
+</html>
