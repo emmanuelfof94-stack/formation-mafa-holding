@@ -95,6 +95,21 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
 .feedback.ok{background:#f0fdf4;color:#065f46;border-left:3px solid var(--success);}
 .feedback.ko{background:#fef2f2;color:#7f1d1d;border-left:3px solid var(--danger);}
 
+/* EXERCICES */
+.exo-header{background:linear-gradient(135deg,#1e3a5f,#0f2848);color:#fff;border-radius:14px;padding:1.4rem 1.8rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.exo-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;}
+.exo-sub{font-size:.8rem;opacity:.72;margin-top:.2rem;}
+.exo-score-live{background:rgba(255,255,255,.15);border-radius:10px;padding:.55rem 1.1rem;text-align:center;min-width:80px;}
+.exo-score-live .ev{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;}
+.exo-score-live .el{font-size:.68rem;opacity:.75;}
+.exo-result{background:var(--surface);border-radius:14px;padding:2rem 1.5rem;text-align:center;box-shadow:var(--shadow);border:1.5px solid var(--border);margin-top:2rem;}
+.exo-result .er-pct{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:var(--primary);}
+.exo-result .er-lbl{font-size:.88rem;color:var(--text-muted);margin-top:.2rem;}
+.exo-result .er-msg{margin:1rem auto;max-width:380px;font-size:.88rem;color:var(--text);line-height:1.65;background:var(--surface2);border-radius:10px;padding:.9rem 1.1rem;}
+.mode-banner{border-radius:12px;padding:.9rem 1.2rem;margin-bottom:1.2rem;font-size:.87rem;font-weight:600;display:flex;align-items:center;gap:.6rem;}
+.mode-banner.locked{background:#fff8e1;color:#92400e;border:1.5px solid #ffe082;}
+.mode-banner.open{background:#f0fdf4;color:#065f46;border:1.5px solid #bbf7d0;}
+
 /* CAS PRATIQUE */
 .cas-card{background:var(--surface);border-radius:14px;padding:1.8rem;margin-bottom:1.5rem;box-shadow:var(--shadow);border:1.5px solid var(--border);}
 .cas-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:.3rem;}
@@ -203,6 +218,8 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
         <input type="date" id="inp-date" />
       </div>
 
+      <div id="mode-banner" class="mode-banner" style="display:none;"></div>
+
       <div class="info-box">
         <p>📌 Consignes de l'évaluation</p>
         <ul>
@@ -215,7 +232,32 @@ body::before{content:'';display:block;position:fixed;top:0;left:0;right:0;height
         </ul>
       </div>
 
-      <button class="btn btn-primary btn-full" onclick="startExam()">Commencer l'évaluation →</button>
+      <button class="btn btn-secondary btn-full" onclick="goExercice()" style="margin-bottom:.75rem;">📚 S'exercer avant l'évaluation (15 questions)</button>
+      <button class="btn btn-primary btn-full" id="btn-start-exam" onclick="startExam()">Commencer l'évaluation →</button>
+    </div>
+  </div>
+
+  <!-- ===== ÉCRAN EXERCICES ===== -->
+  <div class="screen" id="screen-exercice">
+    <div class="exo-header">
+      <div>
+        <div class="exo-title">📚 Module d'Exercices — OM Business</div>
+        <div class="exo-sub">15 questions d'entraînement · Correction immédiate · Sans limite de temps</div>
+      </div>
+      <div class="exo-score-live">
+        <div class="ev"><span id="exo-correct">0</span>/15</div>
+        <div class="el">Score live</div>
+      </div>
+    </div>
+    <div id="exo-questions"></div>
+    <div class="exo-result" id="exo-result" style="display:none;">
+      <div class="er-pct" id="exo-pct">0%</div>
+      <div class="er-lbl">Score final sur les exercices</div>
+      <div class="er-msg" id="exo-msg"></div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+        <button class="btn btn-secondary" onclick="resetExercice()">↺ Recommencer</button>
+        <button class="btn btn-primary" onclick="showScreen('screen-intro')">Passer à l'évaluation →</button>
+      </div>
     </div>
   </div>
 
@@ -814,6 +856,7 @@ let _lastPayload = null;
 try {
   firebase.initializeApp(FIREBASE_CONFIG);
   _db = firebase.database();
+  listenMode();
 } catch(e) { console.warn('Firebase non configuré:', e.message); }
 
 function saveToFirebase(payload) {
@@ -960,6 +1003,211 @@ let candidateName = '';
 let candidateTel = '';
 let candidateZone = '';
 let candidateDate = '';
+
+// ══════════════════════════════════════════════════════════════
+//  CONTRÔLE MODE (exercice / évaluation) — piloté par l'admin via Firebase
+// ══════════════════════════════════════════════════════════════
+let currentMode = 'evaluation'; // valeur par défaut
+
+function listenMode() {
+  if (!_db) return;
+  _db.ref('settings/mode').on('value', snap => {
+    currentMode = snap.val() || 'evaluation';
+    applyMode();
+  });
+}
+
+function applyMode() {
+  const banner = document.getElementById('mode-banner');
+  const btnStart = document.getElementById('btn-start-exam');
+  if (currentMode === 'exercice') {
+    banner.className = 'mode-banner locked';
+    banner.innerHTML = '🔒 L\'administrateur a verrouillé l\'évaluation finale. Seuls les exercices sont disponibles pour l\'instant.';
+    banner.style.display = 'flex';
+    if (btnStart) { btnStart.disabled = true; btnStart.style.opacity = '.4'; btnStart.style.cursor = 'not-allowed'; }
+  } else {
+    banner.className = 'mode-banner open';
+    banner.innerHTML = '✅ L\'évaluation finale est ouverte. Vous pouvez commencer.';
+    banner.style.display = 'flex';
+    if (btnStart) { btnStart.disabled = false; btnStart.style.opacity = '1'; btnStart.style.cursor = 'pointer'; }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  EXERCICES — 15 questions autocorrigées
+// ══════════════════════════════════════════════════════════════
+const EXO_QUESTIONS = [
+  {
+    q: "Que signifie l'acronyme « OM Business » ?",
+    opts: ["Orange Mobile Business","Orange Money Business","Office Market Business","Orange Merchant Business"],
+    correct: 1,
+    ok: "Correct ! OM Business = Orange Money Business, le service de paiement marchand d'Orange CI.",
+    ko: "Non. OM Business signifie Orange Money Business — le service de paiement marchand d'Orange CI."
+  },
+  {
+    q: "Combien d'agents terrain un Superviseur encadre-t-il ?",
+    opts: ["5 à 10 agents","10 à 15 agents","15 à 20 agents","20 à 25 agents"],
+    correct: 2,
+    ok: "Correct ! Un Superviseur gère une équipe de 15 à 20 agents terrain.",
+    ko: "Non. Un Superviseur encadre 15 à 20 agents terrain dans la structure MAFA."
+  },
+  {
+    q: "Que représente le « P » dans la méthode PACO ?",
+    opts: ["Paiement","Présenter","Prospecter","Planifier"],
+    correct: 2,
+    ok: "Correct ! P = Prospecter — identifier et cibler les marchands potentiels.",
+    ko: "Non. P = Prospecter, la première étape qui consiste à identifier les marchands cibles."
+  },
+  {
+    q: "Dans la méthode CRAC, que signifie le « R » ?",
+    opts: ["Rassurer","Reformuler","Répondre","Rappeler"],
+    correct: 1,
+    ok: "Correct ! R = Reformuler l'objection pour s'assurer de l'avoir bien comprise.",
+    ko: "Non. R = Reformuler — on répète l'objection du marchand pour confirmer qu'on l'a bien comprise."
+  },
+  {
+    q: "Quel profil OM Business convient à un marchand avec un CA mensuel inférieur à 150 000 XOF ?",
+    opts: ["Premium","Classique","Essentiel","Standard"],
+    correct: 2,
+    ok: "Correct ! Le profil Essentiel est adapté aux petits marchands de proximité.",
+    ko: "Non. Le profil Essentiel correspond aux marchands avec un faible chiffre d'affaires (< 150 000 XOF/mois)."
+  },
+  {
+    q: "Parmi ces documents, lequel est indispensable pour le KYC d'un marchand ?",
+    opts: ["Relevé bancaire","Certificat de résidence","Pièce d'identité valide (CNI ou passeport)","Attestation fiscale"],
+    correct: 2,
+    ok: "Correct ! La CNI ou le passeport est obligatoire pour identifier le marchand lors de l'enrôlement.",
+    ko: "Non. La pièce d'identité valide (CNI ou passeport) est le document KYC incontournable."
+  },
+  {
+    q: "À quoi sert le sticker « PAYER ICI » remis au marchand lors de l'enrôlement ?",
+    opts: ["À décorer le commerce","À afficher les tarifs de commission","À indiquer aux clients qu'ils peuvent payer par Orange Money","À identifier le superviseur responsable"],
+    correct: 2,
+    ok: "Correct ! Le sticker « PAYER ICI » signale aux clients que le paiement OM Business est accepté.",
+    ko: "Non. Le sticker « PAYER ICI » sert à signaler aux clients la possibilité de payer par Orange Money."
+  },
+  {
+    q: "Quel est le taux de frais appliqué pour les encaissements clients inférieurs à 50 000 XOF/jour ?",
+    opts: ["0,5 %","1 %","2 %","0 % (gratuit)"],
+    correct: 3,
+    ok: "Correct ! Les encaissements clients jusqu'à 50 000 XOF/jour sont totalement gratuits pour le marchand.",
+    ko: "Non. Les encaissements inférieurs à 50 000 XOF/jour sont à 0 % de frais — c'est gratuit."
+  },
+  {
+    q: "Un marchand sans transaction depuis 38 jours est classé :",
+    opts: ["Actif portefeuille","À développer","En attente","Inactif"],
+    correct: 3,
+    ok: "Correct ! Un marchand sans transaction depuis 38 jours passe au statut Inactif.",
+    ko: "Non. Sans transaction pendant 38 jours, le marchand est classé Inactif."
+  },
+  {
+    q: "Quelle est la fréquence recommandée pour consulter l'application mobile de suivi agent ?",
+    opts: ["1 fois par semaine","1 fois par jour","2 fois par jour","À la demande du superviseur"],
+    correct: 2,
+    ok: "Correct ! L'agent doit consulter l'application 2 fois par jour pour suivre ses performances.",
+    ko: "Non. La fréquence recommandée est de 2 consultations par jour de l'application mobile."
+  },
+  {
+    q: "Quelle est la dernière action à réaliser lors d'un enrôlement, après le linkage QR Code ?",
+    opts: ["Remettre la carte de visite de l'agent","Prendre une photo de confirmation via l'application","Appeler le superviseur pour valider","Demander au marchand de signer un reçu"],
+    correct: 1,
+    ok: "Correct ! La photo de confirmation via l'application finalise et valide officiellement l'enrôlement.",
+    ko: "Non. La dernière étape est de prendre une photo de confirmation via l'application mobile."
+  },
+  {
+    q: "La fonctionnalité « Cash Out » permet au marchand de :",
+    opts: ["Recevoir des paiements de ses clients","Envoyer de l'argent à son fournisseur","Permettre à ses clients de retirer de l'argent","Recharger son propre compte OM Business"],
+    correct: 2,
+    ok: "Correct ! Le Cash Out permet au marchand de servir de point de retrait pour ses clients.",
+    ko: "Non. Le Cash Out permet à un client de retirer de l'argent directement chez le marchand."
+  },
+  {
+    q: "Combien de visites par mois sont recommandées pour un marchand classé « À développer » ?",
+    opts: ["1 visite/mois","2 visites/mois","3 visites/mois","1 visite/semaine"],
+    correct: 1,
+    ok: "Correct ! Un marchand « À développer » doit être visité 2 fois par mois pour le faire progresser.",
+    ko: "Non. La fréquence recommandée pour un marchand « À développer » est de 2 visites par mois."
+  },
+  {
+    q: "Combien d'étapes comporte la méthode PACO ?",
+    opts: ["3 étapes","4 étapes","5 étapes","6 étapes"],
+    correct: 1,
+    ok: "Correct ! PACO comporte 4 étapes : Prospecter, Aborder, Conclure, Optimiser.",
+    ko: "Non. La méthode PACO comporte exactement 4 étapes : P-A-C-O."
+  },
+  {
+    q: "Quel est l'objectif quotidien d'enrôlement d'un agent terrain OM Business ?",
+    opts: ["5 marchands/jour","8 marchands/jour","10 marchands/jour","15 marchands/jour"],
+    correct: 2,
+    ok: "Correct ! Chaque agent terrain doit enrôler 10 nouveaux marchands par jour.",
+    ko: "Non. L'objectif quotidien est de 10 enrôlements par agent terrain."
+  }
+];
+
+let exoAnswers = [];
+let exoCorrectCount = 0;
+
+function goExercice() {
+  initExercice();
+  showScreen('screen-exercice');
+  window.scrollTo(0,0);
+}
+
+function initExercice() {
+  exoAnswers = new Array(EXO_QUESTIONS.length).fill(null);
+  exoCorrectCount = 0;
+  document.getElementById('exo-correct').textContent = '0';
+  document.getElementById('exo-result').style.display = 'none';
+
+  const container = document.getElementById('exo-questions');
+  container.innerHTML = EXO_QUESTIONS.map((q, i) => `
+    <div class="q-card" id="exo-card-${i}">
+      <div class="q-num">Exercice ${i+1} / ${EXO_QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((opt, j) => `
+          <div class="opt" id="exo-opt-${i}-${j}" onclick="answerExo(${i},${j})">
+            <div class="opt-icon"></div><span>${opt}</span>
+          </div>`).join('')}
+      </div>
+      <div class="feedback" id="exo-fb-${i}"></div>
+    </div>`).join('');
+}
+
+function answerExo(qIdx, optIdx) {
+  if (exoAnswers[qIdx] !== null) return;
+  exoAnswers[qIdx] = optIdx;
+  const q = EXO_QUESTIONS[qIdx];
+  const ok = optIdx === q.correct;
+  if (ok) { exoCorrectCount++; document.getElementById('exo-correct').textContent = exoCorrectCount; }
+  q.opts.forEach((_, j) => {
+    const el = document.getElementById(`exo-opt-${qIdx}-${j}`);
+    el.classList.add('locked');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === optIdx && !ok) el.classList.add('incorrect');
+  });
+  const fb = document.getElementById(`exo-fb-${qIdx}`);
+  fb.textContent = ok ? q.ok : q.ko;
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
+  if (exoAnswers.every(a => a !== null)) showExoResult();
+}
+
+function showExoResult() {
+  const pct = Math.round(exoCorrectCount / EXO_QUESTIONS.length * 100);
+  document.getElementById('exo-pct').textContent = pct + '%';
+  let msg = '';
+  if (pct >= 80) msg = '🎉 Excellent ! Vous maîtrisez bien les fondamentaux OM Business. Vous êtes prêt(e) pour l\'évaluation officielle.';
+  else if (pct >= 60) msg = '👍 Bon niveau ! Quelques notions à revoir avant l\'évaluation officielle.';
+  else msg = '📖 Des révisions s\'imposent. Relisez les modules de formation avant l\'évaluation officielle.';
+  document.getElementById('exo-msg').textContent = msg;
+  document.getElementById('exo-result').style.display = 'block';
+  document.getElementById('exo-result').scrollIntoView({behavior:'smooth'});
+}
+
+function resetExercice() {
+  initExercice();
+  window.scrollTo(0,0);
+}
 
 function startExam() {
   const nom = document.getElementById('inp-nom').value.trim();

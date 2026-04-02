@@ -108,6 +108,19 @@ tbody td{padding:.72rem 1rem;color:var(--text);vertical-align:middle;}
 .cas-block p{font-size:.83rem;color:#334155;line-height:1.65;white-space:pre-wrap;}
 .cas-block.empty p{color:var(--muted);font-style:italic;}
 
+/* MODE CONTROL */
+.mode-control{background:var(--surface);border-radius:14px;padding:1.1rem 1.4rem;box-shadow:var(--shadow);border:1.5px solid var(--border);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.mode-control .mc-label{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;}
+.mode-control .mc-sub{font-size:.78rem;color:var(--muted);margin-top:.15rem;}
+.mode-pill{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem 1.1rem;border-radius:50px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;}
+.mode-pill.exercice{background:#fff8e1;color:#92400e;border:1.5px solid #ffe082;}
+.mode-pill.evaluation{background:#dcfce7;color:#166534;border:1.5px solid #bbf7d0;}
+.mode-toggle{padding:.6rem 1.4rem;border-radius:50px;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;letter-spacing:.03em;}
+.mode-toggle.lock{background:var(--danger);color:#fff;box-shadow:0 3px 10px rgba(239,68,68,.3);}
+.mode-toggle.lock:hover{background:#dc2626;}
+.mode-toggle.unlock{background:var(--success);color:#fff;box-shadow:0 3px 10px rgba(16,185,129,.3);}
+.mode-toggle.unlock:hover{background:#059669;}
+
 /* TOAST */
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#0f172a;color:#fff;padding:.7rem 1.2rem;border-radius:10px;font-size:.85rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:9000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -157,6 +170,21 @@ tbody td{padding:.72rem 1rem;color:var(--text);vertical-align:middle;}
 
   <!-- LISTE CANDIDATS -->
   <div class="content" id="list-view">
+    <!-- Contrôle Mode Évaluation -->
+    <div class="mode-control">
+      <div>
+        <div class="mc-label">🎛️ Contrôle de l'évaluation</div>
+        <div class="mc-sub">Choisissez ce que les agents voient sur leur écran en temps réel</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
+        <div>
+          <span style="font-size:.75rem;color:var(--muted);font-weight:600;">MODE ACTUEL :</span><br>
+          <span class="mode-pill" id="mode-current-pill">— chargement —</span>
+        </div>
+        <button class="mode-toggle lock" id="btn-mode-toggle" onclick="toggleMode()">…</button>
+      </div>
+    </div>
+
     <!-- Stats -->
     <div class="stats-row" id="stats-row">
       <div class="stat-card"><div class="stat-val" id="s-total">0</div><div class="stat-lbl">Candidats</div></div>
@@ -335,9 +363,48 @@ function initFirebase() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-wrap').style.display = 'flex';
     listenData();
+    listenMode();
   } catch(e) {
     document.getElementById('login-err').textContent = 'Erreur Firebase : ' + e.message;
   }
+}
+
+// ── Contrôle Mode ─────────────────────────────────────────────
+let currentMode = 'evaluation';
+
+function listenMode() {
+  _db.ref('settings/mode').on('value', snap => {
+    currentMode = snap.val() || 'evaluation';
+    renderModePill();
+  });
+}
+
+function renderModePill() {
+  const pill = document.getElementById('mode-current-pill');
+  const btn  = document.getElementById('btn-mode-toggle');
+  if (currentMode === 'exercice') {
+    pill.className = 'mode-pill exercice';
+    pill.textContent = '🔒 Exercice uniquement';
+    btn.className = 'mode-toggle unlock';
+    btn.textContent = '🔓 Ouvrir l\'évaluation finale';
+  } else {
+    pill.className = 'mode-pill evaluation';
+    pill.textContent = '✅ Évaluation ouverte';
+    btn.className = 'mode-toggle lock';
+    btn.textContent = '🔒 Verrouiller — mode Exercice';
+  }
+}
+
+function toggleMode() {
+  if (!_db) { showToast('Firebase non connecté'); return; }
+  const newMode = currentMode === 'exercice' ? 'evaluation' : 'exercice';
+  _db.ref('settings/mode').set(newMode)
+    .then(() => {
+      showToast(newMode === 'exercice'
+        ? '🔒 Évaluation verrouillée — les agents voient uniquement les exercices'
+        : '✅ Évaluation ouverte — les agents peuvent passer le test officiel');
+    })
+    .catch(err => showToast('⚠ Erreur : ' + err.message));
 }
 
 function refreshData() {
