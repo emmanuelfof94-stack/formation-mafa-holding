@@ -1,0 +1,8 @@
+node_modules/
+data/cert.json
+data/pointages.json
+public/photos/
+exports/
+qrcodes/
+*.log
+.env

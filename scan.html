@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badgeage QR Code</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<style>
+  :root { --bleu:#1A5676; --vert:#27ae60; --rouge:#c0392b; --orange:#e67e22; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',sans-serif; background:#0d1f2d; color:#fff; min-height:100vh;
+         display:flex; flex-direction:column; }
+
+  header {
+    background:linear-gradient(135deg,#1A5676,#2c7da0);
+    padding:18px 30px; display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 4px 12px rgba(0,0,0,0.4);
+  }
+  header h1 { font-size:1.3rem; letter-spacing:1px; }
+  header .heure { font-size:2rem; font-weight:700; font-variant-numeric:tabular-nums; }
+
+  nav { background:#0a1a26; display:flex; }
+  nav a { padding:12px 22px; text-decoration:none; color:#aaa; font-size:0.88rem; font-weight:600;
+          border-bottom:3px solid transparent; transition:all 0.2s; }
+  nav a:hover { color:#fff; border-bottom-color:#2c7da0; }
+
+  main { flex:1; display:flex; flex-direction:column; align-items:center; padding:30px 20px; }
+
+  /* ── Scanner ── */
+  .scanner-container {
+    width:100%; max-width:500px; background:#162030; border-radius:16px;
+    padding:24px; box-shadow:0 8px 32px rgba(0,0,0,0.5); margin-bottom:24px;
+  }
+  .scanner-container h2 { text-align:center; color:#7ec8e3; margin-bottom:18px; font-size:1.1rem; }
+  #reader { border-radius:12px; overflow:hidden; }
+  #reader video { border-radius:12px; }
+
+  /* ── Résultat ── */
+  .result-card {
+    width:100%; max-width:500px; border-radius:16px; padding:24px;
+    text-align:center; display:none; box-shadow:0 8px 32px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+  .result-card.entree { background:linear-gradient(135deg,#1a5c34,#27ae60); }
+  .result-card.sortie  { background:linear-gradient(135deg,#7b1f1f,#c0392b); }
+  .result-card.erreur  { background:linear-gradient(135deg,#5a3a00,#d68910); }
+  .result-card .big-icon { font-size:4rem; margin-bottom:10px; }
+  .result-card h3 { font-size:1.6rem; font-weight:700; margin-bottom:6px; }
+  .result-card p  { font-size:1.1rem; opacity:0.9; margin-bottom:4px; }
+  .result-card .heure-badge {
+    display:inline-block; background:rgba(255,255,255,0.2);
+    padding:6px 18px; border-radius:30px; margin-top:10px; font-size:1.3rem; font-weight:700;
+  }
+
+  /* ── Historique ── */
+  .historique { width:100%; max-width:500px; margin-top:20px; }
+  .historique h3 { color:#7ec8e3; margin-bottom:12px; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; }
+  .hist-item {
+    display:flex; align-items:center; gap:12px; padding:10px 16px;
+    background:#162030; border-radius:10px; margin-bottom:8px;
+    border-left:4px solid #27ae60;
+  }
+  .hist-item.sortie { border-left-color:#c0392b; }
+  .hist-item .hist-icon { font-size:1.3rem; }
+  .hist-item .hist-info { flex:1; }
+  .hist-item .hist-nom { font-weight:600; font-size:0.9rem; }
+  .hist-item .hist-detail { font-size:0.78rem; color:#aaa; }
+  .hist-item .hist-heure { font-size:1rem; font-weight:700; color:#7ec8e3; }
+
+  .btn-retour {
+    display:inline-block; margin-top:20px; padding:12px 28px;
+    background:#1A5676; color:white; border-radius:8px; text-decoration:none;
+    font-weight:600; font-size:0.95rem; transition:background 0.2s;
+  }
+  .btn-retour:hover { background:#2c7da0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>SYSTÈME DE BADGEAGE</h1>
+    <div style="font-size:0.8rem;opacity:0.7;" id="date-affichage"></div>
+  </div>
+  <div class="heure" id="heure-affichage"></div>
+</header>
+
+<nav>
+  <a href="index.html">← Dashboard</a>
+  <a href="agents.html">Agents</a>
+  <a href="reglement.html">Règlement</a>
+</nav>
+
+<main>
+
+  <div class="scanner-container">
+    <h2>Pointez votre QR Code devant la caméra</h2>
+    <div id="reader"></div>
+  </div>
+
+  <!-- Carte résultat -->
+  <div class="result-card" id="result-card">
+    <div class="big-icon" id="result-icon">✅</div>
+    <h3 id="result-nom">—</h3>
+    <p id="result-poste">—</p>
+    <p id="result-type">—</p>
+    <div class="heure-badge" id="result-heure">—</div>
+  </div>
+
+  <!-- Historique aujourd'hui -->
+  <div class="historique">
+    <h3>Badgeages d'aujourd'hui</h3>
+    <div id="historique-liste"></div>
+  </div>
+
+  <a href="index.html" class="btn-retour">← Retour au tableau de bord</a>
+</main>
+
+<script>
+// ── Horloge ──
+function majHeure() {
+  const now = new Date();
+  const jours=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  document.getElementById('heure-affichage').textContent = now.toLocaleTimeString('fr-FR');
+  document.getElementById('date-affichage').textContent =
+    `${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]} ${now.getFullYear()}`;
+}
+setInterval(majHeure, 1000); majHeure();
+
+// ── Données ──
+function getAgents()   { return JSON.parse(localStorage.getItem('agents') || '[]'); }
+function getPointages(){ return JSON.parse(localStorage.getItem('pointages') || '[]'); }
+function savePointages(p){ localStorage.setItem('pointages', JSON.stringify(p)); }
+
+function getHeure() {
+  return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+}
+function getDateStr() {
+  return new Date().toLocaleDateString('fr-FR');
+}
+
+// ── Traitement du scan ──
+let dernierScan = null;
+let timerReset = null;
+
+function traiterScan(data) {
+  // Éviter double scan rapide
+  if (data === dernierScan) return;
+  dernierScan = data;
+  clearTimeout(timerReset);
+  timerReset = setTimeout(() => { dernierScan = null; }, 3000);
+
+  const parts = data.split('|');
+  if (parts[0] !== 'BADGE' || parts.length < 4) {
+    afficherResultat('erreur', '⚠️', 'QR Code invalide', '', 'Ce QR code n\'est pas reconnu', getHeure());
+    return;
+  }
+
+  const agentId = parts[1];
+  const agents = getAgents();
+  const agent = agents.find(a => a.id === agentId);
+  if (!agent) {
+    afficherResultat('erreur', '⚠️', 'Agent non trouvé', '', `ID: ${agentId}`, getHeure());
+    return;
+  }
+
+  const pointages = getPointages();
+  const today = getDateStr();
+  const heure = getHeure();
+
+  // Déterminer entrée ou sortie
+  const dejaBadge = pointages.filter(p => p.agentId === agentId && p.date === today);
+  const aEntree = dejaBadge.some(p => p.type === 'entree');
+  const aSortie = dejaBadge.some(p => p.type === 'sortie');
+
+  let type, icon, typeLabel;
+  if (!aEntree) {
+    type = 'entree'; icon = '🟢'; typeLabel = 'ENTRÉE enregistrée';
+  } else if (!aSortie) {
+    type = 'sortie'; icon = '🔴'; typeLabel = 'SORTIE enregistrée';
+  } else {
+    afficherResultat('erreur', 'ℹ️', `${agent.nom} ${agent.prenom}`, agent.poste,
+                     'Déjà badgé (entrée + sortie aujourd\'hui)', heure);
+    return;
+  }
+
+  // Enregistrer
+  pointages.push({ agentId, nom: agent.nom, prenom: agent.prenom,
+                   poste: agent.poste, date: today, heure, type });
+  savePointages(pointages);
+
+  afficherResultat(type, icon, `${agent.nom} ${agent.prenom}`, agent.poste, typeLabel, heure);
+  rafraichirHistorique();
+
+  // Son feedback
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.frequency.value = type === 'entree' ? 880 : 440;
+  gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+  osc.start(); osc.stop(ctx.currentTime + 0.5);
+}
+
+function afficherResultat(type, icon, nom, poste, typeLabel, heure) {
+  const card = document.getElementById('result-card');
+  card.className = 'result-card ' + type;
+  document.getElementById('result-icon').textContent = icon;
+  document.getElementById('result-nom').textContent = nom;
+  document.getElementById('result-poste').textContent = poste;
+  document.getElementById('result-type').textContent = typeLabel;
+  document.getElementById('result-heure').textContent = heure;
+  card.style.display = 'block';
+  setTimeout(() => { card.style.display = 'none'; }, 4000);
+}
+
+function rafraichirHistorique() {
+  const pointages = getPointages();
+  const today = getDateStr();
+  const duJour = pointages.filter(p => p.date === today).reverse().slice(0, 10);
+  const liste = document.getElementById('historique-liste');
+  if (duJour.length === 0) {
+    liste.innerHTML = '<div style="text-align:center;color:#555;padding:20px;">Aucun badgeage aujourd\'hui</div>';
+    return;
+  }
+  liste.innerHTML = '';
+  duJour.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'hist-item ' + p.type;
+    div.innerHTML = `
+      <div class="hist-icon">${p.type==='entree'?'🟢':'🔴'}</div>
+      <div class="hist-info">
+        <div class="hist-nom">${p.nom} ${p.prenom}</div>
+        <div class="hist-detail">${p.poste} — ${p.type==='entree'?'Entrée':'Sortie'}</div>
+      </div>
+      <div class="hist-heure">${p.heure}</div>`;
+    liste.appendChild(div);
+  });
+}
+
+// ── Scanner QR ──
+const html5QrCode = new Html5Qrcode("reader");
+html5QrCode.start(
+  { facingMode: "environment" },
+  { fps: 10, qrbox: { width: 280, height: 280 } },
+  (data) => traiterScan(data),
+  (err) => {}
+).catch(err => {
+  document.getElementById('reader').innerHTML =
+    `<div style="padding:20px;text-align:center;color:#e67e22;">
+      <div style="font-size:2rem;">⚠️</div>
+      <p>Caméra non disponible.<br>Vérifiez les permissions de la caméra.</p>
+      <p style="font-size:0.8rem;margin-top:10px;color:#aaa;">Vous pouvez aussi saisir manuellement l'ID agent ci-dessous.</p>
+    </div>`;
+});
+
+// ── Saisie manuelle ──
+document.addEventListener('DOMContentLoaded', () => {
+  const div = document.createElement('div');
+  div.style.cssText = 'margin-top:16px;display:flex;gap:8px;';
+  div.innerHTML = `
+    <input id="manual-input" type="text" placeholder="Saisir ID agent (ex: AGT001)"
+      style="flex:1;padding:10px;border-radius:8px;border:1px solid #334;background:#0d1f2d;color:#fff;font-size:0.95rem;">
+    <button onclick="saisieManuelle()"
+      style="padding:10px 18px;background:#1A5676;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+      Valider
+    </button>`;
+  document.querySelector('.scanner-container').appendChild(div);
+});
+
+function saisieManuelle() {
+  const val = document.getElementById('manual-input').value.trim().toUpperCase();
+  if (!val) return;
+  const agents = getAgents();
+  const agent = agents.find(a => a.id === val);
+  if (agent) {
+    traiterScan(`BADGE|${agent.id}|${agent.nom}|${agent.prenom}`);
+    document.getElementById('manual-input').value = '';
+  } else {
+    alert('Agent non trouvé : ' + val);
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') saisieManuelle();
+});
+
+rafraichirHistorique();
+</script>
+</body>
+</html>

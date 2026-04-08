@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Gestion Qualité</title>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root {
+    --bleu:#1A5676; --bleu2:#2c7da0;
+    --vert:#27ae60; --rouge:#e74c3c; --orange:#e67e22;
+    --gris:#f0f4f8; --blanc:#fff; --texte:#1e2d3d;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--gris); color:var(--texte); }
+
+  /* ── HEADER ── */
+  header {
+    background:linear-gradient(135deg,var(--bleu),#2c7da0);
+    color:white; padding:0 30px; height:64px;
+    display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 4px 16px rgba(0,0,0,0.2); position:sticky; top:0; z-index:100;
+  }
+  .header-left { display:flex; align-items:center; gap:16px; }
+  .logo-icon { font-size:1.6rem; }
+  .header-title { font-size:1.1rem; font-weight:700; letter-spacing:0.5px; }
+  .header-sub { font-size:0.72rem; opacity:0.65; }
+  .header-right { display:flex; align-items:center; gap:16px; }
+  .live-dot {
+    display:flex; align-items:center; gap:6px;
+    font-size:0.78rem; background:rgba(255,255,255,0.15);
+    padding:5px 12px; border-radius:20px;
+  }
+  .dot { width:8px; height:8px; border-radius:50%; background:#2ecc71; animation:blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .header-heure { font-size:1.2rem; font-weight:700; font-variant-numeric:tabular-nums; }
+
+  /* ── NAV TABS ── */
+  nav {
+    background:var(--blanc); border-bottom:1px solid #dde6ef;
+    display:flex; padding:0 20px; overflow-x:auto;
+    box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  }
+  nav button {
+    padding:14px 20px; border:none; background:transparent;
+    font-weight:600; font-size:0.87rem; color:#888; cursor:pointer;
+    border-bottom:3px solid transparent; margin-bottom:-1px; white-space:nowrap;
+    transition:all 0.2s;
+  }
+  nav button.active { color:var(--bleu); border-bottom-color:var(--bleu); }
+  nav button:hover { color:var(--bleu); background:#f5fafd; }
+
+  /* ── MAIN ── */
+  main { max-width:1280px; margin:24px auto; padding:0 20px 40px; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; animation:fadeIn 0.25s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── KPI ── */
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+  .kpi {
+    background:var(--blanc); border-radius:14px; padding:20px 22px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06); border-left:5px solid var(--bleu);
+    position:relative; overflow:hidden;
+  }
+  .kpi::after {
+    content:''; position:absolute; right:-10px; top:-10px;
+    width:80px; height:80px; border-radius:50%;
+    background:rgba(0,0,0,0.04);
+  }
+  .kpi.vert  { border-left-color:var(--vert); }
+  .kpi.rouge { border-left-color:var(--rouge); }
+  .kpi.orange{ border-left-color:var(--orange); }
+  .kpi-label { font-size:0.74rem; color:#999; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+  .kpi-val   { font-size:2.4rem; font-weight:800; color:var(--texte); line-height:1; }
+  .kpi-sub   { font-size:0.75rem; color:#bbb; margin-top:4px; }
+
+  /* ── CARD ── */
+  .card {
+    background:var(--blanc); border-radius:14px; padding:22px 24px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06); margin-bottom:20px;
+  }
+  .card-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid #edf2f7;
+  }
+  .card-header h2 { font-size:0.92rem; color:var(--bleu); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+  .card-actions { display:flex; gap:8px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:0.84rem; }
+  thead th { background:#f0f7fc; color:#4a6fa5; font-weight:700; padding:10px 14px;
+             text-align:left; font-size:0.76rem; text-transform:uppercase; letter-spacing:0.4px; }
+  thead th:first-child { border-radius:8px 0 0 0; }
+  thead th:last-child  { border-radius:0 8px 0 0; }
+  tbody tr { border-bottom:1px solid #f0f4f8; transition:background 0.1s; }
+  tbody tr:hover { background:#f8fbfe; }
+  tbody td { padding:11px 14px; }
+  .avatar-sm {
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(135deg,var(--bleu2),var(--bleu));
+    display:inline-flex; align-items:center; justify-content:center;
+    color:white; font-size:0.78rem; font-weight:700; flex-shrink:0;
+  }
+  .agent-cell { display:flex; align-items:center; gap:10px; }
+  .agent-cell .nom { font-weight:600; font-size:0.88rem; }
+  .agent-cell .poste { font-size:0.74rem; color:#999; }
+
+  /* ── BADGES ── */
+  .badge {
+    display:inline-flex; align-items:center; gap:4px;
+    padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:600;
+  }
+  .badge.present { background:#d5f5e3; color:#1e8449; }
+  .badge.absent  { background:#fde8e8; color:#c0392b; }
+  .badge.retard  { background:#fef3cd; color:#d68910; }
+  .badge.entree  { background:#d5f5e3; color:#1e8449; }
+  .badge.sortie  { background:#fde8e8; color:#c0392b; }
+
+  /* ── BOUTONS ── */
+  .btn {
+    padding:8px 16px; border-radius:8px; border:none; cursor:pointer;
+    font-size:0.82rem; font-weight:600; display:inline-flex; align-items:center;
+    gap:6px; transition:all 0.15s; text-decoration:none;
+  }
+  .btn-primary { background:var(--bleu); color:white; }
+  .btn-primary:hover { background:var(--bleu2); }
+  .btn-success { background:var(--vert); color:white; }
+  .btn-success:hover { background:#219a52; }
+  .btn-outline { background:white; color:var(--bleu); border:1.5px solid var(--bleu); }
+  .btn-outline:hover { background:#eaf4fb; }
+  .btn-danger { background:#fde8e8; color:var(--rouge); border:1px solid #f5c6c6; }
+  .btn-danger:hover { background:#fad2d2; }
+  .btn-sm { padding:5px 10px; font-size:0.76rem; }
+
+  /* ── FLUX TEMPS RÉEL ── */
+  .flux-item {
+    display:flex; align-items:center; gap:14px; padding:12px 16px;
+    border-radius:10px; background:#f8fbfd; border:1px solid #e8f0f8;
+    margin-bottom:8px; animation:slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+  .flux-item.entree { border-left:4px solid var(--vert); }
+  .flux-item.sortie  { border-left:4px solid var(--rouge); }
+  .flux-type { font-size:1.4rem; flex-shrink:0; }
+  .flux-info { flex:1; }
+  .flux-nom  { font-weight:700; font-size:0.9rem; }
+  .flux-detail { font-size:0.76rem; color:#999; margin-top:2px; }
+  .flux-heure { font-size:1rem; font-weight:700; color:var(--bleu); }
+
+  /* ── FORMULAIRE AGENT ── */
+  .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; }
+  .form-group { display:flex; flex-direction:column; gap:5px; }
+  .form-group label { font-size:0.76rem; font-weight:700; color:#666; text-transform:uppercase; letter-spacing:0.3px; }
+  .form-group input, .form-group select {
+    padding:9px 12px; border:1.5px solid #dde6ef; border-radius:8px; font-size:0.88rem;
+    transition:border 0.2s; background:white;
+  }
+  .form-group input:focus, .form-group select:focus { outline:none; border-color:var(--bleu); }
+
+  /* ── PRÉSENCE GRID ── */
+  .presence-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+  .presence-card {
+    background:var(--blanc); border-radius:12px; padding:16px 18px;
+    display:flex; align-items:center; gap:14px;
+    box-shadow:0 1px 6px rgba(0,0,0,0.06); border:2px solid #f0f4f8;
+    transition:border-color 0.2s;
+  }
+  .presence-card.present { border-color:#b7ecd0; }
+  .presence-card.absent  { border-color:#fad2d2; }
+  .presence-card.retard  { border-color:#fde8b7; }
+  .presence-info { flex:1; min-width:0; }
+  .presence-nom  { font-weight:700; font-size:0.88rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .presence-poste{ font-size:0.74rem; color:#999; }
+  .presence-heure{ font-size:0.76rem; color:var(--bleu); font-weight:600; margin-top:2px; }
+  .presence-status { text-align:right; flex-shrink:0; }
+
+  /* ── FILTRES ── */
+  .filtres { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+  .filtres input, .filtres select {
+    padding:8px 12px; border:1.5px solid #dde6ef; border-radius:8px;
+    font-size:0.83rem; background:white;
+  }
+
+  /* ── NOTIFICATIONS ── */
+  #notif-container { position:fixed; bottom:24px; right:24px; z-index:999; display:flex; flex-direction:column; gap:10px; }
+  .notif {
+    background:white; border-radius:12px; padding:14px 18px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.15); border-left:4px solid var(--vert);
+    display:flex; align-items:center; gap:12px; max-width:320px;
+    animation:slideNotif 0.3s ease; font-size:0.88rem;
+  }
+  .notif.sortie { border-left-color:var(--rouge); }
+  @keyframes slideNotif { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+  .notif-icon { font-size:1.4rem; }
+  .notif-nom { font-weight:700; }
+  .notif-detail { color:#999; font-size:0.78rem; }
+
+  @media(max-width:600px) {
+    main { padding:0 12px 40px; }
+    .kpi-val { font-size:1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-icon">🏢</div>
+    <div>
+      <div class="header-title">TABLEAU DE BORD — GESTION QUALITÉ</div>
+      <div class="header-sub">Vue administrateur</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-dot"><div class="dot"></div>Temps réel</div>
+    <div class="header-heure" id="heure-header"></div>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('tab-dashboard')">Dashboard</button>
+  <button onclick="showTab('tab-presence')">Présences du jour</button>
+  <button onclick="showTab('tab-historique')">Historique</button>
+  <button onclick="showTab('tab-agents')">Agents</button>
+  <button onclick="showTab('tab-rapports')">Rapports & Export</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 1 — DASHBOARD                 -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-content active" id="tab-dashboard">
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-label">Total agents</div><div class="kpi-val" id="kpi-total">—</div><div class="kpi-sub">Inscrits</div></div>
+    <div class="kpi vert"><div class="kpi-label">Présents</div><div class="kpi-val" id="kpi-presents">—</div><div class="kpi-sub">Badgés aujourd'hui</div></div>
+    <div class="kpi rouge"><div class="kpi-label">Absents</div><div class="kpi-val" id="kpi-absents">—</div><div class="kpi-sub">Non badgés</div></div>
+    <div class="kpi orange"><div class="kpi-label">Retards</div><div class="kpi-val" id="kpi-retards">—</div><div class="kpi-sub">Après 8h00</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div class="card">
+      <div class="card-header">
+        <h2>Flux en temps réel</h2>
+        <span style="font-size:0.75rem;color:#aaa;" id="date-today"></span>
+      </div>
+      <div id="flux-liste">
+        <div style="text-align:center;color:#ccc;padding:24px;font-size:0.88rem;">En attente de badgeages...</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h2>Règles actives</h2></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fbfd;border-radius:8px;border:1px solid #e8f0f8;">
+          <span style="font-size:1.3rem;">📵</span>
+          <div><div style="font-size:0.85rem;font-weight:600;">Téléphone personnel</div><div style="font-size:0.76rem;color:#999;">Interdit durant les heures de travail</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fbfd;border-radius:8px;border:1px solid #e8f0f8;">
+          <span style="font-size:1.3rem;">👔</span>
+          <div><div style="font-size:0.85rem;font-weight:600;">Code vestimentaire</div><div style="font-size:0.76rem;color:#999;">Tenue correcte exigée</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fbfd;border-radius:8px;border:1px solid #e8f0f8;">
+          <span style="font-size:1.3rem;">🔇</span>
+          <div><div style="font-size:0.85rem;font-weight:600;">Silence bâtiment</div><div style="font-size:0.76rem;color:#999;">Bâtiment partagé</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#f8fbfd;border-radius:8px;border:1px solid #e8f0f8;">
+          <span style="font-size:1.3rem;">🧹</span>
+          <div><div style="font-size:0.85rem;font-weight:600;">Hygiène</div><div style="font-size:0.76rem;color:#999;">Chacun responsable de son espace</div></div>
+        </div>
+        <div style="margin-top:6px;">
+          <a href="/reglement" class="btn btn-outline" style="width:100%;justify-content:center;">Voir le règlement complet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 2 — PRÉSENCES DU JOUR        -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-content" id="tab-presence">
+  <div class="card">
+    <div class="card-header">
+      <h2>Présences du jour — <span id="date-presence"></span></h2>
+      <button class="btn btn-outline btn-sm" onclick="chargerPresences()">🔄 Actualiser</button>
+    </div>
+    <div class="presence-grid" id="presence-grid">
+      <div style="color:#ccc;padding:20px;text-align:center;">Chargement...</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h2>Détail des badgeages du jour</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Heure</th><th>Agent</th><th>Poste</th><th>Type</th><th>Statut</th><th></th></tr></thead>
+        <tbody id="tbody-today"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 3 — HISTORIQUE               -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-content" id="tab-historique">
+  <div class="card">
+    <div class="card-header"><h2>Historique des pointages</h2></div>
+    <div class="filtres">
+      <input type="date" id="hist-date" onchange="chargerHistorique()" />
+      <select id="hist-agent" onchange="chargerHistorique()">
+        <option value="">Tous les agents</option>
+      </select>
+      <select id="hist-type" onchange="chargerHistorique()">
+        <option value="">Entrée & Sortie</option>
+        <option value="entree">Entrée seulement</option>
+        <option value="sortie">Sortie seulement</option>
+      </select>
+      <button class="btn btn-outline btn-sm" onclick="resetHistFiltres()">Réinitialiser</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Date</th><th>Heure</th><th>Agent</th><th>Poste</th><th>Type</th><th>Retard</th><th></th></tr></thead>
+        <tbody id="tbody-hist"></tbody>
+      </table>
+    </div>
+    <div id="hist-pagination" style="text-align:center;margin-top:16px;"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 4 — AGENTS                   -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-content" id="tab-agents">
+  <div class="card">
+    <div class="card-header"><h2>Ajouter / Modifier un agent</h2></div>
+    <div class="form-grid">
+      <div class="form-group"><label>ID Agent *</label><input id="f-id" placeholder="BO022" /></div>
+      <div class="form-group"><label>Nom *</label><input id="f-nom" placeholder="KONAN" /></div>
+      <div class="form-group"><label>Prénom *</label><input id="f-prenom" placeholder="Ama" /></div>
+      <div class="form-group"><label>Poste</label>
+        <select id="f-poste">
+          <option value="Agent Back Office">Agent Back Office</option>
+          <option value="Agent Call Center">Agent Call Center</option>
+          <option value="Superviseur">Superviseur</option>
+          <option value="Responsable Qualité">Responsable Qualité</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Service</label>
+        <select id="f-service">
+          <option value="Back Office">Back Office</option>
+          <option value="Call Center">Call Center</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Téléphone</label><input id="f-telephone" placeholder="07 XX XX XX XX" /></div>
+      <div class="form-group"><label>Email</label><input id="f-email" type="email" placeholder="agent@email.com" /></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px;">
+      <button class="btn btn-primary" onclick="sauvegarderAgent()">+ Enregistrer l'agent</button>
+      <button class="btn btn-outline" onclick="resetFormAgent()">Annuler</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2>Liste des agents (<span id="nb-agents">0</span>)</h2>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <select id="filtre-service-agents" onchange="chargerAgents()" style="padding:6px 10px;border:1.5px solid #dde6ef;border-radius:8px;font-size:0.82rem;">
+          <option value="">Tous les services</option>
+          <option value="Back Office">Back Office</option>
+          <option value="Call Center">Call Center</option>
+        </select>
+        <input type="text" id="search-agents" placeholder="Rechercher..." oninput="chargerAgents()"
+          style="padding:6px 10px;border:1.5px solid #dde6ef;border-radius:8px;font-size:0.82rem;width:160px;">
+      </div>
+    </div>
+
+    <!-- Compteurs par service -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+      <div style="background:#eaf4fb;border-radius:8px;padding:10px 18px;display:flex;gap:10px;align-items:center;">
+        <span style="font-size:1.4rem;">🏢</span>
+        <div><div style="font-size:1.4rem;font-weight:800;color:#1A5676;" id="count-bo">—</div><div style="font-size:0.74rem;color:#666;">Back Office</div></div>
+      </div>
+      <div style="background:#fff3e0;border-radius:8px;padding:10px 18px;display:flex;gap:10px;align-items:center;">
+        <span style="font-size:1.4rem;">📞</span>
+        <div><div style="font-size:1.4rem;font-weight:800;color:#e67e22;" id="count-cc">—</div><div style="font-size:0.74rem;color:#666;">Call Center</div></div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th><th>Nom complet</th><th>Poste</th><th>Service</th>
+            <th>Téléphone</th><th>Email</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-agents"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 5 — RAPPORTS                 -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-content" id="tab-rapports">
+  <div class="card">
+    <div class="card-header"><h2>Export des données</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+      <button class="btn btn-success" style="padding:18px;flex-direction:column;gap:8px;font-size:0.9rem;" onclick="exporterExcel()">
+        <span style="font-size:2rem;">📊</span> Exporter Excel<br><small style="opacity:0.8;">Pointages + Récap mensuel</small>
+      </button>
+      <button class="btn btn-outline" style="padding:18px;flex-direction:column;gap:8px;font-size:0.9rem;" onclick="exporterCSV()">
+        <span style="font-size:2rem;">📄</span> Exporter CSV<br><small style="opacity:0.8;">Compatible tous outils</small>
+      </button>
+      <button class="btn btn-primary" style="padding:18px;flex-direction:column;gap:8px;font-size:0.9rem;" onclick="window.print()">
+        <span style="font-size:2rem;">🖨️</span> Imprimer<br><small style="opacity:0.8;">Rapport du jour</small>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h2>Aperçu rapport mensuel</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Agent</th><th>Poste</th><th>Présences</th><th>Absences</th><th>Retards</th><th>Taux (%)</th></tr></thead>
+        <tbody id="tbody-recap"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- Notifications temps réel -->
+<div id="notif-container"></div>
+
+<!-- Modal agrandissement photo -->
+<div id="modal-photo" onclick="fermerModalPhoto()" style="
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85);
+  z-index:2000; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
+  <div style="color:white;font-size:0.9rem;font-weight:600;opacity:0.8;" id="modal-photo-titre"></div>
+  <img id="modal-photo-img" src="" style="max-width:90vw;max-height:80vh;border-radius:12px;object-fit:contain;border:3px solid rgba(255,255,255,0.2);" />
+  <div style="color:rgba(255,255,255,0.4);font-size:0.78rem;">Cliquez pour fermer</div>
+</div>
+
+<script>
+const socket = io();
+let agentsCache = [];
+let pointagesCache = [];
+let histPage = 0; const HIST_PAGE_SIZE = 30;
+
+// ── Horloge ──
+function majHeure() {
+  document.getElementById('heure-header').textContent =
+    new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(majHeure, 1000); majHeure();
+
+const today = new Date().toLocaleDateString('fr-FR');
+document.querySelectorAll('#date-today,#date-presence').forEach(el => el.textContent = today);
+
+// ── Tabs ──
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (id === 'tab-presence') { chargerPresences(); chargerTodayTable(); }
+  if (id === 'tab-historique') chargerHistorique();
+  if (id === 'tab-agents') chargerAgents();
+  if (id === 'tab-rapports') chargerRecap();
+}
+
+// ── Stats + Flux ──
+async function chargerStats() {
+  const data = await fetch('/api/stats').then(r=>r.json());
+  document.getElementById('kpi-total').textContent = data.totalAgents;
+  document.getElementById('kpi-presents').textContent = data.presents;
+  document.getElementById('kpi-absents').textContent = data.absents;
+  document.getElementById('kpi-retards').textContent = data.retards;
+}
+
+async function chargerFlux() {
+  const pts = await fetch('/api/pointages/today').then(r=>r.json());
+  pointagesCache = pts;
+  const div = document.getElementById('flux-liste');
+  if (!pts.length) {
+    div.innerHTML = '<div style="text-align:center;color:#ccc;padding:24px;font-size:0.88rem;">En attente de badgeages...</div>';
+    return;
+  }
+  div.innerHTML = '';
+  pts.slice(0,10).forEach(p => {
+    const nomAffiche = p.nom_complet || `${p.prenom} ${p.nom}`;
+    const initiales = nomAffiche.split(' ').filter(w=>w).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    const photoHtml = p.photo
+      ? `<img src="${p.photo}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" />`
+      : `<div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#1A5676,#2c7da0);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:white;flex-shrink:0;">${initiales}</div>`;
+    const el = document.createElement('div');
+    el.className = `flux-item ${p.type}`;
+    el.innerHTML = `
+      ${photoHtml}
+      <div class="flux-info">
+        <div class="flux-nom">${nomAffiche}</div>
+        <div class="flux-detail">${p.service||p.poste} ${p.retard?'• <span style="color:#e67e22">⚠️ Retard</span>':''}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="flux-heure">${p.heure}</div>
+        <div style="font-size:0.72rem;color:#aaa;">${p.type==='entree'?'Entrée':'Sortie'}</div>
+      </div>`;
+    div.appendChild(el);
+  });
+}
+
+// ── Présences du jour ──
+async function chargerPresences() {
+  const [agents, pts] = await Promise.all([
+    fetch('/api/agents').then(r=>r.json()),
+    fetch('/api/pointages/today').then(r=>r.json())
+  ]);
+  agentsCache = agents;
+  const grid = document.getElementById('presence-grid');
+  grid.innerHTML = '';
+  if (!agents.length) { grid.innerHTML = '<div style="color:#ccc;text-align:center;padding:20px;">Aucun agent enregistré</div>'; return; }
+
+  // Grouper par service
+  const bo = agents.filter(a=>a.service==='Back Office');
+  const cc = agents.filter(a=>a.service==='Call Center');
+  const grouped = [
+    { label:'🏢 Back Office', liste: bo },
+    { label:'📞 Call Center', liste: cc }
+  ];
+
+  grouped.forEach(groupe => {
+    if (!groupe.liste.length) return;
+    const titre = document.createElement('div');
+    titre.style.cssText = 'grid-column:1/-1;font-size:0.8rem;font-weight:700;color:#1A5676;text-transform:uppercase;letter-spacing:1px;padding:8px 0 4px;border-bottom:2px solid #e8f0f8;margin-bottom:4px;';
+    titre.textContent = groupe.label + ` — ${groupe.liste.length} agents`;
+    grid.appendChild(titre);
+
+    groupe.liste.forEach(agent => {
+      const entree = pts.find(p => p.agentId === agent.id && p.type === 'entree');
+      const sortie = pts.find(p => p.agentId === agent.id && p.type === 'sortie');
+      let statut = 'absent', label = 'Absent', badge = 'absent';
+      if (entree) {
+        if (entree.retard) { statut='retard'; label='Retard'; badge='retard'; }
+        else { statut='present'; label='Présent'; badge='present'; }
+      }
+      const nomAffiche = agent.nom_complet || `${agent.prenom} ${agent.nom}`;
+      const initiales = nomAffiche.split(' ').filter(w=>w).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+      const avatarStyle = agent.service==='Call Center' ? 'background:linear-gradient(135deg,#e67e22,#f39c12);' : '';
+      const div = document.createElement('div');
+      div.className = `presence-card ${statut}`;
+      div.innerHTML = `
+        <div class="avatar-sm" style="${avatarStyle}">${initiales}</div>
+        <div class="presence-info">
+          <div class="presence-nom">${nomAffiche}</div>
+          <div class="presence-poste">${agent.poste}</div>
+          ${entree ? `<div class="presence-heure">🟢 ${entree.heure}${sortie?` → 🔴 ${sortie.heure}`:''}</div>` : ''}
+        </div>
+        <div class="presence-status"><span class="badge ${badge}">${label}</span></div>`;
+      grid.appendChild(div);
+    });
+  });
+}
+
+async function chargerTodayTable() {
+  const pts = await fetch('/api/pointages/today').then(r=>r.json());
+  const tbody = document.getElementById('tbody-today');
+  if (!pts.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#ccc;padding:24px;">Aucun badgeage aujourd\'hui</td></tr>';
+    return;
+  }
+  tbody.innerHTML = '';
+  pts.forEach(p => {
+    const nomAffiche = p.nom_complet || `${p.prenom} ${p.nom}`;
+    const initiales = nomAffiche.split(' ').filter(w=>w).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    const photoHtml = p.photo
+      ? `<img src="${p.photo}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #dde6ef;cursor:pointer;" onclick="voirPhoto('${p.photo}','${nomAffiche}')" title="Voir la photo" />`
+      : `<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1A5676,#2c7da0);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:white;">${initiales}</div>`;
+    tbody.innerHTML += `<tr>
+      <td><strong>${p.heure}</strong></td>
+      <td><div class="agent-cell">${photoHtml}<div><div class="nom">${nomAffiche}</div><div class="poste">${p.service||''}</div></div></div></td>
+      <td>${p.poste}</td>
+      <td><span class="badge ${p.type}">${p.type==='entree'?'🟢 Entrée':'🔴 Sortie'}</span></td>
+      <td>${p.retard?'<span class="badge retard">⚠️ Retard</span>':'<span style="color:#ccc;font-size:0.78rem;">—</span>'}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="supprimerPointage('${p.id}')">🗑️</button></td>
+    </tr>`;
+  });
+}
+
+// ── Historique ──
+async function chargerHistorique() {
+  const dateF  = document.getElementById('hist-date').value;
+  const agentF = document.getElementById('hist-agent').value;
+  const typeF  = document.getElementById('hist-type').value;
+  let url = '/api/pointages?';
+  if (dateF) {
+    const d = new Date(dateF);
+    url += `date=${d.toLocaleDateString('fr-FR')}&`;
+  }
+  if (agentF) url += `agentId=${agentF}&`;
+  const pts = await fetch(url).then(r=>r.json());
+  const filtre = typeF ? pts.filter(p=>p.type===typeF) : pts;
+  const tbody = document.getElementById('tbody-hist');
+  if (!filtre.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#ccc;padding:24px;">Aucun résultat</td></tr>';
+    return;
+  }
+  tbody.innerHTML = '';
+  const page = filtre.slice(0, HIST_PAGE_SIZE);
+  page.forEach((p,i) => {
+    const nomAffiche = p.nom_complet || `${p.prenom} ${p.nom}`;
+    const initiales  = nomAffiche.split(' ').filter(w=>w).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    const photoHtml = p.photo
+      ? `<img src="${p.photo}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #dde6ef;cursor:pointer;" onclick="voirPhoto('${p.photo}','${nomAffiche.replace(/'/g,"\\'")} — ${p.date} ${p.heure}')" title="Voir la photo" />`
+      : `<div class="avatar-sm">${initiales}</div>`;
+    tbody.innerHTML += `<tr>
+      <td style="color:#aaa;">${i+1}</td>
+      <td>${p.date}</td><td><strong>${p.heure}</strong></td>
+      <td><div class="agent-cell">${photoHtml}<div><div class="nom">${nomAffiche}</div></div></div></td>
+      <td>${p.poste}</td>
+      <td><span class="badge ${p.type}">${p.type==='entree'?'🟢 Entrée':'🔴 Sortie'}</span></td>
+      <td>${p.retard?'<span class="badge retard">⚠️</span>':'—'}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="supprimerPointage('${p.id}')">🗑️</button></td>
+    </tr>`;
+  });
+}
+
+function resetHistFiltres() {
+  document.getElementById('hist-date').value = '';
+  document.getElementById('hist-agent').value = '';
+  document.getElementById('hist-type').value = '';
+  chargerHistorique();
+}
+
+// ── Agents ──
+async function chargerAgents() {
+  const agents = await fetch('/api/agents').then(r=>r.json());
+  agentsCache = agents;
+
+  // Filtres
+  const filtreService = document.getElementById('filtre-service-agents')?.value || '';
+  const recherche = (document.getElementById('search-agents')?.value || '').toLowerCase();
+  let liste = agents;
+  if (filtreService) liste = liste.filter(a => a.service === filtreService);
+  if (recherche) liste = liste.filter(a =>
+    (a.nom_complet||a.nom+' '+a.prenom).toLowerCase().includes(recherche) ||
+    (a.id||'').toLowerCase().includes(recherche)
+  );
+
+  document.getElementById('nb-agents').textContent = liste.length + ' / ' + agents.length;
+  const bo = agents.filter(a=>a.service==='Back Office');
+  const cc = agents.filter(a=>a.service==='Call Center');
+  document.getElementById('count-bo').textContent = bo.length;
+  document.getElementById('count-cc').textContent = cc.length;
+
+  // Remplir select historique
+  const sel = document.getElementById('hist-agent');
+  sel.innerHTML = '<option value="">Tous les agents</option>';
+  agents.forEach(a => {
+    sel.innerHTML += `<option value="${a.id}">${a.nom_complet || a.prenom+' '+a.nom}</option>`;
+  });
+
+  const tbody = document.getElementById('tbody-agents');
+  if (!liste.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#ccc;padding:24px;">Aucun agent trouvé</td></tr>';
+    return;
+  }
+  tbody.innerHTML = '';
+  liste.forEach(a => {
+    const nomAffiche = a.nom_complet || `${a.prenom} ${a.nom}`;
+    const init = nomAffiche.split(' ').filter(w=>w).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    const serviceBadge = a.service === 'Back Office'
+      ? `<span class="badge" style="background:#eaf4fb;color:#1A5676;">🏢 BO</span>`
+      : `<span class="badge" style="background:#fff3e0;color:#e67e22;">📞 CC</span>`;
+    tbody.innerHTML += `<tr>
+      <td><span class="badge" style="background:#f0f4f8;color:#444;font-family:monospace;">${a.id}</span></td>
+      <td><div class="agent-cell">
+        <div class="avatar-sm" style="${a.service==='Back Office'?'':'background:linear-gradient(135deg,#e67e22,#f39c12);'}">${init}</div>
+        <div><div class="nom">${nomAffiche}</div></div>
+      </div></td>
+      <td style="font-size:0.82rem;">${a.poste}</td>
+      <td>${serviceBadge}</td>
+      <td style="font-size:0.8rem;color:#666;">${a.telephone||'—'}</td>
+      <td style="font-size:0.78rem;color:#666;">${a.email||'—'}</td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="editerAgent('${a.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="supprimerAgent('${a.id}')">🗑️</button>
+      </td>
+    </tr>`;
+  });
+}
+
+async function sauvegarderAgent() {
+  const body = {
+    id:        document.getElementById('f-id').value.trim(),
+    nom:       document.getElementById('f-nom').value.trim(),
+    prenom:    document.getElementById('f-prenom').value.trim(),
+    poste:     document.getElementById('f-poste').value,
+    service:   document.getElementById('f-service').value,
+    telephone: document.getElementById('f-telephone').value.trim(),
+    email:     document.getElementById('f-email').value.trim()
+  };
+  if (!body.id || !body.nom || !body.prenom) { alert('ID, Nom et Prénom sont obligatoires.'); return; }
+  body.nom_complet = `${body.prenom} ${body.nom}`;
+  await fetch('/api/agents', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  resetFormAgent();
+  chargerAgents();
+}
+
+async function supprimerAgent(id) {
+  if (!confirm('Supprimer cet agent ?')) return;
+  await fetch(`/api/agents/${id}`, { method:'DELETE' });
+  chargerAgents();
+}
+
+function editerAgent(id) {
+  const a = agentsCache.find(x => x.id === id);
+  if (!a) return;
+  document.getElementById('f-id').value        = a.id;
+  document.getElementById('f-nom').value       = a.nom;
+  document.getElementById('f-prenom').value    = a.prenom;
+  document.getElementById('f-poste').value     = a.poste;
+  document.getElementById('f-service').value   = a.service || 'Back Office';
+  document.getElementById('f-telephone').value = a.telephone || '';
+  document.getElementById('f-email').value     = a.email || '';
+  document.querySelector('[onclick="showTab(\'tab-agents\')"]').click();
+  document.getElementById('f-id').focus();
+}
+
+function resetFormAgent() {
+  ['f-id','f-nom','f-prenom','f-telephone','f-email'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-poste').selectedIndex = 0;
+  document.getElementById('f-service').selectedIndex = 0;
+}
+
+async function supprimerPointage(id) {
+  if (!confirm('Supprimer ce pointage ?')) return;
+  await fetch(`/api/pointages/${id}`, { method:'DELETE' });
+  chargerStats(); chargerFlux();
+  chargerTodayTable(); chargerPresences();
+}
+
+// ── Récap mensuel ──
+async function chargerRecap() {
+  const [agents, pts] = await Promise.all([
+    fetch('/api/agents').then(r=>r.json()),
+    fetch('/api/pointages').then(r=>r.json())
+  ]);
+  const jours = new Set(pts.map(p=>p.date));
+  const nbJ = jours.size || 1;
+  const tbody = document.getElementById('tbody-recap');
+  tbody.innerHTML = '';
+  agents.forEach(a => {
+    const entrees = pts.filter(p => p.agentId === a.id && p.type === 'entree');
+    const retards = entrees.filter(p => p.retard).length;
+    const presences = entrees.length;
+    const absences = Math.max(0, nbJ - presences);
+    const taux = ((presences/nbJ)*100).toFixed(1);
+    tbody.innerHTML += `<tr>
+      <td><div class="agent-cell"><div class="avatar-sm">${(a.prenom[0]||'')+(a.nom[0]||'')}</div><div><div class="nom">${a.prenom} ${a.nom}</div></div></div></td>
+      <td>${a.poste}</td>
+      <td><strong style="color:#27ae60;">${presences}</strong></td>
+      <td><strong style="color:#e74c3c;">${absences}</strong></td>
+      <td><strong style="color:#e67e22;">${retards}</strong></td>
+      <td><strong>${taux}%</strong></td>
+    </tr>`;
+  });
+}
+
+// ── Export Excel ──
+async function exporterExcel() {
+  const [agents, pts] = await Promise.all([
+    fetch('/api/agents').then(r=>r.json()),
+    fetch('/api/pointages').then(r=>r.json())
+  ]);
+  const wb = XLSX.utils.book_new();
+  const rows = [['Date','Heure','ID','Nom','Prénom','Poste','Service','Type','Retard']];
+  pts.forEach(p => rows.push([p.date,p.heure,p.agentId,p.nom,p.prenom,p.poste,p.service||'',p.type==='entree'?'Entrée':'Sortie',p.retard?'Oui':'Non']));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), 'Pointages');
+  const jours = new Set(pts.map(p=>p.date));
+  const nbJ = jours.size || 1;
+  const recap = [['ID','Nom','Prénom','Poste','Présences','Absences','Retards','Taux %']];
+  agents.forEach(a => {
+    const entrees = pts.filter(p => p.agentId===a.id && p.type==='entree');
+    recap.push([a.id,a.nom,a.prenom,a.poste,entrees.length,Math.max(0,nbJ-entrees.length),entrees.filter(p=>p.retard).length,((entrees.length/nbJ)*100).toFixed(1)+'%']);
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(recap), 'Récapitulatif');
+  XLSX.writeFile(wb, `Rapport_Qualite_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+async function exporterCSV() {
+  const pts = await fetch('/api/pointages').then(r=>r.json());
+  let csv = 'Date,Heure,ID,Nom,Prénom,Poste,Type,Retard\n';
+  pts.forEach(p => csv += `${p.date},${p.heure},${p.agentId},${p.nom},${p.prenom},${p.poste},${p.type},${p.retard?'Oui':'Non'}\n`);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'}));
+  a.download = `Pointage_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+}
+
+// ── Modal photo ──
+function voirPhoto(src, titre) {
+  document.getElementById('modal-photo-img').src = src;
+  document.getElementById('modal-photo-titre').textContent = titre;
+  document.getElementById('modal-photo').style.display = 'flex';
+}
+function fermerModalPhoto() {
+  document.getElementById('modal-photo').style.display = 'none';
+}
+
+// ── Notification temps réel ──
+function afficherNotif(p) {
+  const nomAffiche = p.nom_complet || `${p.prenom} ${p.nom}`;
+  const initiales  = nomAffiche.split(' ').filter(w=>w).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  const photoHtml  = p.photo
+    ? `<img src="${p.photo}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #e0ecf4;cursor:pointer;" onclick="voirPhoto('${p.photo}','${nomAffiche}')" />`
+    : `<div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1A5676,#2c7da0);display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:700;color:white;flex-shrink:0;">${initiales}</div>`;
+  const div = document.createElement('div');
+  div.className = `notif ${p.type}`;
+  div.innerHTML = `
+    ${photoHtml}
+    <div>
+      <div class="notif-nom">${nomAffiche}</div>
+      <div class="notif-detail">${p.type==='entree'?'Arrivée':'Départ'} • ${p.heure}${p.retard?' • ⚠️ Retard':''}</div>
+    </div>`;
+  document.getElementById('notif-container').prepend(div);
+  setTimeout(() => div.remove(), 7000);
+}
+
+// ── WebSocket ──
+socket.on('nouveau-pointage', (p) => {
+  afficherNotif(p);
+  chargerStats();
+  chargerFlux();
+});
+socket.on('stats-update', () => { chargerStats(); });
+socket.on('agents-mis-a-jour', () => { if(document.getElementById('tab-agents').classList.contains('active')) chargerAgents(); });
+
+// ── Init ──
+chargerStats();
+chargerFlux();
+setInterval(() => { chargerStats(); chargerFlux(); }, 30000);
+</script>
+</body>
+</html>

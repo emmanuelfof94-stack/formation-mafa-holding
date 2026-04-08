@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestion Qualité — Dashboard</title>
+<style>
+  :root {
+    --bleu: #1A5676;
+    --bleu-clair: #2980b9;
+    --vert: #27ae60;
+    --orange: #e67e22;
+    --rouge: #c0392b;
+    --gris: #f4f6f8;
+    --blanc: #ffffff;
+    --texte: #2c3e50;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--gris); color: var(--texte); }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--bleu) 0%, #2c7da0 100%);
+    color: white; padding: 20px 30px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; }
+  header .date-heure { font-size: 0.95rem; opacity: 0.9; text-align: right; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--blanc); border-bottom: 3px solid var(--bleu);
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  nav a {
+    padding: 14px 24px; text-decoration: none; color: var(--texte);
+    font-weight: 600; font-size: 0.9rem; white-space: nowrap;
+    border-bottom: 3px solid transparent; margin-bottom: -3px;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a.active { color: var(--bleu); border-bottom-color: var(--bleu); background: #eaf4fb; }
+
+  /* ── MAIN ── */
+  main { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+  /* ── CARTES KPI ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .kpi-card {
+    background: var(--blanc); border-radius: 12px; padding: 24px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-left: 5px solid var(--bleu);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .kpi-card.vert   { border-left-color: var(--vert); }
+  .kpi-card.orange { border-left-color: var(--orange); }
+  .kpi-card.rouge  { border-left-color: var(--rouge); }
+  .kpi-card .kpi-label { font-size: 0.85rem; color: #777; text-transform: uppercase; letter-spacing: 0.5px; }
+  .kpi-card .kpi-value { font-size: 2.2rem; font-weight: 700; color: var(--texte); }
+  .kpi-card .kpi-sub   { font-size: 0.8rem; color: #aaa; }
+
+  /* ── SECTIONS ── */
+  .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+  @media(max-width: 768px) { .section-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--blanc); border-radius: 12px; padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .card h2 {
+    font-size: 1rem; color: var(--bleu); margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 2px solid #e8f0f5;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  thead th { background: var(--bleu); color: white; padding: 10px 12px; text-align: left; }
+  tbody tr:nth-child(even) { background: #f8fbfd; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 600;
+  }
+  .badge.present { background: #d5f5e3; color: #1e8449; }
+  .badge.absent  { background: #fde8e8; color: #c0392b; }
+  .badge.retard  { background: #fef3d0; color: #d68910; }
+
+  /* ── RÈGLES RAPIDES ── */
+  .rules-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .rules-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: 8px; background: #f8fbfd;
+    border: 1px solid #e0ecf4;
+  }
+  .rules-list .icon { font-size: 1.5rem; flex-shrink: 0; }
+  .rules-list .rule-text strong { display: block; font-size: 0.9rem; color: var(--bleu); }
+  .rules-list .rule-text span { font-size: 0.82rem; color: #666; }
+
+  /* ── BOUTONS ── */
+  .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .btn {
+    padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;
+    font-weight: 600; font-size: 0.88rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--bleu); color: white; }
+  .btn-primary:hover { background: var(--bleu-clair); }
+  .btn-success { background: var(--vert); color: white; }
+  .btn-success:hover { background: #219a52; }
+  .btn-outline { background: white; color: var(--bleu); border: 2px solid var(--bleu); }
+  .btn-outline:hover { background: #eaf4fb; }
+
+  /* ── FOOTER ── */
+  footer { text-align: center; padding: 20px; color: #aaa; font-size: 0.8rem; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>SERVICE GESTION QUALITÉ</h1>
+    <div style="font-size:0.85rem;opacity:0.8;">Tableau de bord — Suivi des agents</div>
+  </div>
+  <div class="date-heure" id="dateHeure"></div>
+</header>
+
+<nav>
+  <a href="index.html" class="active">Dashboard</a>
+  <a href="scan.html">Badgeage QR</a>
+  <a href="agents.html">Agents</a>
+  <a href="reglement.html">Règlement</a>
+  <a href="rapports.html">Rapports</a>
+</nav>
+
+<main>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-card vert">
+      <div class="kpi-label">Présents aujourd'hui</div>
+      <div class="kpi-value" id="kpi-presents">—</div>
+      <div class="kpi-sub">Agents badgés</div>
+    </div>
+    <div class="kpi-card rouge">
+      <div class="kpi-label">Absents</div>
+      <div class="kpi-value" id="kpi-absents">—</div>
+      <div class="kpi-sub">Non badgés</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-label">Retards</div>
+      <div class="kpi-value" id="kpi-retards">0</div>
+      <div class="kpi-sub">Arrivées après 8h00</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Total agents</div>
+      <div class="kpi-value" id="kpi-total">—</div>
+      <div class="kpi-sub">Inscrits dans le système</div>
+    </div>
+  </div>
+
+  <div class="section-grid">
+
+    <!-- Pointages du jour -->
+    <div class="card">
+      <h2>Pointages du jour</h2>
+      <table>
+        <thead>
+          <tr><th>Agent</th><th>Arrivée</th><th>Départ</th><th>Statut</th></tr>
+        </thead>
+        <tbody id="tbody-pointage">
+          <tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px;">Aucun badgeage enregistré</td></tr>
+        </tbody>
+      </table>
+      <div class="btn-group">
+        <a href="scan.html" class="btn btn-primary">Scanner un badge</a>
+        <a href="rapports.html" class="btn btn-outline">Voir tous les rapports</a>
+      </div>
+    </div>
+
+    <!-- Règlement rapide -->
+    <div class="card">
+      <h2>Rappel — Règlement Intérieur</h2>
+      <ul class="rules-list">
+        <li>
+          <span class="icon">📵</span>
+          <div class="rule-text">
+            <strong>Téléphone personnel</strong>
+            <span>Interdit durant les heures de travail</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon">👔</span>
+          <div class="rule-text">
+            <strong>Code vestimentaire</strong>
+            <span>Tenue correcte et professionnelle exigée</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon">🔇</span>
+          <div class="rule-text">
+            <strong>Silence dans le bâtiment</strong>
+            <span>Bâtiment partagé — pas de bruit dans les couloirs</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon">🧹</span>
+          <div class="rule-text">
+            <strong>Hygiène des lieux</strong>
+            <span>Chacun responsible de la propreté de son espace</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon">🏷️</span>
+          <div class="rule-text">
+            <strong>Badgeage obligatoire</strong>
+            <span>Matin et soir avec votre QR code personnel</span>
+          </div>
+        </li>
+      </ul>
+      <div class="btn-group">
+        <a href="reglement.html" class="btn btn-primary">Voir le règlement complet</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Historique récent -->
+  <div class="card">
+    <h2>Historique des 20 derniers badgeages</h2>
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Heure</th><th>Agent</th><th>Poste</th><th>Type</th></tr>
+      </thead>
+      <tbody id="tbody-historique">
+        <tr><td colspan="5" style="text-align:center;color:#aaa;padding:20px;">Aucun historique disponible</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>Système Gestion Qualité &mdash; <span id="footer-date"></span></footer>
+
+<script>
+// ── Horloge ──
+function majHeure() {
+  const now = new Date();
+  const jours = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  document.getElementById('dateHeure').innerHTML =
+    `${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]} ${now.getFullYear()}<br>` +
+    `<strong style="font-size:1.3rem">${now.toLocaleTimeString('fr-FR')}</strong>`;
+  document.getElementById('footer-date').textContent =
+    now.toLocaleDateString('fr-FR');
+}
+setInterval(majHeure, 1000);
+majHeure();
+
+// ── Données locales ──
+function getAgents() {
+  return JSON.parse(localStorage.getItem('agents') || '[]');
+}
+function getPointages() {
+  return JSON.parse(localStorage.getItem('pointages') || '[]');
+}
+
+function chargerDashboard() {
+  const agents = getAgents();
+  const pointages = getPointages();
+  const today = new Date().toLocaleDateString('fr-FR');
+
+  const pointagesAujourd = pointages.filter(p => p.date === today);
+  const agentsBadges = [...new Set(pointagesAujourd.map(p => p.agentId))];
+
+  document.getElementById('kpi-total').textContent = agents.length || '—';
+  document.getElementById('kpi-presents').textContent = agentsBadges.length;
+  document.getElementById('kpi-absents').textContent = Math.max(0, agents.length - agentsBadges.length);
+
+  // Retards (arrivée après 08:00)
+  const retards = pointagesAujourd.filter(p => {
+    if (p.type !== 'entree') return false;
+    const h = parseInt(p.heure.split(':')[0]);
+    const m = parseInt(p.heure.split(':')[1]);
+    return h > 8 || (h === 8 && m > 0);
+  });
+  document.getElementById('kpi-retards').textContent = retards.length;
+
+  // Table pointage du jour
+  const tbody = document.getElementById('tbody-pointage');
+  if (agentsBadges.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px;">Aucun badgeage enregistré aujourd\'hui</td></tr>';
+  } else {
+    tbody.innerHTML = '';
+    agents.forEach(agent => {
+      const entree = pointagesAujourd.find(p => p.agentId === agent.id && p.type === 'entree');
+      const sortie = pointagesAujourd.find(p => p.agentId === agent.id && p.type === 'sortie');
+      let statut = '<span class="badge absent">Absent</span>';
+      if (entree) {
+        const h = parseInt(entree.heure.split(':')[0]);
+        const m = parseInt(entree.heure.split(':')[1]);
+        statut = (h > 8 || (h === 8 && m > 0))
+          ? '<span class="badge retard">Retard</span>'
+          : '<span class="badge present">Présent</span>';
+      }
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${agent.nom} ${agent.prenom}</td>
+        <td>${entree ? entree.heure : '—'}</td>
+        <td>${sortie ? sortie.heure : '—'}</td>
+        <td>${statut}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Historique 20 derniers
+  const hist = document.getElementById('tbody-historique');
+  const derniers = [...pointages].reverse().slice(0, 20);
+  if (derniers.length === 0) {
+    hist.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:20px;">Aucun historique disponible</td></tr>';
+  } else {
+    hist.innerHTML = '';
+    derniers.forEach(p => {
+      const agent = agents.find(a => a.id === p.agentId) || {};
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${p.date}</td><td>${p.heure}</td>
+        <td>${agent.nom || p.agentId} ${agent.prenom || ''}</td>
+        <td>${agent.poste || '—'}</td>
+        <td>${p.type === 'entree' ? '🟢 Entrée' : '🔴 Sortie'}</td>`;
+      hist.appendChild(tr);
+    });
+  }
+}
+
+// Initialiser agents depuis JSON si vide
+if (!localStorage.getItem('agents')) {
+  const defaultAgents = [
+    {"id":"AGT001","nom":"DUPONT","prenom":"Jean","poste":"Agent Qualité","date_embauche":"2024-01-15"},
+    {"id":"AGT002","nom":"MARTIN","prenom":"Marie","poste":"Responsable Qualité","date_embauche":"2023-06-01"},
+    {"id":"AGT003","nom":"KOUASSI","prenom":"Paul","poste":"Agent Qualité","date_embauche":"2024-03-10"}
+  ];
+  localStorage.setItem('agents', JSON.stringify(defaultAgents));
+}
+
+chargerDashboard();
+setInterval(chargerDashboard, 30000);
+</script>
+</body>
+</html>
