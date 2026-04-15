@@ -4164,6 +4164,29 @@ function enterFormation() {
       </div>
     </button>
 
+    <!-- Carte Module Agent Terrain OM Business -->
+    <a href="module_agent_recrutement_marchand.html" style="text-decoration:none;display:block;" class="module-card">
+      <div class="card-header" style="background:linear-gradient(135deg,#8D0C23,#5A0815);">
+        <div class="card-icon" style="background:rgba(255,255,255,0.15);color:white;">🚶</div>
+        <div class="card-meta">
+          <div class="card-num" style="color:rgba(255,255,255,0.75);">Module 07</div>
+          <h3 style="color:white;">Agent Terrain — Recrutement Marchand OM Business</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-desc">Mission terrain, profils marchands, approche commerciale, processus d'enrôlement, gestion des objections, kit terrain, rémunération Crystal Solutions (fixe 100k + variable 100k) et certification.</p>
+        <div class="card-tags">
+          <span class="tag tag-crystal">💎 Crystal Solutions</span>
+          <span class="tag tag-public">🚶 Agents Terrain</span>
+          <span class="tag tag-duration">⏱ 2h00</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-link-btn">Accéder au module</span>
+        <span class="progress-mini">8 sections · Certif. incluse</span>
+      </div>
+    </a>
+
     <!-- Carte Évaluation Back Office & Call Center -->
     <a href="evaluation_bocc.html" style="text-decoration:none;display:block;" class="module-card">
       <div class="card-header" style="background:linear-gradient(135deg,#6A091A,#8D0C23);">
@@ -4634,33 +4657,51 @@ function enterFormation() {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0">
       <div class="db-card" style="background:linear-gradient(135deg,#1a237e,#283593);color:white;padding:20px;border-radius:14px;text-align:center">
         <div style="font-size:28px;font-weight:800">100 000 F</div>
-        <div style="font-size:12px;margin-top:6px;opacity:0.9">Salaire fixe mensuel<br>(Garanti — part fixe)</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.9">Salaire fixe mensuel<br>(Garanti — au prorata des jours travaillés)</div>
       </div>
       <div class="db-card" style="background:linear-gradient(135deg,#2E7D32,#388E3C);color:white;padding:20px;border-radius:14px;text-align:center">
         <div style="font-size:28px;font-weight:800">100 000 F</div>
-        <div style="font-size:12px;margin-top:6px;opacity:0.9">Part variable (max)<br>(Définie par % d'atteinte des objectifs)</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.9">Part variable (max)<br>(3 critères pondérés)</div>
       </div>
       <div class="db-card" style="background:linear-gradient(135deg,#E65100,#F57C00);color:white;padding:20px;border-radius:14px;text-align:center">
-        <div style="font-size:28px;font-weight:800">15 fiches</div>
-        <div style="font-size:12px;margin-top:6px;opacity:0.9">Objectif journalier minimum<br>validées par le Back Office</div>
+        <div style="font-size:28px;font-weight:800">10 / jour</div>
+        <div style="font-size:12px;margin-top:6px;opacity:0.9">Objectif Volume journalier<br>(réalisations agent)</div>
       </div>
+    </div>
+
+    <!-- Formule Crystal Solutions -->
+    <div style="background:linear-gradient(135deg,#3E1F00,#6D3500);color:white;border-radius:12px;padding:16px 20px;margin:16px 0;text-align:center">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px;opacity:0.85">Formule Part Variable — Crystal Solutions</div>
+      <div style="font-size:15px;font-weight:800">PV = (Score Volume × 40%) + (Taux d'actif × 50%) + (Livrables dans les délais × 10%)</div>
     </div>
 
     <table class="styled-table">
       <thead>
-        <tr><th>Scénario (26 jours)</th><th>Salaire fixe</th><th>Part variable</th><th>Total</th></tr>
+        <tr><th>Critère</th><th>Poids</th><th>Seuil / Objectif</th><th>Montant max</th></tr>
       </thead>
       <tbody>
-        <tr style="background:#e8f5e9"><td><strong>100% objectif atteint</strong></td><td>100 000 F</td><td>100 000 F</td><td><strong>200 000 F</strong></td></tr>
-        <tr><td>75% objectif atteint</td><td>100 000 F</td><td>75 000 F</td><td>175 000 F</td></tr>
-        <tr><td>50% objectif atteint</td><td>100 000 F</td><td>50 000 F</td><td>150 000 F</td></tr>
-        <tr><td>0% objectif atteint</td><td>100 000 F</td><td>0 F</td><td>100 000 F</td></tr>
+        <tr style="background:#fff3e0"><td><strong>Volume (réalisations/jour)</strong></td><td style="font-weight:700;color:#E65100">40%</td><td>&lt;7/j = 0 F &nbsp;|&nbsp; 7-9/j = 20 000 F &nbsp;|&nbsp; ≥10/j = 40 000 F</td><td><strong>40 000 F</strong></td></tr>
+        <tr style="background:#e8f5e9"><td><strong>Taux d'actif</strong></td><td style="font-weight:700;color:#2E7D32">50%</td><td>&lt;60% = 0 F &nbsp;|&nbsp; ≥60% = 50 000 F (tout ou rien)</td><td><strong>50 000 F</strong></td></tr>
+        <tr style="background:#e8eaf6"><td><strong>Respect des consignes</strong></td><td style="font-weight:700;color:#3949ab">10%</td><td>Note /10 attribuée par le responsable × 10 000 F</td><td><strong>10 000 F</strong></td></tr>
+      </tbody>
+    </table>
+
+    <table class="styled-table" style="margin-top:14px">
+      <thead>
+        <tr><th>Scénario</th><th>Volume</th><th>Taux actif</th><th>Note /10</th><th>Part variable</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:#e8f5e9"><td><strong>Objectif 100%</strong></td><td>≥10/j</td><td>≥60%</td><td>10</td><td>40k + 50k + 10k = <strong>100 000 F</strong></td><td><strong>200 000 F</strong></td></tr>
+        <tr><td>Volume moyen</td><td>8/j</td><td>≥60%</td><td>8</td><td>20k + 50k + 8k = <strong>78 000 F</strong></td><td>178 000 F</td></tr>
+        <tr style="background:#fff3e0"><td>Volume insuffisant</td><td>&lt;7/j</td><td>≥60%</td><td>7</td><td>0 + 50k + 7k = <strong>57 000 F</strong></td><td>157 000 F</td></tr>
+        <tr style="background:#fce4ec"><td>Taux actif &lt;60%</td><td>≥10/j</td><td>&lt;60%</td><td>9</td><td>40k + 0 + 9k = <strong>49 000 F</strong></td><td>149 000 F</td></tr>
+        <tr style="background:#fce4ec"><td>Double seuil non atteint</td><td>&lt;7/j</td><td>&lt;60%</td><td>6</td><td>0 + 0 + 6k = <strong>6 000 F</strong></td><td>106 000 F</td></tr>
       </tbody>
     </table>
 
     <div class="alert alert-info">
       <div class="alert-icon">💡</div>
-      <div class="alert-text"><strong>Important :</strong> La validation des fiches est effectuée par le Back Office. Une fiche mal remplie ou incomplète ne compte pas dans le quota journalier. La part variable (100 000 F maximum) est calculée au prorata du pourcentage d'atteinte de l'objectif de 15 fiches/jour.</div>
+      <div class="alert-text"><strong>Important :</strong> La part variable (100 000 F maximum) est calculée selon 3 critères : <strong>Volume</strong> (40%) — objectif ≥10 réalisations/jour, <strong>Taux d'actif</strong> (50%) — seuil minimum 60% d'agents actifs (tout ou rien), <strong>Respect des consignes</strong> (10%) — note attribuée par le responsable (/10). Indicateurs évalués mensuellement par Crystal Solutions.</div>
     </div>
 
     <!-- S10 -->
@@ -4904,21 +4945,21 @@ function enterFormation() {
         <span class="exo-title">Calcul de rémunération &amp; scénarios</span>
       </div>
       <div class="exo-body">
-        <p>Pour chacun des agents ci-dessous, calculez la <strong>rémunération totale du mois</strong> en appliquant les règles vues en cours :</p>
+        <p>Pour chacun des agents ci-dessous, calculez la <strong>part variable mensuelle</strong> en appliquant la formule Crystal Solutions :</p>
         <table class="styled-table" style="margin-top:14px">
           <thead>
-            <tr><th>Agent</th><th>Jours travaillés</th><th>Fiches validées/jour (moy.)</th><th>Présence effective</th><th>Salaire total ?</th></tr>
+            <tr><th>Agent</th><th>Réalisations/jour</th><th>Taux d'actif</th><th>Note /10</th><th>Part variable ?</th><th>Salaire total ?</th></tr>
           </thead>
           <tbody>
-            <tr><td>Agent A</td><td>26 jours</td><td>17 fiches</td><td>95%</td><td style="background:#e8f5e9;font-weight:700">?</td></tr>
-            <tr><td>Agent B</td><td>26 jours</td><td>12 fiches</td><td>100%</td><td style="background:#fff3e0;font-weight:700">?</td></tr>
-            <tr><td>Agent C</td><td>16 jours</td><td>16 fiches</td><td>92%</td><td style="background:#e8f5e9;font-weight:700">?</td></tr>
-            <tr><td>Agent D</td><td>20 jours</td><td>15 fiches</td><td>85%</td><td style="background:#fce4ec;font-weight:700">?</td></tr>
+            <tr><td>Agent A</td><td>10/j</td><td>65%</td><td>9</td><td style="background:#e8f5e9;font-weight:700">?</td><td style="background:#e8f5e9;font-weight:700">?</td></tr>
+            <tr><td>Agent B</td><td>8/j</td><td>72%</td><td>7</td><td style="background:#fff3e0;font-weight:700">?</td><td style="background:#fff3e0;font-weight:700">?</td></tr>
+            <tr><td>Agent C</td><td>5/j</td><td>55%</td><td>8</td><td style="background:#fce4ec;font-weight:700">?</td><td style="background:#fce4ec;font-weight:700">?</td></tr>
+            <tr><td>Agent D</td><td>10/j</td><td>60%</td><td>10</td><td style="background:#e8f5e9;font-weight:700">?</td><td style="background:#e8f5e9;font-weight:700">?</td></tr>
           </tbody>
         </table>
         <div class="alert alert-warn" style="margin-top:14px">
           <div class="alert-icon">⚠️</div>
-          <div class="alert-text"><strong>Rappel :</strong> Le salaire fixe est de 100 000 F (garanti). La part variable (100 000 F max) est calculée selon le % d'atteinte de l'objectif de 15 fiches/jour.</div>
+          <div class="alert-text"><strong>Rappel formule :</strong> Fixe = 100 000 F (garanti). PV = Volume(40%) + Taux actif(50%) + Consignes(10%). Volume : &lt;7/j = 0 F, 7-9/j = 20 000 F, ≥10/j = 40 000 F. Taux actif : &lt;60% = 0 F, ≥60% = 50 000 F. Consignes : Note ÷ 10 × 10 000 F.</div>
         </div>
       </div>
     </div>
@@ -5112,12 +5153,12 @@ function enterFormation() {
     <!-- Q6 -->
     <div class="quiz-question-block" id="m0-q6">
       <div class="quiz-q-num">Question 6 / 20</div>
-      <div class="quiz-q-text">Quel est l'objectif journalier minimum pour valider le salaire fixe ?</div>
+      <div class="quiz-q-text">Quel est l'objectif journalier de réalisations pour obtenir 100% de la composante Volume de la part variable ?</div>
       <div class="quiz-options">
-        <div class="quiz-option" onclick="answerM0(this,'q6',false,'10 fiches est en dessous du seuil minimum requis.')"><span class="option-letter">A</span> 10 fiches validées par jour</div>
-        <div class="quiz-option" onclick="answerM0(this,'q6',true,'Correct ! L\'objectif est de 15 fiches journalières validées par le Back Office pour maintenir le salaire fixe.')"><span class="option-letter">B</span> 15 fiches validées par jour</div>
-        <div class="quiz-option" onclick="answerM0(this,'q6',false,'20 fiches est au-dessus du seuil minimum requis.')"><span class="option-letter">C</span> 20 fiches validées par jour</div>
-        <div class="quiz-option" onclick="answerM0(this,'q6',false,'25 fiches est excessif — l\'objectif est de 15 fiches/jour.')"><span class="option-letter">D</span> 25 fiches validées par jour</div>
+        <div class="quiz-option" onclick="answerM0(this,'q6',false,'7 réalisations/jour donnent seulement 20 000 F (50% des 40%) — le seuil intermédiaire.')"><span class="option-letter">A</span> 7 réalisations par jour</div>
+        <div class="quiz-option" onclick="answerM0(this,'q6',false,'8 réalisations/jour sont dans la tranche 7-9 qui donne 20 000 F, pas 40 000 F.')"><span class="option-letter">B</span> 8 réalisations par jour</div>
+        <div class="quiz-option" onclick="answerM0(this,'q6',true,'Correct ! ≥10 réalisations/jour = 100% des 40% Volume = 40 000 F sur la part variable.')"><span class="option-letter">C</span> 10 réalisations par jour</div>
+        <div class="quiz-option" onclick="answerM0(this,'q6',false,'15 réalisations/jour dépassent l\'objectif — le seuil maximum est fixé à 10/jour.')"><span class="option-letter">D</span> 15 réalisations par jour</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q6"></div>
     </div>
@@ -5129,7 +5170,7 @@ function enterFormation() {
       <div class="quiz-options">
         <div class="quiz-option" onclick="answerM0(this,'q7',false,'40 000 F est l\'ancien montant — la grille a été mise à jour.')"><span class="option-letter">A</span> 40 000 FCFA</div>
         <div class="quiz-option" onclick="answerM0(this,'q7',false,'75 000 F n\'est pas le maximum de la part variable agent.')"><span class="option-letter">B</span> 75 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q7',true,'Correct ! La part variable est de 100 000 FCFA maximum, calculée au prorata du % d\'atteinte de l\'objectif de 15 fiches/jour.')"><span class="option-letter">C</span> 100 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q7',true,'Correct ! La part variable est de 100 000 FCFA maximum, répartie en 3 critères : Volume (40k), Taux d\'actif (50k) et Respect des consignes (10k).')"><span class="option-letter">C</span> 100 000 FCFA</div>
         <div class="quiz-option" onclick="answerM0(this,'q7',false,'150 000 F est la part variable des inspecteurs et superviseurs, pas des agents.')"><span class="option-letter">D</span> 150 000 FCFA</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q7"></div>
@@ -5138,12 +5179,12 @@ function enterFormation() {
     <!-- Q8 -->
     <div class="quiz-question-block" id="m0-q8">
       <div class="quiz-q-num">Question 8 / 20</div>
-      <div class="quiz-q-text">Quelle est la présence effective minimale pour bénéficier de la prime qualitative ?</div>
+      <div class="quiz-q-text">Quel est le taux d'actif minimum pour bénéficier de la composante Taux d'Actif de la part variable ?</div>
       <div class="quiz-options">
-        <div class="quiz-option" onclick="answerM0(this,'q8',false,'75% est insuffisant — le seuil est fixé à 90%.')"><span class="option-letter">A</span> 75%</div>
-        <div class="quiz-option" onclick="answerM0(this,'q8',false,'80% est insuffisant — le seuil est fixé à 90%.')"><span class="option-letter">B</span> 80%</div>
-        <div class="quiz-option" onclick="answerM0(this,'q8',true,'Correct ! La présence effective doit être ≥ 90% pour bénéficier de la prime qualitative MAFA.')"><span class="option-letter">C</span> 90%</div>
-        <div class="quiz-option" onclick="answerM0(this,'q8',false,'100% est le maximum mais pas le seuil minimum requis.')"><span class="option-letter">D</span> 100%</div>
+        <div class="quiz-option" onclick="answerM0(this,'q8',false,'40% est insuffisant — le seuil minimum est fixé à 60% d\'agents actifs.')"><span class="option-letter">A</span> 40%</div>
+        <div class="quiz-option" onclick="answerM0(this,'q8',false,'50% est insuffisant — le seuil est de 60%. En dessous, aucune part n\'est versée.')"><span class="option-letter">B</span> 50%</div>
+        <div class="quiz-option" onclick="answerM0(this,'q8',true,'Correct ! Le taux d\'actif doit être ≥ 60% pour débloquer 50 000 F. C\'est une règle tout ou rien : en dessous de 60%, la part est 0.')"><span class="option-letter">C</span> 60%</div>
+        <div class="quiz-option" onclick="answerM0(this,'q8',false,'75% est au-dessus du seuil requis — il suffit d\'atteindre 60% pour valider la composante.')"><span class="option-letter">D</span> 75%</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q8"></div>
     </div>
@@ -5294,12 +5335,12 @@ function enterFormation() {
     <!-- Q20 -->
     <div class="quiz-question-block" id="m0-q20">
       <div class="quiz-q-num">Question 20 / 20</div>
-      <div class="quiz-q-text">Un agent travaille 26 jours, réalise en moyenne 15 fiches validées/jour et a une présence effective de 95%. Quel est son salaire total ?</div>
+      <div class="quiz-q-text">Un agent réalise 10 enrôlements/jour, le taux d'actif de son équipe est de 65% et il obtient une note de 8/10 pour les consignes. Quelle est sa part variable mensuelle ?</div>
       <div class="quiz-options">
-        <div class="quiz-option" onclick="answerM0(this,'q20',false,'200 000 F est le salaire fixe seul — la prime qualitative s\'ajoute car toutes les conditions sont remplies.')"><span class="option-letter">A</span> 200 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q20',true,'Correct ! 200 000 F (fixe) + 40 000 F (prime qualitative — toutes conditions remplies) = 240 000 FCFA.')"><span class="option-letter">B</span> 240 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q20',false,'260 000 F ne correspond à aucune combinaison de la grille de rémunération.')"><span class="option-letter">C</span> 260 000 FCFA</div>
-        <div class="quiz-option" onclick="answerM0(this,'q20',false,'La prime est de 40 000 F, pas 50 000 F — le total serait 250 000 F.')"><span class="option-letter">D</span> 250 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q20',false,'78 000 F correspond à Volume 20k + Taux 50k + 8k — mais avec 10 réalisations/jour, le Volume est de 40 000 F.')"><span class="option-letter">A</span> 78 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q20',true,'Correct ! Volume ≥10/j = 40 000 F + Taux actif 65%≥60% = 50 000 F + Consignes 8/10 = 8 000 F → PV = 98 000 F.')"><span class="option-letter">B</span> 98 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q20',false,'100 000 F serait le maximum — il faudrait ≥10/j, taux ≥60% ET note 10/10.')"><span class="option-letter">C</span> 100 000 FCFA</div>
+        <div class="quiz-option" onclick="answerM0(this,'q20',false,'150 000 F dépasse le maximum possible (100 000 F) — vérifiez la formule.')"><span class="option-letter">D</span> 150 000 FCFA</div>
       </div>
       <div class="quiz-feedback" id="m0-fb-q20"></div>
     </div>
@@ -11058,14 +11099,106 @@ function answerM3(el, qid, correct, feedback) {
   }
 
   // ══ PDF — clone hors-écran pour capturer tout le contenu sans contrainte de hauteur ══
-  // ══ PDF — fenêtre d'impression (aucune restriction canvas, images incluses) ══
-  window.exportPDF = function(modId, fileName, title) {
+  // ══ Convertit toutes les images d'un nœud DOM en data URI base64 ══
+  async function embedImagesAsBase64(node, baseUrl) {
+    var imgs = Array.from(node.querySelectorAll('img[src]'));
+    await Promise.all(imgs.map(function(img) {
+      return new Promise(function(resolve) {
+        var src = img.getAttribute('src');
+        if (!src || src.startsWith('data:') || src.startsWith('blob:')) { resolve(); return; }
+        try {
+          var absUrl = new URL(src, baseUrl).href;
+          fetch(absUrl)
+            .then(function(r) { return r.ok ? r.blob() : Promise.reject(); })
+            .then(function(blob) {
+              var reader = new FileReader();
+              reader.onload = function(e) { img.src = e.target.result; resolve(); };
+              reader.onerror = function() { resolve(); };
+              reader.readAsDataURL(blob);
+            })
+            .catch(function() { resolve(); });
+        } catch(e) { resolve(); }
+      });
+    }));
+  }
+
+  // ══ PDF — fenêtre d'impression (images embarquées en base64, tout contenu visible) ══
+  window.exportPDF = async function(modId, fileName, title) {
     var btn = event.currentTarget;
     btnWait(btn);
     try {
       var s = getSection(modId);
-      var content = s.sec.innerHTML;
+
+      // Cloner pour ne pas toucher le DOM original
+      var clone = s.sec.cloneNode(true);
       releaseSection(s);
+
+      // Forcer tous les sous-éléments cachés à être visibles dans le clone
+      clone.querySelectorAll('[style*="display:none"],[style*="display: none"]').forEach(function(el) {
+        el.style.removeProperty('display');
+      });
+      clone.querySelectorAll('.tab-section,.tab-content,.sub-tab-section').forEach(function(el) {
+        el.style.setProperty('display', 'block', 'important');
+      });
+
+      // Embarquer les images en base64 (évite les blocages file://)
+      await embedImagesAsBase64(clone, window.location.href);
+
+      var content = clone.innerHTML;
+
+      // ── Récupérer les objectifs pédagogiques (hors tab-section) ──
+      var moduleEl = document.getElementById('module-' + modId);
+      var objEl = moduleEl ? moduleEl.querySelector('.module-objectives') : null;
+      var objHTML = objEl ? objEl.outerHTML : '';
+
+      // ── Récupérer icône + meta du module-hero ──
+      var heroEl = s.sec.querySelector ? s.sec.querySelector('.module-hero') : null;
+      var heroIconEl = heroEl ? heroEl.querySelector('.module-hero-icon') : null;
+      var heroIcon = heroIconEl ? heroIconEl.textContent.trim() : '📚';
+      var heroMetaEl = heroEl ? heroEl.querySelector('.module-hero-meta') : null;
+      var metaItems = [];
+      if (heroMetaEl) {
+        heroMetaEl.querySelectorAll('.module-chip').forEach(function(c) { metaItems.push(c.textContent.trim()); });
+      }
+      var metaStr = metaItems.join(' &nbsp;·&nbsp; ');
+
+      // ── Page de garde ──
+      var date = new Date().toLocaleDateString('fr-FR', {year:'numeric', month:'long', day:'numeric'});
+      var coverPage = '<div style="page-break-after:always;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:0;background:linear-gradient(145deg,#6A091A 0%,#8D0C23 50%,#3a1a00 100%);-webkit-print-color-adjust:exact;print-color-adjust:exact;">'
+        /* Bande dorée haut */
+        + '<div style="height:6px;background:linear-gradient(90deg,#CF9E41,#DDB55A,#CF9E41);"></div>'
+        /* Corps de la couverture */
+        + '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:48pt 44pt;">'
+          /* En-tête Crystal Solutions */
+          + '<div style="font-family:\'JetBrains Mono\',monospace;font-size:8pt;font-weight:800;color:#CF9E41;letter-spacing:.22em;text-transform:uppercase;margin-bottom:28pt;">Crystal Solutions &nbsp;·&nbsp; Filiale MAFA Holding</div>'
+          /* Icône */
+          + '<div style="font-size:48pt;margin-bottom:16pt;">' + heroIcon + '</div>'
+          /* Titre */
+          + '<h1 style="font-family:Sora,Arial,sans-serif;font-size:28pt;font-weight:800;color:white;line-height:1.15;margin:0 0 10pt;border:none;padding:0;">' + title + '</h1>'
+          /* Sous-titre */
+          + '<div style="font-size:12pt;color:rgba(255,204,136,.8);font-weight:600;margin-bottom:24pt;">Programme de Formation — MAFA Holding</div>'
+          /* Chips meta */
+          + (metaStr ? '<div style="font-size:9pt;color:rgba(255,255,255,.65);margin-bottom:32pt;">' + metaStr + '</div>' : '')
+          /* Ligne séparatrice */
+          + '<div style="height:1px;background:rgba(207,158,65,.4);margin-bottom:28pt;"></div>'
+          /* Date */
+          + '<div style="font-size:10pt;color:rgba(255,255,255,.55);">Document généré le <strong style="color:rgba(255,255,255,.8);">' + date + '</strong></div>'
+        + '</div>'
+        /* Pied de page */
+        + '<div style="padding:14pt 44pt;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.1);">'
+          + '<div style="font-size:8pt;color:rgba(255,255,255,.4);font-family:\'JetBrains Mono\',monospace;">FORMATION OFFICIELLE — USAGE INTERNE</div>'
+          + '<div style="font-size:8pt;color:rgba(255,255,255,.4);">Crystal Solutions · 2026</div>'
+        + '</div>'
+        /* Bande dorée bas */
+        + '<div style="height:6px;background:linear-gradient(90deg,#CF9E41,#DDB55A,#CF9E41);"></div>'
+      + '</div>';
+
+      // ── Bloc objectifs pédagogiques (si disponibles) ──
+      var objSection = objHTML
+        ? '<div style="margin:0 0 24pt;padding:14pt 18pt;background:#FFFBF0;border-left:5pt solid #CF9E41;border-radius:8pt;-webkit-print-color-adjust:exact;print-color-adjust:exact;">'
+          + objHTML
+          + '</div>'
+        : '';
 
       // Collecter tous les styles internes de la page (sans CORS)
       var inlineCSS = '';
@@ -11082,38 +11215,73 @@ function answerM3(el, qid, correct, feedback) {
         + '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">'
         + '<style>' + inlineCSS + '</style>'
         + '<style>'
-        /* Reset d'impression */
-        + 'html,body{background:#fff!important;margin:0!important;padding:0!important;}'
-        + 'body{font-family:Sora,Arial,sans-serif;color:#1a1a2e;}'
-        /* Masquer éléments non-contenu */
-        + '.dl-bar,.module-tabs,.module-tabs-clean,.module-breadcrumb,'
-        + '.module-header-wrap,.module-objectives,.module-chips,'
-        + '.tab-btn,.tab-btn-clean,.tab-btn-clean.active-red,'
-        + 'button:not(.quiz-option){display:none!important;}'
-        /* Afficher tout le contenu */
-        + '.tab-section{display:block!important;overflow:visible!important;'
-        + 'max-height:none!important;height:auto!important;padding:0 24px!important;}'
-        /* Conteneur principal sans sidebar */
+
+        /* ── PAGE A4 — margin:0 élimine l'espace réservé aux en-têtes/pieds du navigateur ── */
+        + '@page{size:210mm 297mm portrait;margin:0;}'
+
+        /* ── RESET ── */
+        + 'html,body{background:#fff!important;margin:0!important;padding:0!important;width:100%!important;}'
+        /* Le padding du body crée les marges visuelles — pleine largeur A4 sans restriction ── */
+        + 'body{font-family:Sora,Arial,sans-serif;color:#1a1a2e;font-size:11pt;line-height:1.75;'
+        + 'text-align:justify;-webkit-hyphens:auto;hyphens:auto;'
+        + 'padding:2cm 2.2cm;box-sizing:border-box;}'
+
+        /* ── UI MASQUÉ ── */
+        + '.dl-bar,.module-tabs,.module-tabs-clean,.module-breadcrumb,.module-header-wrap,.module-chips,'
+        + '.tab-btn,.tab-btn-clean,button:not(.quiz-option){display:none!important;}'
         + '.main,.sidebar,.topbar,.overlay-topbar{display:none!important;}'
-        /* Typographie & espacement */
-        + 'h1{font-size:22pt;color:#8D0C23;border-bottom:2pt solid #8D0C23;padding-bottom:6pt;margin-bottom:14pt;}'
-        + 'h2{font-size:15pt;color:#8D0C23;margin-top:20pt;}'
-        + 'h3{font-size:12pt;color:#584B26;margin-top:12pt;}'
-        + 'p,li{font-size:11pt;line-height:1.7;}'
-        + 'table{border-collapse:collapse;width:100%;font-size:10pt;}'
-        + 'td,th{border:1pt solid #ccc;padding:5pt 7pt;}'
-        + 'th{background:#F9E8EC;color:#8D0C23;font-weight:700;}'
-        + 'img{max-width:100%;height:auto;border-radius:6pt;}'
-        /* Mise en page impression */
-        + '@page{margin:1.5cm;size:A4;}'
-        + '@media print{'
-        + '  .module-hero{padding:16pt!important;border-radius:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
-        + '  .info-card,.alert,.section-heading{-webkit-print-color-adjust:exact;print-color-adjust:exact;break-inside:avoid;}'
-        + '  table{break-inside:avoid;}'
-        + '}'
+
+        /* ── TOUT LE CONTENU VISIBLE — pleine largeur ── */
+        + '.tab-section,.tab-content,.sub-tab-section{display:block!important;overflow:visible!important;max-height:none!important;height:auto!important;width:100%!important;padding:0!important;}'
+
+        /* ── TITRES — ne jamais laisser un titre seul en bas de page ── */
+        + 'h1{font-size:20pt;color:#8D0C23;border-bottom:2pt solid #8D0C23;padding-bottom:6pt;margin:0 0 14pt;break-after:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+        + 'h2{font-size:14pt;color:#8D0C23;margin:22pt 0 8pt;break-after:avoid;break-inside:avoid;}'
+        + 'h3{font-size:11.5pt;color:#584B26;margin:14pt 0 5pt;break-after:avoid;break-inside:avoid;}'
+        + 'h1+*,h2+*,h3+*{break-before:avoid;}'
+
+        /* ── PARAGRAPHES & LISTES — contrôle des veuves/orphelines ── */
+        + 'p{font-size:11pt;line-height:1.75;margin:0 0 7pt;text-align:justify;orphans:3;widows:3;}'
+        + 'li{font-size:11pt;line-height:1.7;margin-bottom:3pt;text-align:justify;orphans:3;widows:3;}'
+        + 'ul,ol{margin:5pt 0 8pt;padding-left:18pt;}'
+
+        /* ── TABLEAUX — en-tête répété, jamais de cellule coupée ── */
+        + 'table{border-collapse:collapse;width:100%;font-size:10pt;margin:10pt 0;}'
+        + 'thead{display:table-header-group;}'
+        + 'tfoot{display:table-footer-group;}'
+        + 'tr{break-inside:avoid;}'
+        + 'td,th{border:1pt solid #ccc;padding:5pt 7pt;text-align:left;vertical-align:top;}'
+        + 'th{background:#F9E8EC;color:#8D0C23;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+
+        /* ── IMAGES — centrées, jamais coupées ── */
+        + 'img{max-width:100%;height:auto;display:block;margin:8pt auto;border-radius:4pt;break-inside:avoid;}'
+        + 'figure,.phone-frame,.phone-grid{break-inside:avoid;margin:8pt 0;}'
+
+        /* ── CARTES & BLOCS — jamais coupés entre deux pages ── */
+        + '.info-card,.alert,.step-card,.connect-card,blockquote{'
+        +   'break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;margin-bottom:10pt;}'
+        + '.section-heading{'
+        +   'break-inside:avoid;break-after:avoid;margin-top:22pt;'
+        +   '-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+        + '.section-heading+*{break-before:avoid;}'
+        + '.module-hero{break-inside:avoid;padding:16pt!important;border-radius:0!important;'
+        +   '-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+
+        /* ── OBJECTIFS PÉDAGOGIQUES ── */
+        + '.module-objectives{display:block!important;break-inside:avoid;margin:0 0 16pt!important;padding:12pt 16pt!important;'
+        +   'background:#FFFBF0!important;border-left:4pt solid #CF9E41!important;border-radius:6pt!important;'
+        +   '-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}'
+        + '.module-objectives-title{font-size:10pt!important;font-weight:700!important;color:#584B26!important;'
+        +   'text-transform:uppercase!important;letter-spacing:.08em!important;margin-bottom:8pt!important;}'
+        + '.module-objectives ul{padding:0!important;margin:0!important;list-style:none!important;}'
+        + '.module-objectives ul li{font-size:10.5pt!important;color:#2d3748!important;padding:3pt 0!important;'
+        +   'display:flex!important;gap:7pt!important;}'
+        + '.module-objectives ul li::before{content:"✓"!important;color:#CF9E41!important;font-weight:700!important;flex-shrink:0!important;}'
+
         + '</style>'
         + '</head><body>'
-        + '<div class="tab-section">' + content + '</div>'
+        + coverPage
+        + '<div class="tab-section">' + objSection + content + '</div>'
         + '<script>'
         + '(function(){'
         + '  var tried=false;'
@@ -11146,7 +11314,7 @@ function answerM3(el, qid, correct, feedback) {
       printWin.document.close();
 
       // Toast d'information
-      _showToast('📄 Fenêtre PDF ouverte — dans la boîte de dialogue, choisissez\n« Enregistrer en PDF » comme imprimante.');
+      _showToast('📄 Fenêtre PDF ouverte — Format A4 appliqué.\nChoisissez « Enregistrer en PDF » · Décochez « En-têtes et pieds de page » si nécessaire.');
     } catch(e) {
       alert('Erreur export PDF : ' + (e.message || e));
     }
@@ -11173,51 +11341,90 @@ function answerM3(el, qid, correct, feedback) {
   }
 
   // ══ WORD — format Word HTML natif (sans CDN, ouvre directement dans Word) ══
-  window.exportWord = function(modId, fileName, title) {
+  window.exportWord = async function(modId, fileName, title) {
     var btn = event.currentTarget;
     btnWait(btn);
     try {
       var s = getSection(modId);
-      var content = s.sec.innerHTML;
+
+      // Cloner et rendre tout le contenu visible
+      var clone = s.sec.cloneNode(true);
       releaseSection(s);
+      clone.querySelectorAll('[style*="display:none"],[style*="display: none"]').forEach(function(el) {
+        el.style.removeProperty('display');
+      });
+      clone.querySelectorAll('.tab-section,.tab-content,.sub-tab-section').forEach(function(el) {
+        el.style.setProperty('display', 'block', 'important');
+      });
+
+      // Embarquer les images en base64
+      await embedImagesAsBase64(clone, window.location.href);
+
+      var content = clone.innerHTML;
 
       var html = '<!DOCTYPE html>\n'
         + '<html xmlns:o="urn:schemas-microsoft-com:office:office"\n'
         + '      xmlns:w="urn:schemas-microsoft-com:office:word"\n'
         + '      xmlns="http://www.w3.org/TR/REC-html40">\n'
         + '<head><meta charset="UTF-8"><title>' + title + '</title>\n'
-        + '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View>'
-        + '<w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->\n'
+        /* ── Directives XML Office : format A4, marges standard document de formation ── */
+        + '<!--[if gte mso 9]><xml>\n'
+        + '<w:WordDocument>\n'
+        + '  <w:View>Print</w:View>\n'
+        + '  <w:Zoom>100</w:Zoom>\n'
+        + '  <w:DoNotOptimizeForBrowser/>\n'
+        + '</w:WordDocument>\n'
+        + '</xml><![endif]-->\n'
         + '<style>\n'
-        + 'body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.75;margin:2.5cm;color:#1a1a2e}\n'
-        + 'h1{font-size:22pt;color:#8D0C23;border-bottom:2pt solid #8D0C23;padding-bottom:6pt;margin:0 0 16pt}\n'
-        + 'h2{font-size:15pt;color:#8D0C23;border-bottom:1pt solid #e0c0c8;padding-bottom:3pt;margin:20pt 0 8pt}\n'
-        + 'h3{font-size:12pt;color:#584B26;margin:12pt 0 5pt;font-weight:bold}\n'
-        + 'p{margin:4pt 0;font-size:11pt}\n'
-        + 'ul,ol{margin:5pt 0;padding-left:16pt}\n'
-        + 'li{margin:3pt 0;font-size:11pt}\n'
-        + 'strong{font-weight:bold}\n'
-        + 'em{font-style:italic}\n'
-        + 'table{border-collapse:collapse;width:100%;margin:10pt 0;font-size:10pt}\n'
-        + 'td,th{border:1pt solid #ccc;padding:6pt 8pt;vertical-align:top}\n'
-        + 'th{background-color:#F9E8EC;font-weight:bold;color:#8D0C23}\n'
-        + 'img{max-width:100%;height:auto}\n'
-        + '.info-card{border-left:3pt solid #8D0C23;padding:8pt 10pt;margin:10pt 0;background:#fafafa}\n'
-        + '.module-hero{text-align:center;padding:14pt 20pt;margin:0 0 14pt;background:#8D0C23;color:white}\n'
-        + '.module-hero h1,.module-hero-title{color:white!important;border:none!important;font-size:20pt}\n'
-        + '.module-hero-icon{font-size:26pt;display:block;margin-bottom:6pt}\n'
-        + '.meta-chip{padding:2pt 6pt;margin:2pt;border:1pt solid #e0c0c8;font-size:9pt;display:inline-block}\n'
-        + '.section-heading{margin-top:20pt;margin-bottom:6pt}\n'
-        + '.section-num{background:#8D0C23;color:white;padding:1pt 5pt;font-weight:bold;font-size:9pt;margin-right:5pt}\n'
-        + '.section-heading h2{display:inline;border:none;padding:0}\n'
-        + '.step-card,.connect-card{border:1pt solid #ddd;padding:8pt;margin:6pt 0;background:#f8f9fa}\n'
+        /* ── Format de page A4 via MSO (Word respecte ceci, pas le CSS @page standard) ── */
+        + '@page Section1{\n'
+        + '  size:595.45pt 841.7pt;\n'        /* A4 en points (210mm × 297mm) */
+        + '  margin:72pt 72pt 72pt 90pt;\n'   /* 2.54cm haut/bas, 3.17cm gauche (standard Word) */
+        + '  mso-header-margin:35.45pt;\n'
+        + '  mso-footer-margin:35.45pt;\n'
+        + '  mso-paper-source:0;\n'
+        + '}\n'
+        + 'div.Section1{page:Section1;}\n'
+        /* ── Typographie de base ── */
+        + 'body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.75;margin:0;padding:0;color:#1a1a2e;text-align:justify;}\n'
+        + 'h1{font-size:20pt;color:#8D0C23;border-bottom:2pt solid #8D0C23;padding-bottom:6pt;margin:0 0 14pt;page-break-after:avoid;}\n'
+        + 'h2{font-size:14pt;color:#8D0C23;border-bottom:1pt solid #e0c0c8;padding-bottom:3pt;margin:22pt 0 8pt;page-break-after:avoid;page-break-inside:avoid;}\n'
+        + 'h3{font-size:11.5pt;color:#584B26;margin:14pt 0 5pt;font-weight:bold;page-break-after:avoid;page-break-inside:avoid;}\n'
+        + 'p{margin:0 0 7pt;font-size:11pt;text-align:justify;orphans:3;widows:3;}\n'
+        + 'ul,ol{margin:5pt 0 8pt;padding-left:18pt;}\n'
+        + 'li{margin-bottom:3pt;font-size:11pt;text-align:justify;orphans:3;widows:3;}\n'
+        + 'strong{font-weight:bold;}\n'
+        + 'em{font-style:italic;}\n'
+        /* ── Tableaux ── */
+        + 'table{border-collapse:collapse;width:100%;margin:10pt 0;font-size:10pt;page-break-inside:auto;}\n'
+        + 'thead{display:table-header-group;}\n'
+        + 'tfoot{display:table-footer-group;}\n'
+        + 'tr{page-break-inside:avoid;}\n'
+        + 'td,th{border:1pt solid #ccc;padding:5pt 7pt;vertical-align:top;text-align:left;}\n'
+        + 'th{background-color:#F9E8EC;font-weight:bold;color:#8D0C23;mso-background-source:auto;}\n'
+        /* ── Images ── */
+        + 'img{max-width:100%;height:auto;display:block;margin:8pt auto;page-break-inside:avoid;}\n'
+        + 'figure,.phone-frame{page-break-inside:avoid;margin:8pt 0;}\n'
+        /* ── Cartes & blocs ── */
+        + '.info-card{border-left:3pt solid #8D0C23;padding:8pt 10pt;margin:10pt 0;background:#fafafa;page-break-inside:avoid;}\n'
+        + '.alert,.step-card,.connect-card{border:1pt solid #ddd;padding:8pt;margin:8pt 0;background:#f8f9fa;page-break-inside:avoid;}\n'
+        + '.section-heading{margin-top:22pt;margin-bottom:6pt;page-break-inside:avoid;page-break-after:avoid;}\n'
+        + '.section-num{background:#8D0C23;color:white;padding:1pt 5pt;font-weight:bold;font-size:9pt;margin-right:5pt;}\n'
+        + '.section-heading h2{display:inline;border:none;padding:0;}\n'
+        + '.module-hero{text-align:center;padding:14pt 20pt;margin:0 0 14pt;background:#8D0C23;color:white;page-break-inside:avoid;}\n'
+        + '.module-hero h1{color:white!important;border:none!important;font-size:20pt;page-break-after:avoid;}\n'
+        + '.module-hero-icon{font-size:26pt;display:block;margin-bottom:6pt;}\n'
+        + '.meta-chip{padding:2pt 6pt;margin:2pt;border:1pt solid #e0c0c8;font-size:9pt;display:inline-block;}\n'
+        /* ── Masquer UI ── */
         + 'button,.tab-btn,.tab-btn-clean,.dl-bar,.dl-btn,.module-tabs,.module-tabs-clean,.module-breadcrumb,'
-        + '.module-chips,.module-chip,.quiz-option,.quiz-feedback,.tab-section[style*="none"],'
-        + '.module-title-block,.module-header-wrap,.module-objectives{display:none!important}\n'
-        + '</style></head>\n<body>\n'
+        + '.module-chips,.module-chip,.quiz-option,.quiz-feedback,'
+        + '.module-title-block,.module-header-wrap,.module-objectives{display:none!important;}\n'
+        + '</style></head>\n'
+        /* Contenu enveloppé dans Section1 pour que Word applique le format A4 */
+        + '<body><div class="Section1">\n'
         + '<h1>' + title + '</h1>\n'
         + content
-        + '\n</body></html>';
+        + '\n</div></body></html>';
 
       var blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
       var url = URL.createObjectURL(blob);
@@ -11240,7 +11447,17 @@ function answerM3(el, qid, correct, feedback) {
       await loadScript('https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js', 'lib-pptx');
 
       s = getSection(modId);
-      var section = s.sec;
+
+      // Cloner, rendre le contenu caché visible et embarquer les images
+      var clone = s.sec.cloneNode(true);
+      releaseSection(s);
+      s = null;
+      clone.querySelectorAll('[style*="display:none"],[style*="display: none"]').forEach(function(el) {
+        el.style.removeProperty('display');
+      });
+      await embedImagesAsBase64(clone, window.location.href);
+
+      var section = clone;
 
       var pptx = new PptxGenJS();
       pptx.layout = 'LAYOUT_WIDE';
@@ -11302,10 +11519,8 @@ function answerM3(el, qid, correct, feedback) {
         slide.addText('MAFA Holding — Formation', { x: 0.3, y: 7.28, w: 12.73, h: 0.22, fontSize: 8, color: 'BBBBBB', align: 'right' });
       });
 
-      releaseSection(s);
       await pptx.writeFile({ fileName: fileName + '.pptx' });
     } catch(e) {
-      if (s) releaseSection(s);
       alert('Erreur export PowerPoint : ' + (e.message || e));
     }
     btnReset(btn);
